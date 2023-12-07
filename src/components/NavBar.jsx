@@ -20,7 +20,7 @@ const NavCss=styled.div`
         position: absolute;
         right: 0;
         width: 500px;  
-        height: 600px;  
+      
         h1 {
             font-size: 20px;
         }
