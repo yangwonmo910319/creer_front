@@ -6,7 +6,8 @@ export const MemberAxiosApi = {
   memberLogin: async (email, password) => {
     console.log("로그인 : ", email, password);
     const login = {
-      email, password
+      email,
+      password,
     };
     return await memberAxios.post(KH_DOMAIN + "/auth/login", login);
   },
@@ -20,36 +21,46 @@ export const MemberAxiosApi = {
       },
     });
   },
-   // 회원 조회
-   memberGetOne: async () => {
+  // 회원 조회
+  memberGetOne: async () => {
     const token = localStorage.getItem("accessToken");
     console.log("회원 조회 : ", token);
-    return await memberAxios.get(KH_DOMAIN + `/users/detail`, {
+    return await memberAxios.get(KH_DOMAIN + `/member/detail`, {
       headers: {
         "Content-Type": "application/json",
         Authorization: "Bearer " + token,
       },
     });
-   },
+  },
 
- // 회원 가입
- memberReg: async (userEmail, password, name, image, address, phoneNum, nickName) => {
-  const member = {
-    userEmail: userEmail,
-    password: password,
-    name: name,
-    image: image,
-    address: address,
-    phoneNum: phoneNum,
-    nickName: nickName
-  };
-  return await memberAxios.post(KH_DOMAIN + "/auth/signup", member);
-},
-    // 회원 가입 여부 확인
-    memberRegCheck: async (userEmail) => {
-      console.log("가입 가능 여부 확인 : ", userEmail);
-      return await memberAxios.get(KH_DOMAIN + `/auth/exists/${userEmail}`);
-    },
+  // 회원 가입
+  memberReg: async (
+    userEmail,
+    password,
+    name,
+    image,
+    address,
+    phoneNum,
+    nickName
+  ) => {
+    const member = {
+      userEmail: userEmail,
+      password: password,
+      name: name,
+      image: image,
+      address: address,
+      phoneNum: phoneNum,
+      nickName: nickName,
+    };
+    return await memberAxios.post(KH_DOMAIN + "/auth/signup", member);
+  },
+
+  // 회원 가입 여부 확인
+  memberRegCheck: async (userEmail) => {
+    console.log("가입 가능 여부 확인 : ", userEmail);
+    return await memberAxios.get(KH_DOMAIN + `/auth/exists/${userEmail}`);
+  },
+
   // 회원 정보 수정
   memberUpdate: async (userEmail, name, image) => {
     const token = localStorage.getItem("accessToken");
@@ -73,5 +84,11 @@ export const MemberAxiosApi = {
       userEmaild: userEmail,
     };
     return await memberAxios.post(KH_DOMAIN + "/user/delete", del);
+  },
+
+  nicknameCheck: async (nickName) => {
+    return await memberAxios.get(
+      KH_DOMAIN + `member/signUp/nickName/${nickName}`
+    );
   },
 };

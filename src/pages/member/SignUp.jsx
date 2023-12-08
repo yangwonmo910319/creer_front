@@ -10,19 +10,24 @@ export const SignUp = () => {
   const [inputPassWord, setInputPassWord] = useState("");
   const [inputConPassWord, setInputConPassWord] = useState("");
   const [inputName, setInputName] = useState("");
-  const [inputUserEmail, setInputUserEmail] = useState("");
+  const [inputEmail, setInputEmail] = useState("");
+  const [inputPhoneNum, setInputPhoneNum] = useState("");
+  const [inputNickName, setInputNickName] = useState("");
 
   // 오류 메시지
   const [passWordMessage, setPassWordMessage] = useState("");
   const [conPassWordMessage, setConPassWordMessage] = useState("");
   const [mailMessage, setMailMessage] = useState("");
-  const [addMessage, setAddMessage] = useState("");
+  const [nickNameMessage, setNickNameMessage] = useState("");
+  const [phoneNumMessage, setPhoneNumMessage] = useState("");
 
   // 유효성 검사
   const [isUserMail, setIsUserMail] = useState(false);
   const [isPassWord, setIsPassWord] = useState(false);
   const [isConPassWord, setIsConPassWord] = useState(false);
   const [isName, setIsName] = useState(false);
+  const [isNickName, setIsNickName] = useState(false);
+  const [isPhoneNum, setIsPhoneNum] = useState(false);
 
   // 팝업
   const [modalOpen, setModalOpen] = useState(false);
@@ -33,7 +38,7 @@ export const SignUp = () => {
   };
 
   const onChangeMail = (e) => {
-    setInputUserEmail(e.target.value);
+    setInputEmail(e.target.value);
     const emailRegex = /^[a-zA-Z0-9._-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,4}$/;
     if (!emailRegex.test(e.target.value)) {
       setMailMessage("이메일 형식이 올바르지 않습니다.");
@@ -73,6 +78,24 @@ export const SignUp = () => {
     setIsName(true);
   };
 
+  const onChangePhoneNum = (e) => {
+    const phoneNumRegex = /^\d{2,3}-\d{3,4}-\d{3,4}$/;
+    setInputPhoneNum(e.target.value);
+    if (!phoneNumRegex.test(e.target.value)) {
+      setPhoneNumMessage("전화번호 형식이 올바르지 않습니다.");
+      setIsPhoneNum(false);
+    } else {
+      setPhoneNumMessage("올바른 형식입니다.");
+      setIsPhoneNum(true);
+    }
+  };
+
+  const onChangeNickName = (e) => {
+    setInputNickName(e.target.value);
+    setIsNickName(true);
+    nicknameCheck(e.target.value);
+  };
+
   // 회원 가입 여부 확인
   const memberRegCheck = async (userEmail) => {
     try {
@@ -91,14 +114,32 @@ export const SignUp = () => {
     }
   };
 
+  // 별명 중복 확인
+  const nicknameCheck = async (nickName) => {
+    try {
+      const resp = await MemberAxiosApi.nicknameCheck(nickName);
+      console.log("별명 중복 확인 : ", resp.data);
+
+      if (resp.data === true) {
+        setNickNameMessage("사용 가능한 별명입니다.");
+        setIsNickName(true);
+      } else {
+        setMailMessage("중복된 별명입니다.");
+        setIsNickName(false);
+      }
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
   const onClickLogin = async () => {
     const memberReg = await MemberAxiosApi.memberReg(
-      inputUserEmail,
+      inputEmail,
       inputPassWord,
       inputName
     );
     console.log(memberReg.data);
-    if (memberReg.data.email === inputUserEmail) {
+    if (memberReg.data.email === inputEmail) {
       navigate("/");
     } else {
       setModalOpen(true);
@@ -116,17 +157,19 @@ export const SignUp = () => {
         <Input
           type="email"
           placeholder="이메일"
-          value={inputUserEmail}
+          value={inputEmail}
           onChange={onChangeMail}
         />
       </Items>
+
       <Items className="hint">
-        {inputUserEmail.length > 0 && (
+        {inputEmail.length > 0 && (
           <span className={`message ${isUserMail ? "success" : "error"}`}>
             {mailMessage}
           </span>
         )}
       </Items>
+
       <Items className="item2">
         <Input
           type="password"
@@ -135,6 +178,7 @@ export const SignUp = () => {
           onChange={onChangePw}
         />
       </Items>
+
       <Items className="hint">
         {inputPassWord.length > 0 && (
           <span className={`message ${isPassWord ? "success" : "error"}`}>
@@ -142,6 +186,7 @@ export const SignUp = () => {
           </span>
         )}
       </Items>
+
       <Items className="item2">
         <Input
           type="password"
@@ -150,6 +195,7 @@ export const SignUp = () => {
           onChange={onChangeConPw}
         />
       </Items>
+
       <Items className="hint">
         {inputPassWord.length > 0 && (
           <span className={`message ${isConPassWord ? "success" : "error"}`}>
@@ -157,6 +203,7 @@ export const SignUp = () => {
           </span>
         )}
       </Items>
+
       <Items className="item2">
         <Input
           type="text"
@@ -167,7 +214,46 @@ export const SignUp = () => {
       </Items>
 
       <Items className="item2">
-        {isUserMail && isPassWord && isConPassWord && isName ? (
+        <Input
+          type="text"
+          placeholder="별명"
+          value={inputNickName}
+          onChange={onChangeNickName}
+        />
+      </Items>
+      
+      <Items className="hint">
+        {inputEmail.length > 0 && (
+          <span className={`message ${isNickName ? "success" : "error"}`}>
+            {nickNameMessage}
+          </span>
+        )}
+      </Items>
+
+      <Items className="item2">
+        <Input
+          type="text"
+          placeholder="전화 번호"
+          value={inputPhoneNum}
+          onChange={onChangePhoneNum}
+        />
+      </Items>
+
+      <Items className="hint">
+        {inputEmail.length > 0 && (
+          <span className={`message ${isPhoneNum ? "success" : "error"}`}>
+            {phoneNumMessage}
+          </span>
+        )}
+      </Items>
+
+      <Items className="item2">
+        {isUserMail &&
+        isPassWord &&
+        isConPassWord &&
+        isName &&
+        isNickName &&
+        isPhoneNum ? (
           <Button enabled onClick={onClickLogin}>
             NEXT
           </Button>
