@@ -1,5 +1,5 @@
 import { useState, useReducer } from "react";
-import { reducer } from "../pages/MyPage";
+import { reducer } from "../../pages/member/MyPage";
 import { InputBox, InputTag, InpuTitle, MyPageButton } from "./MyPageComp";
 import { Modal } from "../../utils/member/MyPageModal";
 import { MyPageAxiosApi } from "../../api/member/MyPageAxiosApi";

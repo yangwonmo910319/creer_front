@@ -1,5 +1,5 @@
 import { useState, useReducer } from "react";
-import { reducer } from "../pages/MyPage";
+import { reducer } from "../../pages/member/MyPage";
 import { InputBox, InputTag, InpuTitle, MyPageButton } from "./MyPageComp";
 import { useNavigate } from "react-router-dom/dist";
 import sha256 from "sha256";

@@ -1,7 +1,7 @@
 import React, { useState } from "react";
-import { storage } from "../api/firebase";
+import { storage } from "../../api/FireBase";
 import { ImageSubmit, ImageSection, ImageUpload } from "./MyPageComp";
-import { useUser } from "../contexts/Context";
+import { useUser } from "../../contexts/Context";
 import { MyPageAxiosApi } from "../../api/member/MyPageAxiosApi";
 
 export const MyPageProfileImage = () => {

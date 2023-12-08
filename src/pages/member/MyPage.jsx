@@ -23,7 +23,9 @@ import { MyPageAxiosApi } from "../../api/member/MyPageAxiosApi";
 import { Modal } from "../../utils/member/MyPageModal";
 import { MyPageProfileImage } from "../../components/mypage/MyPageProfile";
 import { MyPagePW } from "../../components/mypage/MyPagePW";
-import {MyPageCash} from "../../"
+import { MyPageCash } from "../../components/mypage/MyPageCash";
+import { MyPageDELETE } from "../../components/mypage/MyPageDelete";
+import { MyPageName } from "../../components/mypage/MyPageName";
 
 // 입력받은 정보를 객체로 저장하는 함수 reducer
 export const reducer = (data, action) => {

@@ -8,7 +8,7 @@ import {
   CashTag,
 } from "./MyPageComp";
 import { MyPageAxiosApi } from "../../api/member/MyPageAxiosApi";
-import { useUser } from "../contexts/Context";
+import { useUser } from "../../contexts/Context";
 import { Modal } from "../../utils/member/MyPageModal";
 import KAKAO from "../../images/kakao.png";
 import NAVER from "../../images/naver.png";
