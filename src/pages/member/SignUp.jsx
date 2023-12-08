@@ -1,14 +1,8 @@
 import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
-import { memberAxiosApi } from "../../api/member/memberAxiosApi";
-import {
-  Input,
-  Button,
-  Container,
-  Items,
-} from "../../css/member/LoginCss";
+import { MemberAxiosApi } from "../../api/member/MemberAxiosApi";
+import { Input, Button, Container, Items } from "../../css/member/LoginCss";
 import { Modal } from "../../utils/member/MemberModal";
-
 
 export const SignUp = () => {
   const navigate = useNavigate();
@@ -81,24 +75,28 @@ export const SignUp = () => {
 
   // 회원 가입 여부 확인
   const memberRegCheck = async (userEmail) => {
-    try{
-      const resp = await memberAxiosApi.memberRegCheck(userEmail);
+    try {
+      const resp = await MemberAxiosApi.memberRegCheck(userEmail);
       console.log("가입 가능 여부 확인 : ", resp.data);
 
-      if(resp.data === true) {
+      if (resp.data === true) {
         setMailMessage("사용 가능한 이메일 입니다.");
         setIsUserMail(true);
       } else {
         setMailMessage("중복된 이메일 입니다.");
         setIsUserMail(false);
       }
-    } catch(error) {
+    } catch (error) {
       console.log(error);
     }
   };
 
   const onClickLogin = async () => {
-    const memberReg = await memberAxiosApi.memberReg(inputUserEmail, inputPassWord, inputName);
+    const memberReg = await MemberAxiosApi.memberReg(
+      inputUserEmail,
+      inputPassWord,
+      inputName
+    );
     console.log(memberReg.data);
     if (memberReg.data.email === inputUserEmail) {
       navigate("/");
@@ -183,4 +181,3 @@ export const SignUp = () => {
     </Container>
   );
 };
-

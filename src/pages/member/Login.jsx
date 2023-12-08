@@ -1,14 +1,9 @@
-import React,{ useState } from "react";
+import React, { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import imgLogo from "../../images/logo.svg";
-import  { memberAxiosApi } from "../../api/member/memberAxiosApi";
-import {
-  Input,
-  Button,
-  Container,
-  Items,
-} from "../../css/member/LoginCss";
-import { Modal } from "../../utils/member/MemberModal"
+import { MemberAxiosApi } from "../../api/member/MemberAxiosApi";
+import { Input, Button, Container, Items } from "../../css/member/LoginCss";
+import { Modal } from "../../utils/member/MemberModal";
 
 export const Login = () => {
   const navigate = useNavigate();
@@ -61,26 +56,26 @@ export const Login = () => {
   };
   const onClickLogin = async () => {
     //로그인을 위한 axios 호출
-    try{
-    const res = await memberAxiosApi.memberLogin(inputUserEmail, inputPw);
-    console.log(res.data);
-    if (res.data.grantType === "Bearer") {
-      console.log("accessToken : ", res.data.accessToken);
-      console.log("refreshToken : ", res.data.refreshToken);
-      window.localStorage.setItem("accessToken", res.data.accessToken); // 브라우저에서 임시로 값을 저장하는 기술
-      window.localStorage.setItem("refreshToken", res.data.refreshToken);
-      window.localStorage.setItem("isLogin", "true");
-      navigate("/");
-    } else {
+    try {
+      const res = await MemberAxiosApi.memberLogin(inputUserEmail, inputPw);
+      console.log(res.data);
+      if (res.data.grantType === "Bearer") {
+        console.log("accessToken : ", res.data.accessToken);
+        console.log("refreshToken : ", res.data.refreshToken);
+        window.localStorage.setItem("accessToken", res.data.accessToken); // 브라우저에서 임시로 값을 저장하는 기술
+        window.localStorage.setItem("refreshToken", res.data.refreshToken);
+        window.localStorage.setItem("isLogin", "true");
+        navigate("/");
+      } else {
+        setModalOpen(true);
+        setModalContent("아이디 및 패스워드를 재확인해 주세요.^^");
+      }
+    } catch (error) {
+      console.log(error);
       setModalOpen(true);
       setModalContent("아이디 및 패스워드를 재확인해 주세요.^^");
     }
-  } catch(error) {
-    console.log(error);
-    setModalOpen(true);
-    setModalContent("아이디 및 패스워드를 재확인해 주세요.^^");
-  }
-};
+  };
 
   return (
     <Container>
@@ -106,7 +101,9 @@ export const Login = () => {
       </Items>
       <Items className="hint">
         {inputPw.length > 0 && (
-          <span className={`${isPassWord ? "success" : "error"}`}>{pwMessage}</span>
+          <span className={`${isPassWord ? "success" : "error"}`}>
+            {pwMessage}
+          </span>
         )}
       </Items>
       <Items className="item2">

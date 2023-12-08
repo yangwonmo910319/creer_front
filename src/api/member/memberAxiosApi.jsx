@@ -1,7 +1,7 @@
 import memberAxios from "axios";
 import { KH_DOMAIN } from "../../utils/Common";
 
-export const memberAxiosApi = {
+export const MemberAxiosApi = {
   // 로그인
   memberLogin: async (email, password) => {
     console.log("로그인 : ", email, password);

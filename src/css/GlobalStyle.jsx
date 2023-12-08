@@ -19,5 +19,4 @@ export const GlobalStyle = createGlobalStyle`
     min-width: 769px;
     margin: 0 auto;
   }
-
 `;
