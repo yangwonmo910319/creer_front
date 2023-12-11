@@ -34,23 +34,14 @@ export const MemberAxiosApi = {
   },
 
   // 회원 가입
-  memberReg: async (
-    userEmail,
-    password,
-    name,
-    image,
-    address,
-    phoneNum,
-    nickName
-  ) => {
+  memberReg: async (email, password, name, nickName, phoneNum, address) => {
     const member = {
-      userEmail: userEmail,
-      password: password,
-      name: name,
-      image: image,
-      address: address,
-      phoneNum: phoneNum,
-      nickName: nickName,
+      email,
+      password,
+      name,
+      nickName,
+      phoneNum,
+      address,
     };
     return await axios.post(KH_DOMAIN + "/auth/signup", member);
   },
@@ -87,8 +78,6 @@ export const MemberAxiosApi = {
   },
 
   nicknameCheck: async (nickName) => {
-    return await axios.get(
-      KH_DOMAIN + `member/signUp/nickName/${nickName}`
-    );
+    return await axios.get(KH_DOMAIN + `/member/signUp/nickName/${nickName}`);
   },
 };

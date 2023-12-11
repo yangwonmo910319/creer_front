@@ -1,8 +1,33 @@
 import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
-import { MemberAxiosApi } from "../../api/member/MemberAxiosApi";
 import { Input, Button, Container, Items } from "../../css/member/LoginCss";
 import { Modal } from "../../utils/member/MemberModal";
+import { MemberAxiosApi } from "../../api/member/MemberAxiosApi";
+import { PopUpAddress } from "../../components/member/PopUpAddress";
+import styled from "styled-components";
+import { EmailVerification } from "../../components/member/EmailVerification";
+
+const AddressInputCss = styled.div`
+  width: 100%;
+  height: 100%;
+  display: flex;
+  align-items: center;
+
+  &.item2 {
+    margin: 0.6vh;
+  }
+
+  input {
+    margin-right: 0.6vw;
+    width: 100%;
+    height: auto;
+    line-height: normal;
+    padding: 1em;
+    border: 1px solid #999;
+    border-radius: 18px;
+    outline-style: none;
+  }
+`;
 
 export const SignUp = () => {
   const navigate = useNavigate();
@@ -13,6 +38,9 @@ export const SignUp = () => {
   const [inputEmail, setInputEmail] = useState("");
   const [inputPhoneNum, setInputPhoneNum] = useState("");
   const [inputNickName, setInputNickName] = useState("");
+  const [inputAdd, setInputAdd] = useState("");
+  const [inputAdd2, setInputAdd2] = useState("");
+  const [inputAdd3, setInputAdd3] = useState("");
 
   // 오류 메시지
   const [passWordMessage, setPassWordMessage] = useState("");
@@ -22,12 +50,14 @@ export const SignUp = () => {
   const [phoneNumMessage, setPhoneNumMessage] = useState("");
 
   // 유효성 검사
-  const [isUserMail, setIsUserMail] = useState(false);
+  const [isEmail, setIsEmail] = useState(false);
+  const [isVerified, setIsVerified] = useState(false);
   const [isPassWord, setIsPassWord] = useState(false);
   const [isConPassWord, setIsConPassWord] = useState(false);
   const [isName, setIsName] = useState(false);
   const [isNickName, setIsNickName] = useState(false);
   const [isPhoneNum, setIsPhoneNum] = useState(false);
+  const [totalAddress, setTotalAddress] = useState("");
 
   // 팝업
   const [modalOpen, setModalOpen] = useState(false);
@@ -42,10 +72,10 @@ export const SignUp = () => {
     const emailRegex = /^[a-zA-Z0-9._-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,4}$/;
     if (!emailRegex.test(e.target.value)) {
       setMailMessage("이메일 형식이 올바르지 않습니다.");
-      setIsUserMail(false);
+      setIsEmail(false);
     } else {
       setMailMessage("올바른 형식 입니다.");
-      setIsUserMail(true);
+      setIsEmail(true);
       memberRegCheck(e.target.value);
     }
   };
@@ -96,7 +126,14 @@ export const SignUp = () => {
     nicknameCheck(e.target.value);
   };
 
-  // 회원 가입 여부 확인
+  const onChangeAdd3 = (e) => {
+    setInputAdd3(e.target.value); // inputAdd3으로 하면 한글자씩 밀린다.
+
+    // 세 개로 나눠진 주소를 하나의 변수에 저장
+    setTotalAddress(inputAdd + "/" + inputAdd2 + "/" + e.target.value);
+  };
+
+  // 회원 가입 여부 확인, 즉 이메일 중복 확인
   const memberRegCheck = async (userEmail) => {
     try {
       const resp = await MemberAxiosApi.memberRegCheck(userEmail);
@@ -104,10 +141,10 @@ export const SignUp = () => {
 
       if (resp.data === true) {
         setMailMessage("사용 가능한 이메일 입니다.");
-        setIsUserMail(true);
+        setIsEmail(true);
       } else {
         setMailMessage("중복된 이메일 입니다.");
-        setIsUserMail(false);
+        setIsEmail(false);
       }
     } catch (error) {
       console.log(error);
@@ -124,7 +161,7 @@ export const SignUp = () => {
         setNickNameMessage("사용 가능한 별명입니다.");
         setIsNickName(true);
       } else {
-        setMailMessage("중복된 별명입니다.");
+        setNickNameMessage("중복된 별명입니다.");
         setIsNickName(false);
       }
     } catch (error) {
@@ -136,7 +173,10 @@ export const SignUp = () => {
     const memberReg = await MemberAxiosApi.memberReg(
       inputEmail,
       inputPassWord,
-      inputName
+      inputName,
+      inputNickName,
+      inputPhoneNum,
+      totalAddress
     );
     console.log(memberReg.data);
     if (memberReg.data.email === inputEmail) {
@@ -164,11 +204,17 @@ export const SignUp = () => {
 
       <Items className="hint">
         {inputEmail.length > 0 && (
-          <span className={`message ${isUserMail ? "success" : "error"}`}>
+          <span className={`message ${isEmail ? "success" : "error"}`}>
             {mailMessage}
           </span>
         )}
       </Items>
+
+      <EmailVerification
+        email={inputEmail}
+        onVerification={setIsVerified}
+        onVerifiedEmail={setInputEmail}
+      />
 
       <Items className="item2">
         <Input
@@ -221,9 +267,9 @@ export const SignUp = () => {
           onChange={onChangeNickName}
         />
       </Items>
-      
+
       <Items className="hint">
-        {inputEmail.length > 0 && (
+        {inputNickName.length > 0 && (
           <span className={`message ${isNickName ? "success" : "error"}`}>
             {nickNameMessage}
           </span>
@@ -247,13 +293,49 @@ export const SignUp = () => {
         )}
       </Items>
 
+      {/* ======================= 주소 입력 ======================= */}
+      <AddressInputCss className="item2">
+        <PopUpAddress
+          setInputAdd={setInputAdd}
+          setInputAdd2={setInputAdd2}
+        ></PopUpAddress>
+      </AddressInputCss>
+
+      <AddressInputCss className="item2">
+        {/* 
+          inputAdd : 사용자가 선택한 주소로, 사용자가 주소를 선택하면, handlePostCode 함수에서 setInputAdd를 호출하여, inputAdd 상태를 업데이트한다.
+          inputAdd2 : 도로명 주소
+          inputAdd3 : 사용자가 직접 입력하는 상세 주소
+        */}
+        {inputAdd && <Input type="addr" value={inputAdd} />}
+      </AddressInputCss>
+
+      <AddressInputCss className="item2">
+        {inputAdd2 && (
+          <>
+            <Input type="addr" value={inputAdd2} />
+            <AddressInputCss className="item2">
+              <input
+                type="addr"
+                placeholder="상세주소"
+                value={inputAdd3}
+                onChange={onChangeAdd3}
+              />
+            </AddressInputCss>
+          </>
+        )}
+      </AddressInputCss>
+      {/* ======================================================= */}
+
       <Items className="item2">
-        {isUserMail &&
+        {isEmail &&
         isPassWord &&
         isConPassWord &&
         isName &&
         isNickName &&
-        isPhoneNum ? (
+        totalAddress &&
+        isPhoneNum &&
+        isVerified ? (
           <Button enabled onClick={onClickLogin}>
             NEXT
           </Button>
