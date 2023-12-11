@@ -2,7 +2,15 @@ import { useCallback, useEffect, useState } from "react";
 import styled from "styled-components";
 import { FaStar, FaStarHalf } from "react-icons/fa"; // 별 아이콘을 사용하기 위한 import
 import { ReviewAxiosApi } from "../../api/goods/ReviewAxiosApi";
+import { ReviewModal } from "../../utils/goods/ReviewModal";
 
+const ReivewInfo = styled.div`
+
+width: 100%;
+height: 50px;
+display: flex;
+flex-direction: row;
+`;
 const ReviewSectionContainer = styled.div`
   padding: 0 30px 70px 30px;
   height: auto;
@@ -16,27 +24,33 @@ const ReviewSectionContainer = styled.div`
   h2 {
     font-size: 24px;
     font-weight: bold;
-    color: #333;
     margin-bottom: 15px;
     padding: 10px 0 8px 0;
-    border-bottom: 2px solid #7d8e9e;
     text-transform: uppercase; /* 텍스트를 대문자로 변환 */
   }
 
   .review-starbox {
-    display: table;
-    table-layout: fixed;
-    width: 100%;
+    margin-left: 35px;
+    display: flex;
+    flex-direction: column;
+    width:  50%;
+    height: 100px;
+    p{
+      text-align: start;
+    }
   }
 
   .review-rating {
     display: table-cell;
-    width: 120px;
-    padding: 32px 0 20px 0;
+    width:  50%;
+    height: 50%;
     text-align: center;
     justify-content: center;
     cursor: default;
     vertical-align: middle; /* 셀 내용 중앙 정렬 */
+p{
+  margin-top: 10px;
+}
   }
 
   .average-rating {
@@ -72,16 +86,19 @@ const ReviewSectionContainer = styled.div`
     overflow: auto;
     flex-direction: column;
     overflow-x: auto;
+
   }
 
   li {
-    border: 1px solid #ddd;
+    width: 81%;
+    display: flex;
     text-align: center;
+    flex-direction: row;
     padding: 20px;
     margin: 10px;
     border-radius: 5px;
+    height: 100px;
     box-shadow: 0px 2px 5px 0px rgba(0, 0, 0, 0.1); // 상자 그림자 추가
-    margin-right: 10px;
   }
 
   .review-rating {
@@ -116,61 +133,25 @@ const ReviewText = ({ isExpanded, children }) => (
 );
 
 const WriteButton = styled.button`
+width: 100px;
+height: 30px;
   position: relative;
   display: inline-block;
-  cursor: pointer;
-  outline: none;
   border: 0;
   vertical-align: middle;
   text-decoration: none;
-  font-size: inherit;
-  font-family: inherit;
   font-weight: 600;
   color: #382b22;
-  text-transform: uppercase;
-  padding: 1.25em 2em;
-  background: #fff0f0;
-  border: 2px solid #b18597;
+  background: #fbf3d8;
+  border: 1px solid #000000;
   border-radius: 0.75em;
-  transform-style: preserve-3d;
-  transition: transform 150ms cubic-bezier(0, 0, 0.58, 1),
-    background 150ms cubic-bezier(0, 0, 0.58, 1);
-  &:before {
-    position: absolute;
-    content: "";
-    width: 100%;
-    height: 100%;
-    top: 0;
-    left: 0;
-    right: 0;
-    bottom: 0;
-    background: #f9c4d2;
-    border-radius: inherit;
-    box-shadow: 0 0 0 2px #b18597, 0 0.625em 0 0 #ffe3e2;
-    transform: translate3d(0, 0.75em, -1em);
-    transition: transform 150ms cubic-bezier(0, 0, 0.58, 1),
-      box-shadow 150ms cubic-bezier(0, 0, 0.58, 1);
-  }
-  &:hover {
-    background: #ffe9e9;
-    transform: translate(0, 0.25em);
-    &:before {
-      box-shadow: 0 0 0 2px #b18597, 0 0.5em 0 0 #ffe3e2;
-      transform: translate3d(0, 0.5em, -1em);
-    }
-  }
-  &:active {
-    background: #ffe9e9;
-    transform: translate(0em, 0.75em);
-    &:before {
-      box-shadow: 0 0 0 2px #b18597, 0 0 #ffe3e2;
-      transform: translate3d(0, 0, -1em);
-    }
-  }
+  margin-top: 10px;
 `;
 
 const MoreButton = styled.button`
-  --btn-bg: #000;
+  background-color: #fbf3d8;
+  color: black;
+  border-radius: 10px;
   position: relative;
   width: 100%;
   height: 40px;
@@ -178,70 +159,64 @@ const MoreButton = styled.button`
   border: none;
   font-family: "Lato", sans-serif;
   font-weight: 500;
-  background: transparent;
   cursor: pointer;
   transition: all 0.3s ease;
   display: block;
 
-  &::before,
-  &::after {
-    position: absolute;
-    content: "";
-    left: 0;
-    width: 100%;
-    height: 1px;
-    background: var(--btn-bg);
-    opacity: 0;
-    transform: scaleX(0);
-    transition: 0.4s ease-in-out;
-  }
-
-  &::before {
-    top: 0;
-  }
-
-  &::after {
-    bottom: 0;
-  }
-
-  &:hover {
-    letter-spacing: 5px;
-    color: var(--btn-bg);
-    background: transparent;
-
-    &::before,
-    &::after {
-      opacity: 1;
-      transform: scaleX(1.2);
-    }
-  }
 `;
-const Nickname = styled.p`
+
+const Img = styled.div`
+  width: 80px;
+  height: 80px;
   color: #333;
   font-size: 18px;
   font-weight: bold;
   margin: 0;
   text-align: center;
+  img{
+    border: 1px solid rgba(0,0,0,0.2);
+    width: 80px;
+    margin-top:10px ;
+    height: 80px;
+  }
 `;
 
-const Id = styled.p`
-  color: #666;
-  font-size: 16px;
-  margin: 0;
+const ReviewBox = styled.div`
+display: flex;
+flex-direction: column;
+`
+;  
+
+const Nickname = styled.div`
+width: 100%;
+height: auto;
+
+ p{
+  color: #333;
+  font-size: 18px;
   text-align: center;
+  font-weight: bold;
+  width: 100%;
+  margin: 0;
+ }
 `;
+
+
 const ReviewDate = styled.p`
+width: 50%;
+height: 30px;
   color: #999;
   font-size: 14px;
   margin: 0;
   text-align: center; // 텍스트 중앙 정렬
 `;
+const StarBox = styled.div`
 
-export const ReviewComp = ({ openReviewModal, GoodsInfo }) => {
-  const [reviews, setReviews] = useState([]);
-
+`;
+export const ReviewComp = ({ goodsNum }) => {
+  const [num , setNum] = useState(goodsNum)
+  const [reviews, setReviews] = useState('');
   const [expandedReviews, setExpandedReviews] = useState([]);
-
   const [averageRating, setAverageRating] = useState(0);
   const [totalRatings, setTotalRatings] = useState(0);
   const stars = [];
@@ -261,111 +236,94 @@ export const ReviewComp = ({ openReviewModal, GoodsInfo }) => {
     }
   }
   // 리뷰 데이터를 가져오는 함수
-  const fetchReviews = useCallback(async () => {
-    if (!GoodsInfo) {
-      console.log(
-        "GoodsInfo is null. fetchReviews will be called again when GoodsInfo is set."
-      );
-      return;
-    }
+  const fetchReviews = useCallback(async () => {   
     try {
-      const response = await ReviewAxiosApi.getReviews(GoodsInfo.id);
+      const response = await ReviewAxiosApi.getReviews(goodsNum);
+  
       if (response.status === 200) {
+        console.log(response)
         setReviews(response.data);
+        //리뷰 수
+        setTotalRatings(response.data.length)   
+        console.log(response.data.length)
+        let totalRating= 0;
+        for(let i=0 ; i<response.data.length;i++){
+          totalRating += response.data[i].reviewStar;
+
+      }
+      setAverageRating(totalRating/response.data.length);
+    
+      
       } else {
         console.error("리뷰 가져오기 실패");
+        console.log(response);
       }
     } catch (error) {
       console.error("리뷰 데이터 요청 에러", error);
     }
-  }, [GoodsInfo]);
-  const fetchReviewStats = useCallback(async () => {
-    if (!GoodsInfo) {
-      console.log(
-        "GoodsInfo is null. fetchReviewStats will be called again when GoodsInfo is set."
-      );
-      return;
-    }
-    try {
-      const response = await ReviewAxiosApi.getReviewStats(GoodsInfo.id);
-      console.log(response);
-      if (response.status === 200) {
-        setAverageRating(response.data.averageRating);
-        setTotalRatings(response.data.totalReviews);
-      } else {
-        console.error("Failed to fetch review stats");
-      }
-    } catch (error) {
-      console.error("Failed to fetch review stats:", error);
-    }
-  }, [GoodsInfo]);
-
+  }, [goodsNum]);
+  
   useEffect(() => {
-    if (GoodsInfo) {
+    if (goodsNum) {
+      console.log("이펙트");
+      console.log(goodsNum);
       fetchReviews();
-      fetchReviewStats();
     }
-  }, [GoodsInfo, fetchReviews, fetchReviewStats]);
+  }, [goodsNum, fetchReviews]);
+
+
 
   return (
     <ReviewSectionContainer>
-      <h2>리뷰</h2>
+      <ReviewModal ></ReviewModal>
+      <h2>리뷰  {num}</h2>
+      <ReivewInfo>
       <div className="review-starbox">
-        <div className="review-rating">
-          <p>평균 평점: {averageRating.toFixed(1)}</p>
+      <p>평균 평점: {averageRating.toFixed(1)}</p>
           <p>{stars}</p>
           <p>리뷰 개수: {totalRatings}</p>
-          <WriteButton onClick={openReviewModal}>Review 작성</WriteButton>
+          </div>
+        <div className="review-rating">
+
+          <WriteButton onClick={()=>{}}>Review 작성</WriteButton>
         </div>
-      </div>
-      <ul>
-        {reviews.length === 0 ? (
-          <li>
-            <p>리뷰가 없습니다.</p>
-          </li>
-        ) : (
+   
+      </ReivewInfo>
+      {/* 리뷰 출력 구간 */}
+
+      <ul className="ReivewUl">
+      {(!reviews || reviews.length === 0) ? (
+  <li>
+    <p>리뷰가 없습니다.</p>
+  </li>
+) : (     
+
           reviews.slice(0, visibleReviews).map((review, index) => (
-            <li key={index}>
-              <div
-                style={{
-                  display: "flex",
-                  flexDirection: "row",
-                  alignItems: "center",
-                }}
-              >
-                <div style={{ marginRight: "40px", width: "120px" }}>
-                  <Nickname>{review.memberName}</Nickname>
-                  <Id>
-                    {review.memberId.substring(0, 2) +
-                      "*".repeat(review.memberId.length - 2)}
-                  </Id>
-                  <ReviewDate>{review.creationDate}</ReviewDate>
-                </div>
-                <div className="star-icons">
+            <li key={index}>                  
+                   <Img><img src={review.reviewImg}/></Img>  
+                   <ReviewBox>
+                   <ReviewDate>{review.reviewDate}</ReviewDate>   
+                  <Nickname><p>{review.memberDto.nickName}</p></Nickname>    
+                         <StarBox>
                   {Array.from({ length: 5 }).map((_, i) => (
-                    <span key={i}>
-                      {i + 1 <= review.rating ? (
+                   <span key={i}>
+                      {i + 1 <= review.reviewStar ? (
                         <FaStar color="#AAB9FF" />
-                      ) : i + 0.5 === review.rating ? (
+                      ) : i + 0.5 === review.reviewStar ? (
                         <FaStarHalf color="#AAB9FF" />
                       ) : (
                         <FaStar color="gray" />
                       )}
-                    </span>
-                  ))}
-                </div>
+                    </span>   
+                  ))}   </StarBox>  
                 <div
                   style={{ width: "100%", height: "100%", overflow: "hidden" }}
                 >
                   <ReviewText isExpanded={expandedReviews.includes(index)}>
-                    {review.content}
+                    {review.reviewContent}
                   </ReviewText>
-                  {review.content.length > 35 && (
-                    // eslint-disable-next-line jsx-a11y/anchor-is-valid
-                    <a
-                      href="#"
-                      onClick={(e) => {
-                        e.preventDefault(); // 링크 기본 동작 방지
+                  {review.reviewContent.length > 35 && (
+                       <p href="#"onClick={(e) => {e.preventDefault(); // 링크 기본 동작 방지
                         setExpandedReviews((prevExpandedReviews) =>
                           prevExpandedReviews.includes(index)
                             ? prevExpandedReviews.filter((i) => i !== index)
@@ -373,18 +331,20 @@ export const ReviewComp = ({ openReviewModal, GoodsInfo }) => {
                         );
                       }}
                       style={{
-                        color: "#007bff", // 링크 색상
+                        marginTop:"10px",
+                        color: "#6db4ff", // 링크 색상
                         textDecoration: "none", // 밑줄 없애기
                       }}
                     >
                       {expandedReviews.includes(index)
                         ? "간략히 보기"
                         : "자세히 보기"}
-                    </a>
+                    </p>
                   )}
                 </div>
-              </div>
+                </ReviewBox>
             </li>
+           
           ))
         )}
       </ul>

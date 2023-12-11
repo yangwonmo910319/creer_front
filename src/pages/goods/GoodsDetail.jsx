@@ -4,6 +4,7 @@ import { GoodsInfo } from "../../components/goods/GoodsInfo";
 import { GoodsAxiosApi } from "../../api/goods/GoodsAxiosApi";
 import { useParams } from "react-router-dom";
 import { useEffect, useState } from "react";
+
 const GoodsDetailCss = styled.div`
  display: flex;
  flex-direction: row;
@@ -26,8 +27,6 @@ const GoodsDetailCss = styled.div`
 
 
 export const GoodsDetail=()=>{
-
-
    const {num} = useParams();
    const [list,setList] = useState('')
     useEffect(()=>{   
@@ -44,13 +43,12 @@ export const GoodsDetail=()=>{
       },[]);
       
       const { goodsCategory, goodsDeliveryFee, goodsDesc, goodsDetailId, goodsPic, goodsPrice, goodsRefund, goodsTitle, memberDto } = list;
-      const goodsInfoList = [goodsDesc,goodsPic];
+      const goodsInfoList = [goodsDetailId,goodsDesc,goodsPic];
     //   const goodsOptionList = [goodsDeliveryFee,goodsCategory,list.memberDto.nickName,list.memberDto.nickName];
     return(
         <GoodsDetailCss>
             <GoodsInfo list ={goodsInfoList}></GoodsInfo>
             <GoodsOption list={list}></GoodsOption>
-        
         </GoodsDetailCss>
     )
 }
