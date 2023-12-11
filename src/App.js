@@ -7,16 +7,19 @@ import { Home } from "./pages/Home";
 import { BuyReview } from "./pages/goods/BuyReview";
 import { Cart } from "./pages/goods/Cart";
 import { MyPage } from "./pages/member/MyPage";
-
+import  {GoodsList}  from "./pages/goods/GoodsList";
+import  {GoodsDetail}  from "./pages/goods/GoodsDetail";
 function App() {
   return (
     <>
       <BrowserRouter>
         <Routes>
+        <Route path="/Signup" element={<SignUp />}></Route>
           <Route path="/Login" element={<Login />}></Route>
           <Route element={<Main />}>
-            <Route path="/" element={<Home />}></Route>
-            <Route path="/Signup" element={<SignUp />}></Route>
+            <Route path="/" element={<Home />}></Route>     
+            <Route path="/Goods" element={<GoodsList/>}></Route>   
+            <Route path="/Goods/:num" element={<GoodsDetail/>}></Route>   
             <Route path="/BuyReview" element={<BuyReview />}></Route>
             <Route path="/Cart" element={<Cart />}></Route>
             <Route path="/MyPage" element={<MyPage />}></Route>

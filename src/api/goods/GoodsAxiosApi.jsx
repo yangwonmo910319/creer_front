@@ -2,19 +2,48 @@ import axios from "axios";
 import { KH_DOMAIN } from "../../utils/Common";
 
 export const GoodsAxiosApi = {
-  // 상품 전체 목록 가져오기
-  getGoods: async () => {
-    const response = await axios.get(KH_DOMAIN + "/Goods/admin");
-
-    return response;
+  // 상품  목록 전부 가져오기
+  getGoodsList: async () => {
+    const accessToken = localStorage.getItem("accessToken");
+    return await axios.get(KH_DOMAIN + "/api/goods/list", {
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: "Bearer " + accessToken,
+      },
+    });
   },
 
-  // ID를 기준으로 상품을 찾음
-  findGoodsById: async (id) => {
-    const response = await axios.get(KH_DOMAIN + `/Goods/${id}`);
-
-    return response;
+  // 상품 목록 한개 가져오기
+  getGoods: async (id) => {
+    const accessToken = localStorage.getItem("accessToken");
+    return await axios.get(KH_DOMAIN + `/api/goods/list/${id}`, {
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: "Bearer " + accessToken,
+      },
+    });
   },
+
+  // 상품 삭제
+  deleteGoods: async (id) => {
+    const accessToken = localStorage.getItem("accessToken");
+    return await axios.get(KH_DOMAIN + `/api/goods/delete/${id}`, {
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: "Bearer " + accessToken,
+      },
+    });    
+  },
+
+
+
+
+
+
+
+
+
+
 
   // 상품 추가
   addGoods: async (GoodsToSave) => {
@@ -22,11 +51,7 @@ export const GoodsAxiosApi = {
     return response;
   },
 
-  // 상품 삭제
-  deleteGoods: async (id) => {
-    const response = await axios.delete(KH_DOMAIN + `/Goods/admin/${id}`);
-    return response;
-  },
+
 
   // 상품 수정
   updateGoods: async (id, Goods) => {

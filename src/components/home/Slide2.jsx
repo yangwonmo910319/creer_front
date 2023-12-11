@@ -1,28 +1,26 @@
 import React, { useState, useRef } from 'react';
 import { useEffect } from 'react';
 import styled, { keyframes, css } from 'styled-components';
-import Test2 from "./Teset2"
-import Test3 from "./Slide"
-import Test4 from "./Teset4"
+
 const Body =styled.div`
-width: 1200px;
-height: 3000px;
+max-width: 1280px;
+width: 100%;
+height: auto;
 margin: 0 auto;
 `;
 const A =styled.div`
 width: 100%;
 height: 500px;
 margin-top: 100px;
-
 `;
 
 const A1 =styled.div`
 
 height:350px;
-width: 90%;
+width: 100%;
 /* https://image.istarbucks.co.kr/upload/common/img/main/2023/231116_christmas2_img.png) */
-background: url("https://img.freepik.com/free-photo/dairy-star-trek-in-the-winter-woods-dramatic-and-picturesque-scene-in-anticipation-of-the-holiday-carpathian-ukraine_146671-14706.jpg?size=626&ext=jpg&ga=GA1.1.1880011253.1699920000&semt=sph") fixed;
-background-size:100% 100%;
+background: url("https://png.pngtree.com/background/20210715/original/pngtree-creative-christmas-gift-box-decoration-green-texture-background-picture-image_1282191.jpg") fixed;
+background-size: 100% 100%;
 background-repeat: no-repeat;
 position: relative;
 

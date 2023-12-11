@@ -1,4 +1,4 @@
-import memberAxios from "axios";
+import axios from "axios";
 import { KH_DOMAIN } from "../../utils/Common";
 
 export const MemberAxiosApi = {
@@ -9,12 +9,12 @@ export const MemberAxiosApi = {
       email,
       password,
     };
-    return await memberAxios.post(KH_DOMAIN + "/auth/login", login);
+    return await axios.post(KH_DOMAIN + "/auth/login", login);
   },
   //회원 전체 조회
   memberGet: async () => {
     const token = localStorage.getItem("accessToken");
-    return await memberAxios.get(KH_DOMAIN + `/users/list`, {
+    return await axios.get(KH_DOMAIN + `/users/list`, {
       headers: {
         "Content-Type": "application/json",
         Authorization: "Bearer " + token,
@@ -25,7 +25,7 @@ export const MemberAxiosApi = {
   memberGetOne: async () => {
     const token = localStorage.getItem("accessToken");
     console.log("회원 조회 : ", token);
-    return await memberAxios.get(KH_DOMAIN + `/member/detail`, {
+    return await axios.get(KH_DOMAIN + `/member/detail`, {
       headers: {
         "Content-Type": "application/json",
         Authorization: "Bearer " + token,
@@ -52,13 +52,13 @@ export const MemberAxiosApi = {
       phoneNum: phoneNum,
       nickName: nickName,
     };
-    return await memberAxios.post(KH_DOMAIN + "/auth/signup", member);
+    return await axios.post(KH_DOMAIN + "/auth/signup", member);
   },
 
   // 회원 가입 여부 확인
   memberRegCheck: async (userEmail) => {
     console.log("가입 가능 여부 확인 : ", userEmail);
-    return await memberAxios.get(KH_DOMAIN + `/auth/exists/${userEmail}`);
+    return await axios.get(KH_DOMAIN + `/auth/exists/${userEmail}`);
   },
 
   // 회원 정보 수정
@@ -70,7 +70,7 @@ export const MemberAxiosApi = {
       name: name,
       image: image,
     };
-    return await memberAxios.put(KH_DOMAIN + `/users/modify`, member, {
+    return await axios.put(KH_DOMAIN + `/users/modify`, member, {
       headers: {
         "Content-Type": "application/json",
         Authorization: "Bearer " + token,
@@ -83,11 +83,11 @@ export const MemberAxiosApi = {
     const del = {
       userEmaild: userEmail,
     };
-    return await memberAxios.post(KH_DOMAIN + "/user/delete", del);
+    return await axios.post(KH_DOMAIN + "/user/delete", del);
   },
 
   nicknameCheck: async (nickName) => {
-    return await memberAxios.get(
+    return await axios.get(
       KH_DOMAIN + `member/signUp/nickName/${nickName}`
     );
   },
