@@ -5,6 +5,7 @@ import { Modal } from "../../utils/member/MemberModal";
 import { MemberAxiosApi } from "../../api/member/MemberAxiosApi";
 import { PopUpAddress } from "../../components/member/PopUpAddress";
 import styled from "styled-components";
+import { EmailVerification } from "../../components/member/EmailVerification";
 
 const AddressInputCss = styled.div`
   width: 100%;
@@ -37,7 +38,6 @@ export const SignUp = () => {
   const [inputEmail, setInputEmail] = useState("");
   const [inputPhoneNum, setInputPhoneNum] = useState("");
   const [inputNickName, setInputNickName] = useState("");
-
   const [inputAdd, setInputAdd] = useState("");
   const [inputAdd2, setInputAdd2] = useState("");
   const [inputAdd3, setInputAdd3] = useState("");
@@ -50,13 +50,13 @@ export const SignUp = () => {
   const [phoneNumMessage, setPhoneNumMessage] = useState("");
 
   // 유효성 검사
-  const [isUserMail, setIsUserMail] = useState(false);
+  const [isEmail, setIsEmail] = useState(false);
+  const [isVerified, setIsVerified] = useState(false);
   const [isPassWord, setIsPassWord] = useState(false);
   const [isConPassWord, setIsConPassWord] = useState(false);
   const [isName, setIsName] = useState(false);
   const [isNickName, setIsNickName] = useState(false);
   const [isPhoneNum, setIsPhoneNum] = useState(false);
-
   const [totalAddress, setTotalAddress] = useState("");
 
   // 팝업
@@ -72,10 +72,10 @@ export const SignUp = () => {
     const emailRegex = /^[a-zA-Z0-9._-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,4}$/;
     if (!emailRegex.test(e.target.value)) {
       setMailMessage("이메일 형식이 올바르지 않습니다.");
-      setIsUserMail(false);
+      setIsEmail(false);
     } else {
       setMailMessage("올바른 형식 입니다.");
-      setIsUserMail(true);
+      setIsEmail(true);
       memberRegCheck(e.target.value);
     }
   };
@@ -133,7 +133,7 @@ export const SignUp = () => {
     setTotalAddress(inputAdd + "/" + inputAdd2 + "/" + e.target.value);
   };
 
-  // 회원 가입 여부 확인
+  // 회원 가입 여부 확인, 즉 이메일 중복 확인
   const memberRegCheck = async (userEmail) => {
     try {
       const resp = await MemberAxiosApi.memberRegCheck(userEmail);
@@ -141,10 +141,10 @@ export const SignUp = () => {
 
       if (resp.data === true) {
         setMailMessage("사용 가능한 이메일 입니다.");
-        setIsUserMail(true);
+        setIsEmail(true);
       } else {
         setMailMessage("중복된 이메일 입니다.");
-        setIsUserMail(false);
+        setIsEmail(false);
       }
     } catch (error) {
       console.log(error);
@@ -204,11 +204,17 @@ export const SignUp = () => {
 
       <Items className="hint">
         {inputEmail.length > 0 && (
-          <span className={`message ${isUserMail ? "success" : "error"}`}>
+          <span className={`message ${isEmail ? "success" : "error"}`}>
             {mailMessage}
           </span>
         )}
       </Items>
+
+      <EmailVerification
+        email={inputEmail}
+        onVerification={setIsVerified}
+        onVerifiedEmail={setInputEmail}
+      />
 
       <Items className="item2">
         <Input
@@ -322,13 +328,14 @@ export const SignUp = () => {
       {/* ======================================================= */}
 
       <Items className="item2">
-        {isUserMail &&
+        {isEmail &&
         isPassWord &&
         isConPassWord &&
         isName &&
         isNickName &&
         totalAddress &&
-        isPhoneNum ? (
+        isPhoneNum &&
+        isVerified ? (
           <Button enabled onClick={onClickLogin}>
             NEXT
           </Button>
