@@ -72,19 +72,12 @@ export const NavBar = () => {
   const [name, setName] = useState();
   const [member, setMember] = useState({});
   const [login, setlogin] = useState(window.localStorage.getItem("isLogin"));
-  // const {addr, temp} = useWeather();
-
-  const logout = () => {
-    window.localStorage.setItem("isLogin", "false");
-    setlogin("logout");
-    navigate("/");
-  };
 
   useEffect(() => {
     if (login !== "true") {
       setlogin("false");
     }
-  });
+  }, [login]);
 
   useEffect(() => {
     const getMember = async () => {
@@ -100,6 +93,7 @@ export const NavBar = () => {
           // 리플레쉬토큰으로 재발급 받기
           await Common.handleUnauthorized();
           const newToken = Common.getAccessToken();
+          
           // if (newToken !== accessToken) {
           //   const rsp = await MemberAxiosApi.memberGetOne(); // 전체 조회
           //   setMember(rsp.data);
@@ -110,6 +104,11 @@ export const NavBar = () => {
     };
     getMember();
   }, [name]);
+
+  const logout = () => {
+    localStorage.clear();
+    window.location.reload();
+  };
 
   return (
     <NavCss>

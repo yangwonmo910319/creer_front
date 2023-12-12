@@ -18,7 +18,7 @@ export const SocialLink = styled.div`
   background-size: cover;
   transition: background-image 0.5s ease-in-out;
   &:hover {
-    transform: scale(1.2);
+    transform: scale(1.05);
   }
 
   &:active {
