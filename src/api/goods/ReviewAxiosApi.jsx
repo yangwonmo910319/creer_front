@@ -31,4 +31,15 @@ export const ReviewAxiosApi = {
       },
     });
   },
+
+     //리뷰 한개 삭제
+     deleteReview: async (num) => {  
+      const accessToken = localStorage.getItem("accessToken");
+      return await axios.get(KH_DOMAIN + `/api/Review/delete/${num}`, {
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: "Bearer " + accessToken,
+        },
+      });
+    },
 };

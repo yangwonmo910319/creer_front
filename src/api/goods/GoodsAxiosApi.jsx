@@ -35,6 +35,17 @@ export const GoodsAxiosApi = {
     });    
   },
 
+    // 상품 수정
+    updateGoods: async (id) => {
+      const accessToken = localStorage.getItem("accessToken");
+      return await axios.post(KH_DOMAIN + `/api/goods/list/${id}`, {
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: "Bearer " + accessToken,
+        },
+      });
+    },
+
 
 
 

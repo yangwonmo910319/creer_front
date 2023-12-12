@@ -68,9 +68,8 @@ ul{
   display: flex;
     li{  
      width: 150px;
-     margin: 0 30px;
+     margin: 0 10%;
      height: 30px;
-
      display: flex;
      justify-content: center; 
      align-items: center;  
@@ -131,7 +130,7 @@ return(
             {/* 리뷰 출력 */}
            <ReviewComp goodsNum={list[0]}      
              openReviewModal={openReviewModal}></ReviewComp>
-            {/* 리뷰 Madal */}
+            {/* 리뷰 작성 Madal */}
             <ReviewModal
           isOpen={isReviewModalOpen}
           onSubmit={reviewSubmit}

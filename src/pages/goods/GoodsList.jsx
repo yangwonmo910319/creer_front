@@ -4,11 +4,11 @@ import { ListMap } from "../../components/goods/ListMap"
 import { useEffect, useState } from "react"
 import { GoodsAxiosApi } from "../../api/goods/GoodsAxiosApi"
 import styled from "styled-components"
-
+import { Slide2 } from "../../components/home/Slide2"
 const GoodsListCss = styled.div`
   width: 100%;
   height: auto;
-  border: 5px solid #e9dd6f;
+  /* border: 5px solid #e9dd6f; */
 
 `;
 
@@ -34,6 +34,7 @@ export const GoodsList=()=>{
         <GoodsListCss>
         {/* 이미지 슬라이드 */}
          <SlideOne/>
+         <Slide2></Slide2>
          {/* 판매 리스트 카테고리 */}
          <Category setCategory={setCategory}/>
 

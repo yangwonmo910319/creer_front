@@ -82,6 +82,7 @@ const SubmitButton = styled.button`
   cursor: pointer;
   outline: none;
   border: 0;
+  margin: 10px;
   vertical-align: middle;
   text-decoration: none;
   font-size: inherit;
@@ -90,8 +91,8 @@ const SubmitButton = styled.button`
   color: #382b22;
   text-transform: uppercase;
   padding: 1.25em 2em;
-  background: #fff0f0;
-  border: 2px solid #b18597;
+  background: #fffd7f;
+  border: 2px solid  #ffeaa3;
   border-radius: 0.75em;
   transform-style: preserve-3d;
   transition: transform 150ms cubic-bezier(0, 0, 0.58, 1),
@@ -170,7 +171,8 @@ export const ReviewModal = ({ isOpen, closeModal, onSubmit }) => {
                 required
               />
             </div>
-            <SubmitButton onClick={submitReview}>리뷰 제출</SubmitButton>
+            <SubmitButton onClick={submitReview}>확 인</SubmitButton>
+            <SubmitButton onClick={closeModal}>취 소</SubmitButton>
           </ModalContent>
         </ModalWrapper>
       )}

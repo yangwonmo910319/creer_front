@@ -4,7 +4,7 @@ import { GoodsInfo } from "../../components/goods/GoodsInfo";
 import { GoodsAxiosApi } from "../../api/goods/GoodsAxiosApi";
 import { useParams } from "react-router-dom";
 import { useEffect, useState } from "react";
-
+import { GoodsOptionEdit } from "../../components/goods/GoodsOptionEdit";
 const GoodsDetailCss = styled.div`
  display: flex;
  flex-direction: row;
@@ -29,6 +29,7 @@ const GoodsDetailCss = styled.div`
 export const GoodsDetail=()=>{
    const {num} = useParams();
    const [list,setList] = useState('')
+
     useEffect(()=>{   
         const InsertGoodsLIst = async () => {
           try {
@@ -48,7 +49,9 @@ export const GoodsDetail=()=>{
     return(
         <GoodsDetailCss>
             <GoodsInfo list ={goodsInfoList}></GoodsInfo>
-            <GoodsOption list={list}></GoodsOption>
+            {/* <GoodsOption list={list}></GoodsOption> */}
+            <GoodsOptionEdit list={list}></GoodsOptionEdit>
+
         </GoodsDetailCss>
     )
 }

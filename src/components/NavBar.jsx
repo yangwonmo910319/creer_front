@@ -175,7 +175,7 @@ export const NavBar = () => {
             <li>
               <div
                 onClick={() => {
-                  navigate("/goods");
+                  navigate("/");
                 }}
               >
                 작품
@@ -191,13 +191,13 @@ export const NavBar = () => {
               </div>
             </li>
             <li>
-              <div
+              {/* <div
                 onClick={() => {
                   navigate("/class");
                 }}
               >
                 클래스
-              </div>
+              </div> */}
             </li>
           </ul>
         </div>
