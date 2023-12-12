@@ -115,7 +115,7 @@ export const Login = () => {
           <SocialLinks>
             <SocialLink>
               <KakaoLogin
-                token="a7940b21b9348984d28207e9a32452d9"
+                token="f07f3fba144f3531dc6095b29d86e2bb" // REST APU 키
                 onSuccess={onKakaoLoginSuccess}
                 onFailure={onKakaoLoginFailure}
                 getProfile={true} // 로그인 성공 후 사용자 정보를 가져올 것인지 설정

@@ -93,7 +93,7 @@ export const MemberAxiosApi = {
         Authorization: `Bearer ${token}`,
       },
     });
-    
+
     return response;
   },
 };
