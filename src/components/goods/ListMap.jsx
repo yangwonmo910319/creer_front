@@ -6,22 +6,21 @@ import { Link } from "react-router-dom";
 
 
 const ListItem = styled.li`
-   border: 3px solid pink;
-   width: 300px;
+   width: 210px;
    height: auto;
    display: flex;
    flex-wrap: wrap;  
    flex-direction: column;
-   margin-left: 10px;
+   margin-left: 20px;
+   padding: 10px;
    @media (max-width: 768px) {
-      width: 300px;
+      width: 230px;
       margin: 0 auto;
         grid-area: option; 
     }
 `;
 
 const ListMapCss = styled.ul`
-   border: 3px solid green;
    width: 100%;
    height: auto;
    display: flex;
@@ -53,10 +52,6 @@ const Class1img = styled.div`
    position: relative;
 `;
 
-const ClassLevel = styled.div`
-   width: 100%;
-   height: 20px;
-`;
 
 const ClassPeice = styled.div`
    width: 100%;

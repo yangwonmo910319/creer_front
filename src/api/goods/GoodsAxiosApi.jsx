@@ -36,9 +36,27 @@ export const GoodsAxiosApi = {
   },
 
     // 상품 수정
-    updateGoods: async (id) => {
+    updateGoods: async ( 
+      goodsCategory,
+      goodsDeliveryFee,
+      goodsDesc,
+      goodsDetailId,
+      goodsPic,
+      goodsPrice,
+      goodsRefund,
+      goodsTitle,) => {
+      const goodsData={
+        goodsCategory,
+        goodsDeliveryFee,
+        goodsDesc,
+        goodsDetailId,
+        goodsPic,
+        goodsPrice,
+        goodsRefund,
+        goodsTitle,
+      }
       const accessToken = localStorage.getItem("accessToken");
-      return await axios.post(KH_DOMAIN + `/api/goods/list/${id}`, {
+      return await axios.post(KH_DOMAIN + `/api/goods/update/${goodsDetailId}`,goodsData ,{
         headers: {
           "Content-Type": "application/json",
           Authorization: "Bearer " + accessToken,
@@ -64,11 +82,7 @@ export const GoodsAxiosApi = {
 
 
 
-  // 상품 수정
-  updateGoods: async (id, Goods) => {
-    const response = await axios.put(KH_DOMAIN + `/Goods/admin/${id}`, Goods);
-    return response;
-  },
+
 
   // 상품 존재 여부 확인
   isGoodsexist: async (title, author) => {

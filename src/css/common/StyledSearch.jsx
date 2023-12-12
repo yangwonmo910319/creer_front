@@ -9,10 +9,11 @@ import { FaSearch, FaMicrophone } from "react-icons/fa";
 
 // 검색바
 const SearchBox = styled.div`
-  width: 100%;
+  width: 40%;
+  height: auto;
   display: flex;
   align-items: center;
-  justify-content: center;
+  height: 40px;
 `;
 
 const SearchMode = styled.div`
@@ -20,7 +21,8 @@ const SearchMode = styled.div`
   display: flex;
   align-items: center;
   width: 70%;
-  height: 40px;
+  
+  height: 35px;
   margin: 20px;
   border: 1.5px solid #c9cacc;
   border-radius: 24px;

@@ -21,8 +21,6 @@ export const ReviewAxiosApi = {
 
    //리뷰 전부 가져오기
    getReviews: async (num) => {
-    console.log("컨트롤");
-    console.log(num);
     const accessToken = localStorage.getItem("accessToken");
     return await axios.get(KH_DOMAIN + `/api/Review/list/${num}`, {
       headers: {

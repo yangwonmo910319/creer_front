@@ -2,7 +2,7 @@ import { useCallback, useEffect, useState } from "react";
 import styled from "styled-components";
 import { FaStar, FaStarHalf } from "react-icons/fa"; // 별 아이콘을 사용하기 위한 import
 import { ReviewAxiosApi } from "../../api/goods/ReviewAxiosApi";
-import { ReviewModal } from "../../utils/goods/ReviewModal";
+import { ReviewModal } from "../../utils/goods/ReviewModal"; 
 
 
 const ReivewInfo = styled.div`
@@ -98,7 +98,7 @@ p{
     border-radius: 5px;
     height: auto;
     border-bottom: 1px solid black;
-    /* box-shadow: 0px 2px 5px 0px rgba(0, 0, 0, 0.542); // 상자 그림자 추가 */
+    box-shadow: 0px 2px 5px 0px rgba(0, 0, 0, 0.542); // 상자 그림자 추가
     margin-bottom: 10px;
   }
 
@@ -169,13 +169,14 @@ const MoreButton = styled.button`
 `;
 
 const ImgBox = styled.div`
-  width: 200px;
-  height: 20%;
+  width: 15%;
+  height: auto;
   color: #333;
   font-size: 18px;
   font-weight: bold;
   margin: 0;
   text-align: center;
+  margin-left: 30px;
   img{
     width: 80px;
     margin-top:10px ;
@@ -183,7 +184,7 @@ const ImgBox = styled.div`
   }
 `;
 const TextBox = styled.div`
-     width: 80%;
+     width: 85%;
   height: auto;
   min-height:150px ;
 
@@ -221,7 +222,7 @@ height: auto;
 
 const ReviewContent = styled.div`
 width: 100%;
-height: auto;
+height: 100%;
 display: flex;
 justify-content: center;
 `;
@@ -233,22 +234,22 @@ const StarBox = styled.div`
   margin-top: 10px;
 `;
 const DeleteBox = styled.div`
-  width: 80px;
+  width: 60px;
   height: 20px;
   display: flex;
   align-items: center;
   justify-content: center;
   position: absolute;
   right: 0;
-  font-size: .8em;
-  margin-right:40px;
+  font-size: .5em;
+  margin-right:80px;
   margin-top: 10px;
   border-radius: 10px;
   border: 0.1px solid black;
   background: #ffb9b9;
 `;
 
-export const ReviewComp = ({ goodsNum ,openReviewModal}) => {
+export const ReviewComp = ({ goodsNum ,openReviewModal,openReviewEditModal}) => {
   const [num , setNum] = useState(goodsNum)
   const [render,setRender] = useState(false)
   const [reviews, setReviews] = useState('');
@@ -257,7 +258,6 @@ export const ReviewComp = ({ goodsNum ,openReviewModal}) => {
   const [totalRatings, setTotalRatings] = useState(0);
   const stars = [];
   const [visibleReviews, setVisibleReviews] = useState(10); // 초기에 보여지는 리뷰 개수 설정
-
   const showMoreReviews = () => {
     setVisibleReviews((prevVisibleReviews) => prevVisibleReviews + 10); // 더 보기 클릭 시 보여지는 리뷰 개수 10개 증가
   };
@@ -332,7 +332,6 @@ export const ReviewComp = ({ goodsNum ,openReviewModal}) => {
   }, [goodsNum, fetchReviews,render]);
 
 
-
   return (
     <ReviewSectionContainer>
       <ReviewModal ></ReviewModal>
@@ -360,7 +359,7 @@ export const ReviewComp = ({ goodsNum ,openReviewModal}) => {
 
           reviews.slice(0, visibleReviews).map((review, index) => (
             <li key={index}>  
-                <ReviewBox>            
+                <ReviewBox  onClick={openReviewEditModal}>            
                    <ImgBox><img src={review.reviewImg}/></ImgBox>                     
                    <TextBox>
                  <ReviewDate> <p>{review.reviewDate}</p></ReviewDate>
@@ -385,7 +384,7 @@ export const ReviewComp = ({ goodsNum ,openReviewModal}) => {
                   <ReviewText isExpanded={expandedReviews.includes(index)}>
                     {review.reviewContent}
                   </ReviewText>
-                  <ReviewContent>    {review.reviewContent.length > 35 && (
+                  <ReviewContent  >    {review.reviewContent.length > 35 && (
                        <p href="#"onClick={(e) => {e.preventDefault(); // 링크 기본 동작 방지
                         setExpandedReviews((prevExpandedReviews) =>
                           prevExpandedReviews.includes(index)
@@ -419,7 +418,7 @@ export const ReviewComp = ({ goodsNum ,openReviewModal}) => {
           10개 더보기
         </MoreButton>
       )}
-
+        
     </ReviewSectionContainer>
   );
 };
