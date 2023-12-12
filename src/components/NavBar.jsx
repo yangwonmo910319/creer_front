@@ -4,7 +4,8 @@ import { useNavigate } from "react-router-dom";
 import { useEffect, useState } from "react";
 import { Common } from "../utils/Common";
 import { GlobalStyle } from ".././css/GlobalStyle";
-import { MemberAxiosApi } from "../api/member/MemberAxiosApi"; 
+import { MemberAxiosApi } from "../api/member/MemberAxiosApi";
+
 const NavCss = styled.div`
   background-color: #ffffff;
   max-width: 1280px;
@@ -95,7 +96,7 @@ export const NavBar = () => {
       } catch (e) {
         // 엑세스토큰 유효기간 지나면 401
         if (e.response.status === 401) {
-          alert("리플레쉬 도전")
+          alert("리플레쉬 도전");
           // 리플레쉬토큰으로 재발급 받기
           await Common.handleUnauthorized();
           const newToken = Common.getAccessToken();
