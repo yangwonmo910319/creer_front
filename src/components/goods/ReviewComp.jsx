@@ -2,7 +2,8 @@ import { useCallback, useEffect, useState } from "react";
 import styled from "styled-components";
 import { FaStar, FaStarHalf } from "react-icons/fa"; // 별 아이콘을 사용하기 위한 import
 import { ReviewAxiosApi } from "../../api/goods/ReviewAxiosApi";
-import { ReviewModal } from "../../utils/goods/ReviewModal";
+import { ReviewModal } from "../../utils/goods/ReviewModal"; 
+
 
 const ReivewInfo = styled.div`
 
@@ -10,6 +11,7 @@ width: 100%;
 height: 50px;
 display: flex;
 flex-direction: row;
+
 `;
 const ReviewSectionContainer = styled.div`
   padding: 0 30px 70px 30px;
@@ -22,7 +24,7 @@ const ReviewSectionContainer = styled.div`
     padding: 0 15px 35px 15px; // 화면이 768px 이하일 때 패딩 변경
   }
   h2 {
-    font-size: 24px;
+    font-size: 20px;
     font-weight: bold;
     margin-bottom: 15px;
     padding: 10px 0 8px 0;
@@ -76,29 +78,28 @@ p{
   }
 
   ul {
+
     position: relative;
     list-style: none;
     margin: 0;
     padding: 0;
     display: block;
     display: flex;
-    text-align: center;
-    overflow: auto;
-    flex-direction: column;
-    overflow-x: auto;
-
+    text-align: center;  
+    flex-direction: column;  
+    margin-top: 30px;
   }
 
   li {
-    width: 81%;
+    width: 90%;        
     display: flex;
     text-align: center;
     flex-direction: row;
-    padding: 20px;
-    margin: 10px;
     border-radius: 5px;
-    height: 100px;
-    box-shadow: 0px 2px 5px 0px rgba(0, 0, 0, 0.1); // 상자 그림자 추가
+    height: auto;
+    border-bottom: 1px solid black;
+    box-shadow: 0px 2px 5px 0px rgba(0, 0, 0, 0.542); // 상자 그림자 추가
+    margin-bottom: 10px;
   }
 
   .review-rating {
@@ -110,11 +111,13 @@ p{
 const ReviewText = ({ isExpanded, children }) => (
   <p
     style={{
+       width:"90%",
+       height:"auto",
       textAlign: "center",
-      margin: 0,
-      color: "#333",
+      margin: "0 auto",
+      marginTop : "10px",
+      color: "#000000",
       fontStyle: "italic",
-      width: "100%",
       overflow: isExpanded ? "visible" : "hidden",
       textOverflow: "ellipsis",
       display: isExpanded ? "block" : "-webkit-box",
@@ -153,7 +156,7 @@ const MoreButton = styled.button`
   color: black;
   border-radius: 10px;
   position: relative;
-  width: 100%;
+  width: 90%;
   height: 40px;
   padding: 10px 25px;
   border: none;
@@ -165,25 +168,38 @@ const MoreButton = styled.button`
 
 `;
 
-const Img = styled.div`
-  width: 80px;
-  height: 80px;
+const ImgBox = styled.div`
+  width: 15%;
+  height: auto;
   color: #333;
   font-size: 18px;
   font-weight: bold;
   margin: 0;
   text-align: center;
+  margin-left: 30px;
   img{
-    border: 1px solid rgba(0,0,0,0.2);
     width: 80px;
     margin-top:10px ;
     height: 80px;
   }
 `;
+const TextBox = styled.div`
+     width: 85%;
+  height: auto;
+  min-height:150px ;
 
+`;
 const ReviewBox = styled.div`
 display: flex;
-flex-direction: column;
+flex-direction: row;
+height: auto;
+width: 100%;
+p{
+  display: flex;
+  align-content: center;
+  justify-content: center;
+  text-align:center;
+}
 `
 ;  
 
@@ -192,39 +208,84 @@ width: 100%;
 height: auto;
 
  p{
+
   color: #333;
   font-size: 18px;
   text-align: center;
   font-weight: bold;
   width: 100%;
   margin: 0;
+  margin-top: 10px;
  }
 `;
 
 
+const ReviewContent = styled.div`
+width: 100%;
+height: 100%;
+display: flex;
+justify-content: center;
+`;
 const ReviewDate = styled.p`
-width: 50%;
-height: 30px;
-  color: #999;
-  font-size: 14px;
-  margin: 0;
-  text-align: center; // 텍스트 중앙 정렬
+width: 100%;
+height: auto;
 `;
 const StarBox = styled.div`
-
+  margin-top: 10px;
 `;
-export const ReviewComp = ({ goodsNum ,openReviewModal}) => {
+const DeleteBox = styled.div`
+  width: 60px;
+  height: 20px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  position: absolute;
+  right: 0;
+  font-size: .5em;
+  margin-right:80px;
+  margin-top: 10px;
+  border-radius: 10px;
+  border: 0.1px solid black;
+  background: #ffb9b9;
+`;
+
+export const ReviewComp = ({ goodsNum ,openReviewModal,openReviewEditModal}) => {
   const [num , setNum] = useState(goodsNum)
+  const [render,setRender] = useState(false)
   const [reviews, setReviews] = useState('');
   const [expandedReviews, setExpandedReviews] = useState([]);
   const [averageRating, setAverageRating] = useState(0);
   const [totalRatings, setTotalRatings] = useState(0);
   const stars = [];
   const [visibleReviews, setVisibleReviews] = useState(10); // 초기에 보여지는 리뷰 개수 설정
-
   const showMoreReviews = () => {
     setVisibleReviews((prevVisibleReviews) => prevVisibleReviews + 10); // 더 보기 클릭 시 보여지는 리뷰 개수 10개 증가
   };
+
+  // 리뷰 삭제 버튼 클릭시
+  const deleteReview = useCallback(async (reviewId) => {   
+    try {
+    //Axios를 통한 리뷰 삭제 컨트롤 실행 후 결과 받아오기
+      const response = await ReviewAxiosApi.deleteReview(reviewId);
+    //성공시
+      if (response.status === 200) {
+        console.log(response)
+
+        //prev[Render]는 React의 useState 또는 setState에서 사용되는 함수 안에서,
+        //  해당 상태의 이전 값을 가리키는 변수입니다. 이전 상태값을 안전하게 참조하고 변경 없이 사용하거나 이전 상태를 
+        // 기반으로 새로운 상태값을 설정할 때 유용하게 사용됩니다.
+        setRender(prevRender => !prevRender);
+    //실패시      
+      } else {
+        console.error("리뷰 삭제 실패");
+        console.log(response);
+      }
+    //에러 발생시
+    } catch (error) {
+      console.error("리뷰 데이터 요청 에러", error);
+    }
+  }, []);
+
 
   for (let i = 1; i <= 5; i++) {
     if (i <= averageRating) {
@@ -264,13 +325,11 @@ export const ReviewComp = ({ goodsNum ,openReviewModal}) => {
   }, [goodsNum]);
   
   useEffect(() => {
-    if (goodsNum) {
-      console.log("이펙트");
-      console.log(goodsNum);
+    if (goodsNum) {  
+      //리뷰 페이지가 있으면 리뷰 가져오기
       fetchReviews();
     }
-  }, [goodsNum, fetchReviews]);
-
+  }, [goodsNum, fetchReviews,render]);
 
 
   return (
@@ -299,11 +358,13 @@ export const ReviewComp = ({ goodsNum ,openReviewModal}) => {
 ) : (     
 
           reviews.slice(0, visibleReviews).map((review, index) => (
-            <li key={index}>                  
-                   <Img><img src={review.reviewImg}/></Img>  
-                   <ReviewBox>
-                   <ReviewDate>{review.reviewDate}</ReviewDate>   
-                  <Nickname><p>{review.memberDto.nickName}</p></Nickname>    
+            <li key={index}>  
+                <ReviewBox  onClick={openReviewEditModal}>            
+                   <ImgBox><img src={review.reviewImg}/></ImgBox>                     
+                   <TextBox>
+                 <ReviewDate> <p>{review.reviewDate}</p></ReviewDate>
+                  <Nickname><p>{review.memberDto.nickName}</p></Nickname>     
+                    <DeleteBox onClick={()=>{deleteReview(review.goodsReviewId)}}> 리뷰 삭제 </DeleteBox>
                          <StarBox>
                   {Array.from({ length: 5 }).map((_, i) => (
                    <span key={i}>
@@ -315,14 +376,15 @@ export const ReviewComp = ({ goodsNum ,openReviewModal}) => {
                         <FaStar color="gray" />
                       )}
                     </span>   
-                  ))}   </StarBox>  
+                  ))}   </StarBox> 
                 <div
                   style={{ width: "100%", height: "100%", overflow: "hidden" }}
                 >
+             
                   <ReviewText isExpanded={expandedReviews.includes(index)}>
                     {review.reviewContent}
                   </ReviewText>
-                  {review.reviewContent.length > 35 && (
+                  <ReviewContent  >    {review.reviewContent.length > 35 && (
                        <p href="#"onClick={(e) => {e.preventDefault(); // 링크 기본 동작 방지
                         setExpandedReviews((prevExpandedReviews) =>
                           prevExpandedReviews.includes(index)
@@ -340,9 +402,12 @@ export const ReviewComp = ({ goodsNum ,openReviewModal}) => {
                         ? "간략히 보기"
                         : "자세히 보기"}
                     </p>
-                  )}
+                  )}  </ReviewContent>
+                  
                 </div>
-                </ReviewBox>
+                </TextBox>
+              
+                </ReviewBox>             
             </li>
            
           ))
@@ -353,6 +418,7 @@ export const ReviewComp = ({ goodsNum ,openReviewModal}) => {
           10개 더보기
         </MoreButton>
       )}
+        
     </ReviewSectionContainer>
   );
 };

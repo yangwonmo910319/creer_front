@@ -5,7 +5,6 @@ import { useNavigate } from "react-router-dom";
 const GoodsOptionCss=styled.div`
     width: 35%;
     height: auto;
-    border: 3px solid green;
     @media (max-width: 768px) {
       width: 500px;
       margin: 0 auto;
@@ -174,12 +173,27 @@ align-items: center;
       align-items: center;
       margin: 0;
 }
+.sell1-5{
+  margin-top: 10px;
+}
 `;
-export const GoodsOption=({list})=>{
+export const GoodsOptionEdit=({goodsDedail,updateGoodsDetail})=>{
+  const [list,setGoodsTitle,setGoodsPrice,setGoodsRefund,setGoodsDeliveryFee,setMemberDto] =goodsDedail; 
+  const [goodsTitle, setGoodsTitle1] = useState('');
+  const [goodsPrice, setGoodsPrice1] = useState('');
+  const [goodsRefund, setGoodsRefund1] = useState('');
+  const [goodsDeliveryFee, setGoodsDeliveryFee1] = useState('');
+
+
   const navigate = useNavigate();
 //댓글 추가,삭제 axios를 실행 후 reset값을 바꿔서 useEffect를 실행하여 추가 삭제된 화면을 새로 보여줌
-const [reset,setReset]=useState(false);
-useEffect(()=>{},[])
+useEffect(()=>{
+
+  setGoodsTitle1(list.goodsTitle)
+  setGoodsPrice1(list.goodsPrice)
+  setGoodsRefund1(list.goodsRefund)
+  setGoodsDeliveryFee1(list.goodsDeliveryFee)
+},[list])
 //삭제 버튼을 누르면 실행
 const deleteGoodsDetail=()=>{
   //게시글 삭제 기능을 만듬
@@ -196,24 +210,41 @@ const deleteGoodsDetail=()=>{
   // setReset(!reset);
   navigate("/");
 }
+const GoodsTitleChange = (e) => {
+  setGoodsTitle1(e.target.value)
+  setGoodsTitle(e.target.value);
+};
+const GoodsDeliveryFeeChange = (e) => {
+  setGoodsDeliveryFee1(e.target.value)
+  setGoodsDeliveryFee(e.target.value);
+};
+const GoodsRefundChange = (e) => {
+  setGoodsRefund1(e.target.value)
+  setGoodsRefund(e.target.value);
+};
+const GoodsPriceChange = (e) => {
+  setGoodsPrice1(e.target.value)
+  setGoodsPrice(e.target.value);
+};
+
+
+
+
+
+
 return(
     <GoodsOptionCss>     
       <OptionCategory>{list.goodsCategory}</OptionCategory>      
         <Seller>
             <Seller1>   <Optionimage>{list.memberDto &&<img src={list.memberDto.name} ></img> }</Optionimage></Seller1>
             <Seller2><OptionNick>{list.memberDto && list.memberDto.nickName}</OptionNick>   
-        <OptionTitle>{list.goodsTitle}</OptionTitle> 
-        {/* <OptionTitleEdit><input type="text" value={list.goodsTitle} /></OptionTitleEdit>  */}
+        <OptionTitleEdit><input type="text" value={goodsTitle} onChange={GoodsTitleChange} /></OptionTitleEdit> 
           </Seller2>            
         </Seller>     
         <Delivery>      
-        <OptionPrice>{list.goodsPrice}</OptionPrice>  
-        {/* <OptionPrice><input type="text" value={list.goodsPrice} /></OptionPrice>   */}
-      
-        <GoodsDeliveryFee>배송: {list.goodsDeliveryFee}</GoodsDeliveryFee>   
-        {/* <GoodsDeliveryFee>배송: <input type="text" value={list.goodsDeliveryFee} /></GoodsDeliveryFee>   */}
-        <GoodsRefund>배송 시작:{list.goodsRefund}</GoodsRefund>          
-        {/* <GoodsRefund>배송 시작: <input type="text" value={list.goodsRefund} /></GoodsRefund>       */}
+        <OptionPrice><input type="text" value={goodsPrice} onChange={GoodsPriceChange}/></OptionPrice>  
+        <GoodsDeliveryFee>배송: <input type="text" value={goodsRefund} onChange={GoodsRefundChange}/></GoodsDeliveryFee>  
+        <GoodsRefund>배송 시작: <input type="text" value={goodsDeliveryFee} onChange={GoodsDeliveryFeeChange}/></GoodsRefund>      
 
         </Delivery>
   
@@ -225,8 +256,8 @@ return(
             <div className="sell1-2"> 장바구니</div>
             </div>
             <div className="sell1-3"> 판매자와 채팅</div>
-       
-            <div className="sell1-4" onClick={()=>deleteGoodsDetail()}> 글 삭제</div>
+            <div className="sell1-4" onClick={()=>updateGoodsDetail()}> 수정 완료</div>
+            <div className="sell1-4 sell1-5" onClick={()=>deleteGoodsDetail()}> 글 삭제</div>
         </Option>
         
     </GoodsOptionCss>

@@ -5,6 +5,7 @@ import { useEffect, useState } from "react";
 import { Common } from "../utils/Common";
 import { GlobalStyle } from ".././css/GlobalStyle";
 import { MemberAxiosApi } from "../api/member/MemberAxiosApi";
+import { StyledSearch } from "../css/common/StyledSearch";
 
 const NavCss = styled.div`
   background-color: #ffffff;
@@ -52,13 +53,9 @@ const NavCss = styled.div`
       }
     }
     .content2ul2 {
-      position: absolute;
-      right: 0;
-      li {
-        float: left;
-        margin: 0 10px;
-        list-style-type: none;
-      }
+      width: 100%;
+      display: flex;
+      justify-content: right;
     }
   }
 `;
@@ -93,9 +90,9 @@ export const NavBar = () => {
           // 리플레쉬토큰으로 재발급 받기
           await Common.handleUnauthorized();
           const newToken = Common.getAccessToken();
-          
+
           // if (newToken !== accessToken) {
-          //   const rsp = await MemberAxiosApi.memberGetOne(); // 전체 조회
+          //   const rsp = await MemberAxiosApi.memberGetOne(); //
           //   setMember(rsp.data);
           //   setName(rsp.data.name);
           // }
@@ -174,7 +171,7 @@ export const NavBar = () => {
             <li>
               <div
                 onClick={() => {
-                  navigate("/goods");
+                  navigate("/");
                 }}
               >
                 작품
@@ -190,21 +187,19 @@ export const NavBar = () => {
               </div>
             </li>
             <li>
-              <div
+              {/* <div
                 onClick={() => {
                   navigate("/class");
                 }}
               >
                 클래스
-              </div>
+              </div> */}
             </li>
           </ul>
         </div>
         <div className="content2ul2">
-          <ul>
-            <li>검색</li>
-            <li>장바구니</li>
-          </ul>
+          <StyledSearch />
+          <p style={{ marginTop: "10px" }}>장바구니</p>
         </div>
       </div>
     </NavCss>

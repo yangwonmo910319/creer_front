@@ -105,7 +105,7 @@ const SubmitButton = styled.button`
   }
 `;
 
-export const ReviewModal = ({ isOpen, closeModal, onSubmit }) => {
+export const ReviewEditModal = ({ isOpen, closeModal, onSubmit }) => {
   const [reviewText, setReviewText] = useState("");
   const [rating, setRating] = useState(0);
   const [hoverRating, setHoverRating] = useState(0);
@@ -177,7 +177,7 @@ export const ReviewModal = ({ isOpen, closeModal, onSubmit }) => {
                 required
               />
             </div>            
-            <SubmitButton onClick={submitReview}>확 인</SubmitButton>
+            <SubmitButton onClick={submitReview}>수 정</SubmitButton>
             <SubmitButton onClick={closeClick}>취 소</SubmitButton>
           </ModalContent>
         </ModalWrapper>
