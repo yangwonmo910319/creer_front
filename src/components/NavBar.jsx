@@ -92,7 +92,7 @@ export const NavBar = () => {
           const newToken = Common.getAccessToken();
 
           // if (newToken !== accessToken) {
-          //   const rsp = await MemberAxiosApi.memberGetOne(); //
+          //   const rsp = await MemberAxiosApi.memberGetOne();
           //   setMember(rsp.data);
           //   setName(rsp.data.name);
           // }
