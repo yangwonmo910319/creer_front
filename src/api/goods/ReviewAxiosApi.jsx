@@ -4,14 +4,19 @@ import { KH_DOMAIN } from "../../utils/Common";
 export const ReviewAxiosApi = {
 
   // 리뷰 작성
-  postReview: async (memberId, goodsId, content, rating) => {
-    const reviewData = {
-      memberId: memberId,
-      goodsId: goodsId,
-      content: content,
-      rating: rating,
+  insertReview: async (   reviewStar, reviewText,num) => {
+       const reviewData = {
+        goodsDetailId  : num ,
+        reviewContent : reviewText,
+        reviewStar : reviewStar
     };
-    return await axios.post(`${KH_DOMAIN}/PurchasePage/review`, reviewData);
+    const accessToken = localStorage.getItem("accessToken");
+    return await axios.post(KH_DOMAIN + `/api/Review/new/`,reviewData, {
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: "Bearer " + accessToken,
+      },
+    });
   },
 
    //리뷰 전부 가져오기

@@ -213,7 +213,7 @@ height: 30px;
 const StarBox = styled.div`
 
 `;
-export const ReviewComp = ({ goodsNum }) => {
+export const ReviewComp = ({ goodsNum ,openReviewModal}) => {
   const [num , setNum] = useState(goodsNum)
   const [reviews, setReviews] = useState('');
   const [expandedReviews, setExpandedReviews] = useState([]);
@@ -228,9 +228,9 @@ export const ReviewComp = ({ goodsNum }) => {
 
   for (let i = 1; i <= 5; i++) {
     if (i <= averageRating) {
-      stars.push(<FaStar key={i} color="#AAB9FF" />);
+      stars.push(<FaStar key={i} color="#fff453"/>);
     } else if (i - 0.5 <= averageRating) {
-      stars.push(<FaStarHalf key={i} color="#AAB9FF" />);
+      stars.push(<FaStarHalf key={i} color="#fff453" />);
     } else {
       stars.push(<FaStar key={i} color="gray" />);
     }
@@ -285,7 +285,7 @@ export const ReviewComp = ({ goodsNum }) => {
           </div>
         <div className="review-rating">
 
-          <WriteButton onClick={()=>{}}>Review 작성</WriteButton>
+          <WriteButton onClick={openReviewModal}>Review 작성</WriteButton>
         </div>
    
       </ReivewInfo>
@@ -308,9 +308,9 @@ export const ReviewComp = ({ goodsNum }) => {
                   {Array.from({ length: 5 }).map((_, i) => (
                    <span key={i}>
                       {i + 1 <= review.reviewStar ? (
-                        <FaStar color="#AAB9FF" />
+                        <FaStar color="#fff453"/>
                       ) : i + 0.5 === review.reviewStar ? (
-                        <FaStarHalf color="#AAB9FF" />
+                        <FaStarHalf color="#fff453" />
                       ) : (
                         <FaStar color="gray" />
                       )}

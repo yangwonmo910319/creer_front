@@ -42,53 +42,62 @@ const ImgBox = styled.div`
     }
 `;
 const InfoBox = styled.div`
-
+     
        width: 80%;
     height: auto;
     border:  1px solid black;
-    margin: 0 auto;
-   margin-top: 10px;
-    p{ margin: 0 auto;
+    margin: 20px auto;
+     p{ margin: 0 auto;
          width: 400px;
         text-align: center;
-        margin-top: 0px;
+     
     }
 `;
 const InfoCategory= styled.div`
-
  margin: 0 auto;
 width: 80%;
 height: 30px;
 margin-top: 50px;
+ display: flex;
+ justify-content: space-around;
+ border:  1px solid rgba(0, 0, 0, 0.192);
+ border-left: none;
+ border-right: none;
+ font-family:Arial;
 ul{  
-     display: flex;
-     justify-content: center;
-     flex-direction: row;
-     flex-wrap: nowrap;
-     align-items: center;  
+  display: flex;
     li{  
-     width: 33%;
+     width: 150px;
+     margin: 0 30px;
      height: 30px;
-     border:  1px solid black;
-     border-radius: 10px;
+
      display: flex;
      justify-content: center; 
      align-items: center;  
+
+
     }
 }
 `;
 
 export const GoodsInfo=({list})=>{
     const [isReviewModalOpen, setIsReviewModalOpen] = useState(false);
+    const user = localStorage.getItem("userId");
     const closeReviewModal = () => {
         setIsReviewModalOpen(false);
       };   
+
+   const openReviewModal = () =>{
+
+    setIsReviewModalOpen(true);
+   }
+
     const reviewSubmit = async (reviewData) => {
-        
+
         try {
           // 서버에 데이터 전송
-          const response = await ReviewAxiosApi.reviewData(
-      
+          const response = await ReviewAxiosApi.insertReview(      
+            reviewData.rating, reviewData.reviewText,list[0],user
           );    
           if (response.status === 201) {
             // 성공적으로 데이터가 전송되었으면, 리뷰 목록에 새 리뷰 추가    
@@ -120,7 +129,8 @@ return(
             {/* 상품 정보 표시 */}
             <p style={{marginTop:"50px"}}> {list[1]} </p>  
             {/* 리뷰 출력 */}
-           <ReviewComp goodsNum={list[0]}></ReviewComp>
+           <ReviewComp goodsNum={list[0]}      
+             openReviewModal={openReviewModal}></ReviewComp>
             {/* 리뷰 Madal */}
             <ReviewModal
           isOpen={isReviewModalOpen}
