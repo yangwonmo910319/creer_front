@@ -2,7 +2,7 @@ import { useEffect, useState } from "react";
 import styled, { css } from "styled-components";
 import { GoodsAxiosApi } from "../../api/goods/GoodsAxiosApi";
 import { useNavigate } from "react-router-dom";
-const GoodsOptionCss=styled.div`
+const GoodsOptionCss = styled.div`
     width: 35%;
     height: auto;
     border: 3px solid green;
@@ -17,7 +17,7 @@ const GoodsOptionCss=styled.div`
 `;
 
 
-const Seller=styled.div`
+const Seller = styled.div`
 position: relative;
 width: 100%;
 height: 150px;
@@ -30,7 +30,7 @@ border-bottom: 1px solid rgba(136, 136, 136, 0.673);
   
 `;
 
-const Seller1=styled.div`
+const Seller1 = styled.div`
    width: 100px;
    height: 100%;
     display: flex;
@@ -39,7 +39,7 @@ const Seller1=styled.div`
  
 `;
 
-const Seller2=styled.div`
+const Seller2 = styled.div`
 
   width:75%;
     display: flex;
@@ -50,7 +50,7 @@ const Seller2=styled.div`
    padding: 10px;
 
 `;
-const Optionimage=styled.div`  
+const Optionimage = styled.div`  
    img{
     border-radius: 50px;
     border: 1px solid #a5a5a5;
@@ -59,13 +59,13 @@ const Optionimage=styled.div`
    margin-bottom: 40px;
    }
 `;
-const OptionNick=styled.div`
+const OptionNick = styled.div`
   position: absolute;
     padding: 10px;
   left: 0;
   top: -25px;
 `;
-const OptionCategory=styled.div`
+const OptionCategory = styled.div`
 background:#d8d3d3d9;
 border-radius: 20px;
 width: 50px;
@@ -75,26 +75,26 @@ justify-content: center;
 align-items: center;
 
 `;
-const OptionTitle=styled.div`
+const OptionTitle = styled.div`
 font-size: 1.5em;
 line-height: 1.2em;
 padding-bottom: 20px;
 `;
-const OptionTitleEdit=styled.div`
+const OptionTitleEdit = styled.div`
 input{
 font-size: 1.5em;
 line-height: 1.2em;
 padding-bottom: 20px;
 }
 `;
-const Delivery=styled.div`
+const Delivery = styled.div`
 width: 100%;
 height: auto;
 position:relative;
 padding-left: 10px;
 
 `;
-const OptionPrice=styled.div`
+const OptionPrice = styled.div`
 position: relative;
 right:0;
 font-size: 1.5em;
@@ -104,14 +104,14 @@ input{
   height: 40px;
 }
 `;
-const GoodsDeliveryFee=styled.div`
+const GoodsDeliveryFee = styled.div`
 font-size: 1em;
 input{
   font-size: 1em;
 }
 `;
 
-const GoodsRefund=styled.div`
+const GoodsRefund = styled.div`
 font-size: 1em;
 padding-bottom: 20px;
 border-bottom: 1px solid rgba(136, 136, 136, 0.673);
@@ -120,7 +120,7 @@ input{
 }
 `;
 
-const Option=styled.div`
+const Option = styled.div`
 
 width: 100%;
 height: auto;
@@ -175,60 +175,39 @@ align-items: center;
       margin: 0;
 }
 `;
-export const GoodsOption=({list})=>{
+export const GoodsOption = ({ list }) => {
   const navigate = useNavigate();
-//댓글 추가,삭제 axios를 실행 후 reset값을 바꿔서 useEffect를 실행하여 추가 삭제된 화면을 새로 보여줌
-const [reset,setReset]=useState(false);
-useEffect(()=>{},[])
-//삭제 버튼을 누르면 실행
-const deleteGoodsDetail=()=>{
-  //게시글 삭제 기능을 만듬
-  const deleteGoods = async()=>{
-    try {             
-    const Delete = await GoodsAxiosApi.deleteGoods(list.goodsDetailId);
-        }catch(error){  
-    console.log(error);
-   }
-  }
-    //게시글 삭제 기능을 실행
-    deleteGoods();
-  //reset값을 변경하여 댓글 업데이트 화면을 보여줌
-  // setReset(!reset);
-  navigate("/");
-}
-return(
-    <GoodsOptionCss>     
-      <OptionCategory>{list.goodsCategory}</OptionCategory>      
-        <Seller>
-            <Seller1>   <Optionimage>{list.memberDto &&<img src={list.memberDto.name} ></img> }</Optionimage></Seller1>
-            <Seller2><OptionNick>{list.memberDto && list.memberDto.nickName}</OptionNick>   
-        <OptionTitle>{list.goodsTitle}</OptionTitle> 
-        {/* <OptionTitleEdit><input type="text" value={list.goodsTitle} /></OptionTitleEdit>  */}
-          </Seller2>            
-        </Seller>     
-        <Delivery>      
-        <OptionPrice>{list.goodsPrice}</OptionPrice>  
-        {/* <OptionPrice><input type="text" value={list.goodsPrice} /></OptionPrice>   */}
-      
-        <GoodsDeliveryFee>배송: {list.goodsDeliveryFee}</GoodsDeliveryFee>   
-        {/* <GoodsDeliveryFee>배송: <input type="text" value={list.goodsDeliveryFee} /></GoodsDeliveryFee>   */}
-        <GoodsRefund>배송 시작:{list.goodsRefund}</GoodsRefund>          
-        {/* <GoodsRefund>배송 시작: <input type="text" value={list.goodsRefund} /></GoodsRefund>       */}
+  //댓글 추가,삭제 axios를 실행 후 reset값을 바꿔서 useEffect를 실행하여 추가 삭제된 화면을 새로 보여줌
+  useEffect(() => { }, [])
+  //삭제 버튼을 누르면 실행
 
-        </Delivery>
-  
-        <Option>
-            <div className="option1"> 추가 예정</div>
-            <div className="option2"> 추가 예정</div>
-            <div className="sell"> 
-            <div className="sell1-1"> 구매 하기</div>
-            <div className="sell1-2"> 장바구니</div>
-            </div>
-            <div className="sell1-3"> 판매자와 채팅</div>
-       
-            <div className="sell1-4" onClick={()=>deleteGoodsDetail()}> 글 삭제</div>
-        </Option>
-        
+  return (
+    <GoodsOptionCss>
+      <OptionCategory>{list.goodsCategory}</OptionCategory>
+      <Seller>
+        <Seller1>   <Optionimage>{list.memberDto && <img src={list.memberDto.name} ></img>}</Optionimage></Seller1>
+        <Seller2><OptionNick>{list.memberDto && list.memberDto.nickName}</OptionNick>
+          <OptionTitle>{list.goodsTitle}</OptionTitle>
+        </Seller2>
+      </Seller>
+      <Delivery>
+        <OptionPrice>{list.goodsPrice}</OptionPrice>
+        <GoodsDeliveryFee>배송: {list.goodsDeliveryFee}</GoodsDeliveryFee>
+        <GoodsRefund>배송 시작:{list.goodsRefund}</GoodsRefund>
+
+
+      </Delivery>
+
+      <Option>
+        <div className="option1"> 추가 예정</div>
+        <div className="option2"> 추가 예정</div>
+        <div className="sell">
+          <div className="sell1-1"> 구매 하기</div>
+          <div className="sell1-2"> 장바구니</div>
+        </div>
+        <div className="sell1-3"> 판매자와 채팅</div>
+      </Option>
+
     </GoodsOptionCss>
-)
+  )
 }

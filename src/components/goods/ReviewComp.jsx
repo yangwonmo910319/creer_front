@@ -2,8 +2,8 @@ import { useCallback, useEffect, useState } from "react";
 import styled from "styled-components";
 import { FaStar, FaStarHalf } from "react-icons/fa"; // 별 아이콘을 사용하기 위한 import
 import { ReviewAxiosApi } from "../../api/goods/ReviewAxiosApi";
-import { ReviewModal } from "../../utils/goods/ReviewModal"; 
-
+import { ReviewModal } from "../../utils/goods/ReviewModal";
+import { ReviewEditModal } from "../../utils/goods/ReviewEditModal"
 
 const ReivewInfo = styled.div`
 
@@ -111,11 +111,11 @@ p{
 const ReviewText = ({ isExpanded, children }) => (
   <p
     style={{
-       width:"90%",
-       height:"auto",
+      width: "80%",
+      height: "auto",
       textAlign: "center",
       margin: "0 auto",
-      marginTop : "10px",
+      marginTop: "10px",
       color: "#000000",
       fontStyle: "italic",
       overflow: isExpanded ? "visible" : "hidden",
@@ -130,8 +130,8 @@ const ReviewText = ({ isExpanded, children }) => (
     {isExpanded
       ? children
       : children.length <= 35
-      ? children
-      : children.slice(0, 35) + "..."}
+        ? children
+        : children.slice(0, 35) + "..."}
   </p>
 );
 
@@ -187,13 +187,14 @@ const TextBox = styled.div`
      width: 85%;
   height: auto;
   min-height:150px ;
-
 `;
 const ReviewBox = styled.div`
 display: flex;
 flex-direction: row;
 height: auto;
 width: 100%;
+
+
 p{
   display: flex;
   align-content: center;
@@ -201,7 +202,7 @@ p{
   text-align:center;
 }
 `
-;  
+  ;
 
 const Nickname = styled.div`
 width: 100%;
@@ -229,6 +230,7 @@ justify-content: center;
 const ReviewDate = styled.p`
 width: 100%;
 height: auto;
+padding: 10px;
 `;
 const StarBox = styled.div`
   margin-top: 10px;
@@ -249,25 +251,36 @@ const DeleteBox = styled.div`
   background: #ffb9b9;
 `;
 
-export const ReviewComp = ({ goodsNum ,openReviewModal,openReviewEditModal}) => {
-  const [num , setNum] = useState(goodsNum)
-  const [render,setRender] = useState(false)
+export const ReviewComp = ({ goodsNum, openReviewModal }) => {
+  const [num, setNum] = useState(goodsNum)
+  const [render, setRender] = useState(false)
   const [reviews, setReviews] = useState('');
   const [expandedReviews, setExpandedReviews] = useState([]);
   const [averageRating, setAverageRating] = useState(0);
   const [totalRatings, setTotalRatings] = useState(0);
   const stars = [];
   const [visibleReviews, setVisibleReviews] = useState(10); // 초기에 보여지는 리뷰 개수 설정
+  const [isReviewEidtModalOpen, setReviewEidtModalOpen] = useState(false);
+  const [goodsReviewId, setGoodsReviewId] = useState('');
+  const [reviewContent, setReviewContent] = useState('');
+  const [reviewStar, setReviewStar] = useState('');
+  const [Writer, setWriter] = useState('');
+  const closeReviewEidtModal = () => {
+    setReviewEidtModalOpen(false);
+  };
+  const openReviewEidtModal = () => {
+    setReviewEidtModalOpen(true);
+  }
   const showMoreReviews = () => {
     setVisibleReviews((prevVisibleReviews) => prevVisibleReviews + 10); // 더 보기 클릭 시 보여지는 리뷰 개수 10개 증가
   };
 
   // 리뷰 삭제 버튼 클릭시
-  const deleteReview = useCallback(async (reviewId) => {   
+  const deleteReview = useCallback(async (reviewId) => {
     try {
-    //Axios를 통한 리뷰 삭제 컨트롤 실행 후 결과 받아오기
+      //Axios를 통한 리뷰 삭제 컨트롤 실행 후 결과 받아오기
       const response = await ReviewAxiosApi.deleteReview(reviewId);
-    //성공시
+      //성공시
       if (response.status === 200) {
         console.log(response)
 
@@ -275,21 +288,39 @@ export const ReviewComp = ({ goodsNum ,openReviewModal,openReviewEditModal}) => 
         //  해당 상태의 이전 값을 가리키는 변수입니다. 이전 상태값을 안전하게 참조하고 변경 없이 사용하거나 이전 상태를 
         // 기반으로 새로운 상태값을 설정할 때 유용하게 사용됩니다.
         setRender(prevRender => !prevRender);
-    //실패시      
+        //실패시      
       } else {
         console.error("리뷰 삭제 실패");
         console.log(response);
       }
-    //에러 발생시
+      //에러 발생시
     } catch (error) {
       console.error("리뷰 데이터 요청 에러", error);
     }
   }, []);
-
+  //리뷰 수정
+  const reviewEidtSubmit = async (reviewData) => {
+    try {
+      // 서버에 데이터 전송
+      const response = await ReviewAxiosApi.updateReview(
+        reviewData.rating, reviewData.reviewText, reviewData.goodsReviewId
+      );
+      if (response.status === 200) {
+        // 성공적으로 데이터가 전송되었으면, 리뷰 목록에 새 리뷰 추가    
+        setRender(!render)
+      } else {
+        // 서버에서 응답이 오지 않거나, 응답의 상태 코드가 200이 아닌 경우 에러 처리
+        console.error("서버 응답 실패");
+      }
+    } catch (error) {
+      // 네트워크 요청 중에 오류가 발생한 경우 에러 처리
+      console.error("submit review 데이터에러 :", error);
+    }
+  };
 
   for (let i = 1; i <= 5; i++) {
     if (i <= averageRating) {
-      stars.push(<FaStar key={i} color="#fff453"/>);
+      stars.push(<FaStar key={i} color="#fff453" />);
     } else if (i - 0.5 <= averageRating) {
       stars.push(<FaStarHalf key={i} color="#fff453" />);
     } else {
@@ -297,24 +328,24 @@ export const ReviewComp = ({ goodsNum ,openReviewModal,openReviewEditModal}) => 
     }
   }
   // 리뷰 데이터를 가져오는 함수
-  const fetchReviews = useCallback(async () => {   
+  const fetchReviews = useCallback(async () => {
     try {
       const response = await ReviewAxiosApi.getReviews(goodsNum);
-  
+
       if (response.status === 200) {
         console.log(response)
         setReviews(response.data);
         //리뷰 수
-        setTotalRatings(response.data.length)   
+        setTotalRatings(response.data.length)
         console.log(response.data.length)
-        let totalRating= 0;
-        for(let i=0 ; i<response.data.length;i++){
+        let totalRating = 0;
+        for (let i = 0; i < response.data.length; i++) {
           totalRating += response.data[i].reviewStar;
 
-      }
-      setAverageRating(totalRating/response.data.length);
-    
-      
+        }
+        setAverageRating(totalRating / response.data.length);
+
+
       } else {
         console.error("리뷰 가져오기 실패");
         console.log(response);
@@ -323,13 +354,13 @@ export const ReviewComp = ({ goodsNum ,openReviewModal,openReviewEditModal}) => 
       console.error("리뷰 데이터 요청 에러", error);
     }
   }, [goodsNum]);
-  
+
   useEffect(() => {
-    if (goodsNum) {  
+    if (goodsNum) {
       //리뷰 페이지가 있으면 리뷰 가져오기
       fetchReviews();
     }
-  }, [goodsNum, fetchReviews,render]);
+  }, [goodsNum, fetchReviews, render, reviewContent]);
 
 
   return (
@@ -337,79 +368,91 @@ export const ReviewComp = ({ goodsNum ,openReviewModal,openReviewEditModal}) => 
       <ReviewModal ></ReviewModal>
       <h2>리뷰  {num}</h2>
       <ReivewInfo>
-      <div className="review-starbox">
-      <p>평균 평점: {averageRating.toFixed(1)}</p>
+        <div className="review-starbox">
+          <p>평균 평점: {averageRating.toFixed(1)}</p>
           <p>{stars}</p>
           <p>리뷰 개수: {totalRatings}</p>
-          </div>
+        </div>
         <div className="review-rating">
 
           <WriteButton onClick={openReviewModal}>Review 작성</WriteButton>
         </div>
-   
+
       </ReivewInfo>
       {/* 리뷰 출력 구간 */}
 
       <ul className="ReivewUl">
-      {(!reviews || reviews.length === 0) ? (
-  <li>
-    <p>리뷰가 없습니다.</p>
-  </li>
-) : (     
+        {(!reviews || reviews.length === 0) ? (
+          <li>
+            <p>리뷰가 없습니다.</p>
+          </li>
+        ) : (
 
           reviews.slice(0, visibleReviews).map((review, index) => (
-            <li key={index}>  
-                <ReviewBox  onClick={openReviewEditModal}>            
-                   <ImgBox><img src={review.reviewImg}/></ImgBox>                     
-                   <TextBox>
-                 <ReviewDate> <p>{review.reviewDate}</p></ReviewDate>
-                  <Nickname><p>{review.memberDto.nickName}</p></Nickname>     
-                    <DeleteBox onClick={()=>{deleteReview(review.goodsReviewId)}}> 리뷰 삭제 </DeleteBox>
-                         <StarBox>
-                  {Array.from({ length: 5 }).map((_, i) => (
-                   <span key={i}>
-                      {i + 1 <= review.reviewStar ? (
-                        <FaStar color="#fff453"/>
-                      ) : i + 0.5 === review.reviewStar ? (
-                        <FaStarHalf color="#fff453" />
-                      ) : (
-                        <FaStar color="gray" />
-                      )}
-                    </span>   
-                  ))}   </StarBox> 
-                <div
-                  style={{ width: "100%", height: "100%", overflow: "hidden" }}
-                >
-             
-                  <ReviewText isExpanded={expandedReviews.includes(index)}>
-                    {review.reviewContent}
-                  </ReviewText>
-                  <ReviewContent  >    {review.reviewContent.length > 35 && (
-                       <p href="#"onClick={(e) => {e.preventDefault(); // 링크 기본 동작 방지
+            <li key={index}>
+              <ReviewBox >
+                <ImgBox><img src={review.reviewImg} /></ImgBox>
+                <TextBox>
+                  <ReviewDate>{review.reviewDate}</ReviewDate>
+                  <Nickname onClick={() => {
+                    setGoodsReviewId(review.goodsReviewId);
+                    setReviewContent(review.reviewContent);
+                    setReviewStar(review.reviewStar);
+                    setWriter(review.memberDto.nickName);
+                    openReviewEidtModal()
+                  }}>
+                    <p>{review.memberDto.nickName}</p>
+                  </Nickname>
+
+                  <StarBox >
+                    {Array.from({ length: 5 }).map((_, i) => (
+                      <span key={i}>
+                        {i + 1 <= review.reviewStar ? (
+                          <FaStar color="#fff453" />
+                        ) : i + 0.5 === review.reviewStar ? (
+                          <FaStarHalf color="#fff453" />
+                        ) : (
+                          <FaStar color="gray" />
+                        )}
+                      </span>
+                    ))}   </StarBox>
+                  <div
+                    style={{ width: "100%", height: "100%", overflow: "hidden" }}
+                  >
+
+                    <ReviewText isExpanded={expandedReviews.includes(index)}>
+                      {review.reviewContent}
+                    </ReviewText>
+                    <ReviewContent  >    {review.reviewContent.length > 35 && (
+                      <p href="#" onClick={(e) => {
+                        e.preventDefault(); // 링크 기본 동작 방지
                         setExpandedReviews((prevExpandedReviews) =>
                           prevExpandedReviews.includes(index)
                             ? prevExpandedReviews.filter((i) => i !== index)
                             : [...prevExpandedReviews, index]
                         );
                       }}
-                      style={{
-                        marginTop:"10px",
-                        color: "#6db4ff", // 링크 색상
-                        textDecoration: "none", // 밑줄 없애기
-                      }}
-                    >
-                      {expandedReviews.includes(index)
-                        ? "간략히 보기"
-                        : "자세히 보기"}
-                    </p>
-                  )}  </ReviewContent>
-                  
-                </div>
+                        style={{
+                          width: "100%",
+                          height: "50px",
+                          marginTop: "10px",
+                          color: "#6db4ff", // 링크 색상
+                          textDecoration: "none", // 밑줄 없애기
+                        }}
+                      >
+                        {expandedReviews.includes(index)
+                          ? "간략히 보기"
+                          : "자세히 보기"}
+                      </p>
+                    )}  </ReviewContent>
+
+                  </div>
                 </TextBox>
-              
-                </ReviewBox>             
+                <DeleteBox onClick={() => { deleteReview(review.goodsReviewId) }}> 리뷰 삭제 </DeleteBox>
+              </ReviewBox>
+
             </li>
-           
+
           ))
         )}
       </ul>
@@ -418,7 +461,17 @@ export const ReviewComp = ({ goodsNum ,openReviewModal,openReviewEditModal}) => 
           10개 더보기
         </MoreButton>
       )}
-        
+      {/* 리뷰 수정 Madal */}
+      <ReviewEditModal
+        Writer={Writer}
+        goodsReviewId={goodsReviewId}
+        reviewContent={reviewContent}
+        reviewStar={reviewStar}
+        isOpen={isReviewEidtModalOpen}
+        onSubmit={reviewEidtSubmit}
+        closeModal={closeReviewEidtModal}
+      />
+
     </ReviewSectionContainer>
   );
 };

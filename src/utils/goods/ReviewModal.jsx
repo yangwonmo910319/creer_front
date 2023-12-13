@@ -139,7 +139,7 @@ export const ReviewModal = ({ isOpen, closeModal, onSubmit }) => {
       closeModal(); // 모달 바깥 부분 클릭 시 모달 닫기
     }
   };
-  const closeClick=()=>{
+  const closeClick = () => {
     //취소 버튼 클릭시 기존 데이터 삭제 
     setReviewText('')
     //Modal 닫음
@@ -176,7 +176,7 @@ export const ReviewModal = ({ isOpen, closeModal, onSubmit }) => {
                 onChange={reviewTextChange}
                 required
               />
-            </div>            
+            </div>
             <SubmitButton onClick={submitReview}>확 인</SubmitButton>
             <SubmitButton onClick={closeClick}>취 소</SubmitButton>
           </ModalContent>
