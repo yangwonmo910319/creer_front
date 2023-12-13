@@ -4,6 +4,7 @@ import { ReviewModal } from "../../utils/goods/ReviewModal";
 import { useEffect, useState } from "react";
 import { ReviewAxiosApi } from "../../api/goods/ReviewAxiosApi";
 import { storage } from "../../api/FireBase";
+import { GoodsAxiosApi } from "../../api/goods/GoodsAxiosApi";
 const GoodsInfoCss = styled.div`
     width: 65%;
     height: auto;
@@ -77,19 +78,39 @@ border-radius: 4px;
 font-size: 16px;
 height: 600px;
 `;
-const FileInput = styled.label`
-  input[type="file"] {
-    display: none; /* 실제 파일 선택 input을 숨김 */
-  }
-  /* 파일 선택 input을 대체하는 스타일을 부여할 수 있는 스타일링 */
-  &::before {
-    content: '파일 선택'; /* 원하는 내용으로 변경 가능 */
-    display: inline-block;
-    padding: 8px 12px;
-    color: white;
-    background-color: red;
-    border-radius: 4px;
-    cursor: pointer;
+
+const NewImgBox = styled.div`
+width: 100%;
+height: 150px;
+text-align: center;
+img{
+  width: 150px;
+  height: 150px;
+}
+
+`;
+const UploadContainer = styled.div`
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin-top: 20px;
+`;
+
+const UploadInput = styled.input`
+  display: none;
+`;
+
+const UploadLabel = styled.label`
+  display: inline-block;
+  padding: 8px 12px;
+  color: white;
+  background-color: #adaaff;
+  border-radius: 4px;
+  cursor: pointer;
+  margin-bottom: 10px;
+  
+  &:hover {
+    background-color: #00648b;
   }
 `;
 export const GoodsInfoEdit = ({ list }) => {
@@ -111,27 +132,21 @@ export const GoodsInfoEdit = ({ list }) => {
   useEffect(() => {
   }, []);
 
-  const fileuploade = async () => {
+
+  const handleFileUpload = async (e) => {
+    const selectedFile = e.target.files[0];
+    setFile(selectedFile);
     try {
       const storageRef = storage.ref();
-      const fileRef = storageRef.child(File.name);
-      // 파일을 업로드하고 기다립니다.
-      await fileRef.put(File);
+      const fileRef = storageRef.child(selectedFile.name);
+      await fileRef.put(selectedFile);
       console.log("File uploaded successfully!");
-      // 다운로드 URL을 가져오고 기다립니다.
       const url = await fileRef.getDownloadURL();
       console.log("저장경로 확인 : " + url);
-      // 상태를 업데이트합니다.
-      setUrl(url);
-      setNewUrl(url)
+      setNewUrl(url);
     } catch (error) {
-      // 에러를 처리합니다.
       console.error("Upload failed", error);
     }
-  };
-  const fileChage = (e) => {
-    setFile(e.target.files[0]);
-    fileuploade()
   };
 
   const reviewSubmit = async (reviewData) => {
@@ -152,16 +167,48 @@ export const GoodsInfoEdit = ({ list }) => {
       console.error("submit review 데이터에러 :", error);
     }
   };
+  const imgUpload = async () => {
+    try {
+      // 서버에 데이터 전송
+      const response = await GoodsAxiosApi.insertGoodsImg(
+        newUrl, list[0]
+      );
+      if (response.status === 200) {
+        // 성공적으로 데이터가 전송되었으면, 리뷰 목록에 새 리뷰 추가    
+        closeReviewModal();
+      } else {
+        // 서버에서 응답이 오지 않거나, 응답의 상태 코드가 200이 아닌 경우 에러 처리
+        console.error("서버 응답 실패");
+      }
+    } catch (error) {
+      // 네트워크 요청 중에 오류가 발생한 경우 에러 처리
+      console.error("submit review 데이터에러 :", error);
+    }
+  }
   return (
     <GoodsInfoCss>
-      <FileInput> <input type="file" onChange={fileChage} /></FileInput>
-      <a onClick={() => { fileuploade() }}>
-        <button>대표 이미지</button></a>
-      <ImgBox>
-        <div className="mainImg"> <img src={url} /></div>
-        {/* <div className="subImg"> <img src={list[2]}/></div>         */}
-      </ImgBox>
 
+      <ImgBox>
+        <div className="mainImg">
+          <img src={url} alt="대표 이미지" />
+        </div>
+      </ImgBox>
+      <NewImgBox>
+        {newUrl && <>
+          <img src={newUrl} alt="새 이미지" />
+        </>
+        }
+      </NewImgBox>
+      <UploadContainer>
+        <UploadLabel>
+          대표 이미지 넣기
+          <UploadInput type="file" onChange={handleFileUpload} />
+        </UploadLabel>
+        <UploadLabel>
+          확인
+          <UploadInput type="button" onClick={imgUpload} />
+        </UploadLabel>
+      </UploadContainer>
       <InfoCategory>
         <ul>
           <li>소개</li>

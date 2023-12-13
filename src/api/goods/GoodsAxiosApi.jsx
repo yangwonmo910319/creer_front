@@ -36,15 +36,7 @@ export const GoodsAxiosApi = {
   },
 
   // 상품 수정
-  updateGoods: async (
-    goodsCategory,
-    goodsDeliveryFee,
-    goodsDesc,
-    goodsDetailId,
-    goodsPic,
-    goodsPrice,
-    goodsRefund,
-    goodsTitle
+  updateGoods: async (goodsCategory, goodsDeliveryFee, goodsDesc, goodsDetailId, goodsPic, goodsPrice, goodsRefund, goodsTitle
   ) => {
     const goodsData = {
       goodsCategory,
@@ -68,6 +60,32 @@ export const GoodsAxiosApi = {
       }
     );
   },
+
+  // 상품 대표 이미지 넣기
+
+  insertGoodsImg: async (newUrl, list) => {
+    alert("sss")
+    const goodsData = {
+      newUrl,
+      list,
+    };
+    const accessToken = localStorage.getItem("accessToken");
+    return await axios.post(
+      KH_DOMAIN + `/api/goods/new/picture/`, goodsData,
+      {
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: "Bearer " + accessToken,
+        },
+      }
+    );
+  },
+
+
+
+
+
+
 
   // 상품 추가
   addGoods: async (GoodsToSave) => {
