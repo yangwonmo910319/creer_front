@@ -2,7 +2,7 @@ import axios from "axios";
 import { KH_DOMAIN } from "../../utils/Common";
 
 export const GoodsAxiosApi = {
-  // 상품  목록 전부 가져오기
+  // 상품 목록 전부 가져오기
   getGoodsList: async () => {
     const accessToken = localStorage.getItem("accessToken");
     return await axios.get(KH_DOMAIN + "/api/goods/list", {
@@ -32,11 +32,21 @@ export const GoodsAxiosApi = {
         "Content-Type": "application/json",
         Authorization: "Bearer " + accessToken,
       },
-    });    
+    });
   },
 
-    // 상품 수정
-    updateGoods: async ( 
+  // 상품 수정
+  updateGoods: async (
+    goodsCategory,
+    goodsDeliveryFee,
+    goodsDesc,
+    goodsDetailId,
+    goodsPic,
+    goodsPrice,
+    goodsRefund,
+    goodsTitle
+  ) => {
+    const goodsData = {
       goodsCategory,
       goodsDeliveryFee,
       goodsDesc,
@@ -44,45 +54,26 @@ export const GoodsAxiosApi = {
       goodsPic,
       goodsPrice,
       goodsRefund,
-      goodsTitle,) => {
-      const goodsData={
-        goodsCategory,
-        goodsDeliveryFee,
-        goodsDesc,
-        goodsDetailId,
-        goodsPic,
-        goodsPrice,
-        goodsRefund,
-        goodsTitle,
-      }
-      const accessToken = localStorage.getItem("accessToken");
-      return await axios.post(KH_DOMAIN + `/api/goods/update/${goodsDetailId}`,goodsData ,{
+      goodsTitle,
+    };
+    const accessToken = localStorage.getItem("accessToken");
+    return await axios.post(
+      KH_DOMAIN + `/api/goods/update/${goodsDetailId}`,
+      goodsData,
+      {
         headers: {
           "Content-Type": "application/json",
           Authorization: "Bearer " + accessToken,
         },
-      });
-    },
-
-
-
-
-
-
-
-
-
-
+      }
+    );
+  },
 
   // 상품 추가
   addGoods: async (GoodsToSave) => {
     const response = await axios.post(KH_DOMAIN + "/Goods/admin", GoodsToSave);
     return response;
   },
-
-
-
-
 
   // 상품 존재 여부 확인
   isGoodsexist: async (title, author) => {

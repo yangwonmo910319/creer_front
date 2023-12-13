@@ -83,7 +83,10 @@ export const Login = () => {
 
   // 카카오 로그인
   const onKakaoLoginSuccess = async (data) => {
-    console.log(data);
+    console.log(
+      // JSON.stringify(data) : 콘솔에서 [object Object]와 같이 찍히는 데이터를 문자열로 변환하여 출력하는 방법
+      "카카오 로그인 시 서버에 날라가는 데이터 : " + JSON.stringify(data)
+    );
 
     // 카카오 사용자 정보와 토큰 등을 백엔드 서버에 전달
     const res = await MemberAxiosApi.kakaoLogin({
@@ -115,8 +118,10 @@ export const Login = () => {
           <SocialLinks>
             <SocialLink>
               <KakaoLogin
+                // 속성들의 이름은 카카오에서 지정해준 것들이기 때문에 변경 불가
+
                 token="d03f4c71ef533c7d60ea8be2b2ff808f" // JavaScript 키
-                onSuccess={onKakaoLoginSuccess}
+                onSuccess={onKakaoLoginSuccess} // 카카오 로그인의 결과 데이터를 인자로 받아 실행, 이는 KakaoLogin 컴포넌트가 내부적으로 처리
                 onFailure={onKakaoLoginFailure}
                 getProfile={true} // 로그인 성공 후 사용자 정보를 가져올 것인지 설정
                 render={({ onClick }) => {
