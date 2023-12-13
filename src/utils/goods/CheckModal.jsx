@@ -1,6 +1,6 @@
-import React, { useState } from "react";
+
 import styled, { keyframes } from "styled-components";
-import { FaStar } from "react-icons/fa";
+
 
 const ModalClickCss = styled.div`
   position: absolute;

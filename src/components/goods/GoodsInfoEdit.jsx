@@ -5,6 +5,7 @@ import { useEffect, useState } from "react";
 import { ReviewAxiosApi } from "../../api/goods/ReviewAxiosApi";
 import { storage } from "../../api/FireBase";
 import { GoodsAxiosApi } from "../../api/goods/GoodsAxiosApi";
+import { SelectImg } from "./SelectImg";
 const GoodsInfoCss = styled.div`
     width: 65%;
     height: auto;
@@ -15,6 +16,24 @@ const GoodsInfoCss = styled.div`
     }
    
 `;
+
+const ImgCategory = styled.div`
+  border: 3px solid red;
+  width: 95%;
+  height: auto;
+  display: flex;
+
+  .ImgCategory1{
+    width: 70%;
+    height: auto;
+    border: 3px solid blue;
+  }
+  .ImgCategory2{
+    width: 30%;
+    height: auto;
+    border: 3px solid yellowgreen;
+  }
+`
 const ImgBox = styled.div`
     width: 100%;
     height: auto;
@@ -148,7 +167,7 @@ export const GoodsInfoEdit = ({ list }) => {
       console.error("Upload failed", error);
     }
   };
-
+//리뷰 추가
   const reviewSubmit = async (reviewData) => {
     try {
       // 서버에 데이터 전송
@@ -167,11 +186,13 @@ export const GoodsInfoEdit = ({ list }) => {
       console.error("submit review 데이터에러 :", error);
     }
   };
-  const imgUpload = async () => {
+
+  //대표 이미지 추가
+  const imgUpload = async () => {         
     try {
       // 서버에 데이터 전송
       const response = await GoodsAxiosApi.insertGoodsImg(
-        newUrl, list[0]
+      list[0],newUrl
       );
       if (response.status === 200) {
         // 성공적으로 데이터가 전송되었으면, 리뷰 목록에 새 리뷰 추가    
@@ -185,9 +206,12 @@ export const GoodsInfoEdit = ({ list }) => {
       console.error("submit review 데이터에러 :", error);
     }
   }
+
+
   return (
     <GoodsInfoCss>
-
+     <ImgCategory>
+     <div className="ImgCategory1">
       <ImgBox>
         <div className="mainImg">
           <img src={url} alt="대표 이미지" />
@@ -209,6 +233,12 @@ export const GoodsInfoEdit = ({ list }) => {
           <UploadInput type="button" onClick={imgUpload} />
         </UploadLabel>
       </UploadContainer>
+      </div>
+      <div className="ImgCategory2">
+        <SelectImg num={list[0]}>          
+        </SelectImg>
+        </div>
+      </ImgCategory>
       <InfoCategory>
         <ul>
           <li>소개</li>
