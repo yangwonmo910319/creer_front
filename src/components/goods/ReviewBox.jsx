@@ -9,7 +9,7 @@ import { ReviewAxiosApi } from "../../api/goods/ReviewAxiosApi";
 export const ReviewBox=({goodsDetailId})=>{
     const [isReviewModalOpen, setIsReviewModalOpen] = useState(false);
     const [isReviewEidtModalOpen, setReviewEidtModalOpen] = useState(false);
-    const user = localStorage.getItem("userId");
+    const nickName = localStorage.getItem("NickName");
     const closeReviewModal = () => {
         setIsReviewModalOpen(false);
     }; 
@@ -25,11 +25,12 @@ const openReviewEidtModal = () =>{
 //리뷰 추가
     const reviewSubmit = async (reviewData) => {
 
-      alert(reviewData.rating)
+      alert("리뷰 추가"+reviewData.rating+".."+reviewData.reviewText)
+      alert("리뷰 추가"+goodsDetailId+".."+nickName)
         try {
           // 서버에 데이터 전송
           const response = await ReviewAxiosApi.insertReview(      
-            reviewData.rating, reviewData.reviewText,reviewData,user
+            reviewData.rating, reviewData.reviewText,reviewData,nickName
           );    
           if (response.status === 201) {
             // 성공적으로 데이터가 전송되었으면, 리뷰 목록에 새 리뷰 추가    
@@ -49,7 +50,7 @@ const openReviewEidtModal = () =>{
       try {
         // 서버에 데이터 전송
         const response = await ReviewAxiosApi.insertReview(      
-          reviewData.rating, reviewData.reviewText,reviewData,user
+          reviewData.rating, reviewData.reviewText,reviewData,nickName
         );    
         if (response.status === 201) {
           // 성공적으로 데이터가 전송되었으면, 리뷰 목록에 새 리뷰 추가    

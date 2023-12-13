@@ -83,6 +83,8 @@ export const NavBar = () => {
         const rsp = await MemberAxiosApi.memberGetOne();
         setMember(rsp.data);
         setName(rsp.data.name);
+        //로그인시 유저 닉네임 저장
+        window.localStorage.setItem("NickName", rsp.data.name);
       } catch (e) {
         // 엑세스토큰 유효기간 지나면 401
         if (e.response.status === 401) {
