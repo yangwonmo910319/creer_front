@@ -97,8 +97,8 @@ return(
         <InfoBox>  
             {/* 상품 정보 표시 */}
             <p style={{marginTop:"50px"}}> {list[1]} </p>          
-         <ReviewBox goodsDetailId ={list[0]}> 
-       
+         {/* 상품 리뷰 */}
+         <ReviewBox goodsDetailId ={list[0]}>        
         </ReviewBox> 
         </InfoBox>
  

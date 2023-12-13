@@ -2,7 +2,9 @@ import { useEffect, useState } from "react";
 import styled, { css } from "styled-components";
 import { GoodsAxiosApi } from "../../api/goods/GoodsAxiosApi";
 import { useNavigate } from "react-router-dom";
-const GoodsOptionCss=styled.div`
+import { CheckModal } from "../../utils/goods/CheckModal";
+
+const GoodsOptionCss = styled.div`
     width: 35%;
     height: auto;
     @media (max-width: 768px) {
@@ -10,13 +12,10 @@ const GoodsOptionCss=styled.div`
       margin: 0 auto;
         grid-area: option; 
     }
-    div{
-        margin: 20px 0;
-    }
 `;
 
 
-const Seller=styled.div`
+const Seller = styled.div`
 position: relative;
 width: 100%;
 height: 150px;
@@ -24,12 +23,12 @@ height: 150px;
 border-bottom: 1px solid rgba(136, 136, 136, 0.673);
     /* justify-content: center; */
    align-items: center;
-
+margin-top: 20px;
  
   
 `;
 
-const Seller1=styled.div`
+const Seller1 = styled.div`
    width: 100px;
    height: 100%;
     display: flex;
@@ -38,7 +37,7 @@ const Seller1=styled.div`
  
 `;
 
-const Seller2=styled.div`
+const Seller2 = styled.div`
 
   width:75%;
     display: flex;
@@ -49,7 +48,7 @@ const Seller2=styled.div`
    padding: 10px;
 
 `;
-const Optionimage=styled.div`  
+const Optionimage = styled.div`  
    img{
     border-radius: 50px;
     border: 1px solid #a5a5a5;
@@ -58,13 +57,13 @@ const Optionimage=styled.div`
    margin-bottom: 40px;
    }
 `;
-const OptionNick=styled.div`
+const OptionNick = styled.div`
   position: absolute;
     padding: 10px;
   left: 0;
   top: -25px;
 `;
-const OptionCategory=styled.div`
+const OptionCategory = styled.div`
 background:#d8d3d3d9;
 border-radius: 20px;
 width: 50px;
@@ -74,27 +73,24 @@ justify-content: center;
 align-items: center;
 
 `;
-const OptionTitle=styled.div`
-font-size: 1.5em;
-line-height: 1.2em;
-padding-bottom: 20px;
-`;
-const OptionTitleEdit=styled.div`
+
+const OptionTitleEdit = styled.div`
 input{
 font-size: 1.5em;
 line-height: 1.2em;
 padding-bottom: 20px;
 }
 `;
-const Delivery=styled.div`
+const Delivery = styled.div`
 width: 100%;
 height: auto;
 position:relative;
 padding-left: 10px;
 
 `;
-const OptionPrice=styled.div`
+const OptionPrice = styled.div`
 position: relative;
+margin-top: 20px;
 right:0;
 font-size: 1.5em;
 margin-right: 100px;
@@ -103,15 +99,17 @@ input{
   height: 40px;
 }
 `;
-const GoodsDeliveryFee=styled.div`
+const GoodsDeliveryFee = styled.div`
 font-size: 1em;
+margin-top: 10px;
 input{
   font-size: 1em;
 }
 `;
 
-const GoodsRefund=styled.div`
+const GoodsRefund = styled.div`
 font-size: 1em;
+margin-top: 10px;
 padding-bottom: 20px;
 border-bottom: 1px solid rgba(136, 136, 136, 0.673);
 input{
@@ -119,7 +117,7 @@ input{
 }
 `;
 
-const Option=styled.div`
+const Option = styled.div`
 
 width: 100%;
 height: auto;
@@ -161,8 +159,10 @@ align-items: center;
       display: flex;
       justify-content: center;
       align-items: center;      
+      margin-top: 30px;
 }
 .sell1-4{
+
         border-radius: 10px;
       width: 60%;
     height: 50px;
@@ -171,95 +171,108 @@ align-items: center;
       display: flex;
       justify-content: center;
       align-items: center;
-      margin: 0;
+      margin-top: 20px;
 }
 .sell1-5{
   margin-top: 10px;
+
 }
 `;
-export const GoodsOptionEdit=({goodsDedail,updateGoodsDetail})=>{
-  const [list,setGoodsTitle,setGoodsPrice,setGoodsRefund,setGoodsDeliveryFee,setMemberDto] =goodsDedail; 
+export const GoodsOptionEdit = ({ goodsDedail, updateGoodsDetail }) => {
+  const [list, setGoodsTitle, setGoodsPrice, setGoodsRefund, setGoodsDeliveryFee, setMemberDto] = goodsDedail;
   const [goodsTitle, setGoodsTitle1] = useState('');
   const [goodsPrice, setGoodsPrice1] = useState('');
   const [goodsRefund, setGoodsRefund1] = useState('');
+
   const [goodsDeliveryFee, setGoodsDeliveryFee1] = useState('');
-
-
+  const [isCheckModalOpen, setIsCheckModalOpen] = useState(false);
+  const [render, setRender] = useState(false);
   const navigate = useNavigate();
-//댓글 추가,삭제 axios를 실행 후 reset값을 바꿔서 useEffect를 실행하여 추가 삭제된 화면을 새로 보여줌
-useEffect(()=>{
-
-  setGoodsTitle1(list.goodsTitle)
-  setGoodsPrice1(list.goodsPrice)
-  setGoodsRefund1(list.goodsRefund)
-  setGoodsDeliveryFee1(list.goodsDeliveryFee)
-},[list])
-//삭제 버튼을 누르면 실행
-const deleteGoodsDetail=()=>{
-  //게시글 삭제 기능을 만듬
-  const deleteGoods = async()=>{
-    try {             
-    const Delete = await GoodsAxiosApi.deleteGoods(list.goodsDetailId);
-        }catch(error){  
-    console.log(error);
-   }
-  }
+  //댓글 추가,삭제 axios를 실행 후 reset값을 바꿔서 useEffect를 실행하여 추가 삭제된 화면을 새로 보여줌
+  useEffect(() => {
+    setGoodsTitle1(list.goodsTitle)
+    setGoodsPrice1(list.goodsPrice)
+    setGoodsRefund1(list.goodsRefund)
+    setGoodsDeliveryFee1(list.goodsDeliveryFee)
+  }, [list])
+  //삭제 버튼을 누르면 실행
+  const deleteGoodsDetail = () => {
+    //게시글 삭제 기능을 만듬
+    const deleteGoods = async () => {
+      try {
+        const Delete = await GoodsAxiosApi.deleteGoods(list.goodsDetailId);
+      } catch (error) {
+        console.log(error);
+      }
+    }
     //게시글 삭제 기능을 실행
     deleteGoods();
-  //reset값을 변경하여 댓글 업데이트 화면을 보여줌
-  // setReset(!reset);
-  navigate("/");
-}
-const GoodsTitleChange = (e) => {
-  setGoodsTitle1(e.target.value)
-  setGoodsTitle(e.target.value);
-};
-const GoodsDeliveryFeeChange = (e) => {
-  setGoodsDeliveryFee1(e.target.value)
-  setGoodsDeliveryFee(e.target.value);
-};
-const GoodsRefundChange = (e) => {
-  setGoodsRefund1(e.target.value)
-  setGoodsRefund(e.target.value);
-};
-const GoodsPriceChange = (e) => {
-  setGoodsPrice1(e.target.value)
-  setGoodsPrice(e.target.value);
-};
+    //reset값을 변경하여 댓글 업데이트 화면을 보여줌
+    // setReset(!reset);
+    navigate("/");
+  }
+  const GoodsTitleChange = (e) => {
+    setGoodsTitle1(e.target.value)
+    setGoodsTitle(e.target.value)
+  };
+  const GoodsDeliveryFeeChange = (e) => {
+    setGoodsDeliveryFee1(e.target.value)
+    setGoodsDeliveryFee(e.target.value);
+  };
+  const GoodsRefundChange = (e) => {
+    setGoodsRefund1(e.target.value)
+    setGoodsRefund(e.target.value);
+  };
+  const GoodsPriceChange = (e) => {
+    setGoodsPrice1(e.target.value)
+    setGoodsPrice(e.target.value);
+  };
 
 
+  const revertChanges = () => {
+    setGoodsTitle1(list.goodsTitle)
+    setGoodsPrice1(list.goodsPrice)
+    setGoodsRefund1(list.goodsRefund)
+    setGoodsDeliveryFee1(list.goodsDeliveryFee)
+    setRender(!render)
+  }
 
 
+  return (
+    <GoodsOptionCss>
+      <OptionCategory>{list.goodsCategory}</OptionCategory>
+      <Seller>
+        <Seller1>   <Optionimage>{list.memberDto && <img src={list.memberDto.name} ></img>}</Optionimage></Seller1>
+        <Seller2><OptionNick>{list.memberDto && list.memberDto.nickName}</OptionNick>
+          <OptionTitleEdit><input type="text" value={goodsTitle} onChange={GoodsTitleChange} /></OptionTitleEdit>
+        </Seller2>
+      </Seller>
+      <Delivery>
+        <OptionPrice><input type="text" value={goodsPrice} onChange={GoodsPriceChange} /></OptionPrice>
+        <GoodsDeliveryFee>배송: <input type="text" value={goodsRefund} onChange={GoodsRefundChange} /></GoodsDeliveryFee>
+        <GoodsRefund>배송 시작: <input type="text" value={goodsDeliveryFee} onChange={GoodsDeliveryFeeChange} /></GoodsRefund>
 
+      </Delivery>
 
-return(
-    <GoodsOptionCss>     
-      <OptionCategory>{list.goodsCategory}</OptionCategory>      
-        <Seller>
-            <Seller1>   <Optionimage>{list.memberDto &&<img src={list.memberDto.name} ></img> }</Optionimage></Seller1>
-            <Seller2><OptionNick>{list.memberDto && list.memberDto.nickName}</OptionNick>   
-        <OptionTitleEdit><input type="text" value={goodsTitle} onChange={GoodsTitleChange} /></OptionTitleEdit> 
-          </Seller2>            
-        </Seller>     
-        <Delivery>      
-        <OptionPrice><input type="text" value={goodsPrice} onChange={GoodsPriceChange}/></OptionPrice>  
-        <GoodsDeliveryFee>배송: <input type="text" value={goodsRefund} onChange={GoodsRefundChange}/></GoodsDeliveryFee>  
-        <GoodsRefund>배송 시작: <input type="text" value={goodsDeliveryFee} onChange={GoodsDeliveryFeeChange}/></GoodsRefund>      
-
-        </Delivery>
-  
-        <Option>
-            <div className="option1"> 추가 예정</div>
-            <div className="option2"> 추가 예정</div>
-            <div className="sell"> 
-            <div className="sell1-1"> 구매 하기</div>
-            <div className="sell1-2"> 장바구니</div>
-            </div>
-            <div className="sell1-3"> 판매자와 채팅</div>
-            <div className="sell1-4" onClick={()=>updateGoodsDetail()}> 수정 완료</div>
-            <div className="sell1-4 sell1-5" onClick={()=>deleteGoodsDetail()}> 글 삭제</div>
-        </Option>
-        
+      <Option>
+        <div className="option1"> 추가 예정</div>
+        <div className="option2"> 추가 예정</div>
+        <div className="sell">
+          <div className="sell1-1"> 구매 하기</div>
+          <div className="sell1-2"> 장바구니</div>
+        </div>
+        <div className="sell1-3"> 판매자와 채팅</div>
+        {/* <div className="sell1-4" onClick={() => updateGoodsDetail()}> 수정 완료</div> */}
+        <div className="sell1-4" onClick={() => setIsCheckModalOpen(!isCheckModalOpen)}> 수정 완료</div>
+        <div className="sell1-4 sell1-5" onClick={() => deleteGoodsDetail()}> 글 삭제</div>
+      </Option>
+      <CheckModal
+        isOpen={isCheckModalOpen}
+        onSubmit={updateGoodsDetail}
+        setIsCheckModalOpen={setIsCheckModalOpen}
+        checkMmessage={"작성하신 글을 수정합니다."}
+        revertChanges={revertChanges}
+      />
     </GoodsOptionCss>
-)
+  )
 }

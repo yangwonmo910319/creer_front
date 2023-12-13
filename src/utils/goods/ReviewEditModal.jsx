@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import styled, { keyframes } from "styled-components";
 import { FaStar } from "react-icons/fa";
 const fadeIn = keyframes`
@@ -105,10 +105,11 @@ const SubmitButton = styled.button`
   }
 `;
 
-export const ReviewEditModal = ({ isOpen, closeModal, onSubmit }) => {
-  const [reviewText, setReviewText] = useState("");
-  const [rating, setRating] = useState(0);
+export const ReviewEditModal = ({ Writer, goodsReviewId, reviewContent, reviewStar, isOpen, onSubmit, closeModal }) => {
+  const [reviewText, setReviewText] = useState('');
+  const [rating, setRating] = useState('');
   const [hoverRating, setHoverRating] = useState(0);
+  const NickName = window.localStorage.getItem("NickName")
   const reviewTextChange = (e) => {
     setReviewText(e.target.value);
   };
@@ -130,22 +131,25 @@ export const ReviewEditModal = ({ isOpen, closeModal, onSubmit }) => {
       alert("리뷰 내용을 입력해주세요."); // 알림 표시
       return;
     }
-    onSubmit({ rating, reviewText });
+    onSubmit({ rating, reviewText, goodsReviewId });
     closeModal();
-    window.location.reload();
   };
   const modalClick = (e) => {
     if (e.target === e.currentTarget) {
       closeModal(); // 모달 바깥 부분 클릭 시 모달 닫기
     }
   };
-  const closeClick=()=>{
+  const closeClick = () => {
     //취소 버튼 클릭시 기존 데이터 삭제 
     setReviewText('')
+    setRating('')
     //Modal 닫음
     closeModal()
   }
-
+  useEffect(() => {
+    setReviewText(reviewContent)
+    setRating(reviewStar)
+  }, [reviewContent, reviewStar])
   return (
     <>
       {isOpen && (
@@ -155,30 +159,64 @@ export const ReviewEditModal = ({ isOpen, closeModal, onSubmit }) => {
             <h2>리뷰 작성</h2>
             <div>
               <StarRating>
-                {[1, 2, 3, 4, 5].map((value) => (
-                  <Star
-                    key={value}
-                    onClick={() => ratingChange(value)}
-                    onMouseEnter={() => mouseEnter(value)}
-                    onMouseLeave={mouseLeave}
-                    color={
-                      value <= (hoverRating || rating) ? "#fff453" : "gray"
-                    }
-                  />
-                ))}
+                {NickName === Writer ? (
+                  // 작성자일 때 별점을 설정할 수 있는 부분
+                  <StarRating>
+                    {[1, 2, 3, 4, 5].map((value) => (
+                      <Star
+                        key={value}
+                        onClick={() => ratingChange(value)}
+                        onMouseEnter={() => mouseEnter(value)}
+                        onMouseLeave={mouseLeave}
+                        color={value <= (hoverRating || rating) ? "#fff453" : "gray"}
+                      />
+                    ))}
+                  </StarRating>
+                ) : (
+                  // 작성자가 아닐 때는 별점을 설정할 수 없는 부분
+                  <StarRating>
+                    {[1, 2, 3, 4, 5].map((value) => (
+                      <Star
+                        key={value}
+                        color={value <= (hoverRating || rating) ? "#fff453" : "gray"}
+                      />
+                    ))}
+                  </StarRating>
+                )}
+
               </StarRating>
             </div>
-            <div>
-              <label htmlFor="reviewText"></label>
-              <TextArea
-                id="reviewText"
-                value={reviewText}
-                onChange={reviewTextChange}
-                required
-              />
-            </div>            
-            <SubmitButton onClick={submitReview}>수 정</SubmitButton>
-            <SubmitButton onClick={closeClick}>취 소</SubmitButton>
+            {NickName === Writer ? (
+              // 작성자일 때 TextArea를 활성화하는 부분
+              <div>
+                <label htmlFor="reviewText"></label>
+                <TextArea
+                  id="reviewText"
+                  value={reviewText}
+                  onChange={reviewTextChange}
+                  required
+                />
+              </div>
+            ) : (
+              // 작성자가 아닐 때는 TextArea를 비활성화하는 부분
+              <div>
+                <label htmlFor="reviewText"></label>
+                <TextArea
+                  id="reviewText"
+                  value={reviewText}
+                  required
+                />
+              </div>
+            )}
+
+            {NickName === Writer ?
+              <>
+                <SubmitButton onClick={submitReview}>수 정</SubmitButton>
+                <SubmitButton onClick={closeClick}>취 소</SubmitButton></>
+              :
+              <SubmitButton onClick={closeClick}>확 인</SubmitButton>}
+
+
           </ModalContent>
         </ModalWrapper>
       )}
