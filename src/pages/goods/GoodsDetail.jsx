@@ -4,8 +4,8 @@ import { GoodsInfo } from "../../components/goods/GoodsInfo";
 import { GoodsAxiosApi } from "../../api/goods/GoodsAxiosApi";
 import { useParams } from "react-router-dom";
 import { useEffect, useState } from "react";
-import{ GoodsInfoEdit} from "../../components/goods/GoodsInfoEdit"
-import{ GoodsOptionEdit} from "../../components/goods/GoodsOptionEdit"
+import { GoodsInfoEdit } from "../../components/goods/GoodsInfoEdit"
+import { GoodsOptionEdit } from "../../components/goods/GoodsOptionEdit"
 const GoodsDetailCss = styled.div`
   display: flex;
   flex-direction: row;
@@ -36,8 +36,6 @@ export const GoodsDetail = () => {
   const [goodsTitle, setGoodsTitle] = useState("");
   const [memberDto, setMemberDto] = useState("");
   const nickName = localStorage.getItem("NickName");
-  const [render, setRender] = useState(false);
-
   // 상품 정보를 가져옵니다.
   useEffect(() => {
     //함수 만들기
@@ -122,13 +120,13 @@ export const GoodsDetail = () => {
   ];
   return (
     <GoodsDetailCss>
-    {memberDto.nickName === nickName ? <> {/* 작성자와 로그인 회원이 같을 경우 */}
-      <GoodsInfoEdit list ={goodsInfoList}></GoodsInfoEdit>
-      <GoodsOptionEdit goodsDedail={goodsOptionList} updateGoodsDetail={updateGoodsDetail}></GoodsOptionEdit>
-  </>:<>      {/* 작성자와 로그인 회원이 다를 경우 */}
-      <GoodsInfo list={goodsInfoList}></GoodsInfo>
-      <GoodsOption list={list}></GoodsOption></>}
+      {memberDto.nickName === nickName ? <> {/* 작성자와 로그인 회원이 같을 경우 */}
+        <GoodsInfoEdit list={goodsInfoList}></GoodsInfoEdit>
+        <GoodsOptionEdit goodsDedail={goodsOptionList} updateGoodsDetail={updateGoodsDetail}></GoodsOptionEdit>
+      </> : <>      {/* 작성자와 로그인 회원이 다를 경우 */}
+        <GoodsInfo list={goodsInfoList}></GoodsInfo>
+        <GoodsOption list={list}></GoodsOption></>}
 
-       </GoodsDetailCss>
+    </GoodsDetailCss>
   );
 };

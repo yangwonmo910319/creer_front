@@ -2,19 +2,19 @@ import React, { useState, useRef } from 'react';
 import { useEffect } from 'react';
 import styled, { keyframes, css } from 'styled-components';
 
-const Body =styled.div`
+const Body = styled.div`
 max-width: 1280px;
 width: 100%;
 height: auto;
 margin: 0 auto;
 `;
-const A =styled.div`
+const A = styled.div`
 width: 100%;
-height: 500px;
-margin-top: 100px;
+height: auto;
+margin-top: 10px;
 `;
 
-const A1 =styled.div`
+const A1 = styled.div`
 
 height:350px;
 width: 100%;
@@ -35,12 +35,12 @@ p{
   position: absolute;
   top: 100px;
   left: 150px;
-  ${({ bb })=>
+  ${({ bb }) =>
     bb == 0
-    ? css`
+      ? css`
             animation: slide 3s forwards;
           `
-        : css`
+      : css`
             animation: slide2 3s forwards;
           `};
   }
@@ -84,27 +84,28 @@ const Photo1 = styled.div`
   /* Additional styling or transform: translateX() can be added if needed */
 `;
 
-export const Slide2=()=> {
- const [position,setPosition ] =useState(0);
- const [asd,setasd ] =useState(20);
- const  onScroll=()=> {
+export const Slide2 = () => {
+  const [position, setPosition] = useState(0);
 
-setPosition(window.scrollY); }
-useEffect(()=>{
+  const onScroll = () => {
 
-window.addEventListener("scroll",onScroll);
-return ()=>{ 
-  window.removeEventListener("scroll",onScroll);
-}
+    setPosition(window.scrollY);
+  }
+  useEffect(() => {
 
-},[])
+    window.addEventListener("scroll", onScroll);
+    return () => {
+      window.removeEventListener("scroll", onScroll);
+    }
+
+  }, [])
   return (
-<Body>
-  <A><A1 bb={position}>
-    <Photo1 asdw={position}/><p>GjristMas Gifts</p>
-  </A1></A>
-     
-</Body>
+    <Body>
+      <A><A1 bb={position}>
+        <Photo1 asdw={position} /><p>GjristMas Gifts</p>
+      </A1></A>
+
+    </Body>
   );
 }
 

@@ -62,9 +62,9 @@ export const GoodsAxiosApi = {
   },
 
   // 상품 대표 이미지 넣기
-  insertGoodsImg: async (num,newUrl) => {
-    const goodsData = {     
-      goodsDetailId:num,
+  insertGoodsImg: async (num, newUrl) => {
+    const goodsData = {
+      goodsDetailId: num,
       goodsPic: newUrl,
     };
     const accessToken = localStorage.getItem("accessToken");
@@ -78,19 +78,7 @@ export const GoodsAxiosApi = {
       }
     );
   },
-  // 상품  이미지 모두 출력
- selectGoodsImg: async (num) => {
-    const accessToken = localStorage.getItem("accessToken");
-    return await axios.get(
-      KH_DOMAIN + `/api/Picture/list/${num}`,
-      {
-        headers: {
-          "Content-Type": "application/json",
-          Authorization: "Bearer " + accessToken,
-        },
-      }
-    );
-  },
+
 
 
 

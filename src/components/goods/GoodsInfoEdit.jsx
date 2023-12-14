@@ -6,6 +6,7 @@ import { ReviewAxiosApi } from "../../api/goods/ReviewAxiosApi";
 import { storage } from "../../api/FireBase";
 import { GoodsAxiosApi } from "../../api/goods/GoodsAxiosApi";
 import { SelectImg } from "./SelectImg";
+import { PictureAxiosApi } from "../../api/goods/PictureAxiosApi";
 const GoodsInfoCss = styled.div`
     width: 65%;
     height: auto;
@@ -18,20 +19,18 @@ const GoodsInfoCss = styled.div`
 `;
 
 const ImgCategory = styled.div`
-  border: 3px solid red;
   width: 95%;
   height: auto;
   display: flex;
-
+   flex-direction: column;
   .ImgCategory1{
-    width: 70%;
-    height: auto;
-    border: 3px solid blue;
+    width: 100%;
+    height: 470px;
   }
   .ImgCategory2{
-    width: 30%;
+    width: 100%;
     height: auto;
-    border: 3px solid yellowgreen;
+
   }
 `
 const ImgBox = styled.div`
@@ -45,6 +44,7 @@ const ImgBox = styled.div`
         display: flex;
         justify-content: center;
         img{
+          border: 1px solid rgba(171, 171, 171, 0.5);
         width: 400px;
         height: 400px;
     }
@@ -100,7 +100,7 @@ height: 600px;
 
 const NewImgBox = styled.div`
 width: 100%;
-height: 150px;
+height: auto;
 text-align: center;
 img{
   width: 150px;
@@ -134,27 +134,32 @@ const UploadLabel = styled.label`
 `;
 export const GoodsInfoEdit = ({ list }) => {
   const [goodsDetailId, goodsDesc, goodsPic, setGoodsDesc, setGoodsPic] = list;
+  //Modal Switch
   const [isReviewModalOpen, setIsReviewModalOpen] = useState(false);
+  //작성자와 로그인 유저 확인용
   const user = localStorage.getItem("userId");
+  //상품 대표 이미지
   const [url, setUrl] = useState(list[2]);
+  //상품 대표 이미지
+  const [mainurl, setMainUrl] = useState(list[2]);
+  //상품 대표 이미지 변경시 사용
   const [newUrl, setNewUrl] = useState('');
-  const [File, setFile] = useState("");
+  //리뷰 모달 닫기
   const closeReviewModal = () => {
     setIsReviewModalOpen(false);
   };
-  const descChage = (e) => {
-    setGoodsDesc(e.target.value)
-  }
+  //리뷰 모달 열기
   const openReviewModal = () => {
     setIsReviewModalOpen(true);
   }
-  useEffect(() => {
-  }, []);
+  //상품 정보 수정
+  const descChage = (e) => {
+    setGoodsDesc(e.target.value)
+  }
 
-
+  //파이어베이스 이미지 주소 받기
   const handleFileUpload = async (e) => {
     const selectedFile = e.target.files[0];
-    setFile(selectedFile);
     try {
       const storageRef = storage.ref();
       const fileRef = storageRef.child(selectedFile.name);
@@ -167,7 +172,8 @@ export const GoodsInfoEdit = ({ list }) => {
       console.error("Upload failed", error);
     }
   };
-//리뷰 추가
+
+  //리뷰 추가
   const reviewSubmit = async (reviewData) => {
     try {
       // 서버에 데이터 전송
@@ -188,15 +194,16 @@ export const GoodsInfoEdit = ({ list }) => {
   };
 
   //대표 이미지 추가
-  const imgUpload = async () => {         
+  const goodsimgUpload = async () => {
     try {
       // 서버에 데이터 전송
       const response = await GoodsAxiosApi.insertGoodsImg(
-      list[0],newUrl
+        list[0] // 상품 번호
+        , newUrl//새 이미지 주소
       );
       if (response.status === 200) {
         // 성공적으로 데이터가 전송되었으면, 리뷰 목록에 새 리뷰 추가    
-        closeReviewModal();
+        window.location.reload();
       } else {
         // 서버에서 응답이 오지 않거나, 응답의 상태 코드가 200이 아닌 경우 에러 처리
         console.error("서버 응답 실패");
@@ -208,36 +215,67 @@ export const GoodsInfoEdit = ({ list }) => {
   }
 
 
+  //상품 이미지 추가
+  const imgUpload = async () => {
+    try {
+      // 서버에 데이터 전송
+      const response = await PictureAxiosApi.insertGoodsImg(
+        list[0],
+        newUrl
+      );
+      if (response.status === 200) {
+        // 성공적으로 데이터가 전송되었으면, 리뷰 목록에 새 리뷰 추가    
+        window.location.reload();
+      } else {
+        // 서버에서 응답이 오지 않거나, 응답의 상태 코드가 200이 아닌 경우 에러 처리
+        console.error("서버 응답 실패");
+      }
+    } catch (error) {
+      // 네트워크 요청 중에 오류가 발생한 경우 에러 처리
+      console.error("submit review 데이터에러 :", error);
+    }
+
+  }
+  const imgview = (e) => {
+    setUrl(e)
+  }
+
   return (
     <GoodsInfoCss>
-     <ImgCategory>
-     <div className="ImgCategory1">
-      <ImgBox>
-        <div className="mainImg">
-          <img src={url} alt="대표 이미지" />
+      <ImgCategory>
+        <div className="ImgCategory1">
+          <ImgBox>
+            <div className="mainImg">
+              <img src={url} alt="대표 이미지" />
+            </div>
+          </ImgBox>
         </div>
-      </ImgBox>
-      <NewImgBox>
-        {newUrl && <>
-          <img src={newUrl} alt="새 이미지" />
-        </>
-        }
-      </NewImgBox>
-      <UploadContainer>
-        <UploadLabel>
-          대표 이미지 넣기
-          <UploadInput type="file" onChange={handleFileUpload} />
-        </UploadLabel>
-        <UploadLabel>
-          확인
-          <UploadInput type="button" onClick={imgUpload} />
-        </UploadLabel>
-      </UploadContainer>
-      </div>
-      <div className="ImgCategory2">
-        <SelectImg num={list[0]}>          
-        </SelectImg>
+        <div className="ImgCategory2">
+          <SelectImg num={list[0]} url={mainurl} imgview={imgview}>
+          </SelectImg>
         </div>
+        <NewImgBox>
+          {newUrl && <>
+            <img src={newUrl} alt="새 이미지" />
+          </>
+          }
+        </NewImgBox>
+        <UploadContainer>
+          <UploadLabel>
+            파일 선택
+            <UploadInput type="file" onChange={handleFileUpload} />
+          </UploadLabel>
+          <UploadLabel>
+            대표 이미지로 저장
+            <UploadInput type="button" onClick={goodsimgUpload} />
+          </UploadLabel>
+          <UploadLabel>
+            상품 이미지로 저장
+            <UploadInput type="button" onClick={imgUpload} />
+          </UploadLabel>
+        </UploadContainer>
+
+
       </ImgCategory>
       <InfoCategory>
         <ul>

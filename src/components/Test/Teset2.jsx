@@ -1,7 +1,7 @@
 import { useState } from "react";
 import styled, { css } from "styled-components";
 
-const Test2Css=styled.div`   
+const Test2Css = styled.div`   
 display:  grid;
 grid-template-columns: 400px 400px 400px;
         grid-template-rows: 400px 400px 400px;
@@ -76,7 +76,7 @@ grid-template-columns: 400px 400px 400px;
 
 .a5{
     width:100%;
-    background: linear-gradient(to right, gold 0%, rgba(0,0,0,0) 50%, pink 100%);
+
     grid-area: a5;
     transition: width 3s;
 
@@ -102,8 +102,8 @@ const A6Styled = styled.div`
   transform: scaleX(1); /* Initial width */
 
   ${(props) =>
-    props.asd &&
-    css`
+        props.asd &&
+        css`
     width:40%;
     height:100%;
     margin-left: 240px;
@@ -114,22 +114,22 @@ const A6Styled = styled.div`
     `}
 `;
 
-const Test2 =()=>{
+const Test2 = () => {
     const elements = [];
     const [isMouseDown, setIsMouseDown] = useState(false);
-return <Test2Css>
-   <div className="a1"><div className="a11"></div> </div>
-   <div className="a2"> </div>
-   <div className="a3"> </div>
-   <div className="a4"> </div>
-   <div className="a5"
-        isMouseDown={isMouseDown}
-        onMouseDown={() => setIsMouseDown(!isMouseDown)}
-      ></div>
-   <A6Styled  className="a6" asd={isMouseDown}> </A6Styled >
-   <div className="a7"> </div>
-   {elements}
-</Test2Css>
+    return <Test2Css>
+        <div className="a1"><div className="a11"></div> </div>
+        <div className="a2"> </div>
+        <div className="a3"> </div>
+        <div className="a4"> </div>
+        <div className="a5"
+            isMouseDown={isMouseDown}
+            onMouseDown={() => setIsMouseDown(!isMouseDown)}
+        ></div>
+        <A6Styled className="a6" asd={isMouseDown}> </A6Styled >
+        <div className="a7"> </div>
+        {elements}
+    </Test2Css>
 
 }
 export default Test2;

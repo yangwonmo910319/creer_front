@@ -2,7 +2,7 @@ import { useState } from "react";
 import { useNavigate } from "react-router";
 import styled, { css } from "styled-components";
 
-const Contetn3Item1Css=styled.div`
+const Contetn3Item1Css = styled.div`
 
 width: 100%; 
 .metn2{
@@ -177,99 +177,99 @@ const Slider = styled.div`
 `;
 
 const slides = [
-    { url:"https://d24y2yfxh2iebm.cloudfront.net/resized/thumbnail/classImages/26dab311-e421-48d3-bcb6-4c1b28494837", target: "C1", title: " 패션", ment:"   "},
-    { url:"https://modo-phinf.pstatic.net/20200316_27/15843311254216wzG4_JPEG/mosa42HKAJ.jpeg?type=w1100", target: "C14" , title:"가구", ment:"  "},
-    { url:"https://img.khan.co.kr/news/2020/11/26/l_2020112601003012200255941.jpg", target: "C20", title:"간식", ment:''},
-    { url:"https://qi-o.qoo10cdn.com/goods_image_big/6/9/0/0/8622526900c_l.jpg", target: "C6" , title:"인형", ment:" '"},
-    { url:"https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSBJByDIyipaCFz9yGBXbydiaJrWx8DgWaCUQ&usqp=CAU", target: "C24" , title:"캔들", ment:" "},
-    { url:"https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcS83dU-HEEUvnXptUu_ogAtm7FNtO_7QwuN2OSgiE-qsMl0_BF__l2rKXWL8K9MUWcXz2E&usqp=CAU", target: "C33" , title:"반려", ment:""},
-    { url:"https://ko.ljwoodencrafts.com/uploads/202131986/handmade-colorful-carved-wooden-square07517091653.jpg", target: "C9" , title:"공예", ment:""}
+    { url: "https://d24y2yfxh2iebm.cloudfront.net/resized/thumbnail/classImages/26dab311-e421-48d3-bcb6-4c1b28494837", target: "C1", title: " 패션", ment: "   " },
+    { url: "https://modo-phinf.pstatic.net/20200316_27/15843311254216wzG4_JPEG/mosa42HKAJ.jpeg?type=w1100", target: "C14", title: "가구", ment: "  " },
+    { url: "https://img.khan.co.kr/news/2020/11/26/l_2020112601003012200255941.jpg", target: "C20", title: "간식", ment: '' },
+    { url: "https://qi-o.qoo10cdn.com/goods_image_big/6/9/0/0/8622526900c_l.jpg", target: "C6", title: "인형", ment: " '" },
+    { url: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSBJByDIyipaCFz9yGBXbydiaJrWx8DgWaCUQ&usqp=CAU", target: "C24", title: "캔들", ment: " " },
+    { url: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcS83dU-HEEUvnXptUu_ogAtm7FNtO_7QwuN2OSgiE-qsMl0_BF__l2rKXWL8K9MUWcXz2E&usqp=CAU", target: "C33", title: "반려", ment: "" },
+    { url: "https://ko.ljwoodencrafts.com/uploads/202131986/handmade-colorful-carved-wooden-square07517091653.jpg", target: "C9", title: "공예", ment: "" }
 ];
 
 
-export const SlideImg=()=>{
+export const SlideImg = () => {
     const [animate, setAnimate] = useState(true);//트루면 작동
     const onStop = () => setAnimate(false);
     const onRun = () => setAnimate(true);
     const navigate = useNavigate();
-    const GoodsLink =(couse)=>{      
-        window.localStorage.setItem("CourseArea",couse);
+    const GoodsLink = (couse) => {
+        window.localStorage.setItem("CourseArea", couse);
         navigate("/Course/Info");
     }
-return(
-    <>
-    <Contetn3Item1Css>
-        <div className="metn2">
-        <Slider>
-            <div className="slide_container">
-              
-                <ul
-                    className="slide_wrapper"
-                    onMouseEnter={onStop}//마우스 대면멈춤
-                    onMouseLeave={onRun}//마우스 떠나면움직음
-                >
-                    <div 
-                        className={"slide original".concat(
-                            animate ? "" : " stop"
-                        )}
-                    >
-                        {slides.map((s, i) => (
-                            <li
-                                key={i}
-                                className={"big" }
-                                onClick={()=>GoodsLink(s.target)}
-                            >
-                            <div className="lb-wrap">
-                                <div className="lb-text">
-                                    <h2>{s.title}</h2>                               
-                                </div>
-                                <div className="lb-text2">                             
-                                     <p>{s.ment}</p>
-                                </div>
-                            </div>
+    return (
+        <>
+            <Contetn3Item1Css>
+                <div className="metn2">
+                    <Slider>
+                        <div className="slide_container">
 
+                            <ul
+                                className="slide_wrapper"
+                                onMouseEnter={onStop}//마우스 대면멈춤
+                                onMouseLeave={onRun}//마우스 떠나면움직음
+                            >
                                 <div
-                                    className="item"
-                                     style={{ backgroundImage: `url(${s.url})`,  backgroundPosition: 'center'}}
-                                ></div>
+                                    className={"slide original".concat(
+                                        animate ? "" : " stop"
+                                    )}
+                                >
+                                    {slides.map((s, i) => (
+                                        <li
+                                            key={i}
+                                            className={"big"}
+                                            onClick={() => GoodsLink(s.target)}
+                                        >
+                                            <div className="lb-wrap">
+                                                <div className="lb-text">
+                                                    <h2>{s.title}</h2>
+                                                </div>
+                                                <div className="lb-text2">
+                                                    <p>{s.ment}</p>
+                                                </div>
+                                            </div>
 
-                            </li>
-                        ))}
-                    </div>
-                    <div
-                        className={"slide clone".concat(animate ? "" : " stop")}
-                    >
-                        {slides.map((s, i) => (
-                            <li
-                                key={i}
-                                className={"big"}
-                                onClick={()=>GoodsLink(s.title)}
-                            >
-                             <div className="lb-wrap">
-                             <div className="lb-text">
-                                    <h2>{s.title}</h2>                               
-                                </div>
-                                <div className="lb-text2">                             
-                                     <p>{s.ment}</p>
-                                </div>
-                            </div>
-                                                                    
-                            <div
-                                className="item"
-                                style={{ backgroundImage: `url(${s.url})`,  backgroundPosition: 'center'}}
-                            ></div>
-                            </li>
-                        ))}
-                    </div>
-                </ul>
-            </div>
-        </Slider>
-        </div>
-    
+                                            <div
+                                                className="item"
+                                                style={{ backgroundImage: `url(${s.url})`, backgroundPosition: 'center' }}
+                                            ></div>
 
-    </Contetn3Item1Css>
-   
-    </>
-)
+                                        </li>
+                                    ))}
+                                </div>
+                                <div
+                                    className={"slide clone".concat(animate ? "" : " stop")}
+                                >
+                                    {slides.map((s, i) => (
+                                        <li
+                                            key={i}
+                                            className={"big"}
+                                            onClick={() => GoodsLink(s.title)}
+                                        >
+                                            <div className="lb-wrap">
+                                                <div className="lb-text">
+                                                    <h2>{s.title}</h2>
+                                                </div>
+                                                <div className="lb-text2">
+                                                    <p>{s.ment}</p>
+                                                </div>
+                                            </div>
+
+                                            <div
+                                                className="item"
+                                                style={{ backgroundImage: `url(${s.url})`, backgroundPosition: 'center' }}
+                                            ></div>
+                                        </li>
+                                    ))}
+                                </div>
+                            </ul>
+                        </div>
+                    </Slider>
+                </div>
+
+
+            </Contetn3Item1Css>
+
+        </>
+    )
 
 }
