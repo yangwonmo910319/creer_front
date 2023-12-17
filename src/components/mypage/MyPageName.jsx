@@ -15,6 +15,7 @@ export const MyPageName = () => {
     pw: "",
     email: "",
   });
+
   //모달창 제어
   const [rst, setRst] = useState(false);
   const closeModal = () => {

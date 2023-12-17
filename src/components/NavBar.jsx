@@ -66,8 +66,9 @@ const Login = styled.div``;
 
 export const NavBar = () => {
   const navigate = useNavigate();
-  const [name, setName] = useState();
   const [member, setMember] = useState({});
+
+  // 로그인 판별을 위한 상태
   const [login, setlogin] = useState(window.localStorage.getItem("isLogin"));
 
   useEffect(() => {
@@ -78,38 +79,33 @@ export const NavBar = () => {
 
   useEffect(() => {
     const getMember = async () => {
+      // 로컬 스토리지에서 액세스 토큰 읽기
       const accessToken = Common.getAccessToken();
+
       try {
+        // 로그인한 해당 회원의 상세 정보 조회
         const rsp = await MemberAxiosApi.memberGetOne();
         setMember(rsp.data);
-        setName(rsp.data.name);
-        //로그인시 유저 닉네임 저장
-        console.log("네비바");
-        console.log(rsp.data);
-        console.log("네비바");
         window.localStorage.setItem("NickName", rsp.data.nickName);
       } catch (e) {
-        // 엑세스토큰 유효기간 지나면 401
+        // 엑세스토큰 유효기간 지나면 401 에러가 발생
         if (e.response.status === 401) {
-          alert("리플레쉬 도전");
+          alert("액세스 토큰이 만료됐습니다!");
           // 리플레쉬토큰으로 재발급 받기
           await Common.handleUnauthorized();
           const newToken = Common.getAccessToken();
-
-          // if (newToken !== accessToken) {
-          //   const rsp = await MemberAxiosApi.memberGetOne();
-          //   setMember(rsp.data);
-          //   setName(rsp.data.name);
-          // }
         }
       }
     };
     getMember();
-  }, [name]);
+  }, []);
 
   const logout = () => {
+    // 로컬 스트리지 비우기
     localStorage.clear();
     window.location.reload();
+
+    // 카카오 로그인 초기화를 위한 쿠키 제거
   };
 
   return (
@@ -123,6 +119,7 @@ export const NavBar = () => {
                 <li>
                   <div
                     onClick={() => {
+                      localStorage.clear();
                       navigate("/Login");
                     }}
                   >
@@ -132,7 +129,8 @@ export const NavBar = () => {
                 <li>
                   <div
                     onClick={() => {
-                      navigate("/Signup");
+                      localStorage.clear();
+                      navigate("/SignUp");
                     }}
                   >
                     회원가입
@@ -143,9 +141,28 @@ export const NavBar = () => {
               <ul>
                 <li>
                   <h1 style={{ fontWeight: "bold" }}>
-                    {member.name}님 환영합니다!
+                    {member.nickName}님 환영합니다!
                   </h1>
                 </li>
+
+                <br />
+
+                <li
+                  onClick={() => {
+                    navigate("/MyPage");
+                  }}
+                >
+                  마이 페이지
+                </li>
+
+                <li
+                  onClick={() => {
+                    navigate("/Cart");
+                  }}
+                >
+                  장바구니
+                </li>
+
                 <li>
                   <div
                     onClick={() => {
@@ -191,20 +208,10 @@ export const NavBar = () => {
                 경매
               </div>
             </li>
-            <li>
-              {/* <div
-                onClick={() => {
-                  navigate("/class");
-                }}
-              >
-                클래스
-              </div> */}
-            </li>
           </ul>
         </div>
         <div className="content2ul2">
           <StyledSearch />
-          <p style={{ marginTop: "10px" }}>장바구니</p>
         </div>
       </div>
     </NavCss>

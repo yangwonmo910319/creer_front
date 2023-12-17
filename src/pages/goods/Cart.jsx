@@ -1,7 +1,6 @@
 // 장바구니 페이지
 import React, { useEffect, useState } from "react";
 import styled from "styled-components";
-import { useUser } from "../../contexts/Context";
 import cartImg from "../../images/cart.png";
 import { GoodsAxiosApi } from "../../api/goods/GoodsAxiosApi";
 import { CartAxiosApi } from "../../api/goods/CartAxiosApi";
@@ -47,16 +46,14 @@ const BookCard = styled.div`
 export const Cart = ({}) => {
   const [cartItems, setCartItems] = useState([]);
   const [checkedItems, setCheckedItems] = useState([]);
-  const { user, checkLoginStatus } = useUser();
+  const { member, setMember } = useState("");
 
   useEffect(() => {
-    if (user) {
+    if (member) {
       fetchCartItems();
     }
-  }, [user]);
-  useEffect(() => {
-    checkLoginStatus();
-  }, []);
+  }, [member]);
+
   useEffect(() => {
     console.log(cartItems); // 상태 업데이트 후의 장바구니 항목 출력
   }, [cartItems]);
@@ -71,7 +68,10 @@ export const Cart = ({}) => {
   const isChecked = (bookId) => checkedItems.includes(bookId);
   const purchaseSelected = async () => {
     try {
-      const response = await GoodsAxiosApi.purchaseBooks(user.id, checkedItems);
+      const response = await GoodsAxiosApi.purchaseBooks(
+        member.id,
+        checkedItems
+      );
       console.log(checkedItems);
       console.log(response); // 서버로부터의 응답 출력
       if (response.status === 200 && response.data) {
@@ -89,7 +89,7 @@ export const Cart = ({}) => {
 
   const fetchCartItems = async () => {
     try {
-      const response = await CartAxiosApi.getCartItems(user.id);
+      const response = await CartAxiosApi.getCartItems(member.id);
       console.log(response.data); // 응답 출력
       if (response.status === 200) {
         const cartItemsWithBookInfo = await Promise.all(
@@ -132,7 +132,7 @@ export const Cart = ({}) => {
 
   const removeFromCart = async (bookId) => {
     try {
-      const response = await CartAxiosApi.removeFromCart(user.id, bookId);
+      const response = await CartAxiosApi.removeFromCart(member.id, bookId);
       console.log(response); // 서버로부터의 응답 출력
       if (response.status === 200) {
         if (window.confirm("장바구니에서 해당 책을 삭제하시겠습니까?")) {

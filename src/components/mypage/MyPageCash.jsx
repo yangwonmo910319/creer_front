@@ -8,7 +8,6 @@ import {
   CashTag,
 } from "./MyPageComp";
 import { MyPageAxiosApi } from "../../api/member/MyPageAxiosApi";
-import { useUser } from "../../contexts/Context";
 import { Modal } from "../../utils/member/MyPageModal";
 import KAKAO from "../../images/kakao.png";
 import NAVER from "../../images/naver.png";
@@ -18,7 +17,7 @@ import SH from "../../images/sh.png";
 import WOORI from "../../images/woori.png";
 
 export const MyPageCash = () => {
-  const { user } = useUser();
+  const [member, setMember] = useState("");
   const [cash, setCash] = useState();
   const [clickName, setClickName] = useState("");
   //모달창 제어
@@ -38,8 +37,8 @@ export const MyPageCash = () => {
   };
   const onClickCharge = async () => {
     try {
-      const charge = await MyPageAxiosApi.chargeAmout(user.id, cash);
-      console.log("금액충전" + user.id);
+      const charge = await MyPageAxiosApi.chargeAmout(member.id, cash);
+      console.log("금액충전" + member.id);
       console.log(cash);
       if (charge.data === true) {
         console.log("현금이 충전되었습니다.");

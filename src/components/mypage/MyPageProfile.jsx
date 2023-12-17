@@ -1,12 +1,10 @@
 import React, { useState } from "react";
 import { storage } from "../../api/FireBase";
 import { ImageSubmit, ImageSection, ImageUpload } from "./MyPageComp";
-import { useUser } from "../../contexts/Context";
 import { MyPageAxiosApi } from "../../api/member/MyPageAxiosApi";
 
 export const MyPageProfileImage = () => {
-  const { user } = useUser();
-
+  const [member, setMember] = useState("");
   const [file, setFile] = useState(null);
   const [url, setUrl] = useState("");
 
@@ -36,7 +34,7 @@ export const MyPageProfileImage = () => {
       fileRef.getDownloadURL().then((url) => {
         console.log("저장경로 확인 : " + url);
         setUrl(url);
-        saveImageUrlToDatabase(user.id, url);
+        saveImageUrlToDatabase(member.id, url);
       });
     });
   };

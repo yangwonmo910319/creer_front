@@ -17,8 +17,8 @@ import {
   CloseButton,
 } from "../../components/mypage/MyPageComp";
 import { MyPageID } from "../../components/mypage/MyPageID";
-import { useUser } from "../../contexts/Context";
 import { useNavigate } from "react-router-dom";
+import { MemberAxiosApi } from "../../api/member/MemberAxiosApi";
 import { MyPageAxiosApi } from "../../api/member/MyPageAxiosApi";
 import { Modal } from "../../utils/member/MyPageModal";
 import { MyPageProfileImage } from "../../components/mypage/MyPageProfile";
@@ -44,40 +44,27 @@ export const reducer = (data, action) => {
 };
 
 export const MyPage = () => {
+  const [member, setMember] = useState("");
   const navigate = useNavigate();
-  // 로그인 정보를 받아오는 context
-  const { checkLoginStatus, isLoggedin, user, token } = useUser();
-  // 회원정보 조회
   const [memberInformation, setMemberInfo] = useState("");
   const [modal, setModal] = useState(false);
   const closeModal = () => {
     setModal(false);
     navigate("/");
   };
-  useEffect(() => {
-    checkLoginStatus(() => {
-      if (!token) {
-        setModal(true);
-      }
-    });
-  }, [token]);
 
   useEffect(() => {
-    const memberInfo = async () => {
-      if (isLoggedin && user) {
-        const rsp = await MyPageAxiosApi.memberGet(user.id);
-        if (rsp.status === 200) {
-          console.log(rsp.data[0].profileUrl);
-          console.log(user.id);
-          setMemberInfo(rsp.data[0]);
-          console.log("회원 정보 2" + memberInformation.profileUrl);
-        }
+    const getMember = async () => {
+      const rsp = await MemberAxiosApi.memberGetOne();
+      // 이전 member 값과 비교하여 변경되었을 때만 처리
+      if (rsp.data.nickName !== member.nickName) {
+        setMember(rsp.data);
+        console.log("이름 : " + rsp.data.nickName);
+        window.localStorage.setItem("NickName", rsp.data.nickName);
       }
     };
-    if (user && user.id) {
-      memberInfo();
-    }
-  }, [user, token]); // 의존성 배열에 user 추가
+    getMember();
+  }, [member]); // 의존성 배열에 member 추가
 
   // 초기 상태 설정
   const [rightIdInfo, setRightIdInfo] = useState(true);

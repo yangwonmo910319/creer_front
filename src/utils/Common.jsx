@@ -6,10 +6,12 @@ moment.locale("ko"); // 한글 설정 적용
 export const KH_DOMAIN = "http://localhost:8111";
 export const KH_SOCKET_URL = "ws://localhost:8111/ws/chat";
 
+// 입력을 기준으로 시간이 얼마나 지났는지 반환
 export const timeFromNow = (timestamp) => {
   return moment(timestamp).fromNow();
 };
 
+// 입력된 날짜 문자열을 년월일시분 형식으로 포맷팅
 export const formatDate = (dateString) => {
   const date = new Date(dateString);
   const year = date.getFullYear();
@@ -19,7 +21,6 @@ export const formatDate = (dateString) => {
   const minute = ("0" + date.getMinutes()).slice(-2);
   return `${year}년 ${month}월 ${day}일 ${hour}시 ${minute}분`;
 };
-
 
 export const Common = {
   getAccessToken: () => {
@@ -35,7 +36,7 @@ export const Common = {
     localStorage.setItem("refreshToken", token);
   },
 
-  // 401 에러 처리 함수
+  // 액세스 토큰이 만료됐을 때, 리프레시 토큰을 통해 액세스 토큰과 리프레시 토큰을 모두 재발급
   handleUnauthorized: async () => {
     const refreshToken = Common.getRefreshToken();
     const accessToken = Common.getAccessToken();
