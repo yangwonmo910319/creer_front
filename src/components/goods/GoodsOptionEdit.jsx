@@ -3,8 +3,11 @@ import styled, { css } from "styled-components";
 import { GoodsAxiosApi } from "../../api/goods/GoodsAxiosApi";
 import { useNavigate } from "react-router-dom";
 import { CheckModal } from "../../utils/goods/CheckModal";
+import { OptionBox } from "./OptionBox";
+import { Buybox } from "./Buybox";
 
 const GoodsOptionCss = styled.div`
+
     width: 35%;
     height: auto;
     @media (max-width: 768px) {
@@ -24,8 +27,7 @@ border-bottom: 1px solid rgba(136, 136, 136, 0.673);
     /* justify-content: center; */
    align-items: center;
 margin-top: 20px;
- 
-  
+
 `;
 
 const Seller1 = styled.div`
@@ -39,7 +41,7 @@ const Seller1 = styled.div`
 
 const Seller2 = styled.div`
 
-  width:75%;
+  width:calc(100% - 100px);
     display: flex;
     position: relative; 
     flex-direction: column;
@@ -49,6 +51,7 @@ const Seller2 = styled.div`
 
 `;
 const Optionimage = styled.div`  
+
    img{
     border-radius: 50px;
     border: 1px solid #a5a5a5;
@@ -58,25 +61,26 @@ const Optionimage = styled.div`
    }
 `;
 const OptionNick = styled.div`
+width: 100%;
   position: absolute;
     padding: 10px;
   left: 0;
   top: -25px;
 `;
 const OptionCategory = styled.div`
-background:#d8d3d3d9;
-border-radius: 20px;
-width: 50px;
-height: 20px;
-display: flex;
-justify-content: center;
-align-items: center;
+width: 300px;
+height: 20px;  border: 2px solid red;
+input{
+  width: 200px;
+}
 
 `;
 
 const OptionTitleEdit = styled.div`
+width: 100%;
 input{
-font-size: 1.5em;
+  width:80%;
+font-size: 1.5em; border: 2px solid red;
 line-height: 1.2em;
 padding-bottom: 20px;
 }
@@ -89,21 +93,27 @@ padding-left: 10px;
 
 `;
 const OptionPrice = styled.div`
+width: 100%;
 position: relative;
 margin-top: 20px;
 right:0;
 font-size: 1.5em;
 margin-right: 100px;
 input{
+  width: 70%;
   font-size: 1em;
   height: 40px;
+   border: 2px solid red;
 }
 `;
 const GoodsDeliveryFee = styled.div`
 font-size: 1em;
+width: 100%;
 margin-top: 10px;
 input{
   font-size: 1em;
+  width: 73%;
+   border: 2px solid red;
 }
 `;
 
@@ -112,8 +122,11 @@ font-size: 1em;
 margin-top: 10px;
 padding-bottom: 20px;
 border-bottom: 1px solid rgba(136, 136, 136, 0.673);
+width: 100%;
 input{
   font-size: 1em;
+  width: 65%;
+   border: 2px solid red;
 }
 `;
 
@@ -125,12 +138,9 @@ display: flex;
 flex-direction: column;
 align-items: center;
 
-.option1 , .option2{
-    width: 60%;
-    height: 25px;
-    background-color: #fbf3d8;
-    margin: 6px;
-    border-radius: 10px;
+.option1 {
+    width: 90%;
+    height: auto;
 }
 .sell{
 
@@ -139,6 +149,7 @@ align-items: center;
     width: 60%;
     height   :80px ;
     margin: 0;
+
     .sell1-1 ,.sell1-2 {
         width: 110px;
         height:80px;
@@ -179,8 +190,9 @@ align-items: center;
 }
 `;
 export const GoodsOptionEdit = ({ goodsDedail, updateGoodsDetail }) => {
-  const [list, setGoodsTitle, setGoodsPrice, setGoodsRefund, setGoodsDeliveryFee, setMemberDto] = goodsDedail;
+  const [list, setGoodsTitle, setGoodsPrice, setGoodsRefund, setGoodsDeliveryFee, setGoodsCategory, setMemberDto] = goodsDedail;
   const [goodsTitle, setGoodsTitle1] = useState('');
+  const [goodsCategory, setGoodsCategory1] = useState('');
   const [goodsPrice, setGoodsPrice1] = useState('');
   const [goodsRefund, setGoodsRefund1] = useState('');
 
@@ -194,6 +206,7 @@ export const GoodsOptionEdit = ({ goodsDedail, updateGoodsDetail }) => {
     setGoodsPrice1(list.goodsPrice)
     setGoodsRefund1(list.goodsRefund)
     setGoodsDeliveryFee1(list.goodsDeliveryFee)
+    setGoodsCategory1(list.goodsCategory)
   }, [list])
   //삭제 버튼을 누르면 실행
   const deleteGoodsDetail = () => {
@@ -227,12 +240,16 @@ export const GoodsOptionEdit = ({ goodsDedail, updateGoodsDetail }) => {
     setGoodsPrice1(e.target.value)
     setGoodsPrice(e.target.value);
   };
-
+  const GoodsCategoryChange = (e) => {
+    setGoodsCategory1(e.target.value)
+    setGoodsCategory(e.target.value);
+  };
 
   const revertChanges = () => {
     setGoodsTitle1(list.goodsTitle)
     setGoodsPrice1(list.goodsPrice)
     setGoodsRefund1(list.goodsRefund)
+    setGoodsCategory1(list.goodsCategory)
     setGoodsDeliveryFee1(list.goodsDeliveryFee)
     setRender(!render)
   }
@@ -240,27 +257,32 @@ export const GoodsOptionEdit = ({ goodsDedail, updateGoodsDetail }) => {
 
   return (
     <GoodsOptionCss>
-      <OptionCategory>{list.goodsCategory}</OptionCategory>
+      <OptionCategory>카테고리:<input type="text" value={goodsCategory} onChange={GoodsCategoryChange} /></OptionCategory>
       <Seller>
-        <Seller1>   <Optionimage>{list.memberDto && <img src={list.memberDto.name} ></img>}</Optionimage></Seller1>
+        <Seller1>   <Optionimage>{list.memberDto && <img src={list.memberDto.image} alt="{}" ></img>}</Optionimage></Seller1>
         <Seller2><OptionNick>{list.memberDto && list.memberDto.nickName}</OptionNick>
           <OptionTitleEdit><input type="text" value={goodsTitle} onChange={GoodsTitleChange} /></OptionTitleEdit>
         </Seller2>
       </Seller>
       <Delivery>
-        <OptionPrice><input type="text" value={goodsPrice} onChange={GoodsPriceChange} /></OptionPrice>
+        <OptionPrice>가격:<input type="text" value={goodsPrice} onChange={GoodsPriceChange} /></OptionPrice>
         <GoodsDeliveryFee>배송: <input type="text" value={goodsRefund} onChange={GoodsRefundChange} /></GoodsDeliveryFee>
         <GoodsRefund>배송 시작: <input type="text" value={goodsDeliveryFee} onChange={GoodsDeliveryFeeChange} /></GoodsRefund>
 
       </Delivery>
 
       <Option>
-        <div className="option1"> 추가 예정</div>
-        <div className="option2"> 추가 예정</div>
-        <div className="sell">
-          <div className="sell1-1"> 구매 하기</div>
-          <div className="sell1-2"> 장바구니</div>
+        <div className="option1">
+
+          <OptionBox list={list.options} list2={list}>
+
+          </OptionBox>
+
+
         </div>
+
+
+
         <div className="sell1-3"> 판매자와 채팅</div>
         {/* <div className="sell1-4" onClick={() => updateGoodsDetail()}> 수정 완료</div> */}
         <div className="sell1-4" onClick={() => setIsCheckModalOpen(!isCheckModalOpen)}> 수정 완료</div>

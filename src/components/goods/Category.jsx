@@ -1,6 +1,7 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import styled, { css } from "styled-components";
-
+import { GoodsAxiosApi } from "../../api/goods/GoodsAxiosApi";
+import { useNavigate, useParams } from "react-router-dom";
 const ListItem = styled.li`
   width: 70px;
   height: 70px;
@@ -28,19 +29,63 @@ margin: 0 auto;
     height: 100%; 
   }
 `;
-
-export const Category = ({ setCategory }) => {
+export const Category = ({ setList }) => {
   const [selectedCategory, setSelectedCategory] = useState(null);
-
+  const { title } = useParams();
+  const navigate = useNavigate();
+  const [reset, setReset] = useState(false);
   const handleCategoryClick = (category) => {
     setSelectedCategory(category);
-    setCategory(category);
+    categoryLIst((category));
+  }
+  const AllClick = (category) => {
+    setSelectedCategory(category);
+    setReset(!reset);
+    navigate('/')
   }
 
+  //모든 상품 리스트 출력
+  useEffect(() => {
+
+    if (title === undefined || title === null) {
+      const InsertGoodsLIst = async () => {
+        try {
+          const rsp = await GoodsAxiosApi.getGoodsList();
+          console.log(rsp.data);
+          setList(rsp.data)
+        } catch (error) {
+          console.log(error);
+        }
+      };
+      InsertGoodsLIst();
+    } else {
+      const titleLIst = async (title) => { // 여기서 파라미터를 title로 받음
+        try {
+          const rsp = await GoodsAxiosApi.titleList(title);
+          console.log(rsp.data);
+          setList(rsp.data);
+        } catch (error) {
+          console.log(error);
+        }
+      };
+      titleLIst(title); // title 파라미터 전달
+    }
+  }, [reset, title])
+
+  //카페고리 별 리스트 출력
+  const categoryLIst = async (category) => {
+    try {
+      const rsp = await GoodsAxiosApi.categoryList(category);
+      console.log(rsp.data);
+      setList(rsp.data)
+    } catch (error) {
+      console.log(error);
+    }
+  };
   return (
     <CategoryCss>
       <ul>
-        <ListItem selected={selectedCategory === "all"} onClick={() => handleCategoryClick("all")}><p>전체</p></ListItem>
+        <ListItem selected={selectedCategory === "all"} onClick={() => AllClick("all")}><p>전체</p></ListItem>
         <ListItem selected={selectedCategory === "fashion"} onClick={() => handleCategoryClick("fashion")}><p>패션</p></ListItem>
         <ListItem selected={selectedCategory === "jewelry"} onClick={() => handleCategoryClick("jewelry")}><p>쥬얼리</p></ListItem>
         <ListItem selected={selectedCategory === "furniture"} onClick={() => handleCategoryClick("furniture")}><p>가구</p></ListItem>
@@ -49,6 +94,7 @@ export const Category = ({ setCategory }) => {
         <ListItem selected={selectedCategory === "kids"} onClick={() => handleCategoryClick("kids")}><p>아동</p></ListItem>
         <ListItem selected={selectedCategory === "craft"} onClick={() => handleCategoryClick("craft")}><p>공예</p></ListItem>
       </ul>
+
     </CategoryCss>
   )
 }

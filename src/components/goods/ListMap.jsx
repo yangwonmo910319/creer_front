@@ -102,8 +102,7 @@ const ClassCategory = styled.div`
 `;
 
 export const ListMap = ({ list }) => {
-   console.log(list)
-   console.log("list")
+
    return (
       <ListMapCss>
          {list && list.map((item, index) => (

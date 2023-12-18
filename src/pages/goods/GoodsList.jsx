@@ -5,6 +5,7 @@ import { useEffect, useState } from "react"
 import { GoodsAxiosApi } from "../../api/goods/GoodsAxiosApi"
 import styled from "styled-components"
 import { Slide2 } from "../../components/home/Slide2"
+import { useParams } from "react-router-dom"
 
 const GoodsListCss = styled.div`
   width: 100%;
@@ -14,22 +15,7 @@ const GoodsListCss = styled.div`
 `;
 
 export const GoodsList = () => {
-  const [category, setCategory] = useState('all');
   const [list, setList] = useState();
-  useEffect(() => {
-    //모든 상품 리스트 출력
-    const InsertGoodsLIst = async () => {
-      try {
-        const rsp = await GoodsAxiosApi.getGoodsList();
-        console.log(rsp.data);
-        setList(rsp.data);
-      } catch (error) {
-        console.log(error);
-      }
-    };
-    InsertGoodsLIst();
-  }, [category])
-
   return (
 
     <GoodsListCss>
@@ -38,8 +24,7 @@ export const GoodsList = () => {
       <SlideOne />
       <Slide2></Slide2>
       {/* 판매 리스트 카테고리 */}
-      <Category setCategory={setCategory} />
-
+      <Category setList={setList} />
       {/* 판매 리스트 출력 */}
       <ListMap list={list}></ListMap>
 

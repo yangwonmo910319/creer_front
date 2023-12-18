@@ -34,7 +34,18 @@ export const GoodsAxiosApi = {
       },
     });
   },
-
+   // 상품 추가
+  insertGoods: async (content ) => {    
+      const accessToken = localStorage.getItem("accessToken");
+      return await axios.post(
+        KH_DOMAIN + `/api/goods/new/`, content, {
+          headers: {
+            "Content-Type": "application/json",
+            Authorization: "Bearer " + accessToken,
+          },
+        }
+      );
+    },
   // 상품 수정
   updateGoods: async (goodsCategory, goodsDeliveryFee, goodsDesc, goodsDetailId, goodsPic, goodsPrice, goodsRefund, goodsTitle
   ) => {
@@ -79,53 +90,28 @@ export const GoodsAxiosApi = {
     );
   },
 
-
-
-
-
-
-  // 상품 추가
-  addGoods: async (GoodsToSave) => {
-    const response = await axios.post(KH_DOMAIN + "/Goods/admin", GoodsToSave);
-    return response;
+  // 카테고리 상품 검색
+  categoryList: async (keyword) => {
+    const accessToken = localStorage.getItem("accessToken");
+    return await axios.get(KH_DOMAIN + `/api/goods/list/tag/?keyword=${keyword}`, {
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: "Bearer " + accessToken,
+      },
+    });
   },
 
-  // 상품 존재 여부 확인
-  isGoodsexist: async (title, author) => {
-    const response = await axios.get(
-      KH_DOMAIN + `/Goods/isGoodsexist?title=${title}&author=${author}`
-    );
-    return response;
+  // 제목 상품 검색  
+  titleList: async (keyword) => {
+    const accessToken = localStorage.getItem("accessToken");
+    return await axios.get(KH_DOMAIN + `/api/goods/list/title/?keyword=${keyword}`, {
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: "Bearer " + accessToken,
+      },
+    });
   },
 
-  // 상품 구매 여부 확인
-  isGoodsBought: async (memberId, GoodsId) => {
-    const response = await axios.get(
-      KH_DOMAIN + `/Goods/isGoodsbought?memberId=${memberId}&GoodsId=${GoodsId}`
-    );
-    return response;
-  },
-  // 회원이 구매한 상품 목록
-  getBoughtGoods: async (userId) => {
-    const response = await axios.get(
-      `${KH_DOMAIN}/buy/boughtGoods?memberId=${userId}`
-    );
-    return response;
-  },
 
-  // 상품 삭제
-  deleteBuyGoods: async (buyId) => {
-    const response = await axios.delete(`${KH_DOMAIN}/buy/${buyId}`);
-    return response.data;
-  },
-  // 상품 정보 가져오기
-  getGoodsInfo: async (goodsId) => {
-    return await axios.get(`${KH_DOMAIN}/goods/${goodsId}`);
-  },
-  // 상품 구매
-  purchaseGoods: async (memberId, goodsId) => {
-    return await axios.post(
-      `${KH_DOMAIN}/goods/purchase/${memberId}/${goodsId}`
-    );
-  },
+
 };

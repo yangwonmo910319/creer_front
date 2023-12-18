@@ -96,6 +96,7 @@ border: none;
 border-radius: 4px;
 font-size: 16px;
 height: 600px;
+border: 3px solid red;
 `;
 
 const NewImgBox = styled.div`
@@ -132,7 +133,7 @@ const UploadLabel = styled.label`
     background-color: #00648b;
   }
 `;
-export const GoodsInfoEdit = ({ list }) => {
+export const GoodsInfoEdit = ({ list, reply }) => {
   const [goodsDetailId, goodsDesc, goodsPic, setGoodsDesc, setGoodsPic] = list;
   //Modal Switch
   const [isReviewModalOpen, setIsReviewModalOpen] = useState(false);
@@ -151,6 +152,7 @@ export const GoodsInfoEdit = ({ list }) => {
   //리뷰 모달 열기
   const openReviewModal = () => {
     setIsReviewModalOpen(true);
+
   }
   //상품 정보 수정
   const descChage = (e) => {
@@ -290,8 +292,9 @@ export const GoodsInfoEdit = ({ list }) => {
           onChange={descChage} placeholder="내용"></InfoDesc>
 
         {/* 리뷰 출력 */}
-        <ReviewComp goodsNum={list[0]}
+        <ReviewComp goodsNum={list[0]} reply={reply}
           openReviewModal={openReviewModal}></ReviewComp>
+
         {/* 리뷰 작성 Madal */}
         <ReviewModal
           isOpen={isReviewModalOpen}

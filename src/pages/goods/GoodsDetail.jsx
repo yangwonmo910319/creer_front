@@ -36,21 +36,26 @@ export const GoodsDetail = () => {
   const [goodsTitle, setGoodsTitle] = useState("");
   const [memberDto, setMemberDto] = useState("");
   const nickName = localStorage.getItem("NickName");
+
+
   // 상품 정보를 가져옵니다.
   useEffect(() => {
     //함수 만들기
-    const InsertGoodsLIst = async () => {
+    const SelectGoodsLIst = async () => {
       try {
         const rsp = await GoodsAxiosApi.getGoods(num);
+        // 상품 정보를 가져옵니다.
+        console.log("상품 상세정보");
         console.log(rsp.data);
         //가져온 데이터를 저장
         setList(rsp.data);
+
       } catch (error) {
         console.log(error);
       }
     };
     //함수 실행
-    InsertGoodsLIst();
+    SelectGoodsLIst();
   }, [num]);
   //가져온 상품 정보를 각각의 저장해 줍니다.
   useEffect(() => {
@@ -116,16 +121,19 @@ export const GoodsDetail = () => {
     setGoodsPrice,
     setGoodsRefund,
     setGoodsDeliveryFee,
+    setGoodsCategory,
     setMemberDto,
   ];
+
   return (
     <GoodsDetailCss>
       {memberDto.nickName === nickName ? <> {/* 작성자와 로그인 회원이 같을 경우 */}
-        <GoodsInfoEdit list={goodsInfoList}></GoodsInfoEdit>
+        <GoodsInfoEdit list={goodsInfoList} reply={list.reviews}></GoodsInfoEdit>
         <GoodsOptionEdit goodsDedail={goodsOptionList} updateGoodsDetail={updateGoodsDetail}></GoodsOptionEdit>
       </> : <>      {/* 작성자와 로그인 회원이 다를 경우 */}
         <GoodsInfo list={goodsInfoList}></GoodsInfo>
-        <GoodsOption list={list}></GoodsOption></>}
+        <GoodsOption list={list}></GoodsOption>
+      </>}
 
     </GoodsDetailCss>
   );

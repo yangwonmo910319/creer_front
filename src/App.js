@@ -18,6 +18,7 @@ function App() {
           <Route element={<Main />}>
             {/* <Route path="/" element={<Home />}></Route>      */}
             <Route path="/" element={<GoodsList />}></Route>
+            <Route path="/:title" element={<GoodsList />}></Route>
             <Route path="/Goods/:num" element={<GoodsDetail />}></Route>
             <Route path="/AuctionList" element={<AuctionList />}></Route>
             <Route path="/Cart" element={<Cart />}></Route>

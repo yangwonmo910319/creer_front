@@ -79,35 +79,14 @@ export const StyledSearch = () => {
   const [search, setSearch] = useState("");
   const navigate = useNavigate();
 
-  const searchBook = async () => {
-    if (!search) {
-      return;
-    }
-
-    const result = await axios.get(
-      "https://www.googleapis.com/books/v1/volumes",
-      {
-        params: {
-          q: search,
-          key: "AIzaSyBZeJKPL9ccyGsvYo3_JA5OHw6ohKwGGgw", // 보안에 문제
-          maxResults: 20, // 한 페이지당 10개의 결과를 가져오도록 설정
-        },
-      }
-    );
-
-    // 검색 결과를 local storage에 저장합니다.
-    localStorage.setItem("searchResult", JSON.stringify(result.data));
-
-    // 검색 결과 페이지로 이동합니다.
-    navigate("/SearchResult");
-
-    // 검색 결과창에서 새로운 검색어를 입력했을때를 위한 처리
-    window.location.reload(); // 페이지 새로고침
+  const searchTitle = async () => {
+    navigate(`/` + search);
+    setSearch('')
   };
 
   const handleKeyPress = (e) => {
     if (e.key === "Enter") {
-      searchBook();
+      searchTitle();
     }
   };
 
@@ -121,7 +100,7 @@ export const StyledSearch = () => {
           </SearchIcon>
           <Input
             type="text"
-            placeholder="원하는 책을 입력해 주세요"
+            placeholder="검색어를 입력해 주세요"
             value={search}
             onChange={(e) => setSearch(e.target.value)}
             onKeyDown={handleKeyPress}
@@ -131,7 +110,7 @@ export const StyledSearch = () => {
           </MicIcon>
         </SearchMode>
         <StyledButton
-          onClick={searchBook}
+          onClick={searchTitle}
           value="검색"
           width="80px"
           height="40px"
