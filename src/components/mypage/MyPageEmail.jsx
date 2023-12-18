@@ -2,7 +2,6 @@ import { useState, useReducer } from "react";
 import { reducer } from "../../pages/member/MyPage";
 import { InputBox, InputTag, InpuTitle, MyPageButton } from "./MyPageComp";
 import { useNavigate } from "react-router-dom/dist";
-import sha256 from "sha256";
 import { Modal } from "../../utils/member/MyPageModal";
 import { MyPageAxiosApi } from "../../api/member/MyPageAxiosApi";
 
@@ -64,7 +63,8 @@ export const MyPageEmail = () => {
       )
     ) {
       dispatch({ type: "Pw", value: inputPw });
-      const hashedPassword = sha256(inputPw).toString();
+      // const hashedPassword = sha256(inputPw).toString();
+      const hashedPassword = inputPw;
       dispatch({ type: "Pw", value: hashedPassword });
       setPwMsg("유효합니다.");
       setCheckPw(true);
@@ -195,6 +195,15 @@ export const MyPageEmail = () => {
               />
             </InpuTitle>
             <p>{msgPw}</p>
+
+            <InpuTitle>
+              <InputBox
+                placeholder="이메일"
+                type="text"
+                onChange={onChangeEmail}
+              />
+            </InpuTitle>
+            <p>{msgEmail}</p>
 
             <MyPageButton onClick={onClickCheck} disabled={!allChecksTrue()}>
               정보 확인

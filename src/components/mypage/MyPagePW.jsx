@@ -2,7 +2,6 @@ import { useState, useReducer } from "react";
 import { reducer } from "../../pages/member/MyPage";
 import { InputBox, InputTag, InpuTitle, MyPageButton } from "./MyPageComp";
 import { useNavigate } from "react-router-dom/dist";
-import sha256 from "sha256";
 import { MyPageAxiosApi } from "../../api/member/MyPageAxiosApi";
 import { Modal } from "../../utils/member/MyPageModal";
 
@@ -65,7 +64,8 @@ export const MyPagePW = () => {
         inputPw
       )
     ) {
-      const hashedPassword = sha256(inputPw).toString();
+      // const hashedPassword = sha256(inputPw).toString();
+      const hashedPassword = inputPw;
       dispatch({ type: "Pw", value: hashedPassword });
       setPwMsg("유효합니다.");
       setCheckPw(true);
@@ -144,7 +144,8 @@ export const MyPagePW = () => {
   const [checkTrue, setCheckTrue] = useState(false);
   const onClickModifyPw = async () => {
     try {
-      const hashedPassword = sha256(newPw).toString();
+      //   const hashedPassword = sha256(inputPw).toString();
+      const hashedPassword = "5555";
       const chPw = await MyPageAxiosApi.modifyPW(data.pw, hashedPassword);
       console.log("newPw의 값:", hashedPassword); // newId의 값을 확인
       console.log("제출된 비밀번호가 잘 찍혔습니다." + chPw.data);
