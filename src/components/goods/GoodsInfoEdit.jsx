@@ -7,6 +7,7 @@ import { storage } from "../../api/FireBase";
 import { GoodsAxiosApi } from "../../api/goods/GoodsAxiosApi";
 import { SelectImg } from "./SelectImg";
 import { PictureAxiosApi } from "../../api/goods/PictureAxiosApi";
+import * as DOMPurify from 'dompurify';
 const GoodsInfoCss = styled.div`
     width: 65%;
     height: auto;
@@ -90,13 +91,17 @@ ul{
     }
 }
 `;
-const InfoDesc = styled.textarea`
+const InfoDescCss = styled.div`
 width: 99%; 
 border: none;
 border-radius: 4px;
 font-size: 16px;
 height: 600px;
 border: 3px solid red;
+img{
+  width: 100%; 
+  height: auto;
+}
 `;
 
 const NewImgBox = styled.div`
@@ -119,6 +124,8 @@ const UploadContainer = styled.div`
 const UploadInput = styled.input`
   display: none;
 `;
+
+
 
 const UploadLabel = styled.label`
   display: inline-block;
@@ -238,10 +245,15 @@ export const GoodsInfoEdit = ({ list, reply }) => {
     }
 
   }
+
   const imgview = (e) => {
     setUrl(e)
   }
 
+  const InfoDesc = ({ value }) => {
+    const processedDesc = DOMPurify.sanitize(value);
+    return <div dangerouslySetInnerHTML={{ __html: processedDesc }} />;
+  }
   return (
     <GoodsInfoCss>
       <ImgCategory>
@@ -288,9 +300,18 @@ export const GoodsInfoEdit = ({ list, reply }) => {
       </InfoCategory>
       <InfoBox>
         {/* 상품 정보 표시 */}
-        <InfoDesc value={goodsDesc}
-          onChange={descChage} placeholder="내용"></InfoDesc>
+        <InfoDescCss>
+          <InfoDesc value={(goodsDesc)}
+            placeholder="내용"></InfoDesc>
+        </InfoDescCss>
 
+        <div
+          style={{
+            width: "100px",
+            whiteSpace: "normal",
+          }}
+
+        />
         {/* 리뷰 출력 */}
         <ReviewComp goodsNum={list[0]} reply={reply}
           openReviewModal={openReviewModal}></ReviewComp>

@@ -69,7 +69,8 @@ width: 100%;
 `;
 const OptionCategory = styled.div`
 width: 300px;
-height: 20px;  border: 2px solid red;
+height: 20px; 
+ border: 2px solid red;
 input{
   width: 200px;
 }
