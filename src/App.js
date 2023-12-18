@@ -1,4 +1,5 @@
 import "./App.css";
+
 import { BrowserRouter, Route, Routes } from "react-router-dom";
 import { Main } from "./components/Main";
 import { SignUp } from "./pages/member/SignUp";
@@ -8,6 +9,8 @@ import { MyPage } from "./pages/member/MyPage";
 import { GoodsList } from "./pages/goods/GoodsList";
 import { GoodsDetail } from "./pages/goods/GoodsDetail";
 import { AuctionList } from "./pages/aution/AuctionList";
+import { GoodsWrite } from "./pages/goods/GoodsWrite";
+
 function App() {
   return (
     <>
@@ -15,11 +18,14 @@ function App() {
         <Routes>
           <Route path="/Signup" element={<SignUp />}></Route>
           <Route path="/Login" element={<Login />}></Route>
+        
+         
           <Route element={<Main />}>
             {/* <Route path="/" element={<Home />}></Route>      */}
             <Route path="/" element={<GoodsList />}></Route>
             <Route path="/:title" element={<GoodsList />}></Route>
             <Route path="/Goods/:num" element={<GoodsDetail />}></Route>
+            <Route path="/GoodsWrite" element={<GoodsWrite />}></Route>
             <Route path="/AuctionList" element={<AuctionList />}></Route>
             <Route path="/Cart" element={<Cart />}></Route>
             <Route path="/MyPage" element={<MyPage />}></Route>

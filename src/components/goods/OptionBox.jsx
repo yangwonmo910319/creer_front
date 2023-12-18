@@ -7,7 +7,6 @@ import { Buybox } from "./Buybox";
 
 const OptionBoxCss = styled.div`
   width  :100% ;
-  border:1px solid red;
   height: 500px;
   ul{
       width  :100% ;
@@ -26,7 +25,6 @@ const OptionBoxCss = styled.div`
 const Status = styled.div`
 width: 100%;
 height: 30px;
-border: 1px solid blue;
 margin-left:10px;
 .btn1{ 
   width:30px;
@@ -38,12 +36,10 @@ margin: 0;
 const OptionBoxCss1 = styled.div`
 width: 100%;
 height: auto;
-border: 1px solid blue;
 `;
 const OptionBoxCss2 = styled.div`
 width: 100%;
 height: auto;
-border: 1px solid yellow;
 `;
 const OptionNum = styled.div`
 width: 100%;
@@ -57,7 +53,7 @@ margin-top: 10px;
 export const OptionBox = ({ list, list2 }) => {
   const [expandedOption, setExpandedOption] = useState(null);
   //수량
-  const [quantity, setQuantity] = useState('1');
+  const [quantity, setQuantity] = useState(1);
   //내가 선택한 옵션
   const [optionList, setOptionList] = useState([]);
   //list로 넘어온 옵션 리스트들을 종류별로 나눔
@@ -85,6 +81,7 @@ export const OptionBox = ({ list, list2 }) => {
       setExpandedOption(key);
     }
     //selectedOption을 받은 경우
+
     if (selectedOption) {
 
       setOptionList(prevState => {

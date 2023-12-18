@@ -8,14 +8,19 @@ import { PurchaseAxiosApi } from "../../api/goods/PurchaseAxiosApi";
 
 
 
-
+const BuyboxCss = styled.div`
+margin-top: 50px;
+ justify-content: space-around;
+display: flex;
+`;
 const Btn1 = styled.div`
     width: 100px;
-    height: 60px;
+    height: 45px;
+    border-radius: 10px;
     display: flex;
     justify-content: center;
     align-items: center;
-    background: red;
+    background: #fcd3d3;
 `;
 
 
@@ -66,9 +71,10 @@ export const Buybox = ({ list, optionList, quantity1 }) => {
     }
   };
   return (
-    <>
+    <BuyboxCss>
       <Btn1 onClick={submit}>    구매하기</Btn1>
       <Btn1 onClick={submit}>    장바구니</Btn1>
-    </>
+      <Btn1 onClick={submit}>    판매자와<br></br> 채팅</Btn1>
+    </BuyboxCss>
   )
 }

@@ -2,11 +2,13 @@
 import { storage } from "../../api/FireBase";
 import { useEffect, useState } from "react";
 import { GoodsInfoEdit } from "../../components/goods/GoodsInfoEdit"
-import { GoodsOptionEdit } from "../../components/goods/GoodsOptionEdit" 
+import { GoodsOptionEdit } from "../../components/goods/GoodsOptionEdit"
 import { GoodsAxiosApi } from "../../api/goods/GoodsAxiosApi";
 import styled from "styled-components";
 import { PictureAxiosApi } from "../../api/goods/PictureAxiosApi";
-
+import { QuillText } from "../../components/goods/QuillText";
+import { OptionWriteBox } from "../../components/goods/OptionWriteBox";
+import { OptionAxiosApi } from "../../api/goods/OptionAxiosApi";
 
 
 const GoodsWriteCss = styled.div`
@@ -245,7 +247,7 @@ const Delivery = styled.div`
 width: 100%;
 height: auto;
 position:relative;
-padding-left: 10px;
+
 
 `;
 const OptionPrice = styled.input`
@@ -282,12 +284,10 @@ display: flex;
 flex-direction: column;
 align-items: center;
 
-.option1 , .option2{
-    width: 60%;
-    height: 25px;
-    background-color: #fbf3d8;
-    margin: 6px;
-    border-radius: 10px;
+.option1 {
+  width: 100%;
+    height: auto;
+    margin-top: 30px;
 }
 .sell{
     display: flex;
@@ -334,61 +334,76 @@ align-items: center;
 
 }
 `;
-export const GoodsWrite=()=>{
-    const [goodsCategory, setGoodsCategory] = useState("");
-    const [goodsDeliveryFee, setGoodsDeliveryFee] = useState("");
-    const [goodsDesc, setGoodsDesc] = useState("");
-    const [goodsPic, setGoodsPic] = useState("");
-    const [goodsPrice, setGoodsPrice] = useState("");
-    const [goodsRefund, setGoodsRefund] = useState("");
-    const [goodsTitle, setGoodsTitle] = useState("");
-    const nickName = localStorage.getItem("NickName");
-    const UserImg = localStorage.getItem("UserImg");
-    //상품 대표 이미지
-    const [url, setUrl] = useState('');
-    //상품 대표 이미지 변경시 사용
-    const [mainUrl, setMainUrl] = useState('');
-   //상품 대표 이미지 변경시 사용
-    const [subUrl, setSubUrl] = useState([]);
-    // 상품 정보를 가져옵니다.
-    useEffect(() => {    
-    }, [subUrl]);
-   const submit=async()=>{
-      const content={ goodsCategory,      // 카테고리
-     goodsPic,        // 상품 사진    ,
-       goodsDesc  ,        // 상품 설명
-     goodsRefund   ,      // 상품 배송/환불/교환 안내
-      goodsTitle  ,        // 상품 이름      
-     goodsPrice  ,        // 상품 가격
+export const GoodsWrite = () => {
+  const [goodsCategory, setGoodsCategory] = useState("");
+  const [goodsDeliveryFee, setGoodsDeliveryFee] = useState("");
+  const [goodsDesc, setGoodsDesc] = useState("");
+  const [goodsPic, setGoodsPic] = useState("");
+  const [goodsPrice, setGoodsPrice] = useState("");
+  const [goodsRefund, setGoodsRefund] = useState("");
+  const [goodsTitle, setGoodsTitle] = useState("");
+  const [content2, setContent2] = useState([]);
+  const nickName = localStorage.getItem("NickName");
+  const UserImg = localStorage.getItem("UserImg");
+  //상품 대표 이미지
+  const [url, setUrl] = useState('');
+  //상품 대표 이미지 변경시 사용
+  const [mainUrl, setMainUrl] = useState('');
+  //상품 대표 이미지 변경시 사용
+  const [subUrl, setSubUrl] = useState([]);
+  // 상품 정보를 가져옵니다.
+  useEffect(() => {
+  }, [subUrl]);
+  const submit = async () => {
+    const content = {
+      goodsCategory,      // 카테고리
+      goodsPic,        // 상품 사진    ,
+      goodsDesc,        // 상품 설명
+      goodsRefund,      // 상품 배송/환불/교환 안내
+      goodsTitle,        // 상품 이름      
+      goodsPrice,        // 상품 가격
       goodsDeliveryFee,  // 배달비
-      }
-            //대표 이미지 추가
-     
-  try {
-  const response = await GoodsAxiosApi.insertGoods(content);
-  console.log("response.data");
-  console.log(response.data);
-  console.log("response.data");
-  const num = response.data;
-
-  if (response.status === 200) {
-    for (let i = 0; i < subUrl.length; i++) {
-      const response2 = await PictureAxiosApi.insertGoodsImg(num, subUrl[i]);
     }
+    //대표 이미지 추가
 
-     
-         
-      } else {
-        // 서버에서 응답이 오지 않거나, 응답의 상태 코드가 200이 아닌 경우 에러 처리
-        console.error("서버 응답 실패");
+    try {
+      const response = await GoodsAxiosApi.insertGoods(content);
+      //작성한 글의 PK를 가져옴
+      const num = response.data;
+      // 새로운 속성을 추가한 새로운 배열
+      const updatedArray = content2.map(item => {
+        return {
+          ...item, // 기존의 객체 속성을 그대로 유지하면서
+          goodsDetailId: num  // 새로운 속성을 추가합니다.
+        };
+      });
+
+      if (response.status === 200) {
+        const response3 = await OptionAxiosApi.insertOption(num, updatedArray);
+        for (let i = 0; i < subUrl.length; i++) {
+          //받은 PK에 사진을 저장
+          const response2 = await PictureAxiosApi.insertGoodsImg(num, subUrl[i]);
+        }
+
+
       }
-    } catch (error) {
+    }
+    catch (error) {
       // 네트워크 요청 중에 오류가 발생한 경우 에러 처리
       console.error("submit review 데이터에러 :", error);
       console.log(error)
     }
-   }
-     //파이어베이스 이미지 주소 받기
+  }
+
+
+
+
+
+
+
+
+
+  //파이어베이스 이미지 주소 받기
   const handleFileUpload = async (e) => {
     const selectedFile = e.target.files[0];
     try {
@@ -403,112 +418,113 @@ export const GoodsWrite=()=>{
       console.error("Upload failed", error);
     }
   };
-  const MainImgChange = () =>{
-     setMainUrl(url)
-     setGoodsPic(url)
-     setUrl('')
-    
+  const MainImgChange = () => {
+    setMainUrl(url)
+    setGoodsPic(url)
+    setUrl('')
+
   }
-const subImgAdd=()=>{
-  setSubUrl(prevState => [...prevState, url]);
-   console.log(subUrl)
-}
-const deleteImg=(index)=>{
-  const updatedSubUrl = subUrl.filter((_, i) => i !== index);
-  setSubUrl(updatedSubUrl);
-}
-    return(
-        <GoodsWriteCss>
-         <GoodsInfoCss>
-      <ImgCategory>
-        <div className="ImgCategory1">
-          <ImgBox>
-            <div className="mainImg">
-              <img src={mainUrl} alt="대표 이미지" />
-            </div>
-          </ImgBox>
-        </div>
-        <div className="ImgCategory2">
-        {subUrl&&subUrl.map((url, index) => (
-        <img key={index} src={url} alt={`Image ${index}`} onClick={()=>{deleteImg(index)}} />
-      ))}
-        </div>
-        <NewImgBox>          
+  const subImgAdd = () => {
+    setSubUrl(prevState => [...prevState, url]);
+    console.log(subUrl)
+  }
+  const deleteImg = (index) => {
+    const updatedSubUrl = subUrl.filter((_, i) => i !== index);
+    setSubUrl(updatedSubUrl);
+  }
+  return (
+    <GoodsWriteCss>
+      <GoodsInfoCss>
+        <ImgCategory>
+          <div className="ImgCategory1">
+            <ImgBox>
+              <div className="mainImg">
+                <img src={mainUrl} alt="대표 이미지" />
+              </div>
+            </ImgBox>
+          </div>
+          <div className="ImgCategory2">
+            {subUrl && subUrl.map((url, index) => (
+              <img key={index} src={url} alt={`Image ${index}`} onClick={() => { deleteImg(index) }} />
+            ))}
+          </div>
+          <NewImgBox>
             <img src={url} alt="새 이미지" />
-      
-     
-        </NewImgBox>
-        <UploadContainer>
-          <UploadLabel>
-            파일 선택
-            <UploadInput type="file"  onChange={handleFileUpload} />
-          </UploadLabel>
-          <UploadLabel>
-            대표 이미지로 저장
-            <UploadInput type="button" onClick={MainImgChange}  />
-          </UploadLabel>
-          <UploadLabel>
-            상품 이미지로 저장
-            <UploadInput type="button" onClick={subImgAdd} />
-          </UploadLabel>
-        </UploadContainer>
 
 
-      </ImgCategory>
-      <InfoCategory>
-        <ul>
-          <li>소개</li>
-          <li>댓글</li>
-          <li>판매자</li>
-        </ul>
-      </InfoCategory>
-      <InfoBox>
-        {/* 상품 정보 표시 */}
-        <InfoDesc value={goodsDesc} onChange={(e)=>{setGoodsDesc(e.target.value)}} placeholder="내용"></InfoDesc>
+          </NewImgBox>
+          <UploadContainer>
+            <UploadLabel>
+              파일 선택
+              <UploadInput type="file" onChange={handleFileUpload} />
+            </UploadLabel>
+            <UploadLabel>
+              대표 이미지로 저장
+              <UploadInput type="button" onClick={MainImgChange} />
+            </UploadLabel>
+            <UploadLabel>
+              상품 이미지로 저장
+              <UploadInput type="button" onClick={subImgAdd} />
+            </UploadLabel>
+          </UploadContainer>
 
-    
-      </InfoBox>
+
+        </ImgCategory>
+        <InfoCategory>
+          <ul>
+            <li>소개</li>
+            <li>댓글</li>
+            <li>판매자</li>
+          </ul>
+        </InfoCategory>
+        <InfoBox>
+          {/* 상품 정보 표시 */}
+          <QuillText goodsDesc={goodsDesc} setGoodsDesc={setGoodsDesc}>
+
+          </QuillText>
 
 
-    </GoodsInfoCss>
+        </InfoBox>
 
-    <GoodsOptionCss>
-      <OptionCategory type="text" value={goodsCategory} onChange={(e)=>{setGoodsCategory(e.target.value)}} placeholder="카테고리 :"> 
-      </OptionCategory>
-      <Seller>
-        <Seller1>  
-          <img src={UserImg}></img>
-        </Seller1>
-        <Seller2>
+
+      </GoodsInfoCss>
+
+      <GoodsOptionCss>
+        <OptionCategory type="text" value={goodsCategory} onChange={(e) => { setGoodsCategory(e.target.value) }} placeholder="카테고리 :">
+        </OptionCategory>
+        <Seller>
+          <Seller1>
+            <img src={UserImg}></img>
+          </Seller1>
+          <Seller2>
             <OptionNick>{nickName && nickName}</OptionNick>
-          <OptionTitleEdit type="text" value={goodsTitle} onChange={(e)=>{setGoodsTitle(e.target.value)}} placeholder="제목 :" />
-        </Seller2>
-      </Seller>
-      <Delivery>
-        <OptionPrice type="text" value={goodsPrice} onChange={(e)=>{setGoodsPrice(e.target.value)}} placeholder=" 가격 :" />
-        <GoodsDeliveryFee type="text" value={goodsDeliveryFee} onChange={(e)=>{setGoodsDeliveryFee(e.target.value)}} placeholder=" 배송 :" />
-        <GoodsRefund type="text" value={goodsRefund} onChange={(e)=>{setGoodsRefund(e.target.value)}} placeholder=" 배송 시작 :" />
+            <OptionTitleEdit type="text" value={goodsTitle} onChange={(e) => { setGoodsTitle(e.target.value) }} placeholder="제목 :" />
+          </Seller2>
+        </Seller>
+        <Delivery>
+          <OptionPrice type="text" value={goodsPrice} onChange={(e) => { setGoodsPrice(e.target.value) }} placeholder=" 가격 :" />
+          <GoodsDeliveryFee type="text" value={goodsDeliveryFee} onChange={(e) => { setGoodsDeliveryFee(e.target.value) }} placeholder=" 배송 :" />
+          <GoodsRefund type="text" value={goodsRefund} onChange={(e) => { setGoodsRefund(e.target.value) }} placeholder=" 배송 시작 :" />
 
-      </Delivery>
+        </Delivery>
 
-      <Option>
-        <div className="option1">
-        
-        </div>
-        <div className="option2"> 추가 예정</div>
-        <div className="sell">
-          <div className="sell1-1"> 구매 하기</div>
-          <div className="sell1-2"> 장바구니</div>
-        </div>
-      
-        
-        <div className="sell1-4" onClick={submit} > 작성 완료</div>
-      
-      </Option>
+        <Option>
+          <div className="option1">
+            <OptionWriteBox setContent2={setContent2}></OptionWriteBox>
+          </div>
+          <div className="sell">
+            <div className="sell1-1"> 구매 하기</div>
+            <div className="sell1-2"> 장바구니</div>
+          </div>
 
-    </GoodsOptionCss>
-        </GoodsWriteCss>
-    )
+
+          <div className="sell1-4" onClick={submit} > 작성 완료</div>
+
+        </Option>
+
+      </GoodsOptionCss>
+    </GoodsWriteCss>
+  )
 }
 
 
