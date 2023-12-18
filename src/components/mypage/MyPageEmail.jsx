@@ -6,7 +6,7 @@ import sha256 from "sha256";
 import { Modal } from "../../utils/member/MyPageModal";
 import { MyPageAxiosApi } from "../../api/member/MyPageAxiosApi";
 
-export const MyPageID = () => {
+export const MyPageEmail = () => {
   const navigate = useNavigate();
 
   const [data, dispatch] = useReducer(reducer, {
@@ -15,6 +15,7 @@ export const MyPageID = () => {
     pw: "",
     email: "",
   });
+
   //모달창 제어
   const [rst, setRst] = useState(false);
   const closeModal = () => {
@@ -160,10 +161,10 @@ export const MyPageID = () => {
                 borderBottom: "3px solid black",
               }}
             >
-              아이디 변경
+              이메일 변경
             </h1>
             <p>
-              아이디를 변경합니다. 회원 정보 확인을 위해서 회원의 이름, 아이디,
+              이메일을 변경합니다. 회원 정보 확인을 위해서 회원의 이름, 아이디,
               비밀번호, 이메일을 입력하세요.
             </p>
 
@@ -176,6 +177,7 @@ export const MyPageID = () => {
               />
             </InpuTitle>
             <p>{msgName}</p>
+
             <InpuTitle>
               <InputBox
                 placeholder="아이디"
@@ -184,6 +186,7 @@ export const MyPageID = () => {
               />
             </InpuTitle>
             <p>{msgId}</p>
+
             <InpuTitle>
               <InputBox
                 placeholder="비밀번호"
@@ -192,14 +195,7 @@ export const MyPageID = () => {
               />
             </InpuTitle>
             <p>{msgPw}</p>
-            <InpuTitle>
-              <InputBox
-                placeholder="이메일"
-                type="text"
-                onChange={onChangeEmail}
-              />
-            </InpuTitle>
-            <p>{msgEmail}</p>
+
             <MyPageButton onClick={onClickCheck} disabled={!allChecksTrue()}>
               정보 확인
             </MyPageButton>

@@ -169,7 +169,7 @@ export const MyPageName = () => {
                 borderBottom: "3px solid black",
               }}
             >
-              회원 정보 변경
+              이름 변경
             </h1>
             <p>
               회원님의 이름을 변경합니다. 회원 정보 확인을 위해서 회원의 이름,

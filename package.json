@@ -16,7 +16,6 @@
     "react-kakao-login": "^2.1.1",
     "react-router-dom": "^6.20.1",
     "react-scripts": "5.0.1",
-    "sha256": "^0.2.0",
     "styled-components": "^6.1.1",
     "styled-reset": "^4.5.1",
     "web-vitals": "^2.1.0"

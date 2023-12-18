@@ -103,6 +103,7 @@ export const NavBar = () => {
   const logout = () => {
     // 로컬 스트리지 비우기
     localStorage.clear();
+    navigate("/");
     window.location.reload();
 
     // 카카오 로그인 초기화를 위한 쿠키 제거

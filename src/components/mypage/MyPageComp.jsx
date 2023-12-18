@@ -93,17 +93,20 @@ export const ImageSection = styled.div`
     display: none;
   }
 `;
+
 // 이미지 등록
 export const ImageSubmit = styled.input`
   cursor: pointer;
   outline: none;
 `;
+
 // 이미지 업로드
 export const ImageUpload = styled.button`
+  color: black;
   cursor: pointer;
   outline: none;
 `;
-//
+
 // 정보 레이어
 export const InfoBox = styled.div`
   width: 80%;
@@ -276,6 +279,7 @@ export const SetButton = styled.button`
   border: 2px solid #888888;
   outline: none;
   background-color: white;
+  color: black;
   border-radius: 10px;
   transition: 0.13s ease-in-out;
   cursor: pointer;
@@ -295,6 +299,7 @@ export const MyPageButton = styled.button`
   padding: 0;
   border: 2px solid #888888;
   outline: none;
+  color: black;
   background-color: white;
   cursor: pointer;
 `;

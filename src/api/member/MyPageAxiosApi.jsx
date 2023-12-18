@@ -2,19 +2,27 @@ import axios from "axios";
 import { KH_DOMAIN } from "../../utils/Common";
 
 export const MyPageAxiosApi = {
-  //회원정보 조회
-  memberGet: async (id) => {
-    return await axios.get(KH_DOMAIN + `/users/member/?id=${id}`);
+  // 정보 수정을 위해서 입력 받은 정보들이 존재하는지 확인
+  memberCheck: async (email, name, password, phoneNum) => {
+    console.log("체크를 위한 정보", email, name, password, phoneNum);
+    return await axios.post(KH_DOMAIN + "/MyPage/checkInfo", {
+      email,
+      name,
+      password,
+      phoneNum,
+    });
   },
 
-  // 정보 수정을 위해서 입력 받은 정보들이 존재하는지 확인
-  memberCheck: async (name, id, pw, email) => {
-    console.log("체크를 위한 정보" + name, id, pw, email);
-    return await axios.get(
-      KH_DOMAIN +
-        `/users/checkInfo/?name=${name}&id=${id}&pw=${pw}&email=${email}`
-    );
+  // 회원 탈퇴
+  memberDel: async (email) => {
+    console.log("Axios : " + email);
+    const del = {
+      email,
+    };
+    console.log("회원 탈퇴를 위한 del 값이 잘 들어갔는지" + del.data);
+    return await axios.post(KH_DOMAIN + "/MyPage/delete", del);
   },
+
   // 정보 변경 전 정보 중복 체크
   checkedId: async (NewId) => {
     try {
@@ -22,7 +30,7 @@ export const MyPageAxiosApi = {
         id: NewId,
       };
       console.log("중복성 체크 아이디:" + NewId);
-      return await axios.post(KH_DOMAIN + "/users/checkId", checkId);
+      return await axios.post(KH_DOMAIN + "/MyPage/checkId", checkId);
     } catch (error) {
       throw error;
     }
@@ -38,7 +46,7 @@ export const MyPageAxiosApi = {
       console.log("현제 아이디" + currentId);
       console.log("새로운 아이디" + newId);
       // POST 요청을 보냅니다.
-      return await axios.post(KH_DOMAIN + "/users/updateId", updateId);
+      return await axios.post(KH_DOMAIN + "/MyPage/updateId", updateId);
     } catch (error) {
       console.error("ID 변경 중 오류 발생:", error);
       throw error;
@@ -55,7 +63,7 @@ export const MyPageAxiosApi = {
       console.log("현제 아이디" + currentPw);
       console.log("새로운 아이디" + newPw);
       // POST 요청을 보냅니다.
-      return await axios.post(KH_DOMAIN + "/users/updatePw", updatePw);
+      return await axios.post(KH_DOMAIN + "/MyPage/updatePw", updatePw);
     } catch (error) {
       console.error("ID 변경 중 오류 발생:", error);
       throw error;
@@ -71,41 +79,20 @@ export const MyPageAxiosApi = {
       console.log("현제 이름" + currentName);
       console.log("새로운 이름" + newName);
       // POST 요청을 보냅니다.
-      return await axios.post(KH_DOMAIN + "/users/updateName", updateName);
+      return await axios.post(KH_DOMAIN + "/MyPage/updateName", updateName);
     } catch (error) {
       console.error("ID 변경 중 오류 발생:", error);
       throw error;
     }
   },
 
-  // 회원 탈퇴
-  memberDel: async (delId) => {
-    console.log("Axios : " + delId);
-    const del = {
-      delId: delId,
-    };
-    console.log("회원 탈퇴를 위한 del 값이 잘 들어갔는지" + del.data);
-    return await axios.post(KH_DOMAIN + "/users/delete", del);
-  },
-
-  // 금액 충전
-  chargeAmout: async (id, cash) => {
-    const IntCash = parseInt(cash);
-    console.log(cash);
-    const charge = {
-      id: id,
-      cash: IntCash,
-    };
-    console.log(charge.data);
-    return await axios.post(KH_DOMAIN + "/users/charge", charge);
-  },
-
-  setImageUrl: async (id, url) => {
+  // 이미지 등록
+  setImageUrl: async (id, image) => {
     const setImageUrl = {
-      id: id,
-      url: url,
+      id,
+      image,
     };
-    console.log("axios url : " + url);
-    return await axios.post(KH_DOMAIN + "/users/setImage", setImageUrl);
+    console.log("axios url : " + image);
+    return await axios.post(KH_DOMAIN + "/MyPage/setImage", setImageUrl);
   },
 };
