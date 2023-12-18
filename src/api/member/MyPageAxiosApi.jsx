@@ -15,12 +15,12 @@ export const MyPageAxiosApi = {
 
   // 회원 탈퇴
   memberDel: async (email) => {
-    console.log("Axios : " + email);
-    const del = {
-      email,
-    };
-    console.log("회원 탈퇴를 위한 del 값이 잘 들어갔는지" + del.data);
-    return await axios.post(KH_DOMAIN + "/MyPage/delete", del);
+    console.log("회원 탈퇴할 회원의 이메일 : " + email);
+    return await axios.delete(KH_DOMAIN + "/MyPage/delete", {
+      headers: {
+        "X-Email": email,
+      },
+    });
   },
 
   // 정보 변경 전 정보 중복 체크

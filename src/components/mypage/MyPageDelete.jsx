@@ -137,7 +137,6 @@ export const MyPageDELETE = ({ id }) => {
       setMsg("유효하지 않습니다.");
       setCheckTrue(false);
     }
-    console.log("회원 탈퇴할 회원의 이메일 : " + delEmail);
   };
   const [checkTrue, setCheckTrue] = useState(false);
   const onClickDeleteId = async () => {
@@ -145,7 +144,12 @@ export const MyPageDELETE = ({ id }) => {
       const response = await MyPageAxiosApi.memberDel(delEmail);
       if (response.data === true) {
         setCheckTrue(true);
-        setRst(true); // Modal
+        setRst(true); // Modal : 회원 탈퇴에 성공했습니다.
+
+        // 로그아웃
+        localStorage.clear();
+        navigate("/");
+        window.location.reload();
       } else {
         setCheckTrue(false);
         alert("회원 탈퇴에 실패했습니다.");
