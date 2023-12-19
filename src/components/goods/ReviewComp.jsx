@@ -269,9 +269,7 @@ z-index: 4;
 `;
 
 export const ReviewComp = ({ goodsNum, openReviewModal, reply }) => {
-  console.log("reply");
-  console.log(reply);
-  console.log("reply");
+
   const [num, setNum] = useState(goodsNum)
   const [render, setRender] = useState(false)
   const [reviews, setReviews] = useState('');
@@ -439,7 +437,7 @@ export const ReviewComp = ({ goodsNum, openReviewModal, reply }) => {
 
                 </TextBox>
               </div>
-
+               
               <DeleteBox onClick={() => { deleteReview(item.goodsReviewId) }}>삭제 </DeleteBox>
 
             </li>

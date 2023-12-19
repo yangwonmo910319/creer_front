@@ -284,10 +284,7 @@ export const GoodsOption = ({ goodsDedail, updateGoodsDetail }) => {
 
 
 
-        <div className="sell1-3"> 판매자와 채팅</div>
-        {/* <div className="sell1-4" onClick={() => updateGoodsDetail()}> 수정 완료</div> */}
-        <div className="sell1-4" onClick={() => setIsCheckModalOpen(!isCheckModalOpen)}> 수정 완료</div>
-        <div className="sell1-4 sell1-5" onClick={() => deleteGoodsDetail()}> 글 삭제</div>
+        
       </Option>
       <CheckModal
         isOpen={isCheckModalOpen}
