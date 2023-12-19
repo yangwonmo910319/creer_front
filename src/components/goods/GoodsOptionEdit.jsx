@@ -70,7 +70,8 @@ width: 100%;
 const OptionCategory = styled.div`
 width: 300px;
 height: 20px; 
- border: 2px solid red;
+
+border: ${(props) => (props.goodsCategory === null || props.goodsCategory.length === 0 ? '3px solid red' : '3px solid   #03bf81')};
 input{
   width: 200px;
 }
@@ -79,9 +80,12 @@ input{
 
 const OptionTitleEdit = styled.div`
 width: 100%;
+
 input{
   width:80%;
-font-size: 1.5em; border: 2px solid red;
+font-size: 1.5em; 
+border: ${(props) => (props.goodsTitle === null || props.goodsTitle.length === 0 ? '3px solid red' : '3px solid   #03bf81')};
+
 line-height: 1.2em;
 padding-bottom: 20px;
 }
@@ -104,17 +108,20 @@ input{
   width: 70%;
   font-size: 1em;
   height: 40px;
-   border: 2px solid red;
+  
+border: ${(props) => (props.goodsPrice === null || props.goodsPrice.length === 0 ? '3px solid red' : '3px solid   #03bf81')};
 }
 `;
 const GoodsDeliveryFee = styled.div`
 font-size: 1em;
 width: 100%;
 margin-top: 10px;
+
+
 input{
   font-size: 1em;
   width: 73%;
-   border: 2px solid red;
+  border: ${(props) => (props.goodsDeliveryFee === null || props.goodsDeliveryFee.length === 0 ? '3px solid red' : '3px solid  #03bf81')};
 }
 `;
 
@@ -127,7 +134,8 @@ width: 100%;
 input{
   font-size: 1em;
   width: 65%;
-   border: 2px solid red;
+ 
+border: ${(props) => (props.goodsRefund === null || props.goodsRefund.length === 0 ? '3px solid red' : '3px solid  #03bf81')};
 }
 `;
 
@@ -258,17 +266,17 @@ export const GoodsOptionEdit = ({ goodsDedail, updateGoodsDetail }) => {
 
   return (
     <GoodsOptionCss>
-      <OptionCategory>카테고리:<input type="text" value={goodsCategory} onChange={GoodsCategoryChange} /></OptionCategory>
+      <OptionCategory goodsCategory={goodsCategory}>카테고리:<input type="text" value={goodsCategory} onChange={GoodsCategoryChange} /></OptionCategory>
       <Seller>
         <Seller1>   <Optionimage>{list.memberDto && <img src={list.memberDto.image} alt="{}" ></img>}</Optionimage></Seller1>
         <Seller2><OptionNick>{list.memberDto && list.memberDto.nickName}</OptionNick>
-          <OptionTitleEdit><input type="text" value={goodsTitle} onChange={GoodsTitleChange} /></OptionTitleEdit>
+          <OptionTitleEdit goodsTitle={goodsTitle}><input type="text" value={goodsTitle} onChange={GoodsTitleChange} /></OptionTitleEdit>
         </Seller2>
       </Seller>
       <Delivery>
-        <OptionPrice>가격:<input type="text" value={goodsPrice} onChange={GoodsPriceChange} /></OptionPrice>
-        <GoodsDeliveryFee>배송: <input type="text" value={goodsRefund} onChange={GoodsRefundChange} /></GoodsDeliveryFee>
-        <GoodsRefund>배송 시작: <input type="text" value={goodsDeliveryFee} onChange={GoodsDeliveryFeeChange} /></GoodsRefund>
+        <OptionPrice goodsPrice={goodsPrice}>가격:<input type="text" value={goodsPrice} onChange={GoodsPriceChange} /></OptionPrice>
+        <GoodsDeliveryFee goodsDeliveryFee={goodsDeliveryFee}>배송: <input type="text" value={goodsRefund} onChange={GoodsRefundChange} /></GoodsDeliveryFee>
+        <GoodsRefund goodsRefund={goodsRefund}>배송 시작: <input type="text" value={goodsDeliveryFee} onChange={GoodsDeliveryFeeChange} /></GoodsRefund>
 
       </Delivery>
 

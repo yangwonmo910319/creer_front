@@ -39,9 +39,7 @@ export const Buybox = ({ list, optionList, quantity1 }) => {
 
 
   const submit = () => {
-
     SelectGoodsLIst()
-
   }
   useEffect(() => {
     if (list !== null && optionList !== null && quantity1 !== null) {

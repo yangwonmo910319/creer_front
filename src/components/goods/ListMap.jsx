@@ -6,6 +6,7 @@ import { Link } from "react-router-dom";
 
 
 const ListItem = styled.li`
+
    width: 210px;
    height: auto;
    display: flex;
@@ -27,14 +28,14 @@ const ListMapCss = styled.ul`
    flex-wrap: wrap;  
    flex-direction: row;
    justify-content: start;
-   list-style: none;
- 
+   list-style: none; 
 `;
 const Class1 = styled.div`
    margin: 0 auto;
+   
    width: 200px;
    color: black;
-   height: 300px;
+   height: 260px;
    border: 1px solid #c3c3c3;
    padding: 10px;
    .member{
@@ -59,11 +60,12 @@ const Class1img = styled.div`
 
 
 const Class1Memberimg = styled.div`
+margin-top: 10px;
   border-radius: 50%;
 img{
    border-radius: 50%;
-   width: 45px;
-      height: 45px;
+   width: 30px;
+      height: 30px;
 }
    
 `
@@ -90,7 +92,8 @@ const ClassNick = styled.div`
 `;
 
 const ClassCategory = styled.div`
-   width: 40%;
+   width: 60px;
+   margin-left: 10px;
    border:  1px solid #b7b5b5;
    text-align: center;
    margin-bottom: -30px;

@@ -46,21 +46,23 @@ const ImgCategory = styled.div`
    flex-direction: column;
   .ImgCategory1{
     width: 100%;  
-    border: 3px solid red;
+ 
     height: 470px;
   }
   .ImgCategory2{
     width: 100%;
     height: 120px;
-    height: auto;
-    border: 2px solid red;
+
     display: flex;
   flex-direction: row;
   justify-content: center;
+
     img{
-      
+      margin: 5px;
+      border: 1px solid black;
       width: 120px;
     height: 120px;
+    padding: 10px;
     }
   }
 `
@@ -69,8 +71,9 @@ const ImgBox = styled.div`
     height: auto;
     display: flex;
    justify-content: center;
-    .mainImg{ 
-        width: 450px;
+   border: ${(props) => (props.url === null || props.url.length === 0 ? '3px solid red' : '3px solid  #03bf81')};
+   .mainImg{ 
+        width: 450px;   
         height: auto;
         display: flex;
         justify-content: center;
@@ -92,7 +95,7 @@ const ImgBox = styled.div`
 const InfoBox = styled.div`     
        width: 80%;
     height: auto;
-border: 3px solid red;
+border: ${(props) => (props.goodsDesc === null || props.goodsDesc.length == 0 ? '3px solid red' : '3px solid  #03bf81')};
     margin: 20px auto;    
     input{
      width: 90%;  
@@ -133,7 +136,10 @@ const NewImgBox = styled.div`
 width: 100%;
 height: auto;
 text-align: center;
+margin-top: 50px;
 img{
+  border: 1px solid black;
+  padding: 10px;
   width: 150px;
   height: 150px;
 }
@@ -165,7 +171,6 @@ const UploadLabel = styled.label`
 `;
 
 const GoodsOptionCss = styled.div`
-
     width: 35%;
     height: auto;
     @media (max-width: 768px) {
@@ -230,18 +235,18 @@ const OptionNick = styled.div`
   top: -25px;
 `;
 const OptionCategory = styled.input`
-border: 3px solid red;
+
 width: 100%;
 height: 20px;
-
+border: ${(props) => (props.goodsCategory === null || props.goodsCategory.length === 0 ? '3px solid red' : '3px solid   #03bf81')};
 `;
 
 const OptionTitleEdit = styled.input`
 font-size: 1.5em;
 line-height: 1.2em;
 padding-bottom: 20px;
- border: 3px solid red;
- width:300px;
+ width:300px; 
+border: ${(props) => (props.goodsTitle === null || props.goodsTitle.length === 0 ? '3px solid red' : '3px solid   #03bf81')};
 `;
 const Delivery = styled.div`
 width: 100%;
@@ -258,14 +263,15 @@ font-size: 1.5em;
 margin-right: 100px;
 width: 100%;
 height: 30px;
-border: 3px solid red;
+border: ${(props) => (props.goodsPrice === null || props.goodsPrice.length === 0 ? '3px solid red' : '3px solid   #03bf81')};
 `;
 const GoodsDeliveryFee = styled.input`
 font-size: 1em;
 margin-top: 15px;
 width:100%;
 height: 20px;
-border: 3px solid red;
+border: ${(props) => (props.goodsDeliveryFee === null || props.goodsDeliveryFee.length === 0 ? '3px solid red' : '3px solid  #03bf81')};
+
 `;
 
 const GoodsRefund = styled.input`
@@ -273,7 +279,8 @@ font-size: 1em;
 margin-top: 15px;
 width:100%;
 height: 20px;
-border: 3px solid red;
+border: ${(props) => (props.goodsRefund === null || props.goodsRefund.length === 0 ? '3px solid red' : '3px solid  #03bf81')};
+
 `;
 
 const Option = styled.div`
@@ -283,7 +290,6 @@ height: auto;
 display: flex;
 flex-direction: column;
 align-items: center;
-
 .option1 {
   width: 100%;
     height: auto;
@@ -318,16 +324,16 @@ align-items: center;
       margin-top: 30px;
 }
 .sell1-4{
-
         border-radius: 10px;
       width: 60%;
     height: 50px;
     color: white;
-    background-color: #f00d33;
+    background-color: #03bf81;    
       display: flex;
       justify-content: center;
       align-items: center;
-      margin-top: 20px;
+   margin-top: 10px;
+
 }
 .sell1-5{
   margin-top: 10px;
@@ -335,7 +341,8 @@ align-items: center;
 }
 `;
 export const GoodsWrite = () => {
-  const [goodsCategory, setGoodsCategory] = useState("");
+
+  const [goodsCategory, setGoodsCategory] = useState(null);
   const [goodsDeliveryFee, setGoodsDeliveryFee] = useState("");
   const [goodsDesc, setGoodsDesc] = useState("");
   const [goodsPic, setGoodsPic] = useState("");
@@ -348,11 +355,13 @@ export const GoodsWrite = () => {
   //상품 대표 이미지
   const [url, setUrl] = useState('');
   //상품 대표 이미지 변경시 사용
-  const [mainUrl, setMainUrl] = useState('');
+  const [mainUrl, setMainUrl] = useState("");
   //상품 대표 이미지 변경시 사용
   const [subUrl, setSubUrl] = useState([]);
   // 상품 정보를 가져옵니다.
+
   useEffect(() => {
+
   }, [subUrl]);
   const submit = async () => {
     const content = {
@@ -437,8 +446,8 @@ export const GoodsWrite = () => {
       <GoodsInfoCss>
         <ImgCategory>
           <div className="ImgCategory1">
-            <ImgBox>
-              <div className="mainImg">
+            <ImgBox url={mainUrl}>
+              <div className="mainImg" >
                 <img src={mainUrl} alt="대표 이미지" />
               </div>
             </ImgBox>
@@ -450,8 +459,6 @@ export const GoodsWrite = () => {
           </div>
           <NewImgBox>
             <img src={url} alt="새 이미지" />
-
-
           </NewImgBox>
           <UploadContainer>
             <UploadLabel>
@@ -477,7 +484,7 @@ export const GoodsWrite = () => {
             <li>판매자</li>
           </ul>
         </InfoCategory>
-        <InfoBox>
+        <InfoBox goodsDesc={goodsDesc}>
           {/* 상품 정보 표시 */}
           <QuillText goodsDesc={goodsDesc} setGoodsDesc={setGoodsDesc}>
 
@@ -490,7 +497,7 @@ export const GoodsWrite = () => {
       </GoodsInfoCss>
 
       <GoodsOptionCss>
-        <OptionCategory type="text" value={goodsCategory} onChange={(e) => { setGoodsCategory(e.target.value) }} placeholder="카테고리 :">
+        <OptionCategory goodsCategory={goodsCategory} type="text" value={goodsCategory} onChange={(e) => { setGoodsCategory(e.target.value) }} placeholder="카테고리 :">
         </OptionCategory>
         <Seller>
           <Seller1>
@@ -498,13 +505,13 @@ export const GoodsWrite = () => {
           </Seller1>
           <Seller2>
             <OptionNick>{nickName && nickName}</OptionNick>
-            <OptionTitleEdit type="text" value={goodsTitle} onChange={(e) => { setGoodsTitle(e.target.value) }} placeholder="제목 :" />
+            <OptionTitleEdit goodsTitle={goodsTitle} type="text" value={goodsTitle} onChange={(e) => { setGoodsTitle(e.target.value) }} placeholder="제목 :" />
           </Seller2>
         </Seller>
         <Delivery>
-          <OptionPrice type="text" value={goodsPrice} onChange={(e) => { setGoodsPrice(e.target.value) }} placeholder=" 가격 :" />
-          <GoodsDeliveryFee type="text" value={goodsDeliveryFee} onChange={(e) => { setGoodsDeliveryFee(e.target.value) }} placeholder=" 배송 :" />
-          <GoodsRefund type="text" value={goodsRefund} onChange={(e) => { setGoodsRefund(e.target.value) }} placeholder=" 배송 시작 :" />
+          <OptionPrice goodsPrice={goodsPrice} type="text" value={goodsPrice} onChange={(e) => { setGoodsPrice(e.target.value) }} placeholder=" 가격 :" />
+          <GoodsDeliveryFee goodsDeliveryFee={goodsDeliveryFee} type="text" value={goodsDeliveryFee} onChange={(e) => { setGoodsDeliveryFee(e.target.value) }} placeholder=" 배송 :" />
+          <GoodsRefund goodsRefund={goodsRefund} type="text" value={goodsRefund} onChange={(e) => { setGoodsRefund(e.target.value) }} placeholder=" 배송 시작 :" />
 
         </Delivery>
 
@@ -512,14 +519,24 @@ export const GoodsWrite = () => {
           <div className="option1">
             <OptionWriteBox setContent2={setContent2}></OptionWriteBox>
           </div>
-          <div className="sell">
-            <div className="sell1-1"> 구매 하기</div>
-            <div className="sell1-2"> 장바구니</div>
-          </div>
-
-
-          <div className="sell1-4" onClick={submit} > 작성 완료</div>
-
+          {
+            (goodsCategory !== null &&
+              goodsPic !== null &&
+              goodsDesc !== null &&
+              goodsRefund !== null &&
+              goodsTitle !== null &&
+              goodsPrice !== null &&
+              goodsDeliveryFee !== null &&
+              goodsCategory.length !== 0 &&
+              goodsPic.length !== 0 &&
+              goodsDesc.length !== 0 &&
+              goodsRefund.length !== 0 &&
+              goodsTitle.length !== 0 &&
+              goodsPrice.length !== 0 &&
+              goodsDeliveryFee.length !== 0) && (
+              <div className="sell1-4" onClick={submit}>작성 완료</div>
+            )
+          }
         </Option>
 
       </GoodsOptionCss>

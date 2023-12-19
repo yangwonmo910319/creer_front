@@ -8,6 +8,7 @@ import { GoodsAxiosApi } from "../../api/goods/GoodsAxiosApi";
 import { SelectImg } from "./SelectImg";
 import { PictureAxiosApi } from "../../api/goods/PictureAxiosApi";
 import * as DOMPurify from 'dompurify';
+import { QuillText } from "./QuillText";
 const GoodsInfoCss = styled.div`
     width: 65%;
     height: auto;
@@ -62,7 +63,8 @@ const ImgBox = styled.div`
 const InfoBox = styled.div`     
        width: 80%;
     height: auto;
-    border:  1px solid black;
+    border: ${(props) => (props.goodsDesc === null || props.goodsDesc.length == 0 ? '3px solid red' : '3px solid  #03bf81')};
+ 
     margin: 20px auto;    
     input{
      width: 90%;  
@@ -97,7 +99,7 @@ border: none;
 border-radius: 4px;
 font-size: 16px;
 height: 600px;
-border: 3px solid red;
+
 img{
   width: 100%; 
   height: auto;
@@ -143,6 +145,7 @@ const UploadLabel = styled.label`
 export const GoodsInfoEdit = ({ list, reply, member }) => {
 
   const [goodsDetailId, goodsDesc, goodsPic, setGoodsDesc, setGoodsPic] = list;
+
   //Modal Switch
   const [isReviewModalOpen, setIsReviewModalOpen] = useState(false);
   //작성자와 로그인 유저 확인용
@@ -299,11 +302,11 @@ export const GoodsInfoEdit = ({ list, reply, member }) => {
           <li>판매자</li>
         </ul>
       </InfoCategory>
-      <InfoBox>
+      <InfoBox goodsDesc={goodsDesc}>
         {/* 상품 정보 표시 */}
         <InfoDescCss>
-          <InfoDesc value={(goodsDesc)}
-            placeholder="내용"></InfoDesc>
+          <QuillText goodsDesc={goodsDesc} setGoodsDesc={setGoodsDesc}>
+          </QuillText>
         </InfoDescCss>
 
         <div

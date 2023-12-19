@@ -1,5 +1,5 @@
 
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import ReactQuill, { Quill } from "react-quill";
 import "react-quill/dist/quill.snow.css";
 import styled from "styled-components";
@@ -51,33 +51,32 @@ export const QuillText = ({ goodsDesc, setGoodsDesc }) => {
 
     const [content, setContent] = useState("");
     console.log(content);
-    const [title, setTitle] = useState("");
-    const handleTitleChange = (e) => {
-        setTitle(e.currentTarget.value);
-    };
+    useEffect(() => {
+        setContent(goodsDesc)
+    }, [])
+    const ContentChage = (e) => {
+        setContent(e)
+        setGoodsDesc(content)
+    }
+
     const handleSubmit = async () => {
+        setGoodsDesc(content)
 
-
-        try {
-            const sanitizedContent = DOMPurify.sanitize(content);
-            setGoodsDesc(sanitizedContent)
-        } catch (error) {
-            console.log(error);
-        }
     };
     return (
         <QuillTextCss>
             <Content1>
-                <label htmlFor="title">상품 소개</label>
+
                 <ReactQuill
                     style={{ width: "100%", height: "600px" }}
                     modules={modules}
-                    onChange={setContent}
+                    value={content}
+                    onChange={ContentChage}
                 />
             </Content1>
-            <Button1>
+            {/* <Button1>
                 <button onClick={handleSubmit}>작성 완료</button>
-            </Button1>
+            </Button1> */}
         </QuillTextCss>
     );
 
