@@ -13,25 +13,25 @@ const CartPageContainer = styled.div`
   width: 60vw;
 `;
 
-const BookCard = styled.div`
+const GoodsCard = styled.div`
   border: 1px solid #ddd;
   padding: 10px;
   margin: 10px 0;
   display: flex;
   align-items: center;
 
-  .book-image {
+  .goods-image {
     width: 150px;
     height: 200px;
     margin-right: 10px;
   }
 
-  .book-title {
+  .goods-title {
     font-weight: bold;
     margin-right: 10px;
   }
 
-  .book-info {
+  .goods-info {
     flex: 1;
   }
 
@@ -57,18 +57,19 @@ export const Cart = ({}) => {
   useEffect(() => {
     console.log(cartItems); // 상태 업데이트 후의 장바구니 항목 출력
   }, [cartItems]);
-  const checkboxChange = (bookId) => {
-    if (checkedItems.includes(bookId)) {
-      setCheckedItems(checkedItems.filter((id) => id !== bookId));
+
+  const checkboxChange = (goodsId) => {
+    if (checkedItems.includes(goodsId)) {
+      setCheckedItems(checkedItems.filter((id) => id !== goodsId));
     } else {
-      setCheckedItems([...checkedItems, bookId]);
+      setCheckedItems([...checkedItems, goodsId]);
     }
-    console.log(bookId);
+    console.log(goodsId);
   };
-  const isChecked = (bookId) => checkedItems.includes(bookId);
+  const isChecked = (goodsId) => checkedItems.includes(goodsId);
   const purchaseSelected = async () => {
     try {
-      const response = await GoodsAxiosApi.purchaseBooks(
+      const response = await GoodsAxiosApi.purchaseGoods(
         member.id,
         checkedItems
       );
@@ -87,22 +88,24 @@ export const Cart = ({}) => {
     }
   };
 
+  // 장바구니 업데이트
   const fetchCartItems = async () => {
     try {
       const response = await CartAxiosApi.getCartItems(member.id);
       console.log(response.data); // 응답 출력
       if (response.status === 200) {
-        const cartItemsWithBookInfo = await Promise.all(
-          // 병렬구문처리할떄 쓰는 Promise
+        const cartItemsWithGoodsInfo = await Promise.all(
           response.data.map(async (item) => {
-            const bookResponse = await GoodsAxiosApi.getBookInfo(item.bookId);
+            const goodsResponse = await GoodsAxiosApi.getGoodsInfo(
+              item.goodsId
+            );
             return {
               ...item,
-              bookInfo: bookResponse.data,
+              goodsInfo: goodsResponse.data,
             };
           })
         );
-        setCartItems(cartItemsWithBookInfo);
+        setCartItems(cartItemsWithGoodsInfo);
         console.log(cartItems); // 상태 업데이트 후의 cartItems 출력
       } else {
         console.error("장바구니 가져오기 실패");
@@ -116,8 +119,8 @@ export const Cart = ({}) => {
   // 모든 책 구매
   const purchaseAll = async () => {
     try {
-      const bookIds = cartItems.map((item) => item.bookId); // 장바구니에 있는 모든 책의 ID를 가져옴
-      const response = await AxiosApi.purchaseBooks(user.id, bookIds);
+      const goodsIds = cartItems.map((item) => item.goodsId); // 장바구니에 있는 모든 책의 ID를 가져옴
+      const response = await AxiosApi.purchaseGoods(user.id, goodsIds);
       console.log(response); // 서버로부터의 응답 출력
       if (response.status === 200) {
         fetchCartItems(); // 책을 구매한 후 장바구니 아이템 목록을 다시 불러옴
@@ -130,9 +133,9 @@ export const Cart = ({}) => {
   };
 */
 
-  const removeFromCart = async (bookId) => {
+  const removeFromCart = async (goodsId) => {
     try {
-      const response = await CartAxiosApi.removeFromCart(member.id, bookId);
+      const response = await CartAxiosApi.removeFromCart(member.id, goodsId);
       console.log(response); // 서버로부터의 응답 출력
       if (response.status === 200) {
         if (window.confirm("장바구니에서 해당 책을 삭제하시겠습니까?")) {
@@ -145,6 +148,7 @@ export const Cart = ({}) => {
       console.error("에러 확인", error);
     }
   };
+
   return (
     <>
       <MiddleOrderBox>
@@ -154,16 +158,16 @@ export const Cart = ({}) => {
             &nbsp;장바구니
           </StyledTitle>
           {cartItems.map((item) => (
-            <BookCard key={item.bookId}>
+            <GoodsCard key={item.goodsId}>
               <input
                 type="checkbox"
-                checked={isChecked(item.bookId)}
-                onChange={() => checkboxChange(item.bookId)}
+                checked={isChecked(item.goodsId)}
+                onChange={() => checkboxChange(item.goodsId)}
                 style={{ margin: "20px", transform: "scale(2)" }}
               />
               <img
-                className="book-image"
-                src={item.bookInfo.imageUrl}
+                className="goods-image"
+                src={item.goodsInfo.imageUrl}
                 alt="책 표지 이미지"
                 style={{
                   transform: "rotate(5deg)", // 이미지를 약간 기울임
@@ -173,18 +177,18 @@ export const Cart = ({}) => {
                 }}
               />
 
-              <div className="book-info">
-                <p className="book-title">{item.bookInfo.title}</p>
-                <p className="book-author">{item.bookInfo.author}</p>
-                <p className="book-price">{item.bookInfo.price}원</p>
+              <div className="goods-info">
+                <p className="goods-title">{item.goodsInfo.title}</p>
+                <p className="goods-author">{item.goodsInfo.author}</p>
+                <p className="goods-price">{item.goodsInfo.price}원</p>
               </div>
               <button
                 className="remove-button"
-                onClick={() => removeFromCart(item.bookId)}
+                onClick={() => removeFromCart(item.goodsId)}
               >
                 제거
               </button>
-            </BookCard>
+            </GoodsCard>
           ))}
           <MiddleOrderBox>
             <StyledButton

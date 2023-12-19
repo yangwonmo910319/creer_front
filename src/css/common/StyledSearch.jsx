@@ -2,7 +2,6 @@ import styled from "styled-components";
 import { StyledButton } from "./StyledButton";
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
-import axios from "axios";
 
 // 이미지
 import { FaSearch, FaMicrophone } from "react-icons/fa";
@@ -21,7 +20,7 @@ const SearchMode = styled.div`
   display: flex;
   align-items: center;
   width: 70%;
-  
+
   height: 35px;
   margin: 20px;
   border: 1.5px solid #c9cacc;
@@ -81,7 +80,7 @@ export const StyledSearch = () => {
 
   const searchTitle = async () => {
     navigate(`/` + search);
-    setSearch('')
+    setSearch("");
   };
 
   const handleKeyPress = (e) => {

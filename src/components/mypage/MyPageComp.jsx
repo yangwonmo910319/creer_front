@@ -1,19 +1,6 @@
-import { createGlobalStyle } from "styled-components";
 import styled from "styled-components";
 
-export const GlobalStyle = createGlobalStyle`
-  /* 여기에 글로벌 스타일을 정의합니다. */
-  body {
-    margin: 0;
-    padding: 0;
-    box-sizing: border-box;
-  }
-  /* 다른 글로벌 스타일 정의 가능 */
-`;
-
 export const Body = styled.div`
-  margin: 0;
-  padding: 0;
   background-color: rgba(245, 245, 245, 0.9);
 `;
 
