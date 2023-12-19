@@ -82,6 +82,64 @@ export const Category = ({ setList }) => {
       console.log(error);
     }
   };
+  const [currentPage, setCurrentPage] = useState(0); // 현재 페이지
+  const [totalPage, setTotalPage] = useState(0); // 총 페이지 수
+
+
+  const onScroll = () => {
+
+    setPosition(window.scrollY);
+  }
+  const [position, setPosition] = useState(0);
+  const [list1, setList1] = useState([]);
+
+  useEffect(() => {
+    const onScroll = () => {
+      if (window.innerHeight + document.documentElement.scrollTop === document.documentElement.scrollHeight) {
+        setCurrentPage(currentPage + 1);
+      }
+    };
+
+    window.addEventListener("scroll", onScroll);
+    return () => {
+      window.removeEventListener("scroll", onScroll);
+    }
+  }, [currentPage]);
+  // 총 페이지 수 계산
+
+  useEffect(() => {
+
+    const totalPage = async () => {
+      try {
+        const res = await GoodsAxiosApi.moviePage(0, 10);
+        setTotalPage(res.data);
+      } catch (error) {
+        console.log(error);
+      }
+    };
+    totalPage();
+
+
+  }, []);
+
+  useEffect(() => {
+    const goodsList = async () => {
+      try {
+        const res = await GoodsAxiosApi.moviePageList(currentPage, 10);
+        const data = res.data;
+        setList(prevList => [...prevList, ...data]); // 기존 리스트에 새 데이터를 추가합니다.
+      } catch (error) {
+        console.log(error);
+      }
+    };
+    goodsList();
+  }, [currentPage]);
+
+  const handlePageChange = (number) => {
+    console.log(number);
+    setCurrentPage(number - 1);
+  };
+
   return (
     <CategoryCss>
       <ul>

@@ -34,18 +34,18 @@ export const GoodsAxiosApi = {
       },
     });
   },
-   // 상품 추가
-  insertGoods: async (content ) => {    
-      const accessToken = localStorage.getItem("accessToken");
-      return await axios.post(
-        KH_DOMAIN + `/api/goods/new/`, content, {
-          headers: {
-            "Content-Type": "application/json",
-            Authorization: "Bearer " + accessToken,
-          },
-        }
-      );
-    },
+  // 상품 추가
+  insertGoods: async (content) => {
+    const accessToken = localStorage.getItem("accessToken");
+    return await axios.post(
+      KH_DOMAIN + `/api/goods/new/`, content, {
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: "Bearer " + accessToken,
+      },
+    }
+    );
+  },
   // 상품 수정
   updateGoods: async (goodsCategory, goodsDeliveryFee, goodsDesc, goodsDetailId, goodsPic, goodsPrice, goodsRefund, goodsTitle
   ) => {
@@ -113,5 +113,25 @@ export const GoodsAxiosApi = {
   },
 
 
+  // 영화 페이지 수 조회
+  GoodsPage: async (page, size) => {
+    const accessToken = localStorage.getItem("accessToken");
+    return await axios.get(KH_DOMAIN + `/api/goods/list/count?page=${page}&size=${size}`, {
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: "Bearer " + accessToken,
+      },
+    });
+  },
+  // 영화 페이지네이션 조회
+  GoodsPageList: async (page, size) => {
+    const accessToken = localStorage.getItem("accessToken");
+    return await axios.get(KH_DOMAIN + `/api/goods/list/page?page=${page}&size=${size}`, {
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: "Bearer " + accessToken,
+      },
+    });
+  },
 
 };
