@@ -269,7 +269,9 @@ z-index: 4;
 `;
 
 export const ReviewComp = ({ goodsNum, openReviewModal, reply }) => {
-
+  console.log("reply");
+  console.log(reply);
+  console.log("reply");
   const [num, setNum] = useState(goodsNum)
   const [render, setRender] = useState(false)
   const [reviews, setReviews] = useState('');
@@ -371,12 +373,17 @@ export const ReviewComp = ({ goodsNum, openReviewModal, reply }) => {
   //     console.error("리뷰 데이터 요청 에러", error);
   //   }
   // }, [goodsNum]);
-
   useEffect(() => {
+    if (reply && Array.isArray(reply)) {
+      setTotalRatings(reply.length);
 
-  }, [isReviewEidtModalOpen]);
-
-
+      let totalRating = 0;
+      for (let i = 0; i < reply.length; i++) {
+        totalRating += reply[i].reviewStar;
+      }
+      setAverageRating(totalRating / reply.length);
+    }
+  }, [isReviewEidtModalOpen, reply]);
   return (
     <ReviewSectionContainer>
       <ReivewInfo>

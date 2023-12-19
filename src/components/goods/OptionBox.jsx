@@ -61,16 +61,25 @@ export const OptionBox = ({ list, list2 }) => {
   console.log("list");
   console.log(list);
 
-  list.forEach(option => {
-    //옵션 goodsOptionNum(번호)에 해당하는 배열을 만듬
-    if (!groupedOptions[option.goodsOptionNum]) {
-      groupedOptions[option.goodsOptionNum] = [];
-    }
-    //옵션 goodsOptionNum(번호)에 맞게 넣음
-    groupedOptions[option.goodsOptionNum].push(option);
-  });
+  // list.forEach(option => {
+  //   //옵션 goodsOptionNum(번호)에 해당하는 배열을 만듬
+  //   if (!groupedOptions[option.goodsOptionNum]) {
+  //     groupedOptions[option.goodsOptionNum] = [];
+  //   }
+  //   //옵션 goodsOptionNum(번호)에 맞게 넣음
+  //   groupedOptions[option.goodsOptionNum].push(option);
+  // });
 
-
+  if (list !== null && Array.isArray(list)) {
+    list.forEach(option => {
+      if (!groupedOptions[option.goodsOptionNum]) {
+        groupedOptions[option.goodsOptionNum] = [];
+      }
+      groupedOptions[option.goodsOptionNum].push(option);
+    });
+  } else {
+    console.error('list is not a valid array');
+  }
   //상위 목록만 누르면 key만 받고 하위 목록을 누르면 키와 key와selectedOption을 받음
   const OptionPick = (key, selectedOption) => {
     if (expandedOption === key) {

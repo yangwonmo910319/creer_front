@@ -140,7 +140,8 @@ const UploadLabel = styled.label`
     background-color: #00648b;
   }
 `;
-export const GoodsInfoEdit = ({ list, reply }) => {
+export const GoodsInfoEdit = ({ list, reply, member }) => {
+
   const [goodsDetailId, goodsDesc, goodsPic, setGoodsDesc, setGoodsPic] = list;
   //Modal Switch
   const [isReviewModalOpen, setIsReviewModalOpen] = useState(false);
@@ -265,7 +266,7 @@ export const GoodsInfoEdit = ({ list, reply }) => {
           </ImgBox>
         </div>
         <div className="ImgCategory2">
-          <SelectImg num={list[0]} url={mainurl} imgview={imgview}>
+          <SelectImg num={list[0]} url={mainurl} imgview={imgview} member={member}>
           </SelectImg>
         </div>
         <NewImgBox>

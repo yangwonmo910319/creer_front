@@ -128,11 +128,11 @@ export const GoodsDetail = () => {
   return (
     <GoodsDetailCss>
       {memberDto.nickName === nickName ? <> {/* 작성자와 로그인 회원이 같을 경우 */}
-        <GoodsInfoEdit list={goodsInfoList} reply={list.reviews}></GoodsInfoEdit>
+        <GoodsInfoEdit list={goodsInfoList} reply={list.reviews} member={memberDto.nickName}></GoodsInfoEdit>
         <GoodsOptionEdit goodsDedail={goodsOptionList} updateGoodsDetail={updateGoodsDetail}></GoodsOptionEdit>
       </> : <>      {/* 작성자와 로그인 회원이 다를 경우 */}
-        <GoodsInfo list={goodsInfoList}></GoodsInfo>
-        <GoodsOption list={list}></GoodsOption>
+        <GoodsInfo list={goodsInfoList} reply={list.reviews} member={memberDto.nickName}></GoodsInfo>
+        <GoodsOption goodsDedail={goodsOptionList} updateGoodsDetail={updateGoodsDetail} ></GoodsOption>
       </>}
 
     </GoodsDetailCss>

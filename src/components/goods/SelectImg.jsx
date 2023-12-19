@@ -57,21 +57,28 @@ const SelectImgCss = styled.div`
   }
   }
 `;
-// ... (이전 코드)
 
-export const SelectImg = ({ num, url, imgview }) => {
+
+export const SelectImg = ({ num, url, imgview, member }) => {
+
   const perPage = 4; // 페이지당 보여질 이미지 수
   const [urls, setUrls] = useState([{ goodsPictures: url }]); // url prop을 객체로 변환하여 초기화합니다.
   const [currentPage, setCurrentPage] = useState(1);
   const [submitUrl, setSubmitUrl] = useState();
   const [pictureId, setPictureId] = useState();
+  const [nickName, setNickName] = useState();
+  const [member1, setMember] = useState();
 
   useEffect(() => {
+    setNickName(localStorage.getItem("NickName"));
+    setMember(member)
     const selectImg = async () => {
+
       try {
         const response = await PictureAxiosApi.selectGoodsImg(num);
         if (response.status === 200) {
           setUrls([{ goodsPictures: url }, ...response.data]);
+
           console.log(response.data)
         } else {
           console.error("서버 응답 실패");
@@ -111,27 +118,28 @@ export const SelectImg = ({ num, url, imgview }) => {
   }
 
   const [isCheckModalOpen, setIsCheckModalOpen] = useState(false);
-
   return (
     <SelectImgCss>
       {currentImages.map((urlObj, index) => (
         <div key={index}>
           {/* 이미지 클릭 시 urlObj.goodsPictures를 직접 전달 */}
           <img src={urlObj.goodsPictures} alt="" onClick={() => imgview(urlObj.goodsPictures)} />
-          {urlObj.goodsPictures !== url ? <>
-            <ImgEdit>
-              <button onClick={() => {
-                setIsCheckModalOpen(true);
-                setPictureId(urlObj.goodsPictureId);
-                setSubmitUrl(urlObj.goodsPictures);
-              }}>수정</button>
-              <button onClick={() => { deleteimg(urlObj.goodsPictureId) }}>삭제</button>
-            </ImgEdit>
-          </>
-            :
+          {urlObj.goodsPictures !== url ? (
+            member1 === nickName ? (
+              <ImgEdit>
+                <button onClick={() => {
+                  setIsCheckModalOpen(true);
+                  setPictureId(urlObj.goodsPictureId);
+                  setSubmitUrl(urlObj.goodsPictures);
+                }}>수정</button>
+                <button onClick={() => { deleteimg(urlObj.goodsPictureId) }}>삭제</button>
+              </ImgEdit>
+            ) : (
+              <></>
+            )
+          ) : (
             <></>
-          }
-
+          )}
         </div>
       ))}
       {urls.length > perPage && (
@@ -144,6 +152,7 @@ export const SelectImg = ({ num, url, imgview }) => {
           </button>
         </div>
       )}
+
       <PictureModal
         isOpen={isCheckModalOpen}
         setIsCheckModalOpen={setIsCheckModalOpen}
@@ -153,4 +162,4 @@ export const SelectImg = ({ num, url, imgview }) => {
       />
     </SelectImgCss>
   );
-};
+}

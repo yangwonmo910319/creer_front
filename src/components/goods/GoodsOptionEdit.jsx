@@ -274,12 +274,8 @@ export const GoodsOptionEdit = ({ goodsDedail, updateGoodsDetail }) => {
 
       <Option>
         <div className="option1">
-
           <OptionBox list={list.options} list2={list}>
-
           </OptionBox>
-
-
         </div>
 
 

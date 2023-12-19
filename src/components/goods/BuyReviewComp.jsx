@@ -205,7 +205,7 @@ export const BuyReviewComp = () => {
   };
 
   // 미리보기 함수
-  const viewPreview = () => {};
+  const viewPreview = () => { };
 
   return (
     <>

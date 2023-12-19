@@ -27,12 +27,11 @@ const Btn1 = styled.div`
 
 export const Buybox = ({ list, optionList, quantity1 }) => {
   //판매자 Pk
-  const [goodsDetailId, setGoodsDetailId] = useState(list.goodsDetailId)
+  const [goodsDetailId, setGoodsDetailId] = useState('')
   //판매자
-  const [seller, setSeller] = useState(list.memberDto.id);
+  const [seller, setSeller] = useState('');
   //옵션
   const [option, setOption] = useState('')
-
   //상태
   const [status, setStatus] = useState('결제 전')
   //수량
@@ -45,12 +44,18 @@ export const Buybox = ({ list, optionList, quantity1 }) => {
 
   }
   useEffect(() => {
-    const goodsOptionContentArray = optionList.map(obj => obj.goodsOptionContent);
-    const result = goodsOptionContentArray.join(", ");
-    console.log(result);
-    setOption(result);
+    if (list !== null && optionList !== null && quantity1 !== null) {
+      const goodsOptionContentArray = optionList.map(obj => obj.goodsOptionContent);
+      const result = goodsOptionContentArray.join(", ");
+      setOption(result);
+      if (list.memberDto !== undefined) {
+        setSeller(list.memberDto.id)
+      } else {
+        console.log("memberDto is undefined");
+      }
+      setGoodsDetailId(list.goodsDetailId)
+    }
   }, [optionList]);
-
 
   const SelectGoodsLIst = async (content) => {
     try {
