@@ -1,4 +1,3 @@
-// 장바구니 페이지
 import React, { useEffect, useState } from "react";
 import styled from "styled-components";
 import cartImg from "../../images/cart.png";
@@ -43,6 +42,7 @@ const GoodsCard = styled.div`
     cursor: pointer;
   }
 `;
+
 export const Cart = ({}) => {
   const [cartItems, setCartItems] = useState([]);
   const [checkedItems, setCheckedItems] = useState([]);

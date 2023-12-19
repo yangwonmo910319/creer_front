@@ -1,50 +1,47 @@
 import { useEffect, useState } from "react";
-import styled from "styled-components"
+import styled from "styled-components";
 import { Buybox } from "./Buybox";
 
-
-
-
 const OptionBoxCss = styled.div`
-  width  :100% ;
+  width: 100%;
   height: 500px;
-  ul{
-      width  :100% ;
-  height: auto;
-  li{
-    width  :100% ;
-  height:30px;
-  border: 1px solid #7e7e7e;
-  padding-left: 10px;
-  display: flex;
-  align-items: center;
-  }
+  ul {
+    width: 100%;
+    height: auto;
+    li {
+      width: 100%;
+      height: 30px;
+      border: 1px solid #7e7e7e;
+      padding-left: 10px;
+      display: flex;
+      align-items: center;
+    }
   }
 `;
 
 const Status = styled.div`
-width: 100%;
-height: 30px;
-margin-left:10px;
-.btn1{ 
-  width:30px;
-height: 30px;
-color: black;
-margin: 0;
-}
-`
+  width: 100%;
+  height: 30px;
+  margin-left: 10px;
+  .btn1 {
+    width: 30px;
+    height: 30px;
+    color: black;
+    margin: 0;
+  }
+`;
 const OptionBoxCss1 = styled.div`
-width: 100%;
-height: auto;
+  width: 100%;
+  height: auto;
 `;
 const OptionBoxCss2 = styled.div`
-width: 100%;
-height: auto;
+  width: 100%;
+  height: auto;
 `;
 const OptionNum = styled.div`
-width: 100%;
-height: 30px;
-margin-top: 10px;
+  width: 100%;
+  height: 30px;
+  margin-top: 10px;
   border: 1px solid #7e7e7e;
   display: flex;
   align-items: center;
@@ -71,14 +68,14 @@ export const OptionBox = ({ list, list2 }) => {
   // });
 
   if (list !== null && Array.isArray(list)) {
-    list.forEach(option => {
+    list.forEach((option) => {
       if (!groupedOptions[option.goodsOptionNum]) {
         groupedOptions[option.goodsOptionNum] = [];
       }
       groupedOptions[option.goodsOptionNum].push(option);
     });
   } else {
-    console.error('list is not a valid array');
+    console.error("list is not a valid array");
   }
   //상위 목록만 누르면 key만 받고 하위 목록을 누르면 키와 key와selectedOption을 받음
   const OptionPick = (key, selectedOption) => {
@@ -92,11 +89,10 @@ export const OptionBox = ({ list, list2 }) => {
     //selectedOption을 받은 경우
 
     if (selectedOption) {
-
-      setOptionList(prevState => {
+      setOptionList((prevState) => {
         const updatedOptionList = prevState.filter(
-          //동일한 값은 남고 다른 값은 지움        
-          option => option.goodsOptionNum !== selectedOption.goodsOptionNum
+          //동일한 값은 남고 다른 값은 지움
+          (option) => option.goodsOptionNum !== selectedOption.goodsOptionNum
         );
         //새로 선택한 옵션을 추가
         updatedOptionList.push(selectedOption);
@@ -104,29 +100,44 @@ export const OptionBox = ({ list, list2 }) => {
         return updatedOptionList;
       });
     }
-
   };
-  useEffect(() => {
-
-  }, [])
+  useEffect(() => {}, []);
   return (
     <OptionBoxCss>
       <Status>
-        수 량:  {quantity}
-        {quantity !== 0 &&
-          <button className="btn1" onClick={() => { setQuantity(quantity - 1) }}>∨</button>
-        }
-
-        <button className="btn1" onClick={() => { setQuantity(quantity + 1) }}>∧</button>
-
+        수 량: {quantity}
+        {quantity !== 0 && (
+          <button
+            className="btn1"
+            onClick={() => {
+              setQuantity(quantity - 1);
+            }}
+          >
+            ∨
+          </button>
+        )}
+        <button
+          className="btn1"
+          onClick={() => {
+            setQuantity(quantity + 1);
+          }}
+        >
+          ∧
+        </button>
       </Status>
       <OptionBoxCss1>
         {Object.keys(groupedOptions).map((key, index) => (
-
           <div key={index}>
             <h3 onClick={() => OptionPick(key)}>
-              <OptionNum> {groupedOptions[key][0].goodsOptionNum} {optionList.find(option => option.goodsOptionNum === key)?.goodsOptionContent}
-              </OptionNum>  </h3>
+              <OptionNum>
+                {" "}
+                {groupedOptions[key][0].goodsOptionNum}{" "}
+                {
+                  optionList.find((option) => option.goodsOptionNum === key)
+                    ?.goodsOptionContent
+                }
+              </OptionNum>{" "}
+            </h3>
             {expandedOption === key && (
               <ul>
                 {groupedOptions[key].map((option, i) => (

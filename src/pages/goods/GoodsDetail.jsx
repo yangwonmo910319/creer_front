@@ -1,11 +1,12 @@
-import styled, { css } from "styled-components";
+import styled from "styled-components";
 import { GoodsOption } from "../../components/goods/GoodsOption";
 import { GoodsInfo } from "../../components/goods/GoodsInfo";
 import { GoodsAxiosApi } from "../../api/goods/GoodsAxiosApi";
 import { useParams } from "react-router-dom";
 import { useEffect, useState } from "react";
-import { GoodsInfoEdit } from "../../components/goods/GoodsInfoEdit"
-import { GoodsOptionEdit } from "../../components/goods/GoodsOptionEdit"
+import { GoodsInfoEdit } from "../../components/goods/GoodsInfoEdit";
+import { GoodsOptionEdit } from "../../components/goods/GoodsOptionEdit";
+
 const GoodsDetailCss = styled.div`
   display: flex;
   flex-direction: row;
@@ -24,7 +25,7 @@ const GoodsDetailCss = styled.div`
 `;
 
 export const GoodsDetail = () => {
-  const { num } = useParams();
+  const { goodsId } = useParams();
   const [list, setList] = useState("");
   const [goodsCategory, setGoodsCategory] = useState("");
   const [goodsDeliveryFee, setGoodsDeliveryFee] = useState("");
@@ -37,26 +38,24 @@ export const GoodsDetail = () => {
   const [memberDto, setMemberDto] = useState("");
   const nickName = localStorage.getItem("NickName");
 
-
   // 상품 정보를 가져옵니다.
   useEffect(() => {
     //함수 만들기
     const SelectGoodsLIst = async () => {
       try {
-        const rsp = await GoodsAxiosApi.getGoods(num);
+        const rsp = await GoodsAxiosApi.getGoods(goodsId);
         // 상품 정보를 가져옵니다.
         console.log("상품 상세정보");
         console.log(rsp.data);
         //가져온 데이터를 저장
         setList(rsp.data);
-
       } catch (error) {
         console.log(error);
       }
     };
     //함수 실행
     SelectGoodsLIst();
-  }, [num]);
+  }, [goodsId]);
   //가져온 상품 정보를 각각의 저장해 줍니다.
   useEffect(() => {
     if (list) {
@@ -127,14 +126,33 @@ export const GoodsDetail = () => {
 
   return (
     <GoodsDetailCss>
-      {memberDto.nickName === nickName ? <> {/* 작성자와 로그인 회원이 같을 경우 */}
-        <GoodsInfoEdit list={goodsInfoList} reply={list.reviews} member={memberDto.nickName}></GoodsInfoEdit>
-        <GoodsOptionEdit goodsDedail={goodsOptionList} updateGoodsDetail={updateGoodsDetail}></GoodsOptionEdit>
-      </> : <>      {/* 작성자와 로그인 회원이 다를 경우 */}
-        <GoodsInfo list={goodsInfoList} reply={list.reviews} member={memberDto.nickName}></GoodsInfo>
-        <GoodsOption goodsDedail={goodsOptionList} updateGoodsDetail={updateGoodsDetail} ></GoodsOption>
-      </>}
-
+      {memberDto.nickName === nickName ? (
+        <>
+          {/* 작성자와 로그인 회원이 같을 경우 */}
+          <GoodsInfoEdit
+            list={goodsInfoList}
+            reply={list.reviews}
+            member={memberDto.nickName}
+          ></GoodsInfoEdit>
+          <GoodsOptionEdit
+            goodsDedail={goodsOptionList}
+            updateGoodsDetail={updateGoodsDetail}
+          ></GoodsOptionEdit>
+        </>
+      ) : (
+        <>
+          {/* 작성자와 로그인 회원이 다를 경우 */}
+          <GoodsInfo
+            list={goodsInfoList}
+            reply={list.reviews}
+            member={memberDto.nickName}
+          ></GoodsInfo>
+          <GoodsOption
+            goodsDedail={goodsOptionList}
+            updateGoodsDetail={updateGoodsDetail}
+          ></GoodsOption>
+        </>
+      )}
     </GoodsDetailCss>
   );
 };

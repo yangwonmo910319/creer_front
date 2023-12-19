@@ -18,11 +18,10 @@ function App() {
         <Routes>
           <Route path="/Signup" element={<SignUp />}></Route>
           <Route path="/Login" element={<Login />}></Route>
-
           <Route element={<Main />}>
             <Route path="/" element={<GoodsList />}></Route>
             <Route path="/:title" element={<GoodsList />}></Route>
-            <Route path="/Goods/:num" element={<GoodsDetail />}></Route>
+            <Route path="/Goods/:goodsId" element={<GoodsDetail />}></Route>
             <Route path="/GoodsWrite" element={<GoodsWrite />}></Route>
             <Route path="/AuctionList" element={<AuctionList />}></Route>
             <Route path="/Cart" element={<Cart />}></Route>
