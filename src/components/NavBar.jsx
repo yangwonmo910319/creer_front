@@ -58,7 +58,11 @@ export const NavBar = () => {
       {/* 기본 */}
       <Top>
         <Weather></Weather>
-        <StyledLogo></StyledLogo>
+        <StyledLogo
+          onClick={() => {
+            navigate("/");
+          }}
+        ></StyledLogo>
         {/* 로그인 여부 */}
         <ul>
           {login === "false" ? (

@@ -2,18 +2,35 @@ import axios from "axios";
 import { KH_DOMAIN } from "../../utils/Common";
 
 export const CartAxiosApi = {
-  // 장바구니 아이템 가져오기
-  getCartItems: async (memberId) => {
-    return await axios.get(`${KH_DOMAIN}/Cart/${memberId}`);
+  // 장바구니에 추가
+  // Post 메서드의 첫번째 매개변수 : URL, 두번째 : 요청 본문, 세번째 : 설정 객체
+  addToCart: async (accessToken, goodsId) => {
+    return await axios.post(
+      `${KH_DOMAIN}/Cart/add`, // URL
+      { goodsId }, // 요청 본문
+      {
+        headers: {
+          // 설정 객체
+          "Content-Type": "application/json",
+          Authorization: "Bearer " + accessToken,
+        },
+      }
+    );
   },
 
-  // 장바구니 아이템 제거
-  removeFromCart: async (memberId, goodsId) => {
-    return await axios.delete(`${KH_DOMAIN}/Cart/${memberId}/${goodsId}`);
+  // 장바구니 전체 조회
+  getCartItems: async (accessToken) => {
+    return await axios.get(`${KH_DOMAIN}/Cart/list`, {
+      headers: {
+        // 설정 객체
+        "Content-Type": "application/json",
+        Authorization: "Bearer " + accessToken,
+      },
+    });
   },
 
-  // 장바구니 아이템 추가
-  addToCart: async (memberId, goodsId) => {
-    return await axios.post(`${KH_DOMAIN}/Cart/add`, { memberId, goodsId });
+  // 장바구니 제거
+  removeFromCart: async (accessToken, goodsId) => {
+    return await axios.delete(`${KH_DOMAIN}/Cart/${accessToken}/${goodsId}`);
   },
 };
