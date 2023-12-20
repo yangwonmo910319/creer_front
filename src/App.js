@@ -5,6 +5,7 @@ import { Main } from "./components/Main";
 import { SignUp } from "./pages/member/SignUp";
 import { Login } from "./pages/member/Login";
 import { Cart } from "./pages/goods/Cart";
+import { Seller } from "./pages/member/Seller";
 import { MyPage } from "./pages/member/MyPage";
 import { GoodsList } from "./pages/goods/GoodsList";
 import { GoodsDetail } from "./pages/goods/GoodsDetail";
@@ -25,6 +26,7 @@ function App() {
             <Route path="/GoodsWrite" element={<GoodsWrite />}></Route>
             <Route path="/AuctionList" element={<AuctionList />}></Route>
             <Route path="/Cart" element={<Cart />}></Route>
+            <Route path="/Seller" element={<Seller />}></Route>
             <Route path="/MyPage" element={<MyPage />}></Route>
           </Route>
         </Routes>

@@ -92,12 +92,12 @@ export const Category = ({ setList }) => {
       titleList(title);
     } else {
       if (selectedCategory === "all") {
-        alert("all")
+  
         setList([])
         setCurrentPage(0)
         goodsList();
       } else {
-        alert("xx")
+     
         categoryList(selectedCategory);
     
       }
