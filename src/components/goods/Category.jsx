@@ -108,18 +108,20 @@ export const Category = ({ setList }) => {
   }, [currentPage]);
 
   return (
-    <CategoryCss>
-      <ul>
-        <ListItem selected={selectedCategory === "all"} onClick={() => CategoryClick("all")}><p>전체</p></ListItem>
-        <ListItem selected={selectedCategory === "패션"} onClick={() => CategoryClick("패션")}><p>패션</p></ListItem>
-        <ListItem selected={selectedCategory === "쥬얼리"} onClick={() => CategoryClick("쥬얼리")}><p>쥬얼리</p></ListItem>
-        <ListItem selected={selectedCategory === "가구"} onClick={() => CategoryClick("가구")}><p>가구</p></ListItem>
-        <ListItem selected={selectedCategory === "문구"} onClick={() => CategoryClick("문구")}><p>문구</p></ListItem>
-        <ListItem selected={selectedCategory === "반려"} onClick={() => CategoryClick("반려")}><p>반려</p></ListItem>
-        <ListItem selected={selectedCategory === "아동"} onClick={() => CategoryClick("아동")}><p>아동</p></ListItem>
-        <ListItem selected={selectedCategory === "공예"} onClick={() => CategoryClick("공예")}><p>공예</p></ListItem>
-      </ul>
+    <>
+      <CategoryCss>
+        <ul>
+          <ListItem selected={selectedCategory === "all"} onClick={() => CategoryClick("all")}><p>전체</p></ListItem>
+          <ListItem selected={selectedCategory === "패션"} onClick={() => CategoryClick("패션")}><p>패션</p></ListItem>
+          <ListItem selected={selectedCategory === "쥬얼리"} onClick={() => CategoryClick("쥬얼리")}><p>쥬얼리</p></ListItem>
+          <ListItem selected={selectedCategory === "가구"} onClick={() => CategoryClick("가구")}><p>가구</p></ListItem>
+          <ListItem selected={selectedCategory === "문구"} onClick={() => CategoryClick("문구")}><p>문구</p></ListItem>
+          <ListItem selected={selectedCategory === "반려"} onClick={() => CategoryClick("반려")}><p>반려</p></ListItem>
+          <ListItem selected={selectedCategory === "아동"} onClick={() => CategoryClick("아동")}><p>아동</p></ListItem>
+          <ListItem selected={selectedCategory === "공예"} onClick={() => CategoryClick("공예")}><p>공예</p></ListItem>
+        </ul>
 
-    </CategoryCss>
+      </CategoryCss>
+    </>
   )
 }
