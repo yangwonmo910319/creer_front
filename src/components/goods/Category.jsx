@@ -88,21 +88,25 @@ export const Category = ({ setList }) => {
 
   useEffect(() => {
     if (title) {
-      setSelectedCategory("검색");
+      setSelectedCategory("검색");  
       titleList(title);
     } else {
-      if (selectedCategory !== "all") {
-        categoryList(selectedCategory);
-      } else {
+      if (selectedCategory === "all") {
+        alert("all")
+        setList([])
+        setCurrentPage(0)
         goodsList();
+      } else {
+        alert("xx")
+        categoryList(selectedCategory);
+    
       }
     }
   }, [title, selectedCategory]);
 
   useEffect(() => {
     if (selectedCategory === "all") {
-      setList([])
-      setCurrentPage(0)
+    
       goodsList();
     }
   }, [currentPage]);
