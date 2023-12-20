@@ -15,12 +15,12 @@ export const GoodsAxiosApi = {
 
   // 상품 목록 한개 가져오기
   getGoods: async (id) => {
-    // const accessToken = localStorage.getItem("accessToken");
+    const accessToken = localStorage.getItem("accessToken");
     return await axios.get(KH_DOMAIN + `/api/goods/list/${id}`, {
-      // headers: {
-      //   "Content-Type": "application/json",
-      //   Authorization: "Bearer " + accessToken,
-      // },
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: "Bearer " + accessToken,
+      },
     });
   },
 
@@ -151,5 +151,3 @@ export const GoodsAxiosApi = {
     );
   },
 };
-
-
