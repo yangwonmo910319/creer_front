@@ -4,6 +4,7 @@ import { PurchaseAxiosApi } from "../../api/goods/PurchaseAxiosApi";
 import { useNavigate } from "react-router-dom";
 import { CartAxiosApi } from "../../api/goods/CartAxiosApi";
 import { useParams } from "react-router-dom";
+import { CheckModal } from "../../utils/goods/CheckModal";
 
 const BuyboxCss = styled.div`
   margin-top: 50px;
@@ -24,6 +25,7 @@ export const Buybox = ({ list, optionList, quantity1 }) => {
   const navigate = useNavigate();
   const { goodsId } = useParams(); // 이후 사용은 중괄호 불필요
   const accessToken = localStorage.getItem("accessToken");
+  const [isModalOpen, setIsModalOpen] = useState(false);
 
   //판매자 Pk
   const [goodsDetailId, setGoodsDetailId] = useState("");
@@ -41,14 +43,31 @@ export const Buybox = ({ list, optionList, quantity1 }) => {
   };
 
   // 장바구니 담기
-  const goToCart = async () => {
+  const cartAdd = async () => {
     try {
-      await CartAxiosApi.addToCart(accessToken, goodsId);
-      alert("장바구니에 물품을 성공적으로 담았습니다.");
+      const res = await CartAxiosApi.addToCart(accessToken, goodsId);
+      if (res && res.status === 200) {
+        alert("장바구니에 물품을 담았습니다.");
+        setIsModalOpen(true);
+      } else {
+        console.error("장바구니에 물품을 담는데 실패했습니다.", res);
+        alert("장바구니에 물품을 담는데 실패했습니다.");
+      }
     } catch (error) {
+      // 오류가 발생한 경우
       console.error("장바구니에 물품을 담는데 실패했습니다.", error);
       alert("장바구니에 물품을 담는데 실패했습니다.");
     }
+  };
+
+  // 장바구니 페이지로 이동
+  const goToCart = () => {
+    navigate("/Cart");
+  };
+
+  // 모달 닫기
+  const setIsCheckModalOpen = (isOpen) => {
+    setIsModalOpen(isOpen);
   };
 
   useEffect(() => {
@@ -87,10 +106,19 @@ export const Buybox = ({ list, optionList, quantity1 }) => {
   };
 
   return (
-    <BuyboxCss>
-      <Btn1 onClick={submit}>구매</Btn1>
-      <Btn1 onClick={goToCart}>장바구니</Btn1>
-      <Btn1>채팅</Btn1>
-    </BuyboxCss>
+    <>
+      <BuyboxCss>
+        <Btn1 onClick={submit}>구매</Btn1>
+        <Btn1 onClick={cartAdd}>장바구니</Btn1>
+        <Btn1>채팅</Btn1>
+      </BuyboxCss>
+
+      <CheckModal
+        isOpen={isModalOpen}
+        onSubmit={goToCart}
+        checkMmessage={"장바구니 페이지로 이동하시겠습니까?"}
+        setIsCheckModalOpen={setIsCheckModalOpen}
+      />
+    </>
   );
 };

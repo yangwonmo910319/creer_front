@@ -43,16 +43,16 @@ const GoodsCard = styled.div`
   }
 `;
 
-export const Cart = ({}) => {
+export const Cart = () => {
   const [cartItems, setCartItems] = useState([]);
   const [checkedItems, setCheckedItems] = useState([]);
-  const { member, setMember } = useState("");
+  const accessToken = localStorage.getItem("accessToken");
 
   useEffect(() => {
-    if (member) {
+    if (accessToken) {
       fetchCartItems();
     }
-  }, [member]);
+  }, [accessToken]);
 
   useEffect(() => {
     console.log(cartItems); // 상태 업데이트 후의 장바구니 항목 출력
@@ -70,7 +70,7 @@ export const Cart = ({}) => {
   const purchaseSelected = async () => {
     try {
       const response = await GoodsAxiosApi.purchaseGoods(
-        member.id,
+        // member.id,
         checkedItems
       );
       console.log(checkedItems);
@@ -91,27 +91,30 @@ export const Cart = ({}) => {
   // 장바구니 업데이트
   const fetchCartItems = async () => {
     try {
-      const response = await CartAxiosApi.getCartItems(member.id);
-      console.log(response.data); // 응답 출력
+      const response = await CartAxiosApi.getCartItems(accessToken);
+      console.log(response.data);
+
       if (response.status === 200) {
         const cartItemsWithGoodsInfo = await Promise.all(
+          // Promise.all : 여러 개의 비동기 작업을 동시에 시작하고,
+          // 모든 작업이 완료될 때까지 기다린 후, 완료되면 그 결과를 모두 반환
           response.data.map(async (item) => {
-            const goodsResponse = await GoodsAxiosApi.getGoodsInfo(
-              item.goodsId
-            );
+            const goodsResponse = await GoodsAxiosApi.getGoods(item.goodsId);
             return {
               ...item,
               goodsInfo: goodsResponse.data,
             };
           })
         );
+
+        // 모두 구매하기를 위한 작업인가?
         setCartItems(cartItemsWithGoodsInfo);
         console.log(cartItems); // 상태 업데이트 후의 cartItems 출력
       } else {
-        console.error("장바구니 가져오기 실패");
+        console.log("장바구니 목록을 가져오는데 실패했습니다.");
       }
     } catch (error) {
-      console.error("에러 확인", error);
+      console.error("장바구니 목록 에러 확인 : ", error);
     }
   };
 
@@ -135,7 +138,7 @@ export const Cart = ({}) => {
 
   const removeFromCart = async (goodsId) => {
     try {
-      const response = await CartAxiosApi.removeFromCart(member.id, goodsId);
+      const response = await CartAxiosApi.removeFromCart(accessToken, goodsId);
       console.log(response); // 서버로부터의 응답 출력
       if (response.status === 200) {
         if (window.confirm("장바구니에서 해당 책을 삭제하시겠습니까?")) {

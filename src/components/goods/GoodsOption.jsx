@@ -253,7 +253,6 @@ export const GoodsOption = ({ goodsDedail, updateGoodsDetail }) => {
       <OptionCategory>{goodsCategory}</OptionCategory>
       <Seller>
         <Seller1>
-          {" "}
           <Optionimage>
             {list.memberDto && <img src={list.memberDto.image} alt="{}"></img>}
           </Optionimage>
