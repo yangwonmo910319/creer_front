@@ -277,11 +277,13 @@ export const ReviewComp = ({ goodsNum, openReviewModal, reply }) => {
   const [averageRating, setAverageRating] = useState(0);
   const [totalRatings, setTotalRatings] = useState(0);
   const stars = [];
-  const [visibleReviews, setVisibleReviews] = useState(5); // 초기에 보여지는 리뷰 개수 설정
+  const [visibleReviews, setVisibleReviews] = useState(10); // 초기에 보여지는 리뷰 개수 설정
   const [isReviewEidtModalOpen, setReviewEidtModalOpen] = useState(false);
   const [goodsReviewId, setGoodsReviewId] = useState('');
   const [reviewContent, setReviewContent] = useState('');
   const [reviewStar, setReviewStar] = useState(goodsNum);
+  const nickName = window.localStorage.getItem("NickName");
+
   const [Writer, setWriter] = useState('');
   const closeReviewEidtModal = () => {
     setReviewEidtModalOpen(false);
@@ -437,8 +439,8 @@ export const ReviewComp = ({ goodsNum, openReviewModal, reply }) => {
 
                 </TextBox>
               </div>
-               
-              <DeleteBox onClick={() => { deleteReview(item.goodsReviewId) }}>삭제 </DeleteBox>
+              {nickName === item.memberDto.nickName && <DeleteBox onClick={() => { deleteReview(item.goodsReviewId) }}>삭제 </DeleteBox>
+              }
 
             </li>
 

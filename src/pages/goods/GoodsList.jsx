@@ -15,7 +15,10 @@ const GoodsListCss = styled.div`
 `;
 
 export const GoodsList = () => {
-  const [list, setList] = useState();
+  const [list, setList] = useState([]);
+  console.log("list")
+  console.log(list)
+  console.log("list")
   return (
 
     <GoodsListCss>
