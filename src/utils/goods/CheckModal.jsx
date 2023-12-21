@@ -1,5 +1,5 @@
 import styled, { keyframes } from "styled-components";
-
+import { useNavigate } from "react-router-dom";
 const ModalClickCss = styled.div`
   position: absolute;
   margin: 0;
@@ -70,11 +70,12 @@ const Button = styled.div``;
 export const CheckModal = ({
   // 기본값 설정
   isOpen = false,
-  setIsCheckModalOpen = () => {},
-  onSubmit = () => {},
+  setIsCheckModalOpen = () => { },
+  onSubmit = () => { },
   checkMmessage = "",
-  revertChanges = () => {},
+  revertChanges = () => { },
 }) => {
+  const navigate = useNavigate();
   // 모달 바깥 부분 클릭 시,
   const modalClick = (e) => {
     if (e.target === e.currentTarget) {
@@ -86,6 +87,7 @@ export const CheckModal = ({
   const CheckClick = () => {
     onSubmit();
     setIsCheckModalOpen();
+    navigate(0)
   };
 
   //취소버튼 누르면

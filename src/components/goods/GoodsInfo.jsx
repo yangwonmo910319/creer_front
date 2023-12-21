@@ -69,7 +69,7 @@ const InfoBox = styled.div`
     }
 `;
 const InfoCategory = styled.div`
- margin: 0 auto;
+margin: 0 auto;
 width: 80%;
 height: 30px;
 margin-top: 50px;
@@ -80,10 +80,12 @@ margin-top: 50px;
  border-right: none;
  font-family:Arial;
 ul{  
+  margin: 0;
+padding: 0;
   display: flex;
     li{  
      width: 150px;
-     margin: 0 10%;
+
      height: 30px;
      display: flex;
      justify-content: center; 

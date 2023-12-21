@@ -3,8 +3,8 @@ import styled, { css } from "styled-components";
 import { GoodsAxiosApi } from "../../api/goods/GoodsAxiosApi";
 import { useNavigate, useParams } from "react-router-dom";
 const ListItem = styled.li`
-  width: 70px;
-  height: 70px;
+  width: 60px;
+  height: 60px;
   background-color: ${props => props.selected ? ' #e84855' : '#fff9e6'};
   color: ${props => props.selected ? ' #ffffff' : '#000000'};
   border-radius: 50px;
@@ -88,25 +88,25 @@ export const Category = ({ setList }) => {
 
   useEffect(() => {
     if (title) {
-      setSelectedCategory("검색");  
+      setSelectedCategory("검색");
       titleList(title);
     } else {
       if (selectedCategory === "all") {
-  
+
         setList([])
         setCurrentPage(0)
         goodsList();
       } else {
-     
+
         categoryList(selectedCategory);
-    
+
       }
     }
   }, [title, selectedCategory]);
 
   useEffect(() => {
     if (selectedCategory === "all") {
-    
+
       goodsList();
     }
   }, [currentPage]);

@@ -10,8 +10,11 @@ import { PictureAxiosApi } from "../../api/goods/PictureAxiosApi";
 import * as DOMPurify from 'dompurify';
 import { QuillText } from "./QuillText";
 const GoodsInfoCss = styled.div`
+margin: 0;
+padding: 0;
     width: 65%;
     height: auto;
+    border: 2px solid red;
     @media (max-width: 768px) {
         width: 500px;
         margin: 0 auto;
@@ -64,7 +67,6 @@ const InfoBox = styled.div`
        width: 80%;
     height: auto;
     border: ${(props) => (props.goodsDesc === null || props.goodsDesc.length == 0 ? '3px solid red' : '3px solid  #03bf81')};
- 
     margin: 20px auto;    
     input{
      width: 90%;  
@@ -82,10 +84,12 @@ margin-top: 50px;
  border-right: none;
  font-family:Arial;
 ul{  
+  margin: 0;
+padding: 0;
   display: flex;
     li{  
      width: 150px;
-     margin: 0 10%;
+
      height: 30px;
      display: flex;
      justify-content: center; 
@@ -94,11 +98,11 @@ ul{
 }
 `;
 const InfoDescCss = styled.div`
-width: 99%; 
+width: 100%; 
 border: none;
 border-radius: 4px;
 font-size: 16px;
-height: 600px;
+height: auto;
 
 img{
   width: 100%; 
@@ -187,11 +191,11 @@ export const GoodsInfoEdit = ({ list, reply, member }) => {
   };
 
   //리뷰 추가
-  const reviewSubmit = async (reviewData) => {
+  const reviewSubmit = async ({ rating, reviewText, url }) => {
     try {
       // 서버에 데이터 전송
       const response = await ReviewAxiosApi.insertReview(
-        reviewData.rating, reviewData.reviewText, goodsDetailId, user
+        rating, reviewText, goodsDetailId, url
       );
       if (response.status === 200) {
         // 성공적으로 데이터가 전송되었으면, 리뷰 목록에 새 리뷰 추가    
@@ -308,17 +312,11 @@ export const GoodsInfoEdit = ({ list, reply, member }) => {
           <QuillText goodsDesc={goodsDesc} setGoodsDesc={setGoodsDesc}>
           </QuillText>
         </InfoDescCss>
-
-        <div
-          style={{
-            width: "100px",
-            whiteSpace: "normal",
-          }}
-
-        />
         {/* 리뷰 출력 */}
         <ReviewComp goodsNum={list[0]} reply={reply}
           openReviewModal={openReviewModal}></ReviewComp>
+
+
 
         {/* 리뷰 작성 Madal */}
         <ReviewModal

@@ -13,9 +13,7 @@ const GoodsListCss = styled.div`
 
 export const GoodsList = () => {
   const [list, setList] = useState([]);
-  console.log("list")
-  console.log(list)
-  console.log("list")
+
   return (
     <GoodsListCss>
       {/* 이미지 슬라이드 */}

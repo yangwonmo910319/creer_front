@@ -1,5 +1,5 @@
 import styled from "styled-components"
-const  FootCss=styled.div`
+const FootCss = styled.div`
 width: 100%;
 height: 400px;
 max-width:1280px ;
@@ -38,10 +38,10 @@ div{    font-size: 12px;
 
 
 
- const Foot = () =>{
-    return(
-       
-        <FootCss> 
+const Foot = () => {
+    return (
+
+        <FootCss>
             <div className="content1">
                 <ul>
                     <li>(주) Creer</li>
@@ -54,14 +54,14 @@ div{    font-size: 12px;
             </div>
             <div className="content2"></div>
             <div className="content3">
-                            <ul>
+                <ul>
                     <li>고객센터 :  (평일 오전 10시 ~ 오후 6시)</li>
                     <li>대표번호 : 02-6959-2153</li>
                     <li>제휴문의 : www.khcampus.or.kr</li>
                 </ul>
-                </div>              
+            </div>
         </FootCss>
-   
+
     )
 }
 export default Foot

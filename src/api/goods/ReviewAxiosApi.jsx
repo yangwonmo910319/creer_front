@@ -4,11 +4,12 @@ import { KH_DOMAIN } from "../../utils/Common";
 export const ReviewAxiosApi = {
 
   // 리뷰 작성
-  insertReview: async (reviewStar, reviewText, goodsDetailId) => {
+  insertReview: async (reviewStar, reviewText, goodsDetailId, url) => {
     const reviewData = {
       goodsDetailId: goodsDetailId,
       reviewContent: reviewText,
-      reviewStar: reviewStar
+      reviewStar: reviewStar,
+      reviewImg: url,
     };
     const accessToken = localStorage.getItem("accessToken");
     return await axios.post(KH_DOMAIN + `/api/Review/new/`, reviewData, {
@@ -41,11 +42,12 @@ export const ReviewAxiosApi = {
     });
   },
   //리뷰 수정
-  updateReview: async (reviewStar, reviewText, goodsDetailId) => {
+  updateReview: async (reviewStar, reviewText, goodsDetailId, url) => {
     const reviewData = {
       goodsDetailId: goodsDetailId,
       reviewContent: reviewText,
-      reviewStar: reviewStar
+      reviewStar: reviewStar,
+      reviewImg: url,
     };
     const accessToken = localStorage.getItem("accessToken");
     return await axios.post(KH_DOMAIN + `/api/Review/update/${goodsDetailId}`, reviewData, {

@@ -4,7 +4,7 @@ import { Buybox } from "./Buybox";
 
 const OptionBoxCss = styled.div`
   width: 100%;
-  height: 500px;
+  height: auto;
   ul {
     width: 100%;
     height: auto;
@@ -23,6 +23,7 @@ const Status = styled.div`
   width: 100%;
   height: 30px;
   margin-left: 10px;
+
   .btn1 {
     width: 30px;
     height: 30px;
@@ -30,8 +31,53 @@ const Status = styled.div`
     margin: 0;
   }
 `;
+
+const Check = styled.div`
+width: 100%;
+height: auto;
+border: 2px solid rgba(80, 80, 80, 0.1);
+display: flex;
+flex-direction: column;
+align-items: center;
+margin-top: 50px;
+background-color: #f2f2f2dc;
+padding: 5px;
+
+.check1{
+width: 100%;
+margin-left: 30px;
+margin-top: 10px;
+height: 20px;
+font-size: 1.2em;
+}
+.check2{
+  width: 100%;
+height: 20px;
+font-size: 1.4em;
+text-align: end;
+margin-right: 20px;
+}
+.check3{
+  margin-top: 5px ;
+  width: 100%;
+height: auto;
+font-size: 2em;
+text-align: end;
+margin-right: 20px;
+}
+`;
+const OptionContent = styled.div`
+margin-top: -20px;
+ul{
+  margin: 0;
+  padding: 0;
+}
+
+`;
 const OptionBoxCss1 = styled.div`
   width: 100%;
+  font-size: 15px;
+  font-weight: normal;
   height: auto;
 `;
 const OptionBoxCss2 = styled.div`
@@ -40,12 +86,13 @@ const OptionBoxCss2 = styled.div`
 `;
 const OptionNum = styled.div`
   width: 100%;
-  height: 30px;
-  margin-top: 10px;
-  border: 1px solid #7e7e7e;
+  height: 30px; 
+  border: 1px solid #b8b8b8;
   display: flex;
   align-items: center;
   padding-left: 10px;
+  font-size: 15px;
+  font-weight: normal; /* 또는 다른 원하는 두께 값(normal, bold 등)으로 설정 */
 `;
 export const OptionBox = ({ list, list2 }) => {
   const [expandedOption, setExpandedOption] = useState(null);
@@ -53,19 +100,15 @@ export const OptionBox = ({ list, list2 }) => {
   const [quantity, setQuantity] = useState(1);
   //내가 선택한 옵션
   const [optionList, setOptionList] = useState([]);
+  const [check, setCheck] = useState('');
   //list로 넘어온 옵션 리스트들을 종류별로 나눔
   const groupedOptions = {};
-  console.log("list");
-  console.log(list);
 
-  // list.forEach(option => {
-  //   //옵션 goodsOptionNum(번호)에 해당하는 배열을 만듬
-  //   if (!groupedOptions[option.goodsOptionNum]) {
-  //     groupedOptions[option.goodsOptionNum] = [];
-  //   }
-  //   //옵션 goodsOptionNum(번호)에 맞게 넣음
-  //   groupedOptions[option.goodsOptionNum].push(option);
-  // });
+  useEffect(() => {
+
+    const combinedOptions = optionList.map((option) => option.goodsOptionContent + " / ").join(' ');
+    setCheck(` ${combinedOptions}  ${quantity}개`);
+  }, [quantity, optionList])
 
   if (list !== null && Array.isArray(list)) {
     list.forEach((option) => {
@@ -101,7 +144,6 @@ export const OptionBox = ({ list, list2 }) => {
       });
     }
   };
-  useEffect(() => {}, []);
   return (
     <OptionBoxCss>
       <Status>
@@ -130,26 +172,38 @@ export const OptionBox = ({ list, list2 }) => {
           <div key={index}>
             <h3 onClick={() => OptionPick(key)}>
               <OptionNum>
-                {" "}
+
                 {groupedOptions[key][0].goodsOptionNum}{" "}
                 {
                   optionList.find((option) => option.goodsOptionNum === key)
                     ?.goodsOptionContent
                 }
-              </OptionNum>{" "}
+              </OptionNum>
             </h3>
-            {expandedOption === key && (
-              <ul>
-                {groupedOptions[key].map((option, i) => (
-                  <li key={i} onClick={() => OptionPick(key, option)}>
-                    {option.goodsOptionContent}
-                  </li>
-                ))}
-              </ul>
-            )}
+            <OptionContent>
+              {expandedOption === key && (
+                <ul>
+                  {groupedOptions[key].map((option, i) => (
+                    <li key={i} onClick={() => OptionPick(key, option)}>
+                      {option.goodsOptionContent}
+                    </li>
+                  ))}
+                </ul>
+              )}       </OptionContent>
+
           </div>
+
         ))}
+        <Check>{check &&
+          <>
+            <div className="check1">{check}</div>
+            <div className="check2">  {list2.goodsPrice}원</div>
+            <div className="check3">  {list2.goodsPrice * 2}원</div>
+          </>
+        }
+        </Check>
       </OptionBoxCss1>
+
       <OptionBoxCss2>
         <Buybox list={list2} optionList={optionList} quantity1={quantity} />
       </OptionBoxCss2>

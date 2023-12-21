@@ -8,16 +8,35 @@ import { ReviewEditModal } from "../../utils/goods/ReviewEditModal"
 const ReivewInfo = styled.div`
 
 width: 100%;
-height: 50px;
+height: auto;
 display: flex;
 flex-direction: row;
+
+  .review-starbox {
+    margin-left: 35px;
+    display: flex;
+    flex-direction: column;
+    width:  50%;
+
+    height: auto;
+  
+    p{  margin: 0;
+      height: 20px;
+      text-align: start;
+    }
+  }
 
 `;
 const ReviewSectionContainer = styled.div`
   height: auto;
-  width: 100%; // 너비를 100%로 설정
+  width: 85%; // 너비를 100%로 설정
   max-width: 1200px; // 컨테이너의 최대 너비 설정
   margin: 0 auto; // 좌우 중앙에 배치
+ padding: 0;
+
+
+ 
+ 
   @media screen and (max-width: 768px) {
  
  
@@ -28,17 +47,6 @@ const ReviewSectionContainer = styled.div`
     margin-bottom: 15px;
     padding: 10px 0 8px 0;
     text-transform: uppercase; /* 텍스트를 대문자로 변환 */
-  }
-
-  .review-starbox {
-    margin-left: 35px;
-    display: flex;
-    flex-direction: column;
-    width:  50%;
-    height: 100px;
-    p{
-      text-align: start;
-    }
   }
 
   .review-rating {
@@ -134,20 +142,22 @@ const ReviewText = ({ isExpanded, children }) => (
   </p>
 );
 
-const WriteButton = styled.button`
-width: 100px;
-height: 30px;
-  position: relative;
-  display: inline-block;
-  border: 0;
-  vertical-align: middle;
-  text-decoration: none;
-  font-weight: 600;
-  color: #382b22;
-  background: #fbf3d8;
-  border: 1px solid #000000;
-  border-radius: 0.75em;
-  margin-top: 10px;
+const WriteButton = styled.div`
+width: 100%;
+height: 60px;  
+display: flex;
+  justify-content: end;
+  align-items: end;
+
+  button{      
+    /* color: #DCF763;
+  background: #435058; */
+    color:#ffffff;
+  background: #d42a30;
+  
+  border: 2px solid #412525;  
+
+  }
 `;
 
 const MoreButton = styled.button`
@@ -168,35 +178,41 @@ const MoreButton = styled.button`
 `;
 
 const ImgBox = styled.div`
-  width: 100px;
-  height: 100px;
+  width: 80px;
+  height: 80px;
   color: #333;
   font-size: 18px;
   font-weight: bold;
   margin: 0;
   text-align: center;
-
+  border: 0.7px solid black;
+  display: flex;
+  justify-content: center;
+  align-items: center;
   img{
-    padding: 1px;
-    border: 0.7px solid black;
-    width: 100px;
-    margin-top:10px ;
-    height: 100px;
+    
+    width: 100%;
+    height:100%;
   }
 `;
 
 const ImgBox1 = styled.div`
+height: aupx;
 img{
-  width: 50px;
-  height: 50px;
+  border-radius: 50%;
+  width: 30px;
+  height: 30px;
 }
 `;
 const TextBox = styled.div`
-     width: 80%;
+
+     width: 90%;
      margin-left: 20px;
   height: auto;
+  padding-top: 10px;
   .box3{
     width: 100%;
+    height: 30px;
     display: flex;
     flex-direction: row;
   }
@@ -204,14 +220,18 @@ const TextBox = styled.div`
 const ReviewBox = styled.div`
 display: flex;
 flex-direction: row;
-align-items: center;
 height: auto;
 width: 100%;
+padding: 0px;
+
 .box1{
-margin-top: 20px;
-margin-left: 20px;
-width: 130px;
-height: 130px;
+  display: flex;
+justify-content:center;
+align-items: center;
+
+width: 100px;
+height: 100px;
+
 }
 .box2{
   width: calc(100% - 130px);
@@ -232,10 +252,15 @@ text-align:start;
 const ReviewContent = styled.div`
 width: 90%;
 margin-left: 10px;
-margin-top: 5px;
-height: 30px;
 overflow: hidden;
 text-align: start;
+height: 20px;
+p{
+  margin: 0;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
 
 `;
 const ReviewDate = styled.p`
@@ -255,25 +280,26 @@ margin-left: 10px;
 height: 100%;
 `;
 const DeleteBox = styled.div`
-width:50px;
-height: 10px;
-border-radius: 10px;
-font-size: .7em;
-margin: auto;
-padding: 5px;
+display: flex;
+justify-content: center;
+align-items: center;
+width:20px;
+height: 20px;
+border-radius: 5px;
+font-size: 1.5em;
+margin: 0;
+
 border:1px solid #7888ff;
 background: white;
-position: absolute;
 right: 0;
-z-index: 4;
+p{
+  margin-bottom: 30px;
+}
 `;
 
 export const ReviewComp = ({ goodsNum, openReviewModal, reply }) => {
 
-  const [num, setNum] = useState(goodsNum)
-  const [render, setRender] = useState(false)
-  const [reviews, setReviews] = useState('');
-  const [expandedReviews, setExpandedReviews] = useState([]);
+
   const [averageRating, setAverageRating] = useState(0);
   const [totalRatings, setTotalRatings] = useState(0);
   const stars = [];
@@ -281,6 +307,7 @@ export const ReviewComp = ({ goodsNum, openReviewModal, reply }) => {
   const [isReviewEidtModalOpen, setReviewEidtModalOpen] = useState(false);
   const [goodsReviewId, setGoodsReviewId] = useState('');
   const [reviewContent, setReviewContent] = useState('');
+  const [reviewUrl, setReviewUrl] = useState('');
   const [reviewStar, setReviewStar] = useState(goodsNum);
   const nickName = window.localStorage.getItem("NickName");
 
@@ -322,7 +349,7 @@ export const ReviewComp = ({ goodsNum, openReviewModal, reply }) => {
     try {
       // 서버에 데이터 전송
       const response = await ReviewAxiosApi.updateReview(
-        reviewData.rating, reviewData.reviewText, reviewData.goodsReviewId
+        reviewData.rating, reviewData.reviewText, reviewData.goodsReviewId, reviewData.url,
       );
       if (response.status === 200) {
         // 성공적으로 데이터가 전송되었으면, 리뷰 목록에 새 리뷰 추가    
@@ -346,33 +373,7 @@ export const ReviewComp = ({ goodsNum, openReviewModal, reply }) => {
       stars.push(<FaStar key={i} color="gray" />);
     }
   }
-  // 리뷰 데이터를 가져오는 함수
-  // const fetchReviews = useCallback(async () => {
-  //   try {
-  //     const response = await ReviewAxiosApi.getReviews(goodsNum);
 
-  //     if (response.status === 200) {
-  //       console.log(response)
-  //       setReviews(response.data);
-  //       //리뷰 수
-  //       setTotalRatings(response.data.length)
-  //       console.log(response.data.length)
-  //       let totalRating = 0;
-  //       for (let i = 0; i < response.data.length; i++) {
-  //         totalRating += response.data[i].reviewStar;
-
-  //       }
-  //       setAverageRating(totalRating / response.data.length);
-
-
-  //     } else {
-  //       console.error("리뷰 가져오기 실패");
-  //       console.log(response);
-  //     }
-  //   } catch (error) {
-  //     console.error("리뷰 데이터 요청 에러", error);
-  //   }
-  // }, [goodsNum]);
   useEffect(() => {
     if (reply && Array.isArray(reply)) {
       setTotalRatings(reply.length);
@@ -394,7 +395,7 @@ export const ReviewComp = ({ goodsNum, openReviewModal, reply }) => {
         </div>
         <div className="review-rating">
 
-          <WriteButton onClick={openReviewModal}>Review 작성</WriteButton>
+          <WriteButton><button onClick={openReviewModal}>Review 작성</button></WriteButton>
         </div>
 
       </ReivewInfo>
@@ -410,6 +411,7 @@ export const ReviewComp = ({ goodsNum, openReviewModal, reply }) => {
                 setGoodsReviewId(item.goodsReviewId);
                 setReviewContent(item.reviewContent);
                 setReviewStar(item.reviewStar);
+                setReviewUrl(item.reviewImg)
                 setWriter(item.memberDto.nickName);
                 openReviewEidtModal()
               }}>
@@ -439,7 +441,7 @@ export const ReviewComp = ({ goodsNum, openReviewModal, reply }) => {
 
                 </TextBox>
               </div>
-              {nickName === item.memberDto.nickName && <DeleteBox onClick={() => { deleteReview(item.goodsReviewId) }}>삭제 </DeleteBox>
+              {nickName === item.memberDto.nickName && <DeleteBox onClick={() => { deleteReview(item.goodsReviewId) }}><p>×</p> </DeleteBox>
               }
 
             </li>
@@ -459,6 +461,7 @@ export const ReviewComp = ({ goodsNum, openReviewModal, reply }) => {
         Writer={Writer}  //작성자
         goodsReviewId={goodsReviewId} //리뷰 PK
         reviewContent={reviewContent} //내용
+        reviewUrl={reviewUrl}
         reviewStar={reviewStar} //별점
         isOpen={isReviewEidtModalOpen} //모달 열기
         onSubmit={reviewEidtSubmit}//수정 함수

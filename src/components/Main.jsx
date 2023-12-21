@@ -7,7 +7,6 @@ const MainCss = styled.div`
   max-width: 1280px;
   min-width: 768px;
   margin: 0 auto;
-
   display: grid;
   grid-template-columns: 100%;
   grid-template-rows: auto;

@@ -18,12 +18,13 @@ const GoodsOptionCss = styled.div`
 const Seller = styled.div`
   position: relative;
   width: 100%;
-  height: 150px;
+  height: auto;
   display: flex;
   border-bottom: 1px solid rgba(136, 136, 136, 0.673);
   /* justify-content: center; */
   align-items: center;
   margin-top: 20px;
+  font-size: .8em;
 `;
 
 const Seller1 = styled.div`
@@ -46,7 +47,7 @@ const Seller2 = styled.div`
 const Optionimage = styled.div`
   img {
     border-radius: 50px;
-    border: 1px solid #a5a5a5;
+    border: 2px solid #a8a8a8;
     width: 100px;
     height: 100px;
     margin-bottom: 40px;

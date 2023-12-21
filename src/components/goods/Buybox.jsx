@@ -18,10 +18,16 @@ const Btn1 = styled.div`
   display: flex;
   justify-content: center;
   align-items: center;
-  background: #fcd3d3;
+  color: white;
+  background: #e3141b;  
+  border: 2px solid #412525;  
+
 `;
 
 export const Buybox = ({ list, optionList, quantity1 }) => {
+  console.log("list")
+  console.log(list)
+  console.log("list")
   const navigate = useNavigate();
   const { goodsId } = useParams(); // 이후 사용은 중괄호 불필요
   const accessToken = localStorage.getItem("accessToken");
@@ -86,7 +92,7 @@ export const Buybox = ({ list, optionList, quantity1 }) => {
     }
   }, [optionList]);
 
-  const SelectGoodsLIst = async (content) => {
+  const SelectGoodsLIst = async () => {
     try {
       const content = {
         seller: seller,
