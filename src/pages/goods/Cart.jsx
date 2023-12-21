@@ -48,6 +48,12 @@ export const Cart = () => {
   const [checkedItems, setCheckedItems] = useState([]);
   const accessToken = localStorage.getItem("accessToken");
 
+  // 장바구니 업데이트
+  const fetchCartItems = async () => {
+    const response = await CartAxiosApi.getCartItems(accessToken);
+    console.log("장바구니 업데이트 응답 : " + response.data);
+  };
+
   useEffect(() => {
     if (accessToken) {
       fetchCartItems();
@@ -55,20 +61,9 @@ export const Cart = () => {
   }, [accessToken]);
 
   useEffect(() => {
-    console.log(cartItems); // 상태 업데이트 후의 장바구니 항목 출력
+    console.log("상태 업데이트 후의 cartItems : " + cartItems); // 상태 업데이트 후의 장바구니 항목 출력
   }, [cartItems]);
 
-  // 장바구니 업데이트
-  const fetchCartItems = async () => {
-    const response = await CartAxiosApi.getCartItems(accessToken);
-    console.log(response.data);
-  };
-
-
-
-
-
-  
   // 장바구니 선택 구매
   const checkboxChange = (goodsId) => {
     if (checkedItems.includes(goodsId)) {
