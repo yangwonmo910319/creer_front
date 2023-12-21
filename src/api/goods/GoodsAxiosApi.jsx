@@ -23,6 +23,18 @@ export const GoodsAxiosApi = {
       },
     });
   },
+  
+  // 내 상품 조회
+  getMyGoods: async () => {
+    const accessToken = localStorage.getItem("accessToken");
+    return await axios.get(KH_DOMAIN + `/api/goods/Mylist`, {
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: "Bearer " + accessToken,
+      },
+    });
+  },
+
 
   // 상품 삭제
   deleteGoods: async (id) => {
