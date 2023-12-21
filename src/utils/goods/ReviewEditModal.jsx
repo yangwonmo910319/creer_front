@@ -40,7 +40,7 @@ const ModalContent = styled.div`
   box-shadow: 0 0 20px rgba(0, 0, 0, 0.5);
   width: 80%;
   max-width: 1000px;
-  height: 90%;
+  height: auto;
   text-align: center;
   margin: 0 20px;
   animation: ${slideUp} 0.5s;
@@ -301,8 +301,9 @@ export const ReviewEditModal = ({ Writer, goodsReviewId, reviewContent, reviewUr
                   </div>
                 </div>
               </div></>
-            ) : (<>
-              <img src={url} alt="" ></img>
+            ) : (<>    <div className="contentImg">
+              <img src={reviewUrl} alt="" ></img>
+            </div>
               <div className="content1">
                 <div className="content1-1">
                   별점
@@ -312,7 +313,6 @@ export const ReviewEditModal = ({ Writer, goodsReviewId, reviewContent, reviewUr
                     <Star
                       key={value}
                       color={value <= (hoverRating || rating) ? "#fff453" : "gray"}
-
                     />
                   ))}
                 </div>
