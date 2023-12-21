@@ -4,10 +4,10 @@ import { KH_DOMAIN } from "../../utils/Common";
 export const CartAxiosApi = {
   // 장바구니에 추가
   // Post 메서드의 첫번째 매개변수 : URL, 두번째 : 요청 본문, 세번째 : 설정 객체
-  addToCart: async (accessToken, goodsId) => {
+  addToCart: async (accessToken, content) => {
     return await axios.post(
       `${KH_DOMAIN}/Cart/add`, // URL
-      { goodsId }, // 요청 본문
+      { content }, // 요청 본문
       {
         headers: {
           // 설정 객체

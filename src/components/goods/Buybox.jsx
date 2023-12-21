@@ -26,6 +26,7 @@ export const Buybox = ({ list, optionList, quantity1 }) => {
   const { goodsId } = useParams(); // 이후 사용은 중괄호 불필요
   const accessToken = localStorage.getItem("accessToken");
   const [isModalOpen, setIsModalOpen] = useState(false);
+  const [content, setContent] = useState({});
 
   //판매자 Pk
   const [goodsDetailId, setGoodsDetailId] = useState("");
@@ -38,14 +39,23 @@ export const Buybox = ({ list, optionList, quantity1 }) => {
   //수량
   const [quantity, setQuantity] = useState("1");
 
-  const submit = () => {
-    SelectGoodsLIst();
-  };
+  // 상품 정보 업데이트
+  useEffect(() => {
+    // goodsId가 변경될 때마다 content 객체를 업데이트합니다.
+    setContent({
+      seller: seller,
+      goodsDetailId: goodsId,
+      option: option,
+      quantity: quantity,
+      status: status,
+    });
+    console.log("content : " + content.seller);
+  }, [seller, goodsId, option, quantity, status, content.seller]);
 
   // 장바구니 담기
   const cartAdd = async () => {
     try {
-      const res = await CartAxiosApi.addToCart(accessToken, goodsId);
+      const res = await CartAxiosApi.addToCart(accessToken, content);
       if (res && res.status === 200) {
         alert("장바구니에 물품을 담았습니다.");
         setIsModalOpen(true);
@@ -86,29 +96,21 @@ export const Buybox = ({ list, optionList, quantity1 }) => {
     }
   }, [optionList]);
 
-  const SelectGoodsLIst = async (content) => {
+  // 구매
+  const SelectGoodsList = async () => {
     try {
-      const content = {
-        seller: seller,
-        goodsDetailId: goodsDetailId,
-        option: option,
-        quantity: quantity,
-        status: status,
-      };
+      console.log("구매 content 정보 : " + JSON.stringify(content));
       const rsp = await PurchaseAxiosApi.insertPurchase(content);
-      // 상품 정보를 가져옵니다.
-      console.log("상품 상세정보");
-      console.log(rsp.data);
-      //가져온 데이터를 저장
+      console.log("구매한 상품 상세정보 : " + rsp.data);
     } catch (error) {
-      console.log(error);
+      console.log("상품 구매 오류 발생 : " + error);
     }
   };
 
   return (
     <>
       <BuyboxCss>
-        <Btn1 onClick={submit}>구매</Btn1>
+        <Btn1 onClick={SelectGoodsList}>구매</Btn1>
         <Btn1 onClick={cartAdd}>장바구니</Btn1>
         <Btn1>채팅</Btn1>
       </BuyboxCss>
