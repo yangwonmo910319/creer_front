@@ -64,6 +64,11 @@ export const Cart = () => {
     console.log(response.data);
   };
 
+
+
+
+
+  
   // 장바구니 선택 구매
   const checkboxChange = (goodsId) => {
     if (checkedItems.includes(goodsId)) {

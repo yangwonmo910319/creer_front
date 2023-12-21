@@ -55,6 +55,7 @@ export const Buybox = ({ list, optionList, quantity1 }) => {
   // 장바구니 담기
   const cartAdd = async () => {
     try {
+      console.log("장바구니에 담을 content 정보 : " + JSON.stringify(content));
       const res = await CartAxiosApi.addToCart(accessToken, content);
       if (res && res.status === 200) {
         alert("장바구니에 물품을 담았습니다.");

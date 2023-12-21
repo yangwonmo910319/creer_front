@@ -7,7 +7,7 @@ export const CartAxiosApi = {
   addToCart: async (accessToken, content) => {
     return await axios.post(
       `${KH_DOMAIN}/Cart/add`, // URL
-      { content }, // 요청 본문
+      content, // 요청 본문
       {
         headers: {
           // 설정 객체
