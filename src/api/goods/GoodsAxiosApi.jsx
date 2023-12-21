@@ -137,6 +137,7 @@ export const GoodsAxiosApi = {
       }
     );
   },
+  
   // 상품 페이지네이션 조회
   GoodsPageList: async (page, size) => {
     const accessToken = localStorage.getItem("accessToken");

@@ -58,6 +58,18 @@ export const Cart = () => {
     console.log(cartItems); // 상태 업데이트 후의 장바구니 항목 출력
   }, [cartItems]);
 
+  // 장바구니 업데이트
+  const fetchCartItems = async () => {
+    const response = await CartAxiosApi.getCartItems(accessToken);
+    console.log(response.data);
+  };
+
+
+
+
+
+  
+  // 장바구니 선택 구매
   const checkboxChange = (goodsId) => {
     if (checkedItems.includes(goodsId)) {
       setCheckedItems(checkedItems.filter((id) => id !== goodsId));
@@ -66,6 +78,7 @@ export const Cart = () => {
     }
     console.log(goodsId);
   };
+
   const isChecked = (goodsId) => checkedItems.includes(goodsId);
   const purchaseSelected = async () => {
     try {
@@ -88,56 +101,7 @@ export const Cart = () => {
     }
   };
 
-  // 장바구니 업데이트
-  const fetchCartItems = async () => {
-    try {
-      const response = await CartAxiosApi.getCartItems(accessToken);
-      console.log(response.data);
-
-      // 장바구니 목록은 잘 불러와지는데, 아래 작업에서 오류 발생 중~
-      // if (response.status === 200) {
-      //   const cartItemsWithGoodsInfo = await Promise.all(
-      //     // Promise.all : 여러 개의 비동기 작업을 동시에 시작하고,
-      //     // 모든 작업이 완료될 때까지 기다린 후, 완료되면 그 결과를 모두 반환
-      //     response.data.map(async (item) => {
-      //       const goodsResponse = await GoodsAxiosApi.getGoods(item.goodsId);
-      //       return {
-      //         ...item,
-      //         goodsInfo: goodsResponse.data,
-      //       };
-      //     })
-      //   );
-
-      // 모두 구매하기를 위한 작업인가?
-      // setCartItems(cartItemsWithGoodsInfo);
-      // console.log(cartItems); // 상태 업데이트 후의 cartItems 출력
-    } catch (error) {
-      // else {
-      //   console.log("장바구니 목록을 가져오는데 실패했습니다.");
-      // }
-      // }
-      console.error("장바구니 목록 에러 확인 : ", error);
-    }
-  };
-
-  /* 
-  // 모든 책 구매
-  const purchaseAll = async () => {
-    try {
-      const goodsIds = cartItems.map((item) => item.goodsId); // 장바구니에 있는 모든 책의 ID를 가져옴
-      const response = await AxiosApi.purchaseGoods(user.id, goodsIds);
-      console.log(response); // 서버로부터의 응답 출력
-      if (response.status === 200) {
-        fetchCartItems(); // 책을 구매한 후 장바구니 아이템 목록을 다시 불러옴
-      } else {
-        console.error("책 구매 실패");
-      }
-    } catch (error) {
-      console.error("에러 확인", error);
-    }
-  };
-*/
-
+  // 장바구니에서 제거
   const removeFromCart = async (goodsId) => {
     try {
       const response = await CartAxiosApi.removeFromCart(accessToken, goodsId);
