@@ -3,12 +3,13 @@ import axios from "axios";
 import styled from "styled-components";
 
 const WeatherBox = styled.div`
-  width: 288px;
+  min-width: 288px;
   max-height: 150px;
   display: flex;
   flex-direction: column;
   justify-content: center;
   align-items: center;
+  background-color: azure;
 `;
 
 // Radio

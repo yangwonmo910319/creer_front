@@ -13,6 +13,7 @@ const SearchBox = styled.div`
   display: flex;
   align-items: center;
   height: 40px;
+  margin-bottom: 20px;
 `;
 
 const SearchMode = styled.div`

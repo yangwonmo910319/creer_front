@@ -57,71 +57,93 @@ export const NavBar = () => {
     <>
       {/* 기본 */}
       <Top>
-        <Weather></Weather>
-        <StyledLogo
-          onClick={() => {
-            navigate("/");
-          }}
-        ></StyledLogo>
-        {/* 로그인 여부 */}
-        <ul>
-          {login === "false" ? (
-            // 로그인 X
-            <>
-              {/* 로그인 */}
-              <li
-                onClick={() => {
-                  navigate("/Login");
-                }}
-              >
-                로그인
-              </li>
+        <div className="up">
+          <Weather></Weather>
+          <StyledLogo
+            onClick={() => {
+              navigate("/");
+            }}
+          ></StyledLogo>
+          {/* 로그인 여부 */}
+          <ul>
+            {login === "false" ? (
+              // 로그인 X
+              <div className="zero">
+                {/* 로그인 */}
+                <li
+                  className="notLogged"
+                  onClick={() => {
+                    navigate("/Login");
+                  }}
+                >
+                  로그인
+                </li>
 
-              {/* 회원가입 */}
-              <li
-                onClick={() => {
-                  navigate("/SignUp");
-                }}
-              >
-                회원가입
-              </li>
-            </>
-          ) : (
-            // 로그인 O
-            <>
-              <Welcome>{member.nickName}님 환영합니다!</Welcome>
-              {/* 마이 페이지 */}
-              <li
-                onClick={() => {
-                  navigate("/MyPage");
-                }}
-              >
-                마이 페이지
-              </li>
+                {/* 회원가입 */}
+                <li
+                  className="notLogged"
+                  onClick={() => {
+                    navigate("/SignUp");
+                  }}
+                >
+                  회원가입
+                </li>
+              </div>
+            ) : (
+              // 로그인 O
+              <>
+                <div className="one">
+                  <Welcome>{member.nickName}님 환영합니다!</Welcome>
+                </div>
+                <div className="two">
+                  {/* 마이 페이지 */}
+                  <li
+                    className="Logged"
+                    onClick={() => {
+                      navigate("/MyPage");
+                    }}
+                  >
+                    마이 페이지
+                  </li>
 
-              {/* 장바구니 */}
-              <li
-                onClick={() => {
-                  navigate("/Cart");
-                }}
-              >
-                장바구니
-              </li>
+                  {/* 장바구니 */}
+                  <li
+                    className="Logged"
+                    onClick={() => {
+                      navigate("/Cart");
+                    }}
+                  >
+                    장바구니
+                  </li>
 
-              {/* 로그아웃 */}
-              <li
-                onClick={() => {
-                  logout();
-                }}
-              >
-                <p>로그아웃</p>
-              </li>
-            </>
-          )}
-        </ul>
+                  {/* 상품 등록 */}
+                  <li
+                    className="Logged"
+                    onClick={() => {
+                      navigate("/GoodsWrite");
+                    }}
+                  >
+                    상품 등록
+                  </li>
+
+                  {/* 로그아웃 */}
+                  <li
+                    className="Logged"
+                    onClick={() => {
+                      logout();
+                    }}
+                  >
+                    로그아웃
+                  </li>
+                </div>
+              </>
+            )}
+          </ul>
+        </div>
+        <div className="down">
+          <StyledSearch></StyledSearch>
+        </div>
       </Top>
-
-      <StyledSearch></StyledSearch>
     </>
   );
 };
