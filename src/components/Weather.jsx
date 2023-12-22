@@ -3,15 +3,14 @@ import axios from "axios";
 import styled from "styled-components";
 
 const WeatherBox = styled.div`
-margin-top: 20px;
-  width: 90%;
+  width: 288px;
+  margin-top: 20px;
   max-height: 100%;
   height: 40%;
   display: flex;
   flex-direction: column;
   justify-content: center;
   align-items: center;
-  background-color: azure;
 `;
 
 // Radio

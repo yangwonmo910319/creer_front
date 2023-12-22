@@ -96,7 +96,7 @@ export const CartModal = ({ isOpen, closeModal, onConfirm, action }) => {
           <CloseButton onClick={closeModal}>&times;</CloseButton>
         </ModalHeader>
         <ModalMain>
-          이 책을{" "}
+          이 책을
           {action === "add"
             ? "장바구니에 담으시겠습니까?"
             : "장바구니에서 제거하시겠습니까?"}

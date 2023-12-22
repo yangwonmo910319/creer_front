@@ -1,19 +1,18 @@
 import styled from "styled-components";
-import { StyledButton } from "./StyledButton";
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 
 // 이미지
-import { FaSearch, FaMicrophone } from "react-icons/fa";
+import { FaSearch } from "react-icons/fa";
 
 // 검색바
 const SearchBox = styled.div`
   width: 100%;
   height: auto;
   display: flex;
+  justify-content: center;
   align-items: center;
   height: 40px;
-  margin-bottom: 20px;
 `;
 
 const SearchMode = styled.div`
@@ -21,7 +20,6 @@ const SearchMode = styled.div`
   display: flex;
   align-items: center;
   width: 70%;
-
   height: 35px;
   margin: 20px;
   border: 1.5px solid #c9cacc;
@@ -35,14 +33,14 @@ const SearchMode = styled.div`
 `;
 
 const Input = styled.input`
-  width: 100%;
+  width: 82%;
   height: 100%;
   border: none;
   outline: none;
   font-size: 16px;
-
+  font-weight: bold;
   padding: 0 10px; // 아이콘과 겹치지 않는 적절한 패딩을 설정
-  background: white; // 배경색을 흰색으로 설정
+  background: rgba(0, 0, 0, 0);
 
   @media (max-width: 600px) {
     font-size: 12px;
@@ -51,19 +49,6 @@ const Input = styled.input`
 
 const SearchIcon = styled.div`
   margin-left: 3%;
-  cursor: pointer;
-  svg {
-    color: #757575;
-    transition: all 0.3s ease-in-out;
-    &:hover {
-      transform: scale(1.2);
-      color: var(--black);
-    }
-  }
-`;
-
-const MicIcon = styled.div`
-  margin-right: 3%;
   cursor: pointer;
   svg {
     color: #757575;
@@ -93,31 +78,18 @@ export const StyledSearch = () => {
   return (
     <>
       <SearchBox>
-        {/* <SearchLogo src={logo} alt="logo" /> */}
         <SearchMode>
-          <SearchIcon>
-            <FaSearch size={15} />
-          </SearchIcon>
           <Input
             type="text"
-            placeholder="검색어를 입력해 주세요"
+            placeholder="  Search"
             value={search}
             onChange={(e) => setSearch(e.target.value)}
             onKeyDown={handleKeyPress}
           />
-          <MicIcon>
-            <FaMicrophone size={15} />
-          </MicIcon>
+          <SearchIcon onClick={searchTitle}>
+            <FaSearch />
+          </SearchIcon>
         </SearchMode>
-        <StyledButton
-          onClick={searchTitle}
-          value="검색"
-          width="80px"
-          height="40px"
-          smallWidth="60px"
-          smallHeight="30px"
-          breakpoint="600px"
-        ></StyledButton>
       </SearchBox>
     </>
   );

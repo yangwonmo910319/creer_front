@@ -283,7 +283,6 @@ export const GoodsOptionEdit = ({ goodsDedail, updateGoodsDetail }) => {
       </OptionCategory>
       <Seller>
         <Seller1>
-          {" "}
           <Optionimage>
             {list.memberDto && <img src={list.memberDto.image} alt="{}"></img>}
           </Optionimage>
@@ -301,11 +300,11 @@ export const GoodsOptionEdit = ({ goodsDedail, updateGoodsDetail }) => {
           <input type="text" value={goodsPrice} onChange={GoodsPriceChange} />
         </OptionPrice>
         <GoodsDeliveryFee goodsDeliveryFee={goodsDeliveryFee}>
-          배송:{" "}
+          배송:
           <input type="text" value={goodsRefund} onChange={GoodsRefundChange} />
         </GoodsDeliveryFee>
         <GoodsRefund goodsRefund={goodsRefund}>
-          배송 시작:{" "}
+          배송 시작:
           <input
             type="text"
             value={goodsDeliveryFee}
@@ -325,11 +324,9 @@ export const GoodsOptionEdit = ({ goodsDedail, updateGoodsDetail }) => {
           className="sell1-4"
           onClick={() => setIsCheckModalOpen(!isCheckModalOpen)}
         >
-          {" "}
           수정 완료
         </div>
         <div className="sell1-4 sell1-5" onClick={() => deleteGoodsDetail()}>
-          {" "}
           글 삭제
         </div>
       </Option>

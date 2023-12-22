@@ -95,10 +95,10 @@ export const PurchaseModal = ({ isOpen, closeModal, onConfirm, action }) => {
           <CloseButton onClick={closeModal}>&times;</CloseButton>
         </ModalHeader>
         <ModalMain>
-          이 책을{" "}
+          이 책을
           {action === "purchase"
-            ? "구매하시겠습니까?"
-            : "장바구니에 담으시겠습니까?"}
+            ? " 구매하시겠습니까?"
+            : " 장바구니에 담으시겠습니까?"}
         </ModalMain>
         <ModalFooter>
           <ConfirmButton onClick={onConfirm}>확인</ConfirmButton>

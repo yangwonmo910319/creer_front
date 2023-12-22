@@ -15,13 +15,6 @@ const MainCss = styled.div`
     "middle"
     "bottom";
   gap: 12px;
-
-  @media (max-width: 768px) {
-    grid-template-areas:
-      "middle"
-      "top"
-      "bottom";
-  }
 `;
 
 const NavCss = styled.div`

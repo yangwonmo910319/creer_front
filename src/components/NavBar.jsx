@@ -4,7 +4,7 @@ import { Common } from "../utils/Common";
 import { MemberAxiosApi } from "../api/member/MemberAxiosApi";
 import { StyledSearch } from "../css/common/StyledSearch";
 import { Weather } from "./Weather";
-import { StyledLogo, MidR, TopL, Top, TopR, BottomR, BottomL, BottomC, Welcome } from "../css/NavBarStyle";
+import { StyledLogo, MidR, TopL, Top, TopR, BottomC } from "../css/NavBarStyle";
 
 export const NavBar = () => {
   const navigate = useNavigate();
@@ -58,41 +58,79 @@ export const NavBar = () => {
         <TopL>
           <Weather></Weather>
         </TopL>
-        <StyledLogo onClick={() => { navigate("/"); }}></StyledLogo>
+        <StyledLogo
+          onClick={() => {
+            navigate("/");
+          }}
+        ></StyledLogo>
         {/* 로그인 여부 */}
-        <TopR>  <ul>
-          {login === "false" ? ( // 로그인 X
-            <> {/* 로그인 */}
-              <MidR> <li onClick={() => { navigate("/Login"); }}>
-                로그인
-              </li>{/* 회원가입 */}<li onClick={() => { navigate("/SignUp"); }}>
-                  회원가입
-                </li></MidR>
-            </>
-          ) : (
-            // 로그인 O
-            <>
-              <TopR>
-                {member.nickName}님
-              </TopR>
-              {/* 마이 페이지 */}
-              <MidR> <li onClick={() => { navigate("/MyPage"); }}>
-                마이 페이지
-              </li>{/* 장바구니 */}
-                <li onClick={() => { navigate("/Cart"); }}>                장바구니
-                </li>{/* 로그아웃 */}
-                <li onClick={() => { logout(); }} >
-                  로그아웃
-                </li></MidR>
-            </>
-          )}
-        </ul></TopR>
-        <BottomL>상품</BottomL>
-        <BottomR>경매</BottomR>
-        <BottomC>  <StyledSearch /></BottomC>
+        <TopR>
+          <ul>
+            {login === "false" ? ( // 로그인 X
+              <>
+                {/* 로그인 */}
+                <br />
+                <br />
+                <br />
+                <MidR>
+                  <li
+                    onClick={() => {
+                      navigate("/Login");
+                    }}
+                  >
+                    로그인
+                  </li>
+                  {/* 회원가입 */}
+                  <li
+                    onClick={() => {
+                      navigate("/SignUp");
+                    }}
+                  >
+                    회원가입
+                  </li>
+                </MidR>
+              </>
+            ) : (
+              // 로그인 O
+              <>
+                <br />
+                <TopR>
+                  안녕하세요, <span>&nbsp;{member.nickName}</span>&nbsp;&nbsp;
+                </TopR>
+                {/* 마이 페이지 */}
+                <MidR>
+                  <li
+                    onClick={() => {
+                      navigate("/MyPage");
+                    }}
+                  >
+                    마이 페이지
+                  </li>
+                  {/* 장바구니 */}
+                  <li
+                    onClick={() => {
+                      navigate("/Cart");
+                    }}
+                  >
+                    장바구니
+                  </li>
+                  {/* 로그아웃 */}
+                  <li
+                    onClick={() => {
+                      logout();
+                    }}
+                  >
+                    로그아웃
+                  </li>
+                </MidR>
+              </>
+            )}
+          </ul>
+        </TopR>
+        <BottomC>
+          <StyledSearch />
+        </BottomC>
       </Top>
-
-      <StyledSearch></StyledSearch>
     </>
   );
 };
