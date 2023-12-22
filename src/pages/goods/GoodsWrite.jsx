@@ -1,8 +1,6 @@
-
 import { storage } from "../../api/FireBase";
 import { useEffect, useState } from "react";
-import { GoodsInfoEdit } from "../../components/goods/GoodsInfoEdit"
-import { GoodsOptionEdit } from "../../components/goods/GoodsOptionEdit"
+import { useNavigate } from "react-router-dom";
 import { GoodsAxiosApi } from "../../api/goods/GoodsAxiosApi";
 import styled from "styled-components";
 import { PictureAxiosApi } from "../../api/goods/PictureAxiosApi";
@@ -112,9 +110,12 @@ margin-top: 50px;
  border-left: none;
  border-right: none;
  font-family:Arial;
-ul{  
+
+ul{   margin: 0;
+ padding: 0;
   display: flex;
-    li{  
+    li{   margin: 0;
+ padding: 0;
      width: 150px;
      margin: 0 10%;
      height: 30px;
@@ -124,14 +125,6 @@ ul{
     }
 }
 `;
-const InfoDesc = styled.textarea`
-width: 99%; 
-border: none;
-border-radius: 4px;
-font-size: 16px;
-height: 600px;
-`;
-
 const NewImgBox = styled.div`
 width: 100%;
 height: auto;
@@ -143,7 +136,6 @@ img{
   width: 150px;
   height: 150px;
 }
-
 `;
 const UploadContainer = styled.div`
   display: flex;
@@ -190,14 +182,14 @@ border-bottom: 1px solid rgba(136, 136, 136, 0.673);
     /* justify-content: center; */
    align-items: center;
 margin-top: 20px;
- 
+
   
 `;
 
 const Seller1 = styled.div`
 
-   width: 100%;
-   height: 100%;
+width: 100px;
+   height: 100px;
     display: flex;
     /* justify-content: center; */
    align-items: center;
@@ -219,16 +211,9 @@ const Seller2 = styled.div`
    padding: 10px;
 
 `;
-const Optionimage = styled.div`  
-   img{
-    border-radius: 50px;
-    border: 1px solid #a5a5a5;
-    width: 100px;
-   height: 100px;
-   margin-bottom: 40px;
-   }
-`;
+
 const OptionNick = styled.div`
+width: 100px;
   position: absolute;
     padding: 10px;
   left: 0;
@@ -245,7 +230,7 @@ const OptionTitleEdit = styled.input`
 font-size: 1.5em;
 line-height: 1.2em;
 padding-bottom: 20px;
- width:300px; 
+ width:100%; 
 border: ${(props) => (props.goodsTitle === null || props.goodsTitle.length === 0 ? '3px solid red' : '3px solid   #03bf81')};
 `;
 const Delivery = styled.div`
@@ -341,7 +326,7 @@ align-items: center;
 }
 `;
 export const GoodsWrite = () => {
-
+  const navigate = useNavigate();
   const [goodsCategory, setGoodsCategory] = useState(null);
   const [goodsDeliveryFee, setGoodsDeliveryFee] = useState("");
   const [goodsDesc, setGoodsDesc] = useState("");
@@ -393,8 +378,6 @@ export const GoodsWrite = () => {
           //받은 PK에 사진을 저장
           const response2 = await PictureAxiosApi.insertGoodsImg(num, subUrl[i]);
         }
-
-
       }
     }
     catch (error) {
@@ -402,6 +385,7 @@ export const GoodsWrite = () => {
       console.error("submit review 데이터에러 :", error);
       console.log(error)
     }
+    navigate("/")
   }
 
 

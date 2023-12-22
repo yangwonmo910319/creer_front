@@ -8,7 +8,7 @@ import { FaSearch, FaMicrophone } from "react-icons/fa";
 
 // 검색바
 const SearchBox = styled.div`
-  width: 40%;
+  width: 100%;
   height: auto;
   display: flex;
   align-items: center;

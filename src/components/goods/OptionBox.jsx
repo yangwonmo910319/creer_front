@@ -48,12 +48,12 @@ width: 100%;
 margin-left: 30px;
 margin-top: 10px;
 height: 20px;
-font-size: 1.2em;
+font-size: 1em;
 }
 .check2{
   width: 100%;
 height: 20px;
-font-size: 1.4em;
+font-size: 1.2em;
 text-align: end;
 margin-right: 20px;
 }
@@ -61,7 +61,7 @@ margin-right: 20px;
   margin-top: 5px ;
   width: 100%;
 height: auto;
-font-size: 2em;
+font-size: 1.7em;
 text-align: end;
 margin-right: 20px;
 }
@@ -105,7 +105,6 @@ export const OptionBox = ({ list, list2 }) => {
   const groupedOptions = {};
 
   useEffect(() => {
-
     const combinedOptions = optionList.map((option) => option.goodsOptionContent + " / ").join(' ');
     setCheck(` ${combinedOptions}  ${quantity}개`);
   }, [quantity, optionList])
@@ -198,7 +197,7 @@ export const OptionBox = ({ list, list2 }) => {
           <>
             <div className="check1">{check}</div>
             <div className="check2">  {list2.goodsPrice}원</div>
-            <div className="check3">  {list2.goodsPrice * 2}원</div>
+            <div className="check3">  {list2.goodsPrice * quantity}원</div>
           </>
         }
         </Check>
