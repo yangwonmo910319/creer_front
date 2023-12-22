@@ -6,6 +6,7 @@ import { CartAxiosApi } from "../../api/goods/CartAxiosApi";
 import { MiddleOrderBox } from "../../css/common/MiddleOrderBox";
 import { StyledButton } from "../../css/common/StyledButton";
 import { StyledTitle } from "../../css/common/StyledTitle";
+import { AnotherButton } from "../../css/common/AnotherButton";
 
 const CartPageContainer = styled.div`
   margin: 20px;
@@ -48,17 +49,17 @@ export const Cart = () => {
   const [checkedItems, setCheckedItems] = useState([]);
   const accessToken = localStorage.getItem("accessToken");
 
-  // 장바구니 업데이트
-  const fetchCartItems = async () => {
-    const response = await CartAxiosApi.getCartItems(accessToken);
-    console.log("장바구니 업데이트 응답 : " + response.data);
-  };
-
   useEffect(() => {
     if (accessToken) {
       fetchCartItems();
     }
   }, [accessToken]);
+
+  // 장바구니 업데이트
+  const fetchCartItems = async () => {
+    const response = await CartAxiosApi.getCartItems(accessToken);
+    console.log("장바구니 목록 업데이트 : " + JSON.stringify(response));
+  };
 
   useEffect(() => {
     console.log("상태 업데이트 후의 cartItems : " + cartItems); // 상태 업데이트 후의 장바구니 항목 출력
@@ -115,6 +116,7 @@ export const Cart = () => {
 
   return (
     <>
+      <AnotherButton></AnotherButton>
       <MiddleOrderBox>
         <CartPageContainer>
           <StyledTitle>

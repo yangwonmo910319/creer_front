@@ -1,5 +1,4 @@
 import "./App.css";
-
 import { BrowserRouter, Route, Routes } from "react-router-dom";
 import { Main } from "./components/Main";
 import { SignUp } from "./pages/member/SignUp";
@@ -24,7 +23,7 @@ function App() {
             <Route path="/:title" element={<GoodsList />}></Route>
             <Route path="/Goods/:goodsId" element={<GoodsDetail />}></Route>
             <Route path="/GoodsWrite" element={<GoodsWrite />}></Route>
-            <Route path="/AuctionList" element={<AuctionList />}></Route>          
+            <Route path="/AuctionList" element={<AuctionList />}></Route>
             <Route path="/Cart" element={<Cart />}></Route>
             <Route path="/Seller" element={<Seller />}></Route>
             <Route path="/MyPage" element={<MyPage />}></Route>

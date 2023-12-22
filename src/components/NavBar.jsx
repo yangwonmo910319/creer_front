@@ -4,7 +4,15 @@ import { Common } from "../utils/Common";
 import { MemberAxiosApi } from "../api/member/MemberAxiosApi";
 import { StyledSearch } from "../css/common/StyledSearch";
 import { Weather } from "./Weather";
-import { StyledLogo, MidR, TopL, Top, TopR, BottomC } from "../css/NavBarStyle";
+import {
+  StyledLogo,
+  MidR,
+  TopL,
+  Top,
+  TopR,
+  BottomC,
+  TopC,
+} from "../css/NavBarStyle";
 
 export const NavBar = () => {
   const navigate = useNavigate();
@@ -58,11 +66,13 @@ export const NavBar = () => {
         <TopL>
           <Weather></Weather>
         </TopL>
-        <StyledLogo
-          onClick={() => {
-            navigate("/");
-          }}
-        ></StyledLogo>
+        <TopC>
+          <StyledLogo
+            onClick={() => {
+              navigate("/");
+            }}
+          ></StyledLogo>
+        </TopC>
         {/* 로그인 여부 */}
         <TopR>
           <ul>
@@ -97,14 +107,22 @@ export const NavBar = () => {
                 <TopR>
                   안녕하세요, <span>&nbsp;{member.nickName}</span>&nbsp;&nbsp;
                 </TopR>
-                {/* 마이 페이지 */}
                 <MidR>
+                  {/* 마이 페이지 */}
                   <li
                     onClick={() => {
                       navigate("/MyPage");
                     }}
                   >
-                    마이 페이지
+                    내 정보 수정
+                  </li>
+                  {/* 상품 등록 */}
+                  <li
+                    onClick={() => {
+                      navigate("/GoodsWrite");
+                    }}
+                  >
+                    상품 등록
                   </li>
                   {/* 장바구니 */}
                   <li

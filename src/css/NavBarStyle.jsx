@@ -14,13 +14,6 @@ export const Top = styled.div`
     "bottomL bottomC bottomR";
 `;
 
-export const StyledLogo = styled(Logo)`
-  width: 100%;
-  height: 100%;
-  cursor: pointer;
-  grid-area: topC;
-`;
-
 export const TopR = styled.div`
   width: 100%;
   height: 100%;
@@ -44,6 +37,22 @@ export const TopL = styled.div`
   height: 100%;
 `;
 
+export const TopC = styled.div`
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  grid-area: topC;
+`;
+
+export const StyledLogo = styled(Logo)`
+  width: 80%;
+  height: 80%;
+  cursor: pointer;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+`;
+
 export const MidR = styled.div`
   display: flex;
   justify-content: end;
@@ -64,5 +73,5 @@ export const BottomC = styled.div`
   height: 100%;
   display: flex;
   justify-content: center;
-  align-items: center;
+  align-items: baseline;
 `;
