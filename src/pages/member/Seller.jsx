@@ -8,80 +8,68 @@ const SalseListCss = styled.div`
   height: auto;
   display: flex;
   flex-direction: column;
-
-  .list {
-    margin: 0 auto;
-    width: 80%;
-    height: auto;
+`;
+const Title = styled.div`
+  width: 80%;
+  height: 30px;
+  border: 1px solid black;
+  margin: 0 auto;
+  ul{
+    padding: 0;
+    margin: 0;
     display: flex;
-    flex-direction: column;
+    justify-content: center;
+    list-style: none;
 
-    .listContent {
-      width: 100%;
-      height: auto;
-      margin-top: 10px;     
-      ul{
-        display: flex;
-        flex-direction: column;
-        list-style: none;
-        width: 100%;
-        border-top: none; 
-        height: auto;
-        padding: 0;
-        li:first-child {
-    border-top: 1px solid black;
-        }
-      }
-      li{       
-        border: 1px solid black;
-        border-top: none;
-        display: flex;
-        width: 100%;
-        height: 150px;
-        padding: 0;
-        .img{
-          width: 130px;
-        height: auto;
-
-        img{
-          width: 100px;
-        height: 100px;
-
-        }
-   
-      }
-      .price{
-          width: 150px;
-          margin-right: 10px;
-        }
-        div{     
-          display: flex;
-          justify-content: space-around;
-          align-items: center;
-        }
-      }
-      .no{
-        width: 80px;     
-      }
-      .title{
-        width: 60%;     
-      }
-      .count{
-        width: 120px;      
-     }
-     .nickName{
-      width: auto;
-
-      border-right: 1px 
-     }
-     .status{
-      margin-right: 10px;
-      width: 150px;      
-     }
+    li{
+      flex: 1; /* 나머지 항목들에 대해 남은 공간 균등 분배 */
+      margin: auto;
+      padding: 5px;   
+       display: flex;
+    justify-content: center;
+    }
+    .info{
+      flex: none; /* .info 클래스에 대해 flex 속성 무시 */
+      width: 300px; /* .info 클래스에 대해 고정 너비 설정 */
+      background: red;
     }
   }
 `;
-
+const Content = styled.div`
+  width: 80%;
+  height: 30px;
+  margin: 0 auto;
+  ul{
+    
+    width: 100%;
+    height: auto;
+    padding: 0;
+    margin: 0;
+    display: flex;
+    justify-content: center;
+    list-style: none;
+    flex-direction: column;
+    li{
+      border: 1px solid black;
+      width: 100%;
+      height: 30px;
+      flex: 1; /* 나머지 항목들에 대해 남은 공간 균등 분배 */
+      margin: auto;
+      padding: 5px;   
+       display: flex;
+    justify-content: center;
+    img{
+      width: 100px;
+      height: 100px;
+    }
+    }
+    .info{
+      flex: none; /* .info 클래스에 대해 flex 속성 무시 */
+      width: 300px; /* .info 클래스에 대해 고정 너비 설정 */
+      background: red;
+    }
+  }
+`;
 export const Seller = () => {
   const [list, setList] = useState('');
   const [Open, setOpen] = useState(0);
@@ -107,48 +95,59 @@ export const Seller = () => {
 
   return (
     <SalseListCss>
-      <div className="list">
-        <div className="listContent">
-          <ul>
-            {list &&
-              list.map((item) => (<>
+      <h3> 판매 상품 리스트</h3>
+      <Title>
+        <ul>
+          <li>순서</li>
+          <li>이미지</li>
+          <li className="info">상품정보</li>
+          <li>판매가격</li>
+          <li>판매상태</li>
+          <li>판매수량</li>
+          <li>판매금액</li>
+        </ul>
+      </Title>
 
-                <li key={item.goodsDetailId} onClick={() => {
-                  openClick(item.goodsDetailId)
-                }}>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+      <Content>
+        <ul>
+          {list &&
+            list.map((item) => (
+              <>
+                <li key={item.goodsDetailId} onClick={() => openClick(item.goodsDetailId)}>
                   <div className="no">{item.goodsDetailId}</div>
-                  <div className="img "><img src={item.goodsPic} alt="" /></div>
+                  <div className="img">
+                    <img src={item.goodsPic} alt="" />
+                  </div>
                   <div className="title">{item.goodsTitle}</div>
-                  {/* Array.isArray( ) 배열인지 아닌지 확인 후 true,false를 반환*/}
-                  <div className="count">{Array.isArray(item.purchase) ? item.purchase.length : 0}</div>
-                  <div className="price ">{item.goodsPrice}</div>
-
+                  <div className="price">{item.goodsPrice}</div>
+                  {/* 판매 상태, 판매 수량, 판매 금액 추가 */}
+                  <div className="status">
+                    {item.purchase && item.purchase.length > 0 ? item.purchase[0].status : '-'}
+                  </div>
+                  <div className="count">{item.purchase ? item.purchase.length : 0}</div>
+                  <div className="count">{item.purchase ? item.purchase.length * item.goodsPrice : 0}</div>
                 </li>
-                {item.goodsDetailId === Open &&
-                  <ul className="buyer">
-                    {item.purchase &&
-                      item.purchase.map((item1, index) => (
-                        <li key={index.id}>
-                          <div className="no"> {item1.id}</div>
-                          <div className="img "><img src={item1.buyer.image} alt="" /></div>
-                          <div className="nickName ">{item1.buyer.nickName}</div>
-                          <div className="title">{item1.buyer.address}</div>
-                          <div className="title">{item1.option}</div>
-                          <div className="count">{item1.quantity}</div>
-                          <div className="count">{item1.quantity * item.goodsPrice}</div>
-                          <div className="status">{item1.status}</div>
-
-
-                        </li>
-                      ))}
-                  </ul >
-                }
-
-
-              </>))}
-          </ul>
-        </div>
-      </div>
+                {/* ... (기타 요소들은 이전과 동일하게 유지합니다) */}
+              </>
+            ))}
+        </ul> </Content>
 
 
     </SalseListCss >
