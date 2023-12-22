@@ -4,9 +4,7 @@ import { Common } from "../utils/Common";
 import { MemberAxiosApi } from "../api/member/MemberAxiosApi";
 import { StyledSearch } from "../css/common/StyledSearch";
 import { Weather } from "./Weather";
-import { Welcome } from "../css/NavBarStyle";
-import { Top } from "../css/NavBarStyle";
-import { StyledLogo } from "../css/NavBarStyle";
+import { StyledLogo, MidR, TopL, Top, TopR, BottomR, BottomL, BottomC, Welcome } from "../css/NavBarStyle";
 
 export const NavBar = () => {
   const navigate = useNavigate();
@@ -57,93 +55,44 @@ export const NavBar = () => {
     <>
       {/* 기본 */}
       <Top>
-        <div className="up">
+        <TopL>
           <Weather></Weather>
-          <StyledLogo
-            onClick={() => {
-              navigate("/");
-            }}
-          ></StyledLogo>
-          {/* 로그인 여부 */}
-          <ul>
-            {login === "false" ? (
-              // 로그인 X
-              <div className="zero">
-                {/* 로그인 */}
-                <li
-                  className="notLogged"
-                  onClick={() => {
-                    navigate("/Login");
-                  }}
-                >
-                  로그인
-                </li>
-
-                {/* 회원가입 */}
-                <li
-                  className="notLogged"
-                  onClick={() => {
-                    navigate("/SignUp");
-                  }}
-                >
+        </TopL>
+        <StyledLogo onClick={() => { navigate("/"); }}></StyledLogo>
+        {/* 로그인 여부 */}
+        <TopR>  <ul>
+          {login === "false" ? ( // 로그인 X
+            <> {/* 로그인 */}
+              <MidR> <li onClick={() => { navigate("/Login"); }}>
+                로그인
+              </li>{/* 회원가입 */}<li onClick={() => { navigate("/SignUp"); }}>
                   회원가입
-                </li>
-              </div>
-            ) : (
-              // 로그인 O
-              <>
-                <div className="one">
-                  <Welcome>{member.nickName}님 환영합니다!</Welcome>
-                </div>
-                <div className="two">
-                  {/* 마이 페이지 */}
-                  <li
-                    className="Logged"
-                    onClick={() => {
-                      navigate("/MyPage");
-                    }}
-                  >
-                    마이 페이지
-                  </li>
-
-                  {/* 장바구니 */}
-                  <li
-                    className="Logged"
-                    onClick={() => {
-                      navigate("/Cart");
-                    }}
-                  >
-                    장바구니
-                  </li>
-
-                  {/* 상품 등록 */}
-                  <li
-                    className="Logged"
-                    onClick={() => {
-                      navigate("/GoodsWrite");
-                    }}
-                  >
-                    상품 등록
-                  </li>
-
-                  {/* 로그아웃 */}
-                  <li
-                    className="Logged"
-                    onClick={() => {
-                      logout();
-                    }}
-                  >
-                    로그아웃
-                  </li>
-                </div>
-              </>
-            )}
-          </ul>
-        </div>
-        <div className="down">
-          <StyledSearch></StyledSearch>
-        </div>
+                </li></MidR>
+            </>
+          ) : (
+            // 로그인 O
+            <>
+              <TopR>
+                {member.nickName}님
+              </TopR>
+              {/* 마이 페이지 */}
+              <MidR> <li onClick={() => { navigate("/MyPage"); }}>
+                마이 페이지
+              </li>{/* 장바구니 */}
+                <li onClick={() => { navigate("/Cart"); }}>                장바구니
+                </li>{/* 로그아웃 */}
+                <li onClick={() => { logout(); }} >
+                  로그아웃
+                </li></MidR>
+            </>
+          )}
+        </ul></TopR>
+        <BottomL>상품</BottomL>
+        <BottomR>경매</BottomR>
+        <BottomC>  <StyledSearch /></BottomC>
       </Top>
+
+      <StyledSearch></StyledSearch>
     </>
   );
 };

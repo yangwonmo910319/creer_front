@@ -5,8 +5,9 @@ import { useNavigate, useParams } from "react-router-dom";
 const ListItem = styled.li`
   width: 60px;
   height: 60px;
-  background-color: ${props => props.selected ? ' #e84855' : '#fff9e6'};
-  color: ${props => props.selected ? ' #ffffff' : '#000000'};
+  background-color: ${props => props.selected ? ' #fde1e1' : '#dcdcdc'};
+  /* color: ${props => props.selected ? ' #ffffff' : '#000000'}; */
+  color:white;
   border-radius: 50px;
   display: flex;  
   justify-content: center; 

@@ -1,13 +1,13 @@
 import styled from "styled-components";
 import { GoodsAxiosApi } from "../../api/goods/GoodsAxiosApi";
 import { useEffect, useState } from "react";
-import{PurchaseListModal} from "../../utils/goods/PurchaseListModal"
+import { PurchaseListModal } from "../../utils/goods/PurchaseListModal";
+
 const SalseListCss = styled.div`
   width: 100%;
   height: auto;
   display: flex;
   flex-direction: column;
-
 
   .list {
     margin: 0 auto;
@@ -16,80 +16,80 @@ const SalseListCss = styled.div`
     display: flex;
     flex-direction: column;
 
-    .listTitle {
-      width: 100%;
-      height: auto;
-
-      ul {
-        display: flex;
-        flex-direction: row;
-
-        .li1 {
-          display: flex;
-          flex-direction: row;
-          justify-content: center;
-          align-items: center;
-          width: 200px;
-          height: auto;
-        }
-
-        .title {
-          width: 100%;
-          height: 100%;
-          display: flex;
-          flex-direction: row;
-          justify-content: center;
-        }
-      }
-    }
-
     .listContent {
       width: 100%;
       height: auto;
-      margin-top: 10px;
-
-      ul {
-        margin-top: 10px;
+      margin-top: 10px;     
+      ul{
         display: flex;
-        flex-direction: row;
-        border-radius: 8px;
-        border: 1px solid black;
-        height: 80px;
-        align-items: center;
-
-        .li1 {
-          display: flex;
-          flex-direction: row;
-          justify-content: center;
-          align-items: center;
-          width: 200px;
-        
-        img {
-          width: 100%;
-          height: 100%;
-        }
-
-        }
-
-        .title {
-          width: 100%;
-          height: 50px;
-          display: flex;
-          align-items: center;
-          justify-content: center;
+        flex-direction: column;
+        list-style: none;
+        width: 100%;
+        border-top: none; 
+        height: auto;
+        padding: 0;
+        li:first-child {
+    border-top: 1px solid black;
         }
       }
+      li{       
+        border: 1px solid black;
+        border-top: none;
+        display: flex;
+        width: 100%;
+        height: 150px;
+        padding: 0;
+        .img{
+          width: 130px;
+        height: auto;
+
+        img{
+          width: 100px;
+        height: 100px;
+
+        }
+   
+      }
+      .price{
+          width: 150px;
+          margin-right: 10px;
+        }
+        div{     
+          display: flex;
+          justify-content: space-around;
+          align-items: center;
+        }
+      }
+      .no{
+        width: 80px;     
+      }
+      .title{
+        width: 60%;     
+      }
+      .count{
+        width: 120px;      
+     }
+     .nickName{
+      width: auto;
+
+      border-right: 1px 
+     }
+     .status{
+      margin-right: 10px;
+      width: 150px;      
+     }
     }
   }
 `;
+
 export const Seller = () => {
   const [list, setList] = useState('');
-  const [isOpen, setIsOpen] = useState(false);
+  const [Open, setOpen] = useState(0);
   const [content, setContent] = useState('');
 
-  const closeModal = () => {
-    setIsOpen(false);
-    setContent('');
+  const openClick = (e) => {
+
+    setOpen(e);
   };
 
   useEffect(() => {
@@ -109,27 +109,48 @@ export const Seller = () => {
     <SalseListCss>
       <div className="list">
         <div className="listContent">
-          {list &&
-            list.map((item) => (
-              <div key={item.goodsDetailId} onClick={() => { setIsOpen(true); setContent(item.id) }}>
-                <ul className="ul1">
-                  <li className="no li1">{item.goodsDetailId}</li>
-                  <li className="img li1"><img src={item.goodsPic} alt="" /></li>
-                  <li className="title">{item.goodsTitle}</li>
-                  <li className="count li1">{item.count}</li>
-                  <li className="price li1">{item.goodsPrice}</li>
-                </ul>
-              </div>
-            ))}
+          <ul>
+            {list &&
+              list.map((item) => (<>
+
+                <li key={item.goodsDetailId} onClick={() => {
+                  openClick(item.goodsDetailId)
+                }}>
+                  <div className="no">{item.goodsDetailId}</div>
+                  <div className="img "><img src={item.goodsPic} alt="" /></div>
+                  <div className="title">{item.goodsTitle}</div>
+                  {/* Array.isArray( ) 배열인지 아닌지 확인 후 true,false를 반환*/}
+                  <div className="count">{Array.isArray(item.purchase) ? item.purchase.length : 0}</div>
+                  <div className="price ">{item.goodsPrice}</div>
+
+                </li>
+                {item.goodsDetailId === Open &&
+                  <ul className="buyer">
+                    {item.purchase &&
+                      item.purchase.map((item1, index) => (
+                        <li key={index.id}>
+                          <div className="no"> {item1.id}</div>
+                          <div className="img "><img src={item1.buyer.image} alt="" /></div>
+                          <div className="nickName ">{item1.buyer.nickName}</div>
+                          <div className="title">{item1.buyer.address}</div>
+                          <div className="title">{item1.option}</div>
+                          <div className="count">{item1.quantity}</div>
+                          <div className="count">{item1.quantity * item.goodsPrice}</div>
+                          <div className="status">{item1.status}</div>
+
+
+                        </li>
+                      ))}
+                  </ul >
+                }
+
+
+              </>))}
+          </ul>
         </div>
       </div>
-      <PurchaseListModal
-        isOpen={isOpen}
-        closeModal={closeModal}
-        onConfirm={() => {
-          // Confirm 버튼 동작 처리
-        }}
-      />
-    </SalseListCss>
+
+
+    </SalseListCss >
   );
 };

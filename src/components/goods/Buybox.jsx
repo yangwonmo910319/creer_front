@@ -18,9 +18,9 @@ const Btn1 = styled.div`
   display: flex;
   justify-content: center;
   align-items: center;
-  color: white;
-  background: #e3141b;  
-  border: 2px solid #412525;  
+  color: #616161;
+  background: #c0f4eb;
+  border: 1px solid #1f968e;  
 
 `;
 
@@ -28,6 +28,7 @@ export const Buybox = ({ list, optionList, quantity1 }) => {
   console.log("list")
   console.log(list)
   console.log("list")
+
   const navigate = useNavigate();
   const { goodsId } = useParams(); // 이후 사용은 중괄호 불필요
   const accessToken = localStorage.getItem("accessToken");
@@ -49,12 +50,10 @@ export const Buybox = ({ list, optionList, quantity1 }) => {
   useEffect(() => {
     // goodsId가 변경될 때마다 content 객체를 업데이트합니다.
     setContent({
-
       seller: seller,
-
       goodsDetailId: goodsId,
       option: option,
-      quantity: quantity,
+      quantity: quantity1,
       status: status,
     });
     console.log("content : " + content.seller);

@@ -4,8 +4,12 @@ import styled from "styled-components";
 const OptionWriteBoxCss = styled.div`
   width: 100%;
   height: auto;
+
+  .numInput {
+    width: 98%;
+  }
   .valueInput {
-    width: 100%;
+    width: 98%;
   }
   input {
     margin-top: 10px;
@@ -31,9 +35,14 @@ const Count = styled.div`
   }
 `;
 const Title = styled.div`
+  
   width: 100%;
   height: auto;
   margin-top: 10px;
+  .optionTitle{
+    border: 2px solid black;
+    padding-top: 10px;
+  }
   button {
     margin-left: 10px;
     width: 80px;
@@ -111,27 +120,26 @@ export const OptionWriteBox = ({ setContent2 }) => {
       <br />
       <Title>
         {arrays.map((array, arrayIndex) => (
-          <div key={arrayIndex}>
-            옵션 제목(사이즈,색,세트 등...)
+          <div key={arrayIndex} className="optionTitle">
+            제목  (사이즈,색)
             <button onClick={() => handleAddValue(arrayIndex)}>
               내용 추가
             </button>
-            <input
+            <input className="numInput"
               value={array}
               onChange={(e) =>
                 handleArrayNameChange(arrayIndex, e.target.value)
+
               }
             />
             <Text>
               {values[arrayIndex].map((value, valueIndex) => (
                 <>
-                  {" "}
-                  옵션 내용(L,XL,red,pink 등...)
-                  <br />
                   <input
                     className="valueInput"
                     key={valueIndex}
                     value={value}
+                    placeholder="상세 옵션"
                     onChange={(e) =>
                       handleValueChange(arrayIndex, valueIndex, e.target.value)
                     }

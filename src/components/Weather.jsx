@@ -3,8 +3,10 @@ import axios from "axios";
 import styled from "styled-components";
 
 const WeatherBox = styled.div`
-  min-width: 288px;
-  max-height: 150px;
+margin-top: 20px;
+  width: 90%;
+  max-height: 100%;
+  height: 40%;
   display: flex;
   flex-direction: column;
   justify-content: center;
