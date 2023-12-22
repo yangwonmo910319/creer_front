@@ -1,36 +1,5 @@
 import React from "react";
-import styled, {
-  ThemeProvider,
-  createGlobalStyle,
-  keyframes,
-} from "styled-components";
-
-// 전역 스타일 정의
-const GlobalStyle = createGlobalStyle`
-  *, *:before, *:after {
-    box-sizing: border-box;
-  }
-
-  body {
-    margin: 0;
-    padding: 30px;
-    background: ${(props) => props.theme.background};
-    min-height: 100vh;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-  }
-
-  .grid {
-    max-width: 400px;
-    margin: 0 auto;
-    display: grid;
-    grid-template-columns: repeat(3, 150px);
-    grid-gap: 40px 25px;
-    align-items: center;
-    justify-content: center;
-  }
-`;
+import styled, { ThemeProvider, keyframes } from "styled-components";
 
 // 테마 객체 정의
 const theme = {
@@ -118,11 +87,14 @@ const Button = styled.button`
   }
 `;
 
-export const AnotherButton = () => (
-  <ThemeProvider theme={theme}>
-    <GlobalStyle />
-    <div className="grid">
-      <Button>Button 1</Button>
-    </div>
-  </ThemeProvider>
-);
+export const AnotherButton = (props) => {
+  const { onClick, width, height, margin, value, padding } = props;
+
+  return (
+    <ThemeProvider theme={theme}>
+      <Button style={{ width, height, margin, padding }} onClick={onClick}>
+        {value}
+      </Button>
+    </ThemeProvider>
+  );
+};
