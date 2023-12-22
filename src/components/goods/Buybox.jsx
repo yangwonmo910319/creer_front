@@ -49,9 +49,9 @@ export const Buybox = ({ list, optionList, quantity1 }) => {
   useEffect(() => {
     // goodsId가 변경될 때마다 content 객체를 업데이트합니다.
     setContent({
-      MemberDto: { 
-        id:seller
-      },
+
+      seller: seller,
+
       goodsDetailId: goodsId,
       option: option,
       quantity: quantity,

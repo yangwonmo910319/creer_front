@@ -40,7 +40,7 @@ height: auto;
    padding: 10px;  
       transition: box-shadow 0.3s ease-in-out;
       &:hover {
-        box-shadow: 0px 0px 10px 0px rgba(74, 74, 74, 0.75);
+        box-shadow: 0px 0px 10px 0px rgba(158, 17, 17, 0.75);
       }
 
       &:last-child:hover {
