@@ -331,9 +331,7 @@ export const ReviewEditModal = ({ Writer, goodsReviewId, reviewContent, reviewUr
               </div>
             </>
             )}
-
             {NickName === Writer ?
-
               <div className="content4">
                 <button onClick={submitReview}>수 정</button>
                 <button onClick={closeClick}>취 소</button>
