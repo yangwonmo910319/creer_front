@@ -2,13 +2,16 @@ import styled from "styled-components";
 
 // 버튼
 export const Button = styled.button`
+  width: ${({ width }) => (width ? width : '150px')}; /* 수정된 동적 너비 설정 */
+  height: ${({ height }) => (height ? height : '50px')}; /* 수정된 동적 높이 설정 */ 
+  border-radius: ${({ radius }) => (radius ? radius : '15px')};
   margin: 5px;
   position: relative;
   padding: 0;
   border: 2px solid #888888;
   outline: none;
   background-color: #f4f5f6;
-  border-radius: 15px;
+
   /* box-shadow: -6px -20px 35px #ffffff, -6px -10px 15px #ffffff,
     -20px 0px 30px #ffffff, 6px 20px 25px rgba(0, 0, 0, 0.2); */
   transition: 0.13s ease-in-out;
@@ -28,7 +31,6 @@ export const Button = styled.button`
     width: ${props => props.smallWidth || '60px'};
     height: ${props => props.smallHeight || '30px'};
   }
-
 `;
 
 const ButtonContent = styled.div`
@@ -36,8 +38,8 @@ const ButtonContent = styled.div`
   top: 1px;
   width: 100%;
   height: 97%;
-  box-shadow: inset 0px -5px 0px#dddddd, 0px -3px 0px #f4f5f6;
-  border-radius: 12px;
+  box-shadow: inset 0px -5px 0px#dddddd, 0px -3px 0px #cfcfcf;
+  border-radius: ${({ radius }) => (radius ? radius : '15px')};
   transition: 0.1s ease-in-out;
   display: flex;
   align-items: center;
@@ -68,15 +70,15 @@ const ButtonText = styled.p`
 `;
 
 export const StyledButton = (props) => {
-  const { onClick, width, height, value, margin, breakpoint, smallWidth, smallHeight } = props;
+  const { onClick, width, height,radius, value,text, margin, breakpoint, smallWidth, smallHeight } = props;
 
   return (
     <Button
       style={{ width, height, margin, smallHeight, smallWidth, breakpoint }}
-      onClick={onClick}
+      radius={radius} onClick={ onClick}
     >
-      <ButtonContent>
-        <ButtonText>{value}</ButtonText>
+      <ButtonContent radius={radius}>
+        <ButtonText>{text}</ButtonText>
       </ButtonContent>
     </Button>
   );

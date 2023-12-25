@@ -4,6 +4,7 @@ import { FaStar, FaStarHalf } from "react-icons/fa"; // 별 아이콘을 사용�
 import { ReviewAxiosApi } from "../../api/goods/ReviewAxiosApi";
 import { ReviewModal } from "../../utils/goods/ReviewModal";
 import { ReviewEditModal } from "../../utils/goods/ReviewEditModal"
+import { StyledButton } from "../../css/common/StyledButton";
 
 const ReivewInfo = styled.div`
 
@@ -149,15 +150,6 @@ display: flex;
   justify-content: end;
   align-items: end;
 
-  button{      
-    /* color: #DCF763;
-  background: #435058; */
-    color:#ffffff;
-  background: #d42a30;
-  
-  border: 2px solid #412525;  
-
-  }
 `;
 
 const MoreButton = styled.button`
@@ -220,10 +212,9 @@ const TextBox = styled.div`
 const ReviewBox = styled.div`
 display: flex;
 flex-direction: row;
-height: auto;
+height: 130px;
 width: 100%;
 padding: 0px;
-
 .box1{
   display: flex;
 justify-content:center;
@@ -394,8 +385,12 @@ export const ReviewComp = ({ goodsNum, openReviewModal, reply }) => {
           <p>리뷰 개수: {totalRatings}</p>
         </div>
         <div className="review-rating">
+          <WriteButton>
+            <StyledButton
+              width={"150px"} height={"40px"} text={"리뷰 작성"} onClick={openReviewModal}
+            ></StyledButton>
+          </WriteButton>
 
-          <WriteButton><button onClick={openReviewModal}>Review 작성</button></WriteButton>
         </div>
 
       </ReivewInfo>
@@ -432,20 +427,14 @@ export const ReviewComp = ({ goodsNum, openReviewModal, reply }) => {
                           <FaStar color="gray" />
                         )}
                       </span>
-
                     ))}
                   </StarBox>
                   <ReviewContent > <p>{item.reviewContent}</p></ ReviewContent >
-
-
-
                 </TextBox>
               </div>
               {nickName === item.memberDto.nickName && <DeleteBox onClick={() => { deleteReview(item.goodsReviewId) }}><p>×</p> </DeleteBox>
               }
-
             </li>
-
             </ReviewBox>
           ))}
         {reply && reply.length > visibleReviews && ( // 더 보기 버튼. 보여지는 리뷰 개수보다 전체 리뷰 개수가 많을 경우에만 보여짐
@@ -454,9 +443,7 @@ export const ReviewComp = ({ goodsNum, openReviewModal, reply }) => {
           </MoreButton>
         )}
       </ul>
-
       {/* 리뷰 수정 Madal */}
-
       <ReviewEditModal
         Writer={Writer}  //작성자
         goodsReviewId={goodsReviewId} //리뷰 PK
@@ -467,7 +454,6 @@ export const ReviewComp = ({ goodsNum, openReviewModal, reply }) => {
         onSubmit={reviewEidtSubmit}//수정 함수
         closeModal={closeReviewEidtModal}// 모달 닫기
       />
-
-    </ReviewSectionContainer>
+     </ReviewSectionContainer>
   );
 };

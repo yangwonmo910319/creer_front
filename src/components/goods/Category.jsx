@@ -2,6 +2,7 @@ import { useEffect, useState } from "react";
 import styled, { css } from "styled-components";
 import { GoodsAxiosApi } from "../../api/goods/GoodsAxiosApi";
 import { useNavigate, useParams } from "react-router-dom";
+import {  PublicButton} from "../../css/common/PublicButton"
 const ListItem = styled.li`
   width: 60px;
   height: 60px;
@@ -31,24 +32,20 @@ margin: 0 auto;
   }
 `;
 export const Category = ({ setList }) => {
-  const [selectedCategory, setSelectedCategory] = useState("all");
+  const [selectedCategory, setSelectedCategory] = useState("전체");
   const { title } = useParams();
   const navigate = useNavigate();
-  const [currentPage, setCurrentPage] = useState(0)
-
-  //카테고리 클릭시
+  const [currentPage, setCurrentPage] = useState(0);
   const CategoryClick = (e) => {
-    setList([])
-    setCurrentPage(0)
-    setSelectedCategory(e)
+    setList([]);
+    setCurrentPage(0);
+    setSelectedCategory(e);
     navigate("/");
-  }
-
+  };
 
   const titleList = async (title) => {
     try {
       const rsp = await GoodsAxiosApi.titleList(title);
-      console.log(rsp.data);
       setList(rsp.data);
     } catch (error) {
       console.log(error);
@@ -58,7 +55,6 @@ export const Category = ({ setList }) => {
   const categoryList = async (category) => {
     try {
       const rsp = await GoodsAxiosApi.categoryList(category);
-      console.log(rsp.data);
       setList(rsp.data);
     } catch (error) {
       console.log(error);
@@ -92,38 +88,35 @@ export const Category = ({ setList }) => {
       setSelectedCategory("검색");
       titleList(title);
     } else {
-      if (selectedCategory === "all") {
-
-        setList([])
-        setCurrentPage(0)
-        goodsList();
+      if (selectedCategory === "전체") {
+        setList([]);
+        setCurrentPage(0);  
       } else {
-
         categoryList(selectedCategory);
-
       }
     }
   }, [title, selectedCategory]);
 
-  useEffect(() => {
-    if (selectedCategory === "all") {
-
+  useEffect(() => {    
+    if (selectedCategory === "전체") {
       goodsList();
     }
   }, [currentPage]);
+
 
   return (
     <>
       <CategoryCss>
         <ul>
-          <ListItem selected={selectedCategory === "all"} onClick={() => CategoryClick("all")}><p>전체</p></ListItem>
-          <ListItem selected={selectedCategory === "패션"} onClick={() => CategoryClick("패션")}><p>패션</p></ListItem>
-          <ListItem selected={selectedCategory === "쥬얼리"} onClick={() => CategoryClick("쥬얼리")}><p>쥬얼리</p></ListItem>
-          <ListItem selected={selectedCategory === "가구"} onClick={() => CategoryClick("가구")}><p>가구</p></ListItem>
-          <ListItem selected={selectedCategory === "문구"} onClick={() => CategoryClick("문구")}><p>문구</p></ListItem>
-          <ListItem selected={selectedCategory === "반려"} onClick={() => CategoryClick("반려")}><p>반려</p></ListItem>
-          <ListItem selected={selectedCategory === "아동"} onClick={() => CategoryClick("아동")}><p>아동</p></ListItem>
-          <ListItem selected={selectedCategory === "공예"} onClick={() => CategoryClick("공예")}><p>공예</p></ListItem>
+         <PublicButton text={"전체"} pick={selectedCategory}  submit={CategoryClick}>  </PublicButton>
+         <PublicButton text={"패션"} pick={selectedCategory} submit={CategoryClick}> </PublicButton>
+         <PublicButton text={"쥬얼리"} pick={selectedCategory} submit={CategoryClick}> </PublicButton>
+         <PublicButton text={"가구"} pick={selectedCategory} submit={CategoryClick}> </PublicButton>
+         <PublicButton text={"문구"} pick={selectedCategory} submit={CategoryClick}> </PublicButton>
+         <PublicButton text={"반려"} pick={selectedCategory} submit={CategoryClick}> </PublicButton>
+         <PublicButton text={"아동"} pick={selectedCategory} submit={CategoryClick}> </PublicButton>
+         <PublicButton text={"공예"} pick={selectedCategory} submit={CategoryClick}> </PublicButton>
+     
         </ul>
 
       </CategoryCss>

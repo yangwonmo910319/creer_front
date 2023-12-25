@@ -5,6 +5,7 @@ import { useNavigate } from "react-router-dom";
 import { CartAxiosApi } from "../../api/goods/CartAxiosApi";
 import { useParams } from "react-router-dom";
 import { CheckModal } from "../../utils/goods/CheckModal";
+import { StyledButton } from "../../css/common/StyledButton";
 
 const BuyboxCss = styled.div`
   margin-top: 50px;
@@ -25,10 +26,6 @@ const Btn1 = styled.div`
 `;
 
 export const Buybox = ({ list, optionList, quantity1 }) => {
-  console.log("list")
-  console.log(list)
-  console.log("list")
-
   const navigate = useNavigate();
   const { goodsId } = useParams(); // 이후 사용은 중괄호 불필요
   const accessToken = localStorage.getItem("accessToken");
@@ -48,16 +45,17 @@ export const Buybox = ({ list, optionList, quantity1 }) => {
 
   // 상품 정보 업데이트
   useEffect(() => {
+
     // goodsId가 변경될 때마다 content 객체를 업데이트합니다.
     setContent({
       seller: seller,
-      goodsDetailId: goodsId,
+      goodsDetailId: list.goodsDetailId,
       option: option,
       quantity: quantity1,
       status: status,
     });
     console.log("content : " + content.seller);
-  }, [seller, goodsId, option, quantity, status, content.seller]);
+  }, [seller, goodsId, option, quantity, status, content.seller,quantity1]);
 
   // 장바구니 담기
   const cartAdd = async () => {
@@ -115,13 +113,20 @@ export const Buybox = ({ list, optionList, quantity1 }) => {
       console.log("상품 구매 오류 발생 : " + error);
     }
   };
-
+ 
   return (
     <>
       <BuyboxCss>
-        <Btn1 onClick={SelectGoodsList}>구매</Btn1>
-        <Btn1 onClick={cartAdd}>장바구니</Btn1>
-        <Btn1>채팅</Btn1>
+        {list.goodsStock >= quantity1? 
+        <StyledButton   width={"120px"}  height={"50px"} text={"구매"} value={quantity} onClick={SelectGoodsList} ></StyledButton>
+         : 
+         <StyledButton   width={"120px"}  height={"50px"} text={"구매"} value={quantity} ></StyledButton>
+       
+        }
+        {/* <Btn1 onClick={cartAdd}>장바구니</Btn1> */}
+        <StyledButton   width={"120px"}  height={"50px"} text={"장바구니"} value={quantity} onClick={cartAdd} ></StyledButton>
+          <StyledButton   width={"120px"}  height={"50px"} text={"채팅"} value={quantity}></StyledButton>
+       
       </BuyboxCss>
 
       <CheckModal

@@ -106,8 +106,7 @@ export const GoodsAxiosApi = {
         Authorization: "Bearer " + accessToken,
       },
     });
-  },
-
+    },
   // 카테고리 상품 검색
   categoryList: async (keyword) => {
     const accessToken = localStorage.getItem("accessToken");

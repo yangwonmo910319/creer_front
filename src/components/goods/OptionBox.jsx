@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react";
 import styled from "styled-components";
 import { Buybox } from "./Buybox";
+import { StyledButton } from "../../css/common/StyledButton";
 
 const OptionBoxCss = styled.div`
   width: 100%;
@@ -95,6 +96,7 @@ const OptionNum = styled.div`
   font-weight: normal; /* 또는 다른 원하는 두께 값(normal, bold 등)으로 설정 */
 `;
 export const OptionBox = ({ list, list2 }) => {
+
   const [expandedOption, setExpandedOption] = useState(null);
   //수량
   const [quantity, setQuantity] = useState(1);
@@ -143,35 +145,32 @@ export const OptionBox = ({ list, list2 }) => {
       });
     }
   };
+  const up=()=>{
+    setQuantity(quantity + 1);
+  }
+  const down=()=>{
+    setQuantity(quantity - 1);
+  }
   return (
     <OptionBoxCss>
       <Status>
+      
         수 량: {quantity}
-        {quantity !== 0 && (
-          <button
-            className="btn1"
-            onClick={() => {
-              setQuantity(quantity - 1);
-            }}
-          >
-            ∨
-          </button>
+
+            <StyledButton 
+    width={"40px"}  height={"40px"} text={"∧"} value={quantity} onClick={  up}
+    ></StyledButton>   
+              {quantity !== 0 && (
+    <StyledButton 
+    width={"40px"}  height={"40px"} text={"∨"} value={quantity} onClick={  down}
+    ></StyledButton>      
         )}
-        <button
-          className="btn1"
-          onClick={() => {
-            setQuantity(quantity + 1);
-          }}
-        >
-          ∧
-        </button>
       </Status>
       <OptionBoxCss1>
         {Object.keys(groupedOptions).map((key, index) => (
           <div key={index}>
             <h3 onClick={() => OptionPick(key)}>
               <OptionNum>
-
                 {groupedOptions[key][0].goodsOptionNum}{" "}
                 {
                   optionList.find((option) => option.goodsOptionNum === key)

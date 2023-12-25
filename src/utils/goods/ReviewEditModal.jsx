@@ -2,6 +2,7 @@ import React, { useEffect, useState } from "react";
 import styled, { keyframes } from "styled-components";
 import { FaStar } from "react-icons/fa";
 import { storage } from "../../api/FireBase";
+import { StyledButton } from "../../css/common/StyledButton";
 const fadeIn = keyframes`
   from {
     opacity: 0;
@@ -82,7 +83,7 @@ justify-content: end;
 }
 .content2-2{
   width: 100%;
-  height: 300px;
+  height: auto;
   margin-left: 10px; 
 }
 }
@@ -92,6 +93,8 @@ justify-content: end;
   flex-direction: row;
   align-items: end;
   margin-top: 20px;
+  height: auto;
+  background: redl;
 }
 .content3-1{
   width: 150px;
@@ -123,8 +126,9 @@ height: 100%;
 .contentImg{
 
 img{
-  width: 350px;
-  height: 350px;
+  border: 1px solid black;
+  width: 280px;
+  height: 280px;
 }
 }
 .content4{
@@ -133,29 +137,7 @@ img{
   height: 50px;
   display: flex;
   justify-content: center;
-  button{
-    width: 150px;
-height: 40px;
-display: flex;
-justify-content: center;
-align-items: center;
-  margin: 10px;
-  color: #ffffff;
-  text-transform: uppercase;
-  padding: 1.25em 2em;
-  background: #d20b0b;
-  border: 2px solid  #9b0202;
-  border-radius: 10px;
-  transform-style: preserve-3d;
-  transition: transform 150ms cubic-bezier(0, 0, 0.58, 1),
-    background 150ms cubic-bezier(0, 0, 0.58, 1);
 
-  &:hover {
-    background:  #ffeaa3;
-    transform: translate(0, 0.25em);
-
-  }
-  }
 }
 
 `;
@@ -179,7 +161,7 @@ const Star = styled(FaStar)`
 `;
 const TextArea = styled.textarea`
   width: 100%;
-  height: 300px;
+  height: 170px;
 `;
 
 export const ReviewEditModal = ({ Writer, goodsReviewId, reviewContent, reviewUrl, reviewStar, isOpen, onSubmit, closeModal }) => {
@@ -188,9 +170,6 @@ export const ReviewEditModal = ({ Writer, goodsReviewId, reviewContent, reviewUr
   const [hoverRating, setHoverRating] = useState(0);
   const NickName = window.localStorage.getItem("NickName")
   const [url, setUrl] = useState(reviewUrl);
-
-  console.log("11111111111")
-  console.log(reviewUrl)
   const reviewTextChange = (e) => {
     setReviewText(e.target.value);
   };
@@ -333,11 +312,13 @@ export const ReviewEditModal = ({ Writer, goodsReviewId, reviewContent, reviewUr
             )}
             {NickName === Writer ?
               <div className="content4">
-                <button onClick={submitReview}>수 정</button>
-                <button onClick={closeClick}>취 소</button>
+                   <StyledButton  onClick={submitReview}  width={"120px"}  height={"50px"} text={"수 정"} ></StyledButton>
+                   <StyledButton  onClick={closeClick}  width={"120px"}  height={"50px"} text={"취 소"} ></StyledButton>
+           
               </div>
               : <div className="content4">
-                <button onClick={closeClick}>확 인</button>
+                <StyledButton  onClick={closeClick}  width={"120px"}  height={"50px"} text={"확 인"} ></StyledButton>
+                
               </div>}
             <CloseButton onClick={closeModal}>&times;</CloseButton>
           </ModalContent>

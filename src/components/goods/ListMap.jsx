@@ -140,35 +140,41 @@ const ClassCategory = styled.div`
 `;
 
 export const ListMap = ({ list }) => {
-
+  console.log(list);
    return (
       <ListMapCss>
          <List>
             <ul>
-               {list && list.map((item, index) => (
-                  <li key={index}>
-                     <Link className="" to={`/goods/${item.goodsDetailId}`}>
-                        <Class1>
-                           {/* 카테고리 */}
-                           <ClassCategory>{item.goodsCategory}</ClassCategory>
-                           {/* 상품 이미지 */}
-                           <Class1img><img src={item.goodsPic} alt={item.goodsPic} /></Class1img>
-
-                           {/* 상품명 */}
-                           <ClassTitle>{item.goodsTitle}</ClassTitle>
-                           {/* 가격 */}
-                           <ClassPeice>{item.goodsPrice}원</ClassPeice>
-                           <div className="member">
-                              {/* 판매자 이미지 */}
-                              <Class1Memberimg><img src={item.memberDto.image} alt={""} /></Class1Memberimg>
-                              {/* 판매자 닉네임 */}
-                              <ClassNick>{item.memberDto && item.memberDto.nickName}</ClassNick>
-                           </div>
-                        </Class1>
-                     </Link>
-                  </li>
-
-               ))}</ul></List>
+            {list &&
+        list.map((item, index) =>
+          item.goodsStatus === "sale" ? (
+            <li key={index}>
+              <Link className="" to={`/goods/${item.goodsDetailId}`}>
+                <Class1>
+                  {/* 카테고리 */}
+                  <ClassCategory>{item.goodsCategory}</ClassCategory>
+                  {/* 상품 이미지 */}
+                  <Class1img>
+                    <img src={item.goodsPic} alt={item.goodsPic} />
+                  </Class1img>
+                  {/* 상품명 */}
+                  <ClassTitle>{item.goodsTitle}</ClassTitle>
+                  {/* 가격 */}
+                  <ClassPeice>{item.goodsPrice}원</ClassPeice>
+                  <div className="member">
+                    {/* 판매자 이미지 */}
+                    <Class1Memberimg>
+                      <img src={item.memberDto.image} alt={""} />
+                    </Class1Memberimg>
+                    {/* 판매자 닉네임 */}
+                    <ClassNick>{item.memberDto && item.memberDto.nickName}</ClassNick>
+                  </div>
+                </Class1>
+              </Link>
+            </li>
+          ) : null
+        )}
+        </ul></List>
       </ListMapCss>
    );
 };

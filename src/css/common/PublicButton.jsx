@@ -1,3 +1,4 @@
+import { useEffect, useState } from 'react';
 import styled, { keyframes } from 'styled-components';
 
 // Hover 효과용 Keyframes
@@ -10,10 +11,6 @@ const scale = keyframes`
   }
 `;
 
-
-
-
-
 const BtnCss = styled.button`
   appearance: none;
   user-select: none;
@@ -22,24 +19,25 @@ const BtnCss = styled.button`
   justify-content: center;
   outline: none;
   cursor: pointer;
-  width: ${({ width }) => (width ? width : '150px')}; /* 수정된 동적 너비 설정 */
-  height: ${({ height }) => (height ? height : '50px')}; /* 수정된 동적 높이 설정 */ background-image: linear-gradient(to top, #b0a3a3);
-  border-radius: 30px;
-  border: 1px solid rgb(193, 193, 193);
-  box-shadow: inset 0 0 0 1px #bfbfbf; /* 수정된 box-shadow 값 */
+  width: ${({ width }) => (width ? width : '50px')}; /* 수정된 동적 너비 설정 */
+  height: ${({ height }) => (height ? height : '50px')}; /* 수정된 동적 높이 설정 */ 
+  border-radius: 50%;
+  background:  inset 0 0 20px 1px #9c9c9c; /* 수정된 box-shadow 값 */
+  border: 1px solid rgb(134, 134, 134);
+  box-shadow: ${({ shadow }) => shadow ? 'inset 0 0 20px 1px #bcffa7d6' : 'none'};
+   /* 수정된 box-shadow 값 */
   transition: box-shadow 0.2s ease, transform 0.2s ease; /* 트랜지션 수정 */
   font-family: "Source Sans Pro", sans-serif;
-  font-size: 14px;
+  font-size: 12px;
   font-weight: 600;
-  color: #414141;
-  /* text-shadow: 0 1px #56f89c; */
-
+  color: #7c7c7c;
+  /* text-shadow: 0 1px #f3f312; */
   &::-moz-focus-inner {
     border: 0;
   }
 
   &:hover:not([disabled]) {
-    box-shadow: inset 0 0 0 2px #56f89c; /* 수정된 box-shadow 값 */
+    box-shadow: inset 0 0 20px 1px #4bc65e79; /* 수정된 box-shadow 값 */
     transform: scale(0.975); /* 변형 효과 추가 */
     color: #858585;
     & > * {
@@ -53,7 +51,7 @@ const BtnCss = styled.button`
   }
 
   &:active:not([disabled]) {
-    box-shadow: inset 0 0 0 3px #56f89c; /* 수정된 box-shadow 값 */
+    box-shadow: inset 0 0 0 3px #686868; /* 수정된 box-shadow 값 */
     transform: scale(0.95); /* 변형 효과 추가 */
 
     & > * {
@@ -68,10 +66,18 @@ const BtnCss = styled.button`
 `;
 
 
-export const PublicButton = ({ width, height, text, submit }) => {
-
+export const PublicButton = ({  text, pick,submit }) => {
+const[selectedCategory,setSelectedCategory]=useState(false);
+const click=()=>{
+    submit(text)
+}
+useEffect(()=>{  if(text===pick){
+  setSelectedCategory(true)
+}else{
+  setSelectedCategory(false)
+}})
   return (
-    <BtnCss width={width} height={height} onClick={submit}>
+    <BtnCss shadow={selectedCategory} onClick={click}>
       {text}
     </BtnCss>
   )

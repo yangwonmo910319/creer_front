@@ -177,8 +177,8 @@ const Slider = styled.div`
 `;
 
 const slides = [
-    { url: "https://d24y2yfxh2iebm.cloudfront.net/resized/thumbnail/classImages/26dab311-e421-48d3-bcb6-4c1b28494837", target: "C1", title: " 패션", ment: "   " },
-    { url: "https://modo-phinf.pstatic.net/20200316_27/15843311254216wzG4_JPEG/mosa42HKAJ.jpeg?type=w1100", target: "C14", title: "가구", ment: "  " },
+    { url: "https://image.idus.com/image/files/ebebbddfc2fc4b6ca1064cb28bbb447e.jpg", target: "C1", title: " 패션", ment: "   " },
+    { url: "https://image.idus.com/image/files/ebebbddfc2fc4b6ca1064cb28bbb447e.jpg", target: "C14", title: "가구", ment: "  " },
     { url: "https://img.khan.co.kr/news/2020/11/26/l_2020112601003012200255941.jpg", target: "C20", title: "간식", ment: '' },
     { url: "https://qi-o.qoo10cdn.com/goods_image_big/6/9/0/0/8622526900c_l.jpg", target: "C6", title: "인형", ment: " '" },
     { url: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSBJByDIyipaCFz9yGBXbydiaJrWx8DgWaCUQ&usqp=CAU", target: "C24", title: "캔들", ment: " " },

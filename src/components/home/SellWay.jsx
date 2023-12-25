@@ -15,7 +15,7 @@ const SellWayCss = styled.div`
 export const SellWay=()=>{
 
     return(
-        <SellWayCss>1
+        <SellWayCss>
         </SellWayCss>
     )
 }

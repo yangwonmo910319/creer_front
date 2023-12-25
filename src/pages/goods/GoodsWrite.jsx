@@ -170,6 +170,8 @@ const GoodsOptionCss = styled.div`
       margin: 0 auto;
         grid-area: option; 
     }
+
+
 `;
 
 
@@ -219,11 +221,18 @@ width: 100px;
   left: 0;
   top: -25px;
 `;
-const OptionCategory = styled.input`
+const OptionCategory = styled.div`
 
 width: 100%;
-height: 20px;
+height: auto;
 border: ${(props) => (props.goodsCategory === null || props.goodsCategory.length === 0 ? '3px solid red' : '3px solid   #03bf81')};
+
+.CategoryRaido{
+ display: none;
+}
+&:hover  .CategoryRaido{
+  display: block;
+}
 `;
 
 const OptionTitleEdit = styled.input`
@@ -327,7 +336,7 @@ align-items: center;
 `;
 export const GoodsWrite = () => {
   const navigate = useNavigate();
-  const [goodsCategory, setGoodsCategory] = useState(null);
+  const [goodsCategory, setGoodsCategory] = useState('');
   const [goodsDeliveryFee, setGoodsDeliveryFee] = useState("");
   const [goodsDesc, setGoodsDesc] = useState("");
   const [goodsPic, setGoodsPic] = useState("");
@@ -387,15 +396,6 @@ export const GoodsWrite = () => {
     }
     navigate("/")
   }
-
-
-
-
-
-
-
-
-
   //파이어베이스 이미지 주소 받기
   const handleFileUpload = async (e) => {
     const selectedFile = e.target.files[0];
@@ -481,8 +481,25 @@ export const GoodsWrite = () => {
       </GoodsInfoCss>
 
       <GoodsOptionCss>
-        <OptionCategory goodsCategory={goodsCategory} type="text" value={goodsCategory} onChange={(e) => { setGoodsCategory(e.target.value) }} placeholder="카테고리 :">
-        </OptionCategory>
+
+        <OptionCategory goodsCategory={goodsCategory} >  {goodsCategory ? goodsCategory:"카테고리"}     
+        <div className="CategoryRaido">   
+            <input type="radio" name="goods" id="패션" value="패션"  onChange={(e) => { setGoodsCategory(e.target.value) }}/>패션     
+        <br />      
+            <input type="radio" name="goods" id="쥬얼리" value="쥬얼리" onChange={(e) => { setGoodsCategory(e.target.value) }}/>쥬얼리
+        <br />    
+            <input type="radio" name="goods" id="가구" value="가구" onChange={(e) => { setGoodsCategory(e.target.value) }} />가구
+        <br />
+        <input type="radio" name="goods" id="문구" value="문구" onChange={(e) => { setGoodsCategory(e.target.value) }} />문구
+        <br />
+        <input type="radio" name="goods" id="반려" value="반려" onChange={(e) => { setGoodsCategory(e.target.value) }} />반려
+        <br />
+        <input type="radio" name="goods" id="아동" value="아동" onChange={(e) => { setGoodsCategory(e.target.value) }} />아동
+        <br />
+        <input type="radio" name="goods" id="공예" value="공예" onChange={(e) => { setGoodsCategory(e.target.value) }} />공예
+        <br />
+      </div>
+      </OptionCategory>
         <Seller>
           <Seller1>
             <img src={UserImg}></img>
