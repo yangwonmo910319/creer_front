@@ -11,6 +11,7 @@ import { GoodsList } from "./pages/goods/GoodsList";
 import { GoodsDetail } from "./pages/goods/GoodsDetail";
 import { AuctionList } from "./pages/aution/AuctionList";
 import { GoodsWrite } from "./pages/goods/GoodsWrite";
+import { Payment } from "./pages/goods/Payment";
 
 function App() {
   return (
@@ -25,6 +26,7 @@ function App() {
             <Route path="/:title" element={<GoodsList />}></Route>
             <Route path="/Goods/:goodsId" element={<GoodsDetail />}></Route>
             <Route path="/GoodsWrite" element={<GoodsWrite />}></Route>
+            <Route path="/Payment" element={<Payment />}></Route>
             <Route path="/AuctionList" element={<AuctionList />}></Route>
             <Route path="/Cart" element={<Cart />}></Route>
             <Route path="/Seller" element={<Seller />}></Route>
@@ -32,6 +34,7 @@ function App() {
           </Route>
         </Routes>
       </BrowserRouter>
+      
     </>
   );
 }
