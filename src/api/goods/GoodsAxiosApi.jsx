@@ -23,7 +23,7 @@ export const GoodsAxiosApi = {
       },
     });
   },
-  
+
   // 내 상품 조회
   getMyGoods: async () => {
     const accessToken = localStorage.getItem("accessToken");
@@ -66,7 +66,7 @@ export const GoodsAxiosApi = {
     goodsDetailId,
     goodsPic,
     goodsPrice,
-    goodsRefund,
+    goodsStock,
     goodsTitle
   ) => {
     const accessToken = localStorage.getItem("accessToken");
@@ -77,7 +77,7 @@ export const GoodsAxiosApi = {
       goodsDetailId,
       goodsPic,
       goodsPrice,
-      goodsRefund,
+      goodsStock,
       goodsTitle,
     };
 
@@ -149,7 +149,7 @@ export const GoodsAxiosApi = {
       }
     );
   },
-  
+
   // 상품 페이지네이션 조회
   GoodsPageList: async (page, size) => {
     const accessToken = localStorage.getItem("accessToken");

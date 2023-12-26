@@ -1,11 +1,11 @@
 import styled from "styled-components";
-import { GoodsOption } from "../../components/goods/GoodsOption";
-import { GoodsInfo } from "../../components/goods/GoodsInfo";
+
 import { GoodsAxiosApi } from "../../api/goods/GoodsAxiosApi";
 import { useParams } from "react-router-dom";
 import { useEffect, useState } from "react";
 import { GoodsInfoEdit } from "../../components/goods/GoodsInfoEdit";
 import { GoodsOptionEdit } from "../../components/goods/GoodsOptionEdit";
+
 
 const GoodsDetailCss = styled.div`
   display: flex;
@@ -24,7 +24,7 @@ const GoodsDetailCss = styled.div`
   }
 `;
 
-export const GoodsDetail = () => {
+export const GoodsEdit = () => {
   const { goodsId } = useParams();
   const [list, setList] = useState("");
   const [goodsCategory, setGoodsCategory] = useState("");
@@ -78,12 +78,14 @@ export const GoodsDetail = () => {
       setGoodsPic(goodsPic);
       setGoodsPrice(goodsPrice);
       setGoodsStock(goodsStock);
+      setGoodsStock(goodsStock);
       setGoodsTitle(goodsTitle);
       setMemberDto(memberDto);
     }
   }, [list]);
 
   const updateGoodsDetail = () => {
+    alert("수정" + goodsDesc)
     //게시글 수정 기능을 만듬
     const updateGoods = async () => {
       try {
@@ -127,15 +129,15 @@ export const GoodsDetail = () => {
   return (
     <GoodsDetailCss>
       {/* 작성자와 로그인 회원이 다를 경우 */}
-      <GoodsInfo
+      <GoodsInfoEdit
         list={goodsInfoList}
         reply={list.reviews}
         member={memberDto.nickName}
-      ></GoodsInfo>
-      <GoodsOption
+      ></GoodsInfoEdit>
+      <GoodsOptionEdit
         goodsDedail={goodsOptionList}
         updateGoodsDetail={updateGoodsDetail}
-      ></GoodsOption>
+      ></GoodsOptionEdit>
     </GoodsDetailCss>
   );
 };

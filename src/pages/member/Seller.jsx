@@ -2,7 +2,7 @@ import styled from "styled-components";
 import { GoodsAxiosApi } from "../../api/goods/GoodsAxiosApi";
 import { useEffect, useState } from "react";
 import { PurchaseListModal } from "../../utils/goods/PurchaseListModal";
-
+import { useNavigate } from "react-router-dom";
 const SalseListCss = styled.div`
   width: 100%;
   height: auto;
@@ -17,6 +17,7 @@ const Title = styled.div`
   margin: 0 auto;
   font-size: .8em;
   ul{
+    height: 30px;
     padding: 0;
     margin: 0;
     display: flex;
@@ -52,14 +53,13 @@ const Content = styled.div`
   margin: 0 auto;
   display: flex;
   flex-direction: column;
-  img{
-    width: 100px;
-    height: 100px;
-  }
+  
+
 `;
 
 const Goods1 = styled.li`
   display: flex;
+  height: 120px;
   align-items: center;
   flex-direction: row;
   div{    
@@ -73,10 +73,17 @@ const Goods1 = styled.li`
   .no{
     flex: none;
     width: 50px;
+    display: flex;
+      flex-direction: column;
   }
     .img{
     flex: none;
     width: 100px;
+    img{
+    width: 100px;
+    height: 100px;
+    
+  }
   }
 `;
 const Goods = styled.ul` 
@@ -107,7 +114,9 @@ const Buyer1 = styled.li`
   div{  
     width: 100%;
     height: 30px;
-    border  :1px solid black ;
+    border-top: 1px solid black;
+    border-bottom: 1px solid black;
+
     flex:1; 
     display: flex;
   align-items: center;
@@ -136,7 +145,6 @@ width: 100%;
 
 div{
 flex: 1;
-border: 1px solid black;
 display: flex;
 justify-content: center;
 align-items: center;
@@ -153,10 +161,11 @@ width: 50px;
     
 `;
 export const Seller = () => {
+
   const [list, setList] = useState('');
   const [Open, setOpen] = useState(0);
-  const [content, setContent] = useState('');
 
+  const navigate = useNavigate();
   const openClick = (e) => {
     setOpen(e);
   };
@@ -173,7 +182,9 @@ export const Seller = () => {
     };
     memberRegCheck();
   }, []);
-
+  const navi = (e) => {
+    navigate(`/GoodsEdit/${e}`)
+  }
   return (
     <SalseListCss>
       <h3> 판매 상품 리스트</h3>
@@ -194,17 +205,21 @@ export const Seller = () => {
 
         {list &&
           list.map((item) => (
-            <Goods key={item.goodsDetailId} onClick={() => openClick(item.goodsDetailId)}>
-              <Goods1> <div className="no">{item.goodsDetailId}</div>
-                <div className="img">
-                  <img src={item.goodsPic} alt="" />
+
+            <Goods key={item.goodsDetailId} >
+              <Goods1 >
+                <div className="no">{item.goodsDetailId}  <button onClick={() => { navi(item.goodsDetailId) }}> 수정</button> </div>
+                <div onClick={() => openClick(item.goodsDetailId)}  >
+                  <div className="img">
+                    <img src={item.goodsPic} alt="" />
+                  </div>
+                  <div className="title">{item.goodsTitle}</div>
+                  <div className="price">{item.goodsPrice}</div>
+                  <div className="Status">{item.goodsStatus}</div>
+                  <div className="Stock">{item.goodsStock}</div>
+                  <div className="count">{item.purchase ? item.purchase.length : 0}</div>
+                  <div className="count">{item.purchase ? item.purchase.length * item.goodsPrice : 0}</div>
                 </div>
-                <div className="title">{item.goodsTitle}</div>
-                <div className="price">{item.goodsPrice}</div>
-                <div className="Status">{item.goodsStatus}</div>
-                <div className="Stock">{item.goodsStock}</div>
-                <div className="count">{item.purchase ? item.purchase.length : 0}</div>
-                <div className="count">{item.purchase ? item.purchase.length * item.goodsPrice : 0}</div>
               </Goods1>
               {Open === item.goodsDetailId && item.purchase && (
                 <Buyer>
