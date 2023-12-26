@@ -10,10 +10,9 @@ const SalseListCss = styled.div`
   flex-direction: column;
 `;
 const Title = styled.div`
-
+    border-bottom: 1px solid black;
   width: 80%;
   height: auto;
-  border: 1px solid black;
   margin: 0 auto;
   font-size: .8em;
   ul{
@@ -54,7 +53,6 @@ const Content = styled.div`
   display: flex;
   flex-direction: column;
   
-
 `;
 
 const Goods1 = styled.li`
@@ -62,6 +60,7 @@ const Goods1 = styled.li`
   height: 120px;
   align-items: center;
   flex-direction: row;
+      border-bottom: 1px solid black;
   div{    
     flex:1; 
     border-top: none;
@@ -93,8 +92,7 @@ padding: 0;
   margin: 0 auto;
   display: flex;
   flex-direction: column;
-  list-style:none;
-  border: 1px solid black;
+    /* border-bottom: 1px solid black; */
   .title{   
     width: 200px;
     flex:none;
@@ -105,17 +103,17 @@ const Buyer = styled.div`
   height: auto;
   margin: 0 auto;   
 
+ 
 `;
 const Buyer1 = styled.li`
   display: flex;
   width: 100%;
   align-items: center;
-  flex-direction: row;
+  flex-direction: row;    border-bottom: 1px solid black;
   div{  
     width: 100%;
     height: 30px;
-    border-top: 1px solid black;
-    border-bottom: 1px solid black;
+
 
     flex:1; 
     display: flex;
@@ -142,7 +140,7 @@ const Buyer2 = styled.li`
   height: auto;
 display: flex;
 width: 100%;
-
+    border-bottom: 1px solid #d6d6d6;
 div{
 flex: 1;
 display: flex;
@@ -208,7 +206,8 @@ export const Seller = () => {
 
             <Goods key={item.goodsDetailId} >
               <Goods1 >
-                <div className="no">{item.goodsDetailId}  <button onClick={() => { navi(item.goodsDetailId) }}> 수정</button> </div>
+                <div className="no">{item.goodsDetailId} 
+                 <button onClick={() => { navi(item.goodsDetailId) }}> 수정</button> </div>
                 <div onClick={() => openClick(item.goodsDetailId)}  >
                   <div className="img">
                     <img src={item.goodsPic} alt="" />
