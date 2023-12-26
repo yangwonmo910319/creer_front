@@ -114,16 +114,29 @@ export const Cart = () => {
 
   return (
     <>
+      <AnotherButton></AnotherButton>
       <MiddleOrderBox>
         <CartPageContainer>
           <StyledTitle>
             <img src={cartImg} alt="장바구니" style={{ width: "4vw" }}></img>
             &nbsp;장바구니
           </StyledTitle>
-
           {cartItems.map((item) => (
             <GoodsCard key={item.goodsDetailId}>
-              <div className="goods-info">{/* 여기에 item 정보를 표시 */}</div>
+              <div className="goods-info">
+                <input
+                  type="checkbox"
+                  checked={isChecked(item.goodsDetailId)}
+                  onChange={() => checkboxChange(item.goodsDetailId)}
+                />
+                <img
+                  src={item.imageUrl}
+                  alt={item.title}
+                  className="goods-image"
+                />
+                <div className="goods-title">{item.title}</div>
+                {/* 기타 상품 정보 표시 */}
+              </div>
               <button
                 className="remove-button"
                 onClick={() => removeFromCart(item.goodsDetailId)}
@@ -132,16 +145,14 @@ export const Cart = () => {
               </button>
             </GoodsCard>
           ))}
-
           <MiddleOrderBox>
             <StyledButton
               onClick={purchaseSelected}
-              value="구매하기"
+              value="선택 구매하기"
               width="200px"
               height="50px"
             ></StyledButton>
           </MiddleOrderBox>
-          <AnotherButton></AnotherButton>
         </CartPageContainer>
       </MiddleOrderBox>
     </>

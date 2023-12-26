@@ -1,5 +1,4 @@
-import { useState, useReducer } from "react";
-import { reducer } from "../../pages/member/MyPage";
+import { useState } from "react";
 import { InputBox, InputTag, InpuTitle, MyPageButton } from "./MyPageComp";
 import { useNavigate } from "react-router-dom/dist";
 import { MyPageAxiosApi } from "../../api/member/MyPageAxiosApi";
@@ -8,12 +7,8 @@ import { Modal } from "../../utils/member/MyPageModal";
 export const MyPagePW = () => {
   const navigate = useNavigate();
 
-  const [data, dispatch] = useReducer(reducer, {
-    name: "",
-    id: "",
-    pw: "",
-    email: "",
-  });
+  const [pw, setPw] = useState("");
+
   //모달창 제어
   const [rst, setRst] = useState(false);
   const closeModal = () => {
@@ -22,101 +17,41 @@ export const MyPagePW = () => {
     window.location.reload();
   };
 
-  const [msgName, setNameMsg] = useState("이름 형식에 맞추어 입력하시오.");
-  const [msgId, setIdMsg] = useState("아이디 형식에 맞추어 입력하시오.");
   const [msgPw, setPwMsg] = useState("비밀번호 형식에 맞추어 입력하시오.");
-  const [msgEmail, setEmailMsg] = useState("이메일 형식에 맞추어 입력하시오.");
-  const allChecksTrue = () => {
-    return checkName && checkId && checkPw && checkEmail;
-  };
 
-  // 이름 제약 조건
-  const onChangeName = (e) => {
-    const inputName = e.target.value;
-    if (inputName.length >= 2 && !/[0-9!@#$%^&*(),.?":{}|<>]/.test(inputName)) {
-      dispatch({ type: "Name", value: inputName });
-      setNameMsg("유효합니다.");
-      setCheckName(true);
-    } else {
-      dispatch({ type: "Name", value: false });
-      setNameMsg("유효하지 않습니다.");
-      setCheckName(false);
-    }
-  };
-  // 비밀번호 제약 조건
-  const onChangeId = (e) => {
-    const inputId = e.target.value;
-    if (/^[a-zA-Z0-9]{8,20}$/.test(inputId)) {
-      dispatch({ type: "Id", value: inputId });
-      setIdMsg("유효합니다.");
-      setCheckId(true);
-    } else {
-      dispatch({ type: "Id", value: false });
-      setIdMsg("유효하지 않습니다.");
-      setCheckId(false);
-    }
-  };
   // 비밀번호 제약 조건
   const onChangePw = (e) => {
     const inputPw = e.target.value;
-    if (
-      /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,20}$/.test(
-        inputPw
-      )
-    ) {
-      // const hashedPassword = sha256(inputPw).toString();
-      const hashedPassword = inputPw;
-      dispatch({ type: "Pw", value: hashedPassword });
+    if (/^(?=.*[a-zA-Z])(?=.*[0-9]).{8,25}$/.test(inputPw)) {
+      setPw(e.target.value);
       setPwMsg("유효합니다.");
       setCheckPw(true);
-      console.log(hashedPassword);
     } else {
-      dispatch({ type: "Pw", value: false });
       setPwMsg("유효하지 않습니다.");
       setCheckPw(false);
-    }
-  };
-  // 이메일 제약 조건
-  const onChangeEmail = (e) => {
-    const inputEmail = e.target.value;
-    if (/^[A-Za-z0-9]+@[A-Za-z]+\.[A-Za-z]+$/.test(inputEmail)) {
-      dispatch({ type: "Email", value: inputEmail });
-      setEmailMsg("유효합니다.");
-      setCheckEmail(true);
-    } else {
-      dispatch({ type: "Email", value: false });
-      setEmailMsg("유효하지 않습니다.");
-      setCheckEmail(false);
     }
   };
 
   // 기본 이름 아이디 등 입력하고 난후 입력 조건이 적절하면 등장하는 정보 수정 입력창
   // 체크
-  const [checkName, setCheckName] = useState(false);
-  const [checkId, setCheckId] = useState(false);
   const [checkPw, setCheckPw] = useState(false);
-  const [checkEmail, setCheckEmail] = useState(false);
+  const allChecksTrue = () => {
+    return checkPw;
+  };
 
   // 백엔드 이후 체크된 정보를 토대로 true or false
   const [checkedInfo, setCheckedInfo] = useState(false);
+
   const onClickCheck = async () => {
-    const checked = await MyPageAxiosApi.memberCheck(
-      data.name,
-      data.id,
-      data.pw,
-      data.email
-    );
-    console.log(checked);
-    console.log("온 클릭 체크 이후 결과가 잘 찍혔습니다.");
-    console.log(data.name, data.id, data.pw, data.email);
-    if (checked.data === true) {
-      console.log("체크가 true입니다.");
+    const accessToken = localStorage.getItem("accessToken");
+    const res = await MyPageAxiosApi.memberCheck(pw, accessToken);
+    // 입력한 비밀번호가 맞으면 비밀번호 변경 진행
+    if (res.data) {
       setCheckedInfo(true);
       setOldIsVisible(false);
       setNewIsVisible(true);
     } else {
-      console.log("체크가 false입니다.");
-      setCheckedInfo(false);
+      setPwMsg("비밀번호가 틀렸습니다.");
     }
   };
 
@@ -125,17 +60,13 @@ export const MyPagePW = () => {
   const [msg, setMsg] = useState("");
   const onModifyPw = (e) => {
     setMsg("");
-    if (
-      /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,20}$/.test(
-        e.target.value
-      )
-    ) {
+    if (/^(?=.*[a-zA-Z])(?=.*[0-9]).{8,25}$/.test(e.target.value)) {
       setMsg("유효합니다.");
       setNewPw(e.target.value);
       console.log(checkTrue);
       setCheckTrue(true);
     } else {
-      setMsg("유효하지 않습니다.");
+      setMsg("숫자+영문자 조합으로 8자리 이상 입력해주세요!");
       setCheckTrue(false);
     }
   };
@@ -143,22 +74,16 @@ export const MyPagePW = () => {
   // 비밀번호 변경 클릭 함수
   const [checkTrue, setCheckTrue] = useState(false);
   const onClickModifyPw = async () => {
+    setMsg("비밀번호 변경 중...");
     try {
       //   const hashedPassword = sha256(inputPw).toString();
-      const hashedPassword = "5555";
-      const chPw = await MyPageAxiosApi.modifyPW(data.pw, hashedPassword);
-      console.log("newPw의 값:", hashedPassword); // newId의 값을 확인
-      console.log("제출된 비밀번호가 잘 찍혔습니다." + chPw.data);
-      if (chPw === true) {
-        alert("비밀번호가 변경되었습니다.");
-      } else {
-        setCheckTrue(false);
-        alert("비밀번호가 변경되었습니다.");
-        navigate("/");
-        window.location.reload();
+      const res = await MyPageAxiosApi.modifyPW(newPw);
+      if (res.data === true) {
+        setRst(true);
       }
     } catch (error) {
       console.error("PW 변경 중 오류 발생:", error);
+      setMsg("비밀번호 변경에 실패했습니다. 다시 입력해주세요.");
     }
   };
 
@@ -180,29 +105,9 @@ export const MyPagePW = () => {
               비밀번호 변경
             </h1>
             <p>
-              비밀번호를 변경합니다. 회원 정보 확인을 위해서 회원의 이름,
-              아이디, 비밀번호, 이메일을 입력하세요.
+              비밀번호를 변경합니다. 회원 정보 확인을 위해서 현재 비밀번호를
+              입력하세요.
             </p>
-            <InpuTitle>
-              <InputBox
-                height="100%"
-                width="70%"
-                placeholder="이름"
-                type="text"
-                onChange={onChangeName}
-              />
-            </InpuTitle>
-            <p>{msgName}</p>
-            <InpuTitle>
-              <InputBox
-                height="100%"
-                width="70%"
-                placeholder="아이디"
-                type="text"
-                onChange={onChangeId}
-              />
-            </InpuTitle>
-            <p>{msgId}</p>
             <InpuTitle>
               <InputBox
                 height="100%"
@@ -213,16 +118,6 @@ export const MyPagePW = () => {
               />
             </InpuTitle>
             <p>{msgPw}</p>
-            <InpuTitle>
-              <InputBox
-                height="100%"
-                width="70%"
-                placeholder="이메일"
-                type="text"
-                onChange={onChangeEmail}
-              />
-            </InpuTitle>
-            <p>{msgEmail}</p>
 
             <MyPageButton onClick={onClickCheck} disabled={!allChecksTrue()}>
               정보 확인

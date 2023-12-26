@@ -189,7 +189,7 @@ export const MyPage = () => {
           </InfoBox>
           <LeftDiv>
             <SetButton onClick={onClickEmail}>이메일 변경</SetButton>
-            <SetButton onClick={onClickName}>이름 변경</SetButton>
+            <SetButton onClick={onClickName}>별명 변경</SetButton>
             <SetButton onClick={onClickPw}>비밀번호 변경</SetButton>
             <SetButton onClick={onClickAddress}>주소 변경</SetButton>
             <SetButton onClick={onClickPhone}>전화번호 변경</SetButton>
