@@ -5,7 +5,6 @@ import { useNavigate } from "react-router-dom";
 import { CartAxiosApi } from "../../api/goods/CartAxiosApi";
 import { useParams } from "react-router-dom";
 import { CheckModal } from "../../utils/goods/CheckModal";
-import { StyledButton } from "../../css/common/StyledButton";
 import { AnotherButton } from "../../css/common/AnotherButton";
 const BuyboxCss = styled.div`
   margin-top: 50px;
@@ -21,11 +20,10 @@ const Btn1 = styled.div`
   align-items: center;
   color: #616161;
   background: #c0f4eb;
-  border: 1px solid #1f968e;  
-
+  border: 1px solid #1f968e;
 `;
 
-export const Buybox = ({ list, optionList, quantity1, }) => {
+export const Buybox = ({ list, optionList, quantity1 }) => {
   const navigate = useNavigate();
   const { goodsId } = useParams(); // 이후 사용은 중괄호 불필요
   const accessToken = localStorage.getItem("accessToken");
@@ -44,7 +42,6 @@ export const Buybox = ({ list, optionList, quantity1, }) => {
 
   // 상품 정보 업데이트
   useEffect(() => {
-
     // goodsId가 변경될 때마다 content 객체를 업데이트합니다.
     setContent({
       goodsDetailId: list.goodsDetailId,
@@ -52,7 +49,6 @@ export const Buybox = ({ list, optionList, quantity1, }) => {
       quantity: quantity1,
       status: status,
     });
-
   }, [seller, goodsId, option, quantity, status, content.seller, quantity1]);
 
   // 장바구니 담기
@@ -100,7 +96,6 @@ export const Buybox = ({ list, optionList, quantity1, }) => {
     }
   }, [optionList]);
 
-
   // 구매
   const SelectGoodsList = async () => {
     try {
@@ -115,16 +110,36 @@ export const Buybox = ({ list, optionList, quantity1, }) => {
   return (
     <>
       <BuyboxCss>
-        {list.goodsStock >= quantity1 ?
-          <AnotherButton width={"120px"} height={"50px"} value={"구매"} data={quantity} onClick={SelectGoodsList} ></AnotherButton>
-          :
-          <AnotherButton width={"120px"} height={"50px"} value={"재고 부족"} data={quantity} ></AnotherButton>
-
-        }
+        {list.goodsStock >= quantity1 ? (
+          <AnotherButton
+            width={"120px"}
+            height={"50px"}
+            value={"구매"}
+            data={quantity}
+            onClick={SelectGoodsList}
+          ></AnotherButton>
+        ) : (
+          <AnotherButton
+            width={"120px"}
+            height={"50px"}
+            value={"재고 부족"}
+            data={quantity}
+          ></AnotherButton>
+        )}
         {/* <Btn1 onClick={cartAdd}>장바구니</Btn1> */}
-        <AnotherButton width={"120px"} height={"50px"} value={"장바구니"} data={quantity} onClick={cartAdd} ></AnotherButton>
-        <AnotherButton width={"120px"} height={"50px"} value={"채팅"} data={quantity}></AnotherButton>
-
+        <AnotherButton
+          width={"120px"}
+          height={"50px"}
+          value={"장바구니"}
+          data={quantity}
+          onClick={cartAdd}
+        ></AnotherButton>
+        <AnotherButton
+          width={"120px"}
+          height={"50px"}
+          value={"채팅"}
+          data={quantity}
+        ></AnotherButton>
       </BuyboxCss>
 
       <CheckModal

@@ -4,7 +4,6 @@ import cartImg from "../../images/cart.png";
 import { GoodsAxiosApi } from "../../api/goods/GoodsAxiosApi";
 import { CartAxiosApi } from "../../api/goods/CartAxiosApi";
 import { MiddleOrderBox } from "../../css/common/MiddleOrderBox";
-import { StyledButton } from "../../css/common/StyledButton";
 import { StyledTitle } from "../../css/common/StyledTitle";
 import { AnotherButton } from "../../css/common/AnotherButton";
 
@@ -20,22 +19,22 @@ const GoodsCard = styled.div`
   display: flex;
   align-items: center;
 
-  .goods-image {
+  .goodsImage {
     width: 150px;
     height: 200px;
     margin-right: 10px;
   }
 
-  .goods-title {
+  .goodsTitle {
     font-weight: bold;
     margin-right: 10px;
   }
 
-  .goods-info {
+  .goodsInfo {
     flex: 1;
   }
 
-  .remove-button {
+  .removeButton {
     background-color: red;
     color: white;
     border: none;
@@ -49,17 +48,14 @@ export const Cart = () => {
   const [checkedItems, setCheckedItems] = useState([]);
   const accessToken = localStorage.getItem("accessToken");
 
-  useEffect(() => {
-    if (accessToken) {
-      fetchCartItems();
-    }
-  }, [accessToken]);
-
   const fetchCartItems = async () => {
     try {
       const response = await CartAxiosApi.getCartItems(accessToken);
+      // console.log("장바구니 목록 : " + JSON.stringify(response));
+
       if (response.status === 200) {
         setCartItems(response.data);
+        console.log("cartItems : " + JSON.stringify(response));
       } else {
         console.error("장바구니 가져오기 실패");
       }
@@ -67,6 +63,12 @@ export const Cart = () => {
       console.error("장바구니 목록을 가져오는 중 오류 발생", error);
     }
   };
+
+  useEffect(() => {
+    if (accessToken) {
+      fetchCartItems();
+    }
+  }, [accessToken]);
 
   const checkboxChange = (goodsId) => {
     if (checkedItems.includes(goodsId)) {
@@ -114,45 +116,48 @@ export const Cart = () => {
 
   return (
     <>
-      <AnotherButton></AnotherButton>
       <MiddleOrderBox>
         <CartPageContainer>
           <StyledTitle>
             <img src={cartImg} alt="장바구니" style={{ width: "4vw" }}></img>
             &nbsp;장바구니
           </StyledTitle>
+
           {cartItems.map((item) => (
             <GoodsCard key={item.goodsDetailId}>
-              <div className="goods-info">
+              <div className="goodsInfo">
+                {/* 정보 추가 */}
                 <input
                   type="checkbox"
                   checked={isChecked(item.goodsDetailId)}
                   onChange={() => checkboxChange(item.goodsDetailId)}
                 />
-                <img
-                  src={item.imageUrl}
-                  alt={item.title}
-                  className="goods-image"
-                />
-                <div className="goods-title">{item.title}</div>
-                {/* 기타 상품 정보 표시 */}
+                <img src={item.image} alt={item.title} className="goodsImage" />
+                <div className="goodsTitle">{item.seller}</div>
+                <div className="goodsTitle">{item.option}</div>
+                <div className="goodsTitle">{item.quantity}</div>
               </div>
               <button
-                className="remove-button"
+                className="removeButton"
                 onClick={() => removeFromCart(item.goodsDetailId)}
               >
                 제거
               </button>
             </GoodsCard>
           ))}
+
+          <br />
+
           <MiddleOrderBox>
-            <StyledButton
+            <AnotherButton
               onClick={purchaseSelected}
-              value="선택 구매하기"
+              value="구매하기"
               width="200px"
               height="50px"
-            ></StyledButton>
+            ></AnotherButton>
           </MiddleOrderBox>
+
+          <br />
         </CartPageContainer>
       </MiddleOrderBox>
     </>
