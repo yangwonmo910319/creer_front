@@ -5,6 +5,7 @@ export const ReviewAxiosApi = {
 
   // 리뷰 작성
   insertReview: async (reviewStar, reviewText, goodsDetailId, url) => {
+
     const reviewData = {
       goodsDetailId: goodsDetailId,
       reviewContent: reviewText,

@@ -170,6 +170,8 @@ const GoodsOptionCss = styled.div`
       margin: 0 auto;
         grid-area: option; 
     }
+
+
 `;
 
 
@@ -219,11 +221,18 @@ width: 100px;
   left: 0;
   top: -25px;
 `;
-const OptionCategory = styled.input`
+const OptionCategory = styled.div`
 
 width: 100%;
-height: 20px;
+height: auto;
 border: ${(props) => (props.goodsCategory === null || props.goodsCategory.length === 0 ? '3px solid red' : '3px solid   #03bf81')};
+
+.CategoryRaido{
+ display: none;
+}
+&:hover  .CategoryRaido{
+  display: block;
+}
 `;
 
 const OptionTitleEdit = styled.input`
@@ -327,12 +336,12 @@ align-items: center;
 `;
 export const GoodsWrite = () => {
   const navigate = useNavigate();
-  const [goodsCategory, setGoodsCategory] = useState(null);
+  const [goodsCategory, setGoodsCategory] = useState('');
   const [goodsDeliveryFee, setGoodsDeliveryFee] = useState("");
   const [goodsDesc, setGoodsDesc] = useState("");
   const [goodsPic, setGoodsPic] = useState("");
   const [goodsPrice, setGoodsPrice] = useState("");
-  const [goodsRefund, setGoodsRefund] = useState("");
+  const [goodsStock, setGoodsStock] = useState("");
   const [goodsTitle, setGoodsTitle] = useState("");
   const [content2, setContent2] = useState([]);
   const nickName = localStorage.getItem("NickName");
@@ -353,7 +362,7 @@ export const GoodsWrite = () => {
       goodsCategory,      // 카테고리
       goodsPic,        // 상품 사진    ,
       goodsDesc,        // 상품 설명
-      goodsRefund,      // 상품 배송/환불/교환 안내
+      goodsStock,      // 상품 배송/환불/교환 안내
       goodsTitle,        // 상품 이름      
       goodsPrice,        // 상품 가격
       goodsDeliveryFee,  // 배달비
@@ -387,15 +396,6 @@ export const GoodsWrite = () => {
     }
     navigate("/")
   }
-
-
-
-
-
-
-
-
-
   //파이어베이스 이미지 주소 받기
   const handleFileUpload = async (e) => {
     const selectedFile = e.target.files[0];
@@ -481,7 +481,24 @@ export const GoodsWrite = () => {
       </GoodsInfoCss>
 
       <GoodsOptionCss>
-        <OptionCategory goodsCategory={goodsCategory} type="text" value={goodsCategory} onChange={(e) => { setGoodsCategory(e.target.value) }} placeholder="카테고리 :">
+
+        <OptionCategory goodsCategory={goodsCategory} >  {goodsCategory ? goodsCategory : "카테고리"}
+          <div className="CategoryRaido">
+            <input type="radio" name="goods" id="패션" value="패션" onChange={(e) => { setGoodsCategory(e.target.value) }} />패션
+            <br />
+            <input type="radio" name="goods" id="쥬얼리" value="쥬얼리" onChange={(e) => { setGoodsCategory(e.target.value) }} />쥬얼리
+            <br />
+            <input type="radio" name="goods" id="가구" value="가구" onChange={(e) => { setGoodsCategory(e.target.value) }} />가구
+            <br />
+            <input type="radio" name="goods" id="문구" value="문구" onChange={(e) => { setGoodsCategory(e.target.value) }} />문구
+            <br />
+            <input type="radio" name="goods" id="반려" value="반려" onChange={(e) => { setGoodsCategory(e.target.value) }} />반려
+            <br />
+            <input type="radio" name="goods" id="아동" value="아동" onChange={(e) => { setGoodsCategory(e.target.value) }} />아동
+            <br />
+            <input type="radio" name="goods" id="공예" value="공예" onChange={(e) => { setGoodsCategory(e.target.value) }} />공예
+            <br />
+          </div>
         </OptionCategory>
         <Seller>
           <Seller1>
@@ -494,8 +511,8 @@ export const GoodsWrite = () => {
         </Seller>
         <Delivery>
           <OptionPrice goodsPrice={goodsPrice} type="text" value={goodsPrice} onChange={(e) => { setGoodsPrice(e.target.value) }} placeholder=" 가격 :" />
-          <GoodsDeliveryFee goodsDeliveryFee={goodsDeliveryFee} type="text" value={goodsDeliveryFee} onChange={(e) => { setGoodsDeliveryFee(e.target.value) }} placeholder=" 배송 :" />
-          <GoodsRefund goodsRefund={goodsRefund} type="text" value={goodsRefund} onChange={(e) => { setGoodsRefund(e.target.value) }} placeholder=" 배송 시작 :" />
+          <GoodsDeliveryFee goodsDeliveryFee={goodsDeliveryFee} type="text" value={goodsDeliveryFee} onChange={(e) => { setGoodsDeliveryFee(e.target.value) }} placeholder=" 배송비 :" />
+          <GoodsRefund goodsRefund={goodsStock} type="text" value={goodsStock} onChange={(e) => { setGoodsStock(e.target.value) }} placeholder=" 재고 :" />
 
         </Delivery>
 
@@ -507,14 +524,14 @@ export const GoodsWrite = () => {
             (goodsCategory !== null &&
               goodsPic !== null &&
               goodsDesc !== null &&
-              goodsRefund !== null &&
+              goodsStock !== null &&
               goodsTitle !== null &&
               goodsPrice !== null &&
               goodsDeliveryFee !== null &&
               goodsCategory.length !== 0 &&
               goodsPic.length !== 0 &&
               goodsDesc.length !== 0 &&
-              goodsRefund.length !== 0 &&
+              goodsStock.length !== 0 &&
               goodsTitle.length !== 0 &&
               goodsPrice.length !== 0 &&
               goodsDeliveryFee.length !== 0) && (

@@ -2,6 +2,7 @@ import React, { useEffect, useState } from "react";
 import styled, { keyframes } from "styled-components";
 import { FaStar } from "react-icons/fa";
 import { storage } from "../../api/FireBase";
+import { AnotherButton } from "../../css/common/AnotherButton";
 const fadeIn = keyframes`
   from {
     opacity: 0;
@@ -129,33 +130,11 @@ img{
 }
 .content4{
   margin: 0 auto;
+  margin-top: 20px;
   width: 100%;
   height: 50px;
   display: flex;
-  justify-content: center;
-  button{
-    width: 150px;
-height: 40px;
-display: flex;
-justify-content: center;
-align-items: center;
-  margin: 10px;
-  color: #ffffff;
-  text-transform: uppercase;
-  padding: 1.25em 2em;
-  background: #d20b0b;
-  border: 2px solid  #9b0202;
-  border-radius: 10px;
-  transform-style: preserve-3d;
-  transition: transform 150ms cubic-bezier(0, 0, 0.58, 1),
-    background 150ms cubic-bezier(0, 0, 0.58, 1);
-
-  &:hover {
-    background:  #ffeaa3;
-    transform: translate(0, 0.25em);
-
-  }
-  }
+  justify-content: center;  
 }
 
 `;
@@ -189,8 +168,6 @@ export const ReviewEditModal = ({ Writer, goodsReviewId, reviewContent, reviewUr
   const NickName = window.localStorage.getItem("NickName")
   const [url, setUrl] = useState(reviewUrl);
 
-  console.log("11111111111")
-  console.log(reviewUrl)
   const reviewTextChange = (e) => {
     setReviewText(e.target.value);
   };
@@ -335,15 +312,15 @@ export const ReviewEditModal = ({ Writer, goodsReviewId, reviewContent, reviewUr
             {NickName === Writer ?
 
               <div className="content4">
-                <button onClick={submitReview}>수 정</button>
-                <button onClick={closeClick}>취 소</button>
+                <AnotherButton value={"수 정"} onClick={submitReview}></AnotherButton>
+                <AnotherButton value={"취 소"} onClick={closeClick}></AnotherButton>
               </div>
               : <div className="content4">
-                <button onClick={closeClick}>확 인</button>
+                <AnotherButton value={"확 인"} onClick={closeClick}></AnotherButton>
               </div>}
             <CloseButton onClick={closeModal}>&times;</CloseButton>
           </ModalContent>
-        </ModalWrapper>
+        </ModalWrapper >
       )}
     </>
   );

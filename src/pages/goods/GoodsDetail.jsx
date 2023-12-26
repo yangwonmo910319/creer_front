@@ -33,7 +33,7 @@ export const GoodsDetail = () => {
   const [goodsDetailId, setGoodsDetailId] = useState("");
   const [goodsPic, setGoodsPic] = useState("");
   const [goodsPrice, setGoodsPrice] = useState("");
-  const [goodsRefund, setGoodsRefund] = useState("");
+  const [goodsStock, setGoodsStock] = useState("");
   const [goodsTitle, setGoodsTitle] = useState("");
   const [memberDto, setMemberDto] = useState("");
   const nickName = localStorage.getItem("NickName");
@@ -66,7 +66,7 @@ export const GoodsDetail = () => {
         goodsDetailId,
         goodsPic,
         goodsPrice,
-        goodsRefund,
+        goodsStock,
         goodsTitle,
         memberDto,
       } = list;
@@ -77,7 +77,7 @@ export const GoodsDetail = () => {
       setGoodsDetailId(goodsDetailId);
       setGoodsPic(goodsPic);
       setGoodsPrice(goodsPrice);
-      setGoodsRefund(goodsRefund);
+      setGoodsStock(goodsStock);
       setGoodsTitle(goodsTitle);
       setMemberDto(memberDto);
     }
@@ -94,7 +94,7 @@ export const GoodsDetail = () => {
           goodsDetailId,
           goodsPic,
           goodsPrice,
-          goodsRefund,
+          goodsStock,
           goodsTitle
         );
       } catch (error) {
@@ -118,7 +118,7 @@ export const GoodsDetail = () => {
     list,
     setGoodsTitle,
     setGoodsPrice,
-    setGoodsRefund,
+    setGoodsStock,
     setGoodsDeliveryFee,
     setGoodsCategory,
     setMemberDto,

@@ -60,16 +60,17 @@ const OptionNick = styled.div`
   top: -25px;
 `;
 const OptionCategory = styled.div`
-  width: 300px;
-  height: 20px;
 
-  border: ${(props) =>
-    props.goodsCategory === null || props.goodsCategory.length === 0
-      ? "3px solid red"
-      : "3px solid   #03bf81"};
-  input {
-    width: 200px;
-  }
+width: 100%;
+height: auto;
+border: ${(props) => (props.goodsCategory === null || props.goodsCategory.length === 0 ? '3px solid red' : '3px solid   #03bf81')};
+
+.CategoryRaido{
+ display: none;
+}
+&:hover  .CategoryRaido{
+  display: block;
+}
 `;
 
 const OptionTitleEdit = styled.div`
@@ -79,9 +80,9 @@ const OptionTitleEdit = styled.div`
     width: 80%;
     font-size: 1.5em;
     border: ${(props) =>
-      props.goodsTitle === null || props.goodsTitle.length === 0
-        ? "3px solid red"
-        : "3px solid   #03bf81"};
+    props.goodsTitle === null || props.goodsTitle.length === 0
+      ? "3px solid red"
+      : "3px solid   #03bf81"};
 
     line-height: 1.2em;
     padding-bottom: 20px;
@@ -106,9 +107,9 @@ const OptionPrice = styled.div`
     height: 40px;
 
     border: ${(props) =>
-      props.goodsPrice === null || props.goodsPrice.length === 0
-        ? "3px solid red"
-        : "3px solid   #03bf81"};
+    props.goodsPrice === null || props.goodsPrice.length === 0
+      ? "3px solid red"
+      : "3px solid   #03bf81"};
   }
 `;
 const GoodsDeliveryFee = styled.div`
@@ -120,9 +121,9 @@ const GoodsDeliveryFee = styled.div`
     font-size: 1em;
     width: 73%;
     border: ${(props) =>
-      props.goodsDeliveryFee === null || props.goodsDeliveryFee.length === 0
-        ? "3px solid red"
-        : "3px solid  #03bf81"};
+    props.goodsDeliveryFee === null || props.goodsDeliveryFee.length === 0
+      ? "3px solid red"
+      : "3px solid  #03bf81"};
   }
 `;
 
@@ -137,9 +138,9 @@ const GoodsRefund = styled.div`
     width: 65%;
 
     border: ${(props) =>
-      props.goodsRefund === null || props.goodsRefund.length === 0
-        ? "3px solid red"
-        : "3px solid  #03bf81"};
+    props.goodsStock === null || props.goodsStock.length === 0
+      ? "3px solid red"
+      : "3px solid  #03bf81"};
   }
 `;
 
@@ -199,11 +200,12 @@ const Option = styled.div`
   }
 `;
 export const GoodsOptionEdit = ({ goodsDedail, updateGoodsDetail }) => {
+
   const [
     list,
     setGoodsTitle,
     setGoodsPrice,
-    setGoodsRefund,
+    setGoodsStock,
     setGoodsDeliveryFee,
     setGoodsCategory,
     setMemberDto,
@@ -211,7 +213,7 @@ export const GoodsOptionEdit = ({ goodsDedail, updateGoodsDetail }) => {
   const [goodsTitle, setGoodsTitle1] = useState("");
   const [goodsCategory, setGoodsCategory1] = useState("");
   const [goodsPrice, setGoodsPrice1] = useState("");
-  const [goodsRefund, setGoodsRefund1] = useState("");
+  const [goodsStock, setGoodsStock1] = useState("");
 
   const [goodsDeliveryFee, setGoodsDeliveryFee1] = useState("");
   const [isCheckModalOpen, setIsCheckModalOpen] = useState(false);
@@ -221,7 +223,7 @@ export const GoodsOptionEdit = ({ goodsDedail, updateGoodsDetail }) => {
   useEffect(() => {
     setGoodsTitle1(list.goodsTitle);
     setGoodsPrice1(list.goodsPrice);
-    setGoodsRefund1(list.goodsRefund);
+    setGoodsStock1(list.goodsStock);
     setGoodsDeliveryFee1(list.goodsDeliveryFee);
     setGoodsCategory1(list.goodsCategory);
   }, [list]);
@@ -249,9 +251,9 @@ export const GoodsOptionEdit = ({ goodsDedail, updateGoodsDetail }) => {
     setGoodsDeliveryFee1(e.target.value);
     setGoodsDeliveryFee(e.target.value);
   };
-  const GoodsRefundChange = (e) => {
-    setGoodsRefund1(e.target.value);
-    setGoodsRefund(e.target.value);
+  const GoodsStockChange = (e) => {
+    setGoodsStock1(e.target.value);
+    setGoodsStock(e.target.value);
   };
   const GoodsPriceChange = (e) => {
     setGoodsPrice1(e.target.value);
@@ -265,7 +267,7 @@ export const GoodsOptionEdit = ({ goodsDedail, updateGoodsDetail }) => {
   const revertChanges = () => {
     setGoodsTitle1(list.goodsTitle);
     setGoodsPrice1(list.goodsPrice);
-    setGoodsRefund1(list.goodsRefund);
+    setGoodsStock1(list.goodsRefund);
     setGoodsCategory1(list.goodsCategory);
     setGoodsDeliveryFee1(list.goodsDeliveryFee);
     setRender(!render);
@@ -273,13 +275,23 @@ export const GoodsOptionEdit = ({ goodsDedail, updateGoodsDetail }) => {
 
   return (
     <GoodsOptionCss>
-      <OptionCategory goodsCategory={goodsCategory}>
-        카테고리:
-        <input
-          type="text"
-          value={goodsCategory}
-          onChange={GoodsCategoryChange}
-        />
+      <OptionCategory goodsCategory={goodsCategory} >  {goodsCategory ? goodsCategory : "카테고리"}
+        <div className="CategoryRaido">
+          <input type="radio" name="goods" id="패션" value="패션" onChange={(e) => { setGoodsCategory(e.target.value) }} />패션
+          <br />
+          <input type="radio" name="goods" id="쥬얼리" value="쥬얼리" onChange={(e) => { setGoodsCategory(e.target.value) }} />쥬얼리
+          <br />
+          <input type="radio" name="goods" id="가구" value="가구" onChange={(e) => { setGoodsCategory(e.target.value) }} />가구
+          <br />
+          <input type="radio" name="goods" id="문구" value="문구" onChange={(e) => { setGoodsCategory(e.target.value) }} />문구
+          <br />
+          <input type="radio" name="goods" id="반려" value="반려" onChange={(e) => { setGoodsCategory(e.target.value) }} />반려
+          <br />
+          <input type="radio" name="goods" id="아동" value="아동" onChange={(e) => { setGoodsCategory(e.target.value) }} />아동
+          <br />
+          <input type="radio" name="goods" id="공예" value="공예" onChange={(e) => { setGoodsCategory(e.target.value) }} />공예
+          <br />
+        </div>
       </OptionCategory>
       <Seller>
         <Seller1>
@@ -301,9 +313,9 @@ export const GoodsOptionEdit = ({ goodsDedail, updateGoodsDetail }) => {
         </OptionPrice>
         <GoodsDeliveryFee goodsDeliveryFee={goodsDeliveryFee}>
           배송:
-          <input type="text" value={goodsRefund} onChange={GoodsRefundChange} />
+          <input type="text" value={goodsStock} onChange={GoodsStockChange} />
         </GoodsDeliveryFee>
-        <GoodsRefund goodsRefund={goodsRefund}>
+        <GoodsRefund goodsStock={goodsStock}>
           배송 시작:
           <input
             type="text"

@@ -181,15 +181,16 @@ export const GoodsOption = ({ goodsDedail, updateGoodsDetail }) => {
     list,
     setGoodsTitle,
     setGoodsPrice,
-    setGoodsRefund,
+    setGoodsStock,
     setGoodsDeliveryFee,
     setGoodsCategory,
     setMemberDto,
   ] = goodsDedail;
+
   const [goodsTitle, setGoodsTitle1] = useState("");
   const [goodsCategory, setGoodsCategory1] = useState("");
   const [goodsPrice, setGoodsPrice1] = useState("");
-  const [goodsRefund, setGoodsRefund1] = useState("");
+  const [goodsStock, setGoodsStock1] = useState("");
 
   const [goodsDeliveryFee, setGoodsDeliveryFee1] = useState("");
   const [isCheckModalOpen, setIsCheckModalOpen] = useState(false);
@@ -199,10 +200,11 @@ export const GoodsOption = ({ goodsDedail, updateGoodsDetail }) => {
   useEffect(() => {
     setGoodsTitle1(list.goodsTitle);
     setGoodsPrice1(list.goodsPrice);
-    setGoodsRefund1(list.goodsRefund);
+    setGoodsStock1(list.goodsStock);
     setGoodsDeliveryFee1(list.goodsDeliveryFee);
     setGoodsCategory1(list.goodsCategory);
   }, [list]);
+
   //삭제 버튼을 누르면 실행
   const deleteGoodsDetail = () => {
     //게시글 삭제 기능을 만듬
@@ -228,8 +230,8 @@ export const GoodsOption = ({ goodsDedail, updateGoodsDetail }) => {
     setGoodsDeliveryFee(e.target.value);
   };
   const GoodsRefundChange = (e) => {
-    setGoodsRefund1(e.target.value);
-    setGoodsRefund(e.target.value);
+    setGoodsStock1(e.target.value);
+    setGoodsStock(e.target.value);
   };
   const GoodsPriceChange = (e) => {
     setGoodsPrice1(e.target.value);
@@ -243,7 +245,7 @@ export const GoodsOption = ({ goodsDedail, updateGoodsDetail }) => {
   const revertChanges = () => {
     setGoodsTitle1(list.goodsTitle);
     setGoodsPrice1(list.goodsPrice);
-    setGoodsRefund1(list.goodsRefund);
+    setGoodsStock1(list.goodsStock);
     setGoodsCategory1(list.goodsCategory);
     setGoodsDeliveryFee1(list.goodsDeliveryFee);
     setRender(!render);
@@ -265,22 +267,17 @@ export const GoodsOption = ({ goodsDedail, updateGoodsDetail }) => {
       </Seller>
       <Delivery>
         <OptionPrice>{goodsPrice} 원</OptionPrice>
-        <GoodsDeliveryFee>배송:{goodsRefund}</GoodsDeliveryFee>
+        <GoodsDeliveryFee>재고:{goodsStock}</GoodsDeliveryFee>
         <GoodsRefund>배송 시작: {goodsDeliveryFee} </GoodsRefund>
       </Delivery>
 
       <Option>
         <div className="option1">
-          <OptionBox list={list.options} list2={list}></OptionBox>
+          <OptionBox list={list.options} list2={list} ></OptionBox>
+
         </div>
       </Option>
-      <CheckModal
-        isOpen={isCheckModalOpen}
-        onSubmit={updateGoodsDetail}
-        setIsCheckModalOpen={setIsCheckModalOpen}
-        checkMmessage={"작성하신 글을 수정합니다."}
-        revertChanges={revertChanges}
-      />
+
     </GoodsOptionCss>
   );
 };

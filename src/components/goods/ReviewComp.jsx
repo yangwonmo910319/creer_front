@@ -4,6 +4,7 @@ import { FaStar, FaStarHalf } from "react-icons/fa"; // 별 아이콘을 사용�
 import { ReviewAxiosApi } from "../../api/goods/ReviewAxiosApi";
 import { ReviewModal } from "../../utils/goods/ReviewModal";
 import { ReviewEditModal } from "../../utils/goods/ReviewEditModal"
+import { AnotherButton } from "../../css/common/AnotherButton"
 
 const ReivewInfo = styled.div`
 
@@ -149,15 +150,6 @@ display: flex;
   justify-content: end;
   align-items: end;
 
-  button{      
-    /* color: #DCF763;
-  background: #435058; */
-    color:#ffffff;
-  background: #d42a30;
-  
-  border: 2px solid #412525;  
-
-  }
 `;
 
 const MoreButton = styled.button`
@@ -220,10 +212,9 @@ const TextBox = styled.div`
 const ReviewBox = styled.div`
 display: flex;
 flex-direction: row;
-height: auto;
+height: 130px;
 width: 100%;
 padding: 0px;
-
 .box1{
   display: flex;
 justify-content:center;
@@ -296,7 +287,6 @@ p{
   margin-bottom: 30px;
 }
 `;
-
 export const ReviewComp = ({ goodsNum, openReviewModal, reply }) => {
 
 
@@ -395,7 +385,11 @@ export const ReviewComp = ({ goodsNum, openReviewModal, reply }) => {
         </div>
         <div className="review-rating">
 
-          <WriteButton><button onClick={openReviewModal}>Review 작성</button></WriteButton>
+          <WriteButton>
+            <AnotherButton
+              width={"150px"} height={"40px"} value={"리뷰 작성"} onClick={openReviewModal}
+            ></AnotherButton>
+          </WriteButton>
         </div>
 
       </ReivewInfo>
@@ -441,7 +435,8 @@ export const ReviewComp = ({ goodsNum, openReviewModal, reply }) => {
 
                 </TextBox>
               </div>
-              {nickName === item.memberDto.nickName && <DeleteBox onClick={() => { deleteReview(item.goodsReviewId) }}><p>×</p> </DeleteBox>
+              {nickName === item.memberDto.nickName &&
+                <AnotherButton width={"30px"} height={"30px"} value={"X"} onClick={() => { deleteReview(item.goodsReviewId) }}></AnotherButton>
               }
 
             </li>

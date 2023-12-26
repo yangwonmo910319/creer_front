@@ -2,6 +2,8 @@ import React, { useState } from "react";
 import styled, { keyframes } from "styled-components";
 import { FaStar } from "react-icons/fa";
 import { storage } from "../../api/FireBase";
+import { AnotherButton } from "../../css/common/AnotherButton";
+
 const fadeIn = keyframes`
   from {
     opacity: 0;
@@ -126,29 +128,7 @@ height: 100%;
   height: 50px;
   display: flex;
   justify-content: center;
-  button{
-    width: 150px;
-height: 40px;
-display: flex;
-justify-content: center;
-align-items: center;
-  margin: 10px;
-  color: #ffffff;
-  text-transform: uppercase;
-  padding: 1.25em 2em;
-  background: #d20b0b;
-  border: 2px solid  #9b0202;
-  border-radius: 10px;
-  transform-style: preserve-3d;
-  transition: transform 150ms cubic-bezier(0, 0, 0.58, 1),
-    background 150ms cubic-bezier(0, 0, 0.58, 1);
-
-  &:hover {
-    background:  #ffeaa3;
-    transform: translate(0, 0.25em);
-
-  }
-  }
+ 
 }
 
 `;
@@ -177,6 +157,7 @@ const TextArea = styled.textarea`
 
 
 export const ReviewModal = ({ isOpen, closeModal, onSubmit }) => {
+
   const [reviewText, setReviewText] = useState("");
   const [rating, setRating] = useState(0);
   const [hoverRating, setHoverRating] = useState(0);
@@ -197,6 +178,7 @@ export const ReviewModal = ({ isOpen, closeModal, onSubmit }) => {
   };
 
   const submitReview = () => {
+    alert(2)
     if (!reviewText.trim()) {
       // 텍스트가 비어 있는지 확인
       alert("리뷰 내용을 입력해주세요."); // 알림 표시
@@ -204,7 +186,6 @@ export const ReviewModal = ({ isOpen, closeModal, onSubmit }) => {
     }
     onSubmit({ rating, reviewText, url });
     closeModal();
-    window.location.reload();
   };
   const modalClick = (e) => {
     if (e.target === e.currentTarget) {
@@ -283,8 +264,8 @@ export const ReviewModal = ({ isOpen, closeModal, onSubmit }) => {
               </div>
             </div>
             <div className="content4">
-              <button onClick={submitReview}>확 인</button>
-              <button onClick={closeClick}>취 소</button>
+              < AnotherButton onClick={submitReview} value={"확 인"}></AnotherButton>
+              <AnotherButton onClick={closeClick} value={"취 소"}></AnotherButton>
             </div>
             <CloseButton onClick={closeModal}></CloseButton>
 

@@ -3,10 +3,11 @@ import { ReviewModal } from "../../utils/goods/ReviewModal";
 
 import { useState } from "react";
 import { ReviewAxiosApi } from "../../api/goods/ReviewAxiosApi";
-
+import { useNavigate } from "react-router-dom";
 
 
 export const ReviewBox = ({ goodsDetailId }) => {
+  const navigate = useNavigate();
   const [isReviewModalOpen, setIsReviewModalOpen] = useState(false);
   const closeReviewModal = () => {
     setIsReviewModalOpen(false);
@@ -17,6 +18,7 @@ export const ReviewBox = ({ goodsDetailId }) => {
 
   //리뷰 추가
   const reviewSubmit = async (reviewData) => {
+
     try {
       // 서버에 데이터 전송
       const response = await ReviewAxiosApi.insertReview(
@@ -25,6 +27,7 @@ export const ReviewBox = ({ goodsDetailId }) => {
       if (response.status === 201) {
         // 성공적으로 데이터가 전송되었으면, 리뷰 목록에 새 리뷰 추가    
         closeReviewModal();
+        navigate(`/${goodsDetailId}`)
       } else {
         // 서버에서 응답이 오지 않거나, 응답의 상태 코드가 200이 아닌 경우 에러 처리
         console.error("서버 응답 실패");

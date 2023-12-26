@@ -5,7 +5,8 @@ import { useNavigate } from "react-router-dom";
 import { CartAxiosApi } from "../../api/goods/CartAxiosApi";
 import { useParams } from "react-router-dom";
 import { CheckModal } from "../../utils/goods/CheckModal";
-
+import { StyledButton } from "../../css/common/StyledButton";
+import { AnotherButton } from "../../css/common/AnotherButton";
 const BuyboxCss = styled.div`
   margin-top: 50px;
   justify-content: space-around;
@@ -24,21 +25,16 @@ const Btn1 = styled.div`
 
 `;
 
-export const Buybox = ({ list, optionList, quantity1 }) => {
-  console.log("list")
-  console.log(list)
-  console.log("list")
-
+export const Buybox = ({ list, optionList, quantity1, }) => {
   const navigate = useNavigate();
   const { goodsId } = useParams(); // 이후 사용은 중괄호 불필요
   const accessToken = localStorage.getItem("accessToken");
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [content, setContent] = useState({});
-
   //판매자 Pk
   const [goodsDetailId, setGoodsDetailId] = useState("");
   //판매자
-  const [seller, setSeller] = useState("");
+  const [seller, setSeller] = useState();
   //옵션
   const [option, setOption] = useState("");
   //상태
@@ -48,16 +44,16 @@ export const Buybox = ({ list, optionList, quantity1 }) => {
 
   // 상품 정보 업데이트
   useEffect(() => {
+
     // goodsId가 변경될 때마다 content 객체를 업데이트합니다.
     setContent({
-      seller: seller,
-      goodsDetailId: goodsId,
+      goodsDetailId: list.goodsDetailId,
       option: option,
       quantity: quantity1,
       status: status,
     });
-    console.log("content : " + content.seller);
-  }, [seller, goodsId, option, quantity, status, content.seller]);
+
+  }, [seller, goodsId, option, quantity, status, content.seller, quantity1]);
 
   // 장바구니 담기
   const cartAdd = async () => {
@@ -119,9 +115,16 @@ export const Buybox = ({ list, optionList, quantity1 }) => {
   return (
     <>
       <BuyboxCss>
-        <Btn1 onClick={SelectGoodsList}>구매</Btn1>
-        <Btn1 onClick={cartAdd}>장바구니</Btn1>
-        <Btn1>채팅</Btn1>
+        {list.goodsStock >= quantity1 ?
+          <AnotherButton width={"120px"} height={"50px"} value={"구매"} data={quantity} onClick={SelectGoodsList} ></AnotherButton>
+          :
+          <AnotherButton width={"120px"} height={"50px"} value={"재고 부족"} data={quantity} ></AnotherButton>
+
+        }
+        {/* <Btn1 onClick={cartAdd}>장바구니</Btn1> */}
+        <AnotherButton width={"120px"} height={"50px"} value={"장바구니"} data={quantity} onClick={cartAdd} ></AnotherButton>
+        <AnotherButton width={"120px"} height={"50px"} value={"채팅"} data={quantity}></AnotherButton>
+
       </BuyboxCss>
 
       <CheckModal

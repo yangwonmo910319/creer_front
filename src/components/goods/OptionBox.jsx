@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react";
 import styled from "styled-components";
 import { Buybox } from "./Buybox";
+import { AnotherButton } from "../../css/common/AnotherButton";
 
 const OptionBoxCss = styled.div`
   width: 100%;
@@ -23,13 +24,17 @@ const Status = styled.div`
   width: 100%;
   height: 30px;
   margin-left: 10px;
-
-  .btn1 {
-    width: 30px;
-    height: 30px;
-    color: black;
-    margin: 0;
+  margin-top: 10px;
+display:  flex;
+flex-direction: row;
+.btn{
+  display:  flex;
+flex-direction: row;
+  margin: 0 20px; 
+  button{
+    margin: 0 5px; 
   }
+}
 `;
 
 const Check = styled.div`
@@ -143,35 +148,33 @@ export const OptionBox = ({ list, list2 }) => {
       });
     }
   };
+  const up = () => {
+    setQuantity(quantity + 1);
+  }
+  const down = () => {
+    setQuantity(quantity - 1);
+  }
   return (
     <OptionBoxCss>
       <Status>
+
         수 량: {quantity}
-        {quantity !== 0 && (
-          <button
-            className="btn1"
-            onClick={() => {
-              setQuantity(quantity - 1);
-            }}
-          >
-            ∨
-          </button>
-        )}
-        <button
-          className="btn1"
-          onClick={() => {
-            setQuantity(quantity + 1);
-          }}
-        >
-          ∧
-        </button>
+        <div className="btn">
+          <AnotherButton
+            width={"40px"} height={"40px"} value={"∧"} onClick={up}
+          ></AnotherButton>
+          {quantity !== 0 && (
+            <AnotherButton
+              width={"40px"} height={"40px"} value={"∨"} onClick={down}
+            ></AnotherButton>
+          )}
+        </div>
       </Status>
       <OptionBoxCss1>
         {Object.keys(groupedOptions).map((key, index) => (
           <div key={index}>
             <h3 onClick={() => OptionPick(key)}>
               <OptionNum>
-
                 {groupedOptions[key][0].goodsOptionNum}{" "}
                 {
                   optionList.find((option) => option.goodsOptionNum === key)
