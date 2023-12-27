@@ -6,17 +6,22 @@ import { StyledSearch } from "../css/common/StyledSearch";
 import { Weather } from "./Weather";
 import {
   StyledLogo,
-  MidR,
   TopL,
   Top,
   TopR,
   BottomC,
   TopC,
+  MemberDropDown,
+  GoodsDropDown,
+  MidR,
+  MidRLogged,
 } from "../css/NavBarStyle";
 
 export const NavBar = () => {
   const navigate = useNavigate();
   const [member, setMember] = useState({});
+  const [memberView, setMemberView] = useState(false);
+  const [goodsView, setGoodsView] = useState(false);
 
   // 로그인 판별을 위한 상태
   const [login, setlogin] = useState(window.localStorage.getItem("isLogin"));
@@ -73,12 +78,74 @@ export const NavBar = () => {
             }}
           ></StyledLogo>
         </TopC>
-        {/* 로그인 여부 */}
-
         <TopR>
+          <ul>
+            {login === "false" ? ( // 로그인 X
+              <>
+                {/* 로그인 */}
+                <MidR>
+                  <li
+                    onClick={() => {
+                      navigate("/Login");
+                    }}
+                  >
+                    <span>로그인</span>
+                  </li>
+                  {/* 회원가입 */}
+                  <li
+                    onClick={() => {
+                      navigate("/SignUp");
+                    }}
+                  >
+                    <span>회원가입</span>
+                  </li>
+                </MidR>
+              </>
+            ) : (
+              // 로그인 O
+              <>
+                <br />
+                <TopR>
+                  안녕하세요,{" "}
+                  <span>
+                    &nbsp;<strong>{member.nickName}</strong>
+                  </span>
+                  &nbsp;&nbsp;
+                </TopR>
+                <MidRLogged>
+                  <li
+                    onClick={() => {
+                      setMemberView(!memberView);
+                    }}
+                  >
+                    <span>회원</span>
+                    {memberView && (
+                      <MemberDropDown onClose={() => setMemberView(false)} />
+                    )}
+                  </li>
 
+                  <li
+                    onClick={() => {
+                      setGoodsView(!goodsView);
+                    }}
+                  >
+                    <span>상품</span>
+                    {goodsView && (
+                      <GoodsDropDown onClose={() => setGoodsView(false)} />
+                    )}
+                  </li>
 
-
+                  <li
+                    onClick={() => {
+                      logout();
+                    }}
+                  >
+                    <span>로그아웃</span>
+                  </li>
+                </MidRLogged>
+              </>
+            )}
+          </ul>
         </TopR>
         <BottomC>
           <StyledSearch />
