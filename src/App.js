@@ -8,9 +8,12 @@ import { Seller } from "./pages/member/Seller";
 import { MyPage } from "./pages/member/MyPage";
 import { GoodsList } from "./pages/goods/GoodsList";
 import { GoodsDetail } from "./pages/goods/GoodsDetail";
-import { AuctionList } from "./pages/aution/AuctionList";
 import { GoodsWrite } from "./pages/goods/GoodsWrite";
 import { GoodsEdit } from "./pages/goods/GoodsEdit";
+import { ChatList } from "./pages/chat/ChatList";
+import { ChatRoomCreate } from "./pages/chat/ChatRoomCreate";
+import { Chatting } from "./pages/chat/Chatting";
+
 function App() {
   return (
     <>
@@ -22,9 +25,8 @@ function App() {
             <Route path="/" element={<GoodsList />}></Route>
             <Route path="/:title" element={<GoodsList />}></Route>
             <Route path="/Goods/:goodsId" element={<GoodsDetail />}></Route>
-            <Route path="/GoodsEdit/:goodsId" element={<GoodsEdit/>}></Route>
+            <Route path="/GoodsEdit/:goodsId" element={<GoodsEdit />}></Route>
             <Route path="/GoodsWrite" element={<GoodsWrite />}></Route>
-            <Route path="/AuctionList" element={<AuctionList />}></Route>
             <Route path="/Cart" element={<Cart />}></Route>
             <Route path="/Seller" element={<Seller />}></Route>
             <Route path="/MyPage" element={<MyPage />}></Route>

@@ -1,8 +1,8 @@
 import React, { useState, useEffect, useRef } from "react";
 import { useParams, useNavigate } from "react-router-dom";
 import styled from "styled-components";
-import { WEB_SOCKET_URL } from "../../utils/Common";
-import { ChatAxiosApi } from "../../api/ChatAxiosApi";
+import { ChatAxiosApi } from "../../api/chat/ChatAxiosApi";
+import { KH_SOCKET_URL } from "../../utils/Common";
 
 const ChatContainer = styled.div`
   padding: 20px;
@@ -148,12 +148,12 @@ export const Chatting = () => {
 
     if (!ws.current) {
       // 새로운 웹소켓 객체를 생성하고, ws.current에 할당
-      ws.current = new WebSocket(WEB_SOCKET_URL);
+      ws.current = new WebSocket(KH_SOCKET_URL);
 
       // 지정해 놓은 웹소켓 서버로 연결을 시도
       ws.current.onopen = () => {
         // 연결이 성공적으로 이루어졌다면,
-        console.log("Successfully connected to " + WEB_SOCKET_URL);
+        console.log("Successfully connected to " + KH_SOCKET_URL);
         setSocketConnected(true);
       };
     }
