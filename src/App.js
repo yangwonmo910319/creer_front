@@ -12,7 +12,7 @@ import { GoodsWrite } from "./pages/goods/GoodsWrite";
 import { GoodsEdit } from "./pages/goods/GoodsEdit";
 import { ChatList } from "./pages/chat/ChatList";
 import { Chatting } from "./pages/chat/Chatting";
-
+import { Payment } from "./pages/member/Payment";
 function App() {
   return (
     <>
@@ -27,6 +27,7 @@ function App() {
             <Route path="/GoodsEdit/:goodsId" element={<GoodsEdit />}></Route>
             <Route path="/GoodsWrite" element={<GoodsWrite />}></Route>
             <Route path="/Cart" element={<Cart />}></Route>
+            <Route path="/Goods/Payment/:goodsId" element={<Payment />}></Route>
             <Route path="/Seller" element={<Seller />}></Route>
             <Route path="/MyPage" element={<MyPage />}></Route>
             <Route path="/ChatList" element={<ChatList />} />

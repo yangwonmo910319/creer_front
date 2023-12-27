@@ -39,8 +39,17 @@ export const CartAxiosApi = {
       },
     });
   },
-
-
+  
+  // 결제페이지 상품 하나 찾기
+  selectCart: async (accessToken, num) => {
+    return await axios.get(`${KH_DOMAIN}/Cart/select/${num}`, {
+      headers: {
+        // 설정 객체
+        "Content-Type": "application/json",
+        Authorization: "Bearer " + accessToken,
+      },
+    });
+  },
 
 
 

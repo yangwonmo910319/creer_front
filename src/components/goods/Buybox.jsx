@@ -43,7 +43,7 @@ export const Buybox = ({ list, optionList, quantity1 }) => {
       goodsImg: list.goodsPic, //상품 이미지
       price: list.goodsPrice,  //가격
     });
-  }, [option, status, quantity1]);
+  }, [option, status, quantity1,list]);
 
   // 장바구니 담기
   const cartAdd = async () => {

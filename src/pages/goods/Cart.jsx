@@ -7,10 +7,12 @@ import { MiddleOrderBox } from "../../css/common/MiddleOrderBox";
 import { StyledTitle } from "../../css/common/StyledTitle";
 import { AnotherButton } from "../../css/common/AnotherButton";
 import { useNavigate } from "react-router-dom";
+
 const CartPageContainer = styled.div`
   margin: 20px;
-  width: 60vw;
+  width: 80%;
   max-width: 1280px;
+
 `;
 
 const GoodsCard = styled.div`
@@ -20,12 +22,13 @@ const GoodsCard = styled.div`
   display: flex;
   align-items: center;
   width: 100%;
+  height: 100px;
   .goodsInfo {
     display: flex;
     width: 100%;
   .goodsImage {
-    width: 150px;
-    height: 200px;
+    width: 100px;
+    height: 100px;
     margin-right: 10px;
   }
   .removeButton {
@@ -44,7 +47,6 @@ const GoodsCard = styled.div`
   .title {
     width: calc(100% - (150px + 5% + 10% + 5%));
     height: 200px;
-
     margin-right: 10px;
   }
 .quantity{
@@ -81,7 +83,11 @@ export const Cart = () => {
       if (response.status === 200) {
         setCartItems(response.data);
         console.log("cartItems : " + JSON.stringify(response));
-
+       console.log(response.data);
+       console.log(response.data);
+       console.log(response.data);
+       console.log(response.data);
+       console.log(response.data);
       } else {
         console.error("장바구니 가져오기 실패");
       }
@@ -152,13 +158,15 @@ export const Cart = () => {
           </StyledTitle>
           {cartItems && cartItems.map((item, i) => (
             <GoodsCard key={i}>
-              <div className="goodsInfo" onClick={() => { move(item.goodsDetailId) }}>
+              <div className="goodsInfo" >
                 {/* 정보 추가 */}
-                <div>
+                <div onClick={() => { move(item.goodsDetailId) }}>
                   <img src={item.goodsImg} alt={item.title} className="goodsImage" />
                   <div className="title" >{item.title}{item.option}</div>
-                  <div className="quantity">{item.quantity}</div>
-                  <div className="price">{item.price}</div></div>
+                  <div className="price">{item.price}원</div>
+                  <div className="quantity">{item.quantity}개</div>           
+                  <div className="price">{item.quantity*item.price}원</div>
+                  </div>
                 <div className="btn">
                   <AnotherButton
                     onClick={() => { remove(item.cartId) }}
@@ -171,7 +179,19 @@ export const Cart = () => {
             </GoodsCard>
           ))}
           <br />
-
+          {/* <GoodsCard >
+              <div className="goodsInfo" >
+        
+                <div>             
+                  <div className="title" ></div>
+                  <div className="price">원</div>
+                  <div className="quantity">개</div>           
+                  <div className="price">원</div>
+                  </div>
+                <div className="btn">       
+                </div>
+              </div>
+            </GoodsCard> */}
           <MiddleOrderBox>
             <AnotherButton
               onClick={purchaseSelected}
