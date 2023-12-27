@@ -171,6 +171,7 @@ export const Seller = () => {
   };
 
   useEffect(() => {
+
     const memberRegCheck = async () => {
       try {
         const resp = await GoodsAxiosApi.getMyGoods();
@@ -181,7 +182,8 @@ export const Seller = () => {
       }
     };
     memberRegCheck();
-  }, []);
+  }, [status, list, statusOn]);
+
   const navi = (e) => {
     navigate(`/GoodsEdit/${e}`)
   }
@@ -246,7 +248,10 @@ export const Seller = () => {
                         <div className="option">   {purchaseItem.buyer.option}</div>
                         <div className="quantity">  {purchaseItem.quantity}</div>
                         <div className="price">  {item.goodsPrice * purchaseItem.quantity}</div>
-                        <div className="status" onClick={() => { setStatusOn(purchaseItem.id) }}>  {purchaseItem.status}</div>
+                        <div className="status" onClick={() => {
+                          setStatus(purchaseItem.status)
+                          setStatusOn(purchaseItem.id)
+                        }}>  {purchaseItem.status}</div>
                       </div>
                       <div>
                         <StatusButton

@@ -8,7 +8,8 @@ const BtnCss = styled.div`
 display: flex;
 flex-direction: row;
 background: white;
-float: right;    border: 1px solid black;
+float: right;  
+
   input {
 
     flex: 1;
@@ -17,27 +18,24 @@ float: right;    border: 1px solid black;
   }
 `;
 export const StatusButton = ({ id, status, setStatus, statusOn, setStatusOn }) => {
-
+  const [content, setContent] = useState()
   const click = (e) => {
     setStatusOn(false);
-    const updateStatus = async () => {
-      try {
-        const update = await PurchaseAxiosApi.update(
-
-        );
-      } catch (error) {
-        console.log(error);
-      }
-    };
-    updateStatus()
-
-
-
+    setStatus(e.target.value)
+    setContent(e.target.value); // 클릭된 라디오 버튼의 값을 content 상태로 설정
+    updateStatus(e.target.value); // 변경된 값으로 updateStatus 호출
   }
 
+  const updateStatus = async (newContent) => {
+    try {
+      const update = await PurchaseAxiosApi.update(id, newContent); // content 대신 newContent를 넘겨줌
+    } catch (error) {
+      console.log(error);
+    }
+  };
 
   useEffect(() => {
-    // statusOn 값이 변경될 때마다 처리할 내용을 작성할 수 있습니다.
+    setContent(status)
   }, [statusOn]);
 
   return (
@@ -50,16 +48,25 @@ export const StatusButton = ({ id, status, setStatus, statusOn, setStatusOn }) =
             id="결제 전"
             value="결제 전"
             onChange={(e) => { click(e) }}
-            checked={status === '결제 전'} // status가 '결제 전'인 경우 체크되도록 설정
+            checked={status === '결제 전'}
           />
           결제 전
+          <input
+            type="radio"
+            name="goods"
+            id="결제 확인"
+            value="결제 확인"
+            onChange={(e) => { click(e) }}
+            checked={status === '결제 확인'}
+          />
+          결제 확인
           <input
             type="radio"
             name="goods"
             id="배송 중"
             value="배송중"
             onChange={(e) => { click(e) }}
-            checked={status === '배송중'} // status가 '배송중'인 경우 체크되도록 설정
+            checked={status === '배송중'}
           />
           배송 중
           <input
@@ -68,7 +75,7 @@ export const StatusButton = ({ id, status, setStatus, statusOn, setStatusOn }) =
             id="배송 확인"
             value="배송 확인"
             onChange={(e) => { click(e) }}
-            checked={status === '배송 확인'} // status가 '배송 확인'인 경우 체크되도록 설정
+            checked={status === '배송 확인'}
           />
           배송 확인
         </BtnCss>

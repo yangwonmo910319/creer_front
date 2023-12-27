@@ -28,7 +28,7 @@ export const PurchaseAxiosApi = {
   update: async (id, content) => {
     const accessToken = localStorage.getItem("accessToken");
     console.log("구매 회원 토큰 : " + accessToken);
-    return await axios.post(KH_DOMAIN + `/api/purchase/update/${id}/${content}`, {
+    return await axios.post(KH_DOMAIN + `/api/purchase/update?id=${id}&content=${content}`, null, {
       headers: {
         "Content-Type": "application/json",
         Authorization: "Bearer " + accessToken,

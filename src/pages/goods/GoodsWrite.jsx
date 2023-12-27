@@ -6,6 +6,7 @@ import styled from "styled-components";
 import { PictureAxiosApi } from "../../api/goods/PictureAxiosApi";
 import { QuillText } from "../../components/goods/QuillText";
 import { OptionWriteBox } from "../../components/goods/OptionWriteBox";
+import { AnotherButton } from "../../css/common/AnotherButton";
 import { OptionAxiosApi } from "../../api/goods/OptionAxiosApi";
 
 
@@ -537,7 +538,7 @@ export const GoodsWrite = () => {
               goodsTitle.length !== 0 &&
               goodsPrice.length !== 0 &&
               goodsDeliveryFee.length !== 0) && (
-              <div className="sell1-4" onClick={submit}>작성 완료</div>
+              <AnotherButton value={"작성 완료"} onClick={submit}></AnotherButton>
             )
           }
         </Option>
