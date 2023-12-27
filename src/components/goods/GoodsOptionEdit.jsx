@@ -1,9 +1,10 @@
 import { useEffect, useState } from "react";
-import styled from "styled-components";
+import styled, { css } from "styled-components";
 import { GoodsAxiosApi } from "../../api/goods/GoodsAxiosApi";
 import { useNavigate } from "react-router-dom";
 import { CheckModal } from "../../utils/goods/CheckModal";
 import { OptionBox } from "./OptionBox";
+import { AnotherButton } from "../../css/common/AnotherButton";
 
 const GoodsOptionCss = styled.div`
   width: 35%;
@@ -63,8 +64,10 @@ const OptionCategory = styled.div`
 
 width: 100%;
 height: auto;
-border: ${(props) => (props.goodsCategory === null || props.goodsCategory.length === 0 ? '3px solid red' : '3px solid   #03bf81')};
-
+border: ${(props) => (
+    props.goodsCategory === null || props.goodsCategory === undefined || props.goodsCategory.length === 0
+      ? '3px solid red' : '3px solid   #03bf81')};
+ 
 .CategoryRaido{
  display: none;
 }
@@ -75,12 +78,11 @@ border: ${(props) => (props.goodsCategory === null || props.goodsCategory.length
 
 const OptionTitleEdit = styled.div`
   width: 100%;
-
   input {
     width: 80%;
     font-size: 1.5em;
     border: ${(props) =>
-    props.goodsTitle === null || props.goodsTitle.length === 0
+    props.goodsTitle === null || props.goodsTitle === undefined || props.goodsTitle.length === 0
       ? "3px solid red"
       : "3px solid   #03bf81"};
 
@@ -107,27 +109,35 @@ const OptionPrice = styled.div`
     height: 40px;
 
     border: ${(props) =>
-    props.goodsPrice === null || props.goodsPrice.length === 0
+    props.goodsPrice === null || props.goodsPrice === undefined || props.goodsPrice.length === 0
       ? "3px solid red"
       : "3px solid   #03bf81"};
   }
 `;
 const GoodsDeliveryFee = styled.div`
+  /* 기본 스타일 */
   font-size: 1em;
-  width: 100%;
   margin-top: 10px;
 
-  input {
-    font-size: 1em;
-    width: 73%;
-    border: ${(props) =>
-    props.goodsDeliveryFee === null || props.goodsDeliveryFee.length === 0
-      ? "3px solid red"
-      : "3px solid  #03bf81"};
+  /* 조건부 스타일링 */
+   ${({ goodsDeliveryFee }) => goodsDeliveryFee === null || goodsDeliveryFee === undefined || goodsDeliveryFee.length === 0 ?
+
+    css`
+      input {
+        border: 3px solid red;
+        /* 추가적인 스타일 */
+      }
+    ` :
+    css`
+      input {
+        border: 3px solid #03bf81;
+        /* 추가적인 스타일 */
+      }
+    `
   }
 `;
 
-const GoodsRefund = styled.div`
+const GoodsStock = styled.div`
   font-size: 1em;
   margin-top: 10px;
   padding-bottom: 20px;
@@ -138,7 +148,7 @@ const GoodsRefund = styled.div`
     width: 65%;
 
     border: ${(props) =>
-    props.goodsStock === null || props.goodsStock.length === 0
+    props.goodsStock === null || props.goodsStock === undefined || props.goodsStock.length === 0
       ? "3px solid red"
       : "3px solid  #03bf81"};
   }
@@ -147,57 +157,16 @@ const GoodsRefund = styled.div`
 const Option = styled.div`
   width: 100%;
   height: auto;
-  display: flex;
-  flex-direction: column;
+  display: flex; 
+  flex-direction: row;
   align-items: center;
+  justify-content: center;
+  button{
 
-  .option1 {
-    width: 90%;
-    height: auto;
+    margin: 30px;
   }
-  .sell {
-    display: flex;
-    justify-content: space-around;
-    width: 60%;
-    height: 80px;
-    margin: 0;
 
-    .sell1-1,
-    .sell1-2 {
-      width: 110px;
-      height: 80px;
-      margin: 10px;
-      border-radius: 10px;
-      background-color: #fbf3d8;
-      display: flex;
-      justify-content: center;
-      align-items: center;
-    }
-  }
-  .sell1-3 {
-    border-radius: 10px;
-    width: 60%;
-    height: 20px;
-    background-color: #fbf3d8;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    margin-top: 30px;
-  }
-  .sell1-4 {
-    border-radius: 10px;
-    width: 60%;
-    height: 50px;
-    color: white;
-    background-color: #f00d33;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    margin-top: 20px;
-  }
-  .sell1-5 {
-    margin-top: 10px;
-  }
+
 `;
 export const GoodsOptionEdit = ({ goodsDedail, updateGoodsDetail }) => {
 
@@ -214,7 +183,6 @@ export const GoodsOptionEdit = ({ goodsDedail, updateGoodsDetail }) => {
   const [goodsCategory, setGoodsCategory1] = useState("");
   const [goodsPrice, setGoodsPrice1] = useState("");
   const [goodsStock, setGoodsStock1] = useState("");
-
   const [goodsDeliveryFee, setGoodsDeliveryFee1] = useState("");
   const [isCheckModalOpen, setIsCheckModalOpen] = useState(false);
   const [render, setRender] = useState(false);
@@ -258,10 +226,6 @@ export const GoodsOptionEdit = ({ goodsDedail, updateGoodsDetail }) => {
   const GoodsPriceChange = (e) => {
     setGoodsPrice1(e.target.value);
     setGoodsPrice(e.target.value);
-  };
-  const GoodsCategoryChange = (e) => {
-    setGoodsCategory1(e.target.value);
-    setGoodsCategory(e.target.value);
   };
 
   const revertChanges = () => {
@@ -311,36 +275,26 @@ export const GoodsOptionEdit = ({ goodsDedail, updateGoodsDetail }) => {
           가격:
           <input type="text" value={goodsPrice} onChange={GoodsPriceChange} />
         </OptionPrice>
-        <GoodsDeliveryFee goodsDeliveryFee={goodsDeliveryFee}>
-          배송:
+        <GoodsStock goodsStock={goodsStock}>
+          재고 :
           <input type="text" value={goodsStock} onChange={GoodsStockChange} />
-        </GoodsDeliveryFee>
-        <GoodsRefund goodsStock={goodsStock}>
-          배송 시작:
+        </GoodsStock>
+        <GoodsDeliveryFee goodsDeliveryFee={goodsDeliveryFee}>
+          배송비:
           <input
             type="text"
             value={goodsDeliveryFee}
             onChange={GoodsDeliveryFeeChange}
           />
-        </GoodsRefund>
+        </GoodsDeliveryFee>
       </Delivery>
-
       <Option>
-        <div className="option1">
-          <OptionBox list={list.options} list2={list}></OptionBox>
-        </div>
 
-        <div className="sell1-3"> 판매자와 채팅</div>
-        {/* <div className="sell1-4" onClick={() => updateGoodsDetail()}> 수정 완료</div> */}
-        <div
-          className="sell1-4"
-          onClick={() => setIsCheckModalOpen(!isCheckModalOpen)}
-        >
-          수정 완료
-        </div>
-        <div className="sell1-4 sell1-5" onClick={() => deleteGoodsDetail()}>
-          글 삭제
-        </div>
+
+        <AnotherButton width={"150px"} value={"수정 완료"} onClick={() => setIsCheckModalOpen(!isCheckModalOpen)}></AnotherButton>
+        <AnotherButton width={"150px"} value={"삭제"} onClick={() => deleteGoodsDetail()}></AnotherButton>
+
+
       </Option>
       <CheckModal
         isOpen={isCheckModalOpen}

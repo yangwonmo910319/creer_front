@@ -136,14 +136,15 @@ const UploadInput = styled.input`
 const UploadLabel = styled.label`
   display: inline-block;
   padding: 8px 12px;
-  color: white;
-  background-color: #adaaff;
+  color: #787878;
+  background-color: #e5e5e5;
+  border: 1px solid  #484848;
   border-radius: 4px;
   cursor: pointer;
   margin-bottom: 10px;
   
   &:hover {
-    background-color: #00648b;
+    background-color: #6f6f6f;
   }
 `;
 export const GoodsInfoEdit = ({ list, reply, member }) => {
@@ -164,15 +165,6 @@ export const GoodsInfoEdit = ({ list, reply, member }) => {
   const closeReviewModal = () => {
     setIsReviewModalOpen(false);
   };
-  //리뷰 모달 열기
-  const openReviewModal = () => {
-    setIsReviewModalOpen(true);
-
-  }
-  //상품 정보 수정
-  const descChage = (e) => {
-    setGoodsDesc(e.target.value)
-  }
 
   //파이어베이스 이미지 주소 받기
   const handleFileUpload = async (e) => {
@@ -251,7 +243,6 @@ export const GoodsInfoEdit = ({ list, reply, member }) => {
       // 네트워크 요청 중에 오류가 발생한 경우 에러 처리
       console.error("submit review 데이터에러 :", error);
     }
-
   }
 
   const imgview = (e) => {
@@ -312,21 +303,7 @@ export const GoodsInfoEdit = ({ list, reply, member }) => {
           <QuillText goodsDesc={goodsDesc} setGoodsDesc={setGoodsDesc}>
           </QuillText>
         </InfoDescCss>
-        {/* 리뷰 출력 */}
-        <ReviewComp goodsNum={list[0]} reply={reply}
-          openReviewModal={openReviewModal}></ReviewComp>
-
-
-
-        {/* 리뷰 작성 Madal */}
-        <ReviewModal
-          isOpen={isReviewModalOpen}
-          onSubmit={reviewSubmit}
-          closeModal={closeReviewModal}
-        />
       </InfoBox>
-
-
     </GoodsInfoCss>
   )
 }

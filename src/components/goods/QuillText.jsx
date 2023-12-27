@@ -53,30 +53,24 @@ export const QuillText = ({ goodsDesc, setGoodsDesc }) => {
     console.log(content);
     useEffect(() => {
         setContent(goodsDesc)
-    }, [])
-    const ContentChage = (e) => {
+    }, [goodsDesc])
+
+    const contextChage = (e) => {
         setContent(e)
-        setGoodsDesc(content)
+        setGoodsDesc(e)
     }
 
-    const handleSubmit = async () => {
-        setGoodsDesc(content)
-
-    };
     return (
         <QuillTextCss>
             <Content1>
-
                 <ReactQuill
                     style={{ width: "100%", height: "600px" }}
                     modules={modules}
                     value={content}
-                    onChange={ContentChage}
+                    onChange={(e) => { contextChage(e) }}
                 />
             </Content1>
-            {/* <Button1>
-                <button onClick={handleSubmit}>작성 완료</button>
-            </Button1> */}
+
         </QuillTextCss>
     );
 

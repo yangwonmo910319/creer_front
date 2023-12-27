@@ -343,6 +343,7 @@ export const GoodsWrite = () => {
   const [goodsPrice, setGoodsPrice] = useState("");
   const [goodsStock, setGoodsStock] = useState("");
   const [goodsTitle, setGoodsTitle] = useState("");
+  const [goodsStatus, setGoodsStatus] = useState("sale");
   const [content2, setContent2] = useState([]);
   const nickName = localStorage.getItem("NickName");
   const UserImg = localStorage.getItem("UserImg");
@@ -362,10 +363,11 @@ export const GoodsWrite = () => {
       goodsCategory,      // 카테고리
       goodsPic,        // 상품 사진    ,
       goodsDesc,        // 상품 설명
-      goodsStock,      // 상품 배송/환불/교환 안내
+      goodsStock,      // 재고
       goodsTitle,        // 상품 이름      
       goodsPrice,        // 상품 가격
       goodsDeliveryFee,  // 배달비
+      goodsStatus,  // 판매 상태      
     }
     //대표 이미지 추가
 
