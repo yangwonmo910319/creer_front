@@ -16,6 +16,7 @@ import {
   MidR,
   MidRLogged,
 } from "../css/NavBarStyle";
+import { Reload } from "../utils/Common";
 
 export const NavBar = () => {
   const navigate = useNavigate();
@@ -59,7 +60,7 @@ export const NavBar = () => {
     // 로컬 스트리지 비우기
     localStorage.clear();
     navigate("/");
-    window.location.reload();
+    Reload(navigate);
 
     // 카카오 로그인 초기화를 위한 쿠키 제거
   };

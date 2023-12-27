@@ -61,3 +61,8 @@ export const Common = {
     }
   },
 };
+
+// 새로고침
+export const Reload = (navigate) => {
+  navigate(0);
+};
