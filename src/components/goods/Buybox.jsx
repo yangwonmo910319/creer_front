@@ -39,7 +39,9 @@ export const Buybox = ({ list, optionList, quantity1 }) => {
   const [status, setStatus] = useState("결제 전");
   //수량
   const [quantity, setQuantity] = useState("1");
-
+  console.log(list.goodsTitle);
+  console.log(list.goodsPic);
+  console.log(list.goodsPrice);
   // 상품 정보 업데이트
   useEffect(() => {
     // goodsId가 변경될 때마다 content 객체를 업데이트합니다.
@@ -47,9 +49,11 @@ export const Buybox = ({ list, optionList, quantity1 }) => {
       goodsDetailId: list.goodsDetailId, //상품 PK
       option: option,    //선택 옵션
       quantity: quantity1, //수량
-      status: status, //판매 상태
+      title: list.goodsTitle, //상품 제목
+      goodsImg: list.goodsPic, //상품 이미지
+      price: list.goodsPrice,  //가격
     });
-  }, [seller, goodsId, option, quantity, status, content.seller, quantity1]);
+  }, [option, status, quantity1]);
 
   // 장바구니 담기
   const cartAdd = async () => {

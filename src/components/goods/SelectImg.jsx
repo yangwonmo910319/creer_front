@@ -57,7 +57,7 @@ const SelectImgCss = styled.div`
   }
 `;
 
-export const SelectImg = ({ num, url, imgview, member }) => {
+export const SelectImg = ({ num, url, imgview, member, login }) => {
   const perPage = 4; // 페이지당 보여질 이미지 수
   const [urls, setUrls] = useState([{ goodsPictures: url }]); // url prop을 객체로 변환하여 초기화합니다.
   const [currentPage, setCurrentPage] = useState(1);
@@ -74,7 +74,6 @@ export const SelectImg = ({ num, url, imgview, member }) => {
         const response = await PictureAxiosApi.selectGoodsImg(num);
         if (response.status === 200) {
           setUrls([{ goodsPictures: url }, ...response.data]);
-
           console.log(response.data);
         } else {
           console.error("서버 응답 실패");
@@ -124,7 +123,7 @@ export const SelectImg = ({ num, url, imgview, member }) => {
             onClick={() => imgview(urlObj.goodsPictures)}
           />
           {urlObj.goodsPictures !== url ? (
-            member1 === nickName ? (
+            login === true ? (
               <ImgEdit>
                 <button
                   onClick={() => {

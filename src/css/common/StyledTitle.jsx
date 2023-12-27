@@ -9,4 +9,5 @@ export const StyledTitle = styled.div`
   justify-content: center;
   margin-bottom: 50px;
   margin-top: 50px;
+  font-size: 4em;
 `;

@@ -19,6 +19,7 @@ export const PictureAxiosApi = {
 
   // 상품 이미지 넣기
   insertGoodsImg: async (num, newUrl) => {
+
     const goodsData = {
       goodsDetailId: num,
       goodsPictures: newUrl,

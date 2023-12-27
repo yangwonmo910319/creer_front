@@ -14,7 +14,6 @@ margin: 0;
 padding: 0;
     width: 65%;
     height: auto;
-    border: 2px solid red;
     @media (max-width: 768px) {
         width: 500px;
         margin: 0 auto;
@@ -66,7 +65,7 @@ const ImgBox = styled.div`
 const InfoBox = styled.div`     
        width: 80%;
     height: auto;
-    border: ${(props) => (props.goodsDesc === null || props.goodsDesc.length == 0 ? '3px solid red' : '3px solid  #03bf81')};
+    border: ${(props) => (props.goodsDesc === null || props.goodsDesc.length === 0 ? '3px solid red' : '3px solid  #03bf81')};
     margin: 20px auto;    
     input{
      width: 90%;  
@@ -164,6 +163,7 @@ export const GoodsInfoEdit = ({ list, reply, member }) => {
   //리뷰 모달 닫기
   const closeReviewModal = () => {
     setIsReviewModalOpen(false);
+
   };
 
   //파이어베이스 이미지 주소 받기
@@ -253,6 +253,10 @@ export const GoodsInfoEdit = ({ list, reply, member }) => {
     const processedDesc = DOMPurify.sanitize(value);
     return <div dangerouslySetInnerHTML={{ __html: processedDesc }} />;
   }
+  useEffect(() => {
+    setUrl(list[2])
+    setMainUrl(list[2])
+  }, list)
   return (
     <GoodsInfoCss>
       <ImgCategory>
@@ -264,7 +268,7 @@ export const GoodsInfoEdit = ({ list, reply, member }) => {
           </ImgBox>
         </div>
         <div className="ImgCategory2">
-          <SelectImg num={list[0]} url={mainurl} imgview={imgview} member={member}>
+          <SelectImg num={list[0]} url={mainurl} imgview={imgview} member={member} login={true}>
           </SelectImg>
         </div>
         <NewImgBox>

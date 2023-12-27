@@ -79,7 +79,7 @@ border: ${(props) => (
 const OptionTitleEdit = styled.div`
   width: 100%;
   input {
-    width: 80%;
+    width: 93%;
     font-size: 1.5em;
     border: ${(props) =>
     props.goodsTitle === null || props.goodsTitle === undefined || props.goodsTitle.length === 0
@@ -104,7 +104,7 @@ const OptionPrice = styled.div`
   font-size: 1.5em;
   margin-right: 100px;
   input {
-    width: 70%;
+    width:78%;
     font-size: 1em;
     height: 40px;
 
@@ -145,7 +145,7 @@ const GoodsStock = styled.div`
   width: 100%;
   input {
     font-size: 1em;
-    width: 65%;
+    width: 80%;
 
     border: ${(props) =>
     props.goodsStock === null || props.goodsStock === undefined || props.goodsStock.length === 0
