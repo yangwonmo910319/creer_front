@@ -6,10 +6,11 @@ import { CartAxiosApi } from "../../api/goods/CartAxiosApi";
 import { MiddleOrderBox } from "../../css/common/MiddleOrderBox";
 import { StyledTitle } from "../../css/common/StyledTitle";
 import { AnotherButton } from "../../css/common/AnotherButton";
-
+import { useNavigate } from "react-router-dom";
 const CartPageContainer = styled.div`
   margin: 20px;
   width: 60vw;
+  max-width: 1280px;
 `;
 
 const GoodsCard = styled.div`
@@ -18,33 +19,57 @@ const GoodsCard = styled.div`
   margin: 10px 0;
   display: flex;
   align-items: center;
-
+  width: 100%;
+  .goodsInfo {
+    display: flex;
+    width: 100%;
   .goodsImage {
     width: 150px;
     height: 200px;
     margin-right: 10px;
   }
-
-  .goodsTitle {
-    font-weight: bold;
-    margin-right: 10px;
-  }
-
-  .goodsInfo {
-    flex: 1;
-  }
-
   .removeButton {
-    background-color: red;
+
     color: white;
     border: none;
     padding: 5px 10px;
     cursor: pointer;
+  } 
+  div{
+    flex: 1;
+    display: flex;
+    justify-content: center;
+    align-items: center;
   }
+  .title {
+    width: calc(100% - (150px + 5% + 10% + 5%));
+    height: 200px;
+
+    margin-right: 10px;
+  }
+.quantity{
+      flex: none;
+    min-width: 30px;
+    width: 5%;
+}
+  .btn{
+    flex: none;
+    min-width: 50px;
+    width: 5%;
+  }
+  .price{
+    flex: none;
+    min-width: 50px;
+    width: 10%;
+  }
+  }
+  
 `;
 
 export const Cart = () => {
-  const [cartItems, setCartItems] = useState([]);
+  const navigate = useNavigate();
+
+  const [cartItems, setCartItems] = useState('');
   const [checkedItems, setCheckedItems] = useState([]);
   const accessToken = localStorage.getItem("accessToken");
 
@@ -54,8 +79,9 @@ export const Cart = () => {
       // console.log("장바구니 목록 : " + JSON.stringify(response));
 
       if (response.status === 200) {
-
+        setCartItems(response.data);
         console.log("cartItems : " + JSON.stringify(response));
+
       } else {
         console.error("장바구니 가져오기 실패");
       }
@@ -78,7 +104,7 @@ export const Cart = () => {
     }
   };
 
-  const isChecked = (goodsId) => checkedItems.includes(goodsId);
+
 
   const purchaseSelected = async () => {
     try {
@@ -98,10 +124,9 @@ export const Cart = () => {
     }
   };
 
-  const removeFromCart = async (goodsId) => {
+  const remove = async (num) => {
     try {
-      const response = await CartAxiosApi.removeFromCart(accessToken, goodsId);
-
+      const response = await CartAxiosApi.removeFromCart(accessToken, num);
       if (response.status === 200) {
         if (window.confirm("장바구니에서 해당 책을 삭제하시겠습니까?")) {
           fetchCartItems();
@@ -114,38 +139,37 @@ export const Cart = () => {
     }
   };
 
+  const move = (e) => {
+    navigate(`/goods/` + e)
+  }
   return (
     <>
       <MiddleOrderBox>
         <CartPageContainer>
           <StyledTitle>
-            <img src={cartImg} alt="장바구니" style={{ width: "4vw" }}></img>
-            &nbsp;장바구니
+            <img src={cartImg} alt="장바구니" style={{ width: "80px" }}></img>
+            장바구니
           </StyledTitle>
-
-          {cartItems.map((item) => (
-            <GoodsCard key={item.cartId}>
-              <div className="goodsInfo">
+          {cartItems && cartItems.map((item, i) => (
+            <GoodsCard key={i}>
+              <div className="goodsInfo" onClick={() => { move(item.goodsDetailId) }}>
                 {/* 정보 추가 */}
-                <input
-                  type="checkbox"
-                  checked={isChecked(item.goodsDetailId)}
-                  onChange={() => checkboxChange(item.goodsDetailId)}
-                />
-                <img src={item.image} alt={item.title} className="goodsImage" />
-                <div className="goodsTitle">{item.seller}</div>
-                <div className="goodsTitle">{item.option}</div>
-                <div className="goodsTitle">{item.quantity}</div>
+                <div>
+                  <img src={item.goodsImg} alt={item.title} className="goodsImage" />
+                  <div className="title" >{item.title}{item.option}</div>
+                  <div className="quantity">{item.quantity}</div>
+                  <div className="price">{item.price}</div></div>
+                <div className="btn">
+                  <AnotherButton
+                    onClick={() => { remove(item.cartId) }}
+                    value="삭제"
+                    width="50px"
+                    height="50px">
+                  </AnotherButton>
+                </div>
               </div>
-              <button
-                className="removeButton"
-                onClick={() => removeFromCart(item.goodsDetailId)}
-              >
-                제거
-              </button>
             </GoodsCard>
           ))}
-
           <br />
 
           <MiddleOrderBox>

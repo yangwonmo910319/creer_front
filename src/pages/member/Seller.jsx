@@ -3,6 +3,7 @@ import { GoodsAxiosApi } from "../../api/goods/GoodsAxiosApi";
 import { useEffect, useState } from "react";
 import { PurchaseListModal } from "../../utils/goods/PurchaseListModal";
 import { useNavigate } from "react-router-dom";
+import { StatusButton } from "../../css/common/StatusButton";
 const SalseListCss = styled.div`
   width: 100%;
   height: auto;
@@ -159,7 +160,8 @@ width: 50px;
     
 `;
 export const Seller = () => {
-
+  const [status, setStatus] = useState('');
+  const [statusOn, setStatusOn] = useState(false);
   const [list, setList] = useState('');
   const [Open, setOpen] = useState(0);
 
@@ -183,6 +185,7 @@ export const Seller = () => {
   const navi = (e) => {
     navigate(`/GoodsEdit/${e}`)
   }
+
   return (
     <SalseListCss>
       <h3> 판매 상품 리스트</h3>
@@ -206,8 +209,8 @@ export const Seller = () => {
 
             <Goods key={item.goodsDetailId} >
               <Goods1 >
-                <div className="no">{item.goodsDetailId} 
-                 <button onClick={() => { navi(item.goodsDetailId) }}> 수정</button> </div>
+                <div className="no">{item.goodsDetailId}
+                  <button onClick={() => { navi(item.goodsDetailId) }}> 수정</button> </div>
                 <div onClick={() => openClick(item.goodsDetailId)}  >
                   <div className="img">
                     <img src={item.goodsPic} alt="" />
@@ -229,17 +232,31 @@ export const Seller = () => {
                     <div className="option">옵션   </div>
                     <div className="quantity">구매량  </div>
                     <div className="price">구매 금액 </div>
-                    <div className="status">결재 상황 </div>  </Buyer1>
+                    <div className="status" >판매 상황 </div>
+                  </Buyer1>
+
+
                   <Buyer2>   {item.purchase.map((purchaseItem) => (
-                    <div key={purchaseItem.id} className="buyer2">
-                      <div className="id"> {purchaseItem.id}</div>
-                      <div className="nickName">   {purchaseItem.buyer.nickName}</div>
-                      <div className="address">   {purchaseItem.buyer.address}</div>
-                      <div className="option">   {purchaseItem.buyer.option}</div>
-                      <div className="quantity">  {purchaseItem.quantity}</div>
-                      <div className="price">  {item.goodsPrice * purchaseItem.quantity}</div>
-                      <div className="status">  {purchaseItem.status}</div>
-                    </div>
+                    <>
+                      <div key={purchaseItem.id} className="buyer2">
+
+                        <div className="id"> {purchaseItem.id}</div>
+                        <div className="nickName">   {purchaseItem.buyer.nickName}</div>
+                        <div className="address">   {purchaseItem.buyer.address}</div>
+                        <div className="option">   {purchaseItem.buyer.option}</div>
+                        <div className="quantity">  {purchaseItem.quantity}</div>
+                        <div className="price">  {item.goodsPrice * purchaseItem.quantity}</div>
+                        <div className="status" onClick={() => { setStatusOn(purchaseItem.id) }}>  {purchaseItem.status}</div>
+                      </div>
+                      <div>
+                        <StatusButton
+                          id={purchaseItem.id} //기본키
+                          status={purchaseItem.status}//값                   
+                          setStatus={setStatus}
+                          statusOn={statusOn} //모달 켜기
+                          setStatusOn={setStatusOn}//모달끄기
+                        /></div>
+                    </>
                   ))}</Buyer2>
                 </Buyer>
               )}

@@ -397,49 +397,50 @@ export const ReviewComp = ({ goodsNum, openReviewModal, reply }) => {
       <ul >
         {reply &&
           reply.slice(0, visibleReviews).map((item, index) => (
-            <ReviewBox >   <li key={index}>
-              <div className="box1">
-                <ImgBox><img src={item.reviewImg} alt=""></img></ImgBox>
-              </div>
-              <div className="box2" onClick={() => {
-                setGoodsReviewId(item.goodsReviewId);
-                setReviewContent(item.reviewContent);
-                setReviewStar(item.reviewStar);
-                setReviewUrl(item.reviewImg)
-                setWriter(item.memberDto.nickName);
-                openReviewEidtModal()
-              }}>
-                <TextBox >
-                  <div className="box3" >
-                    <ImgBox1> <img src={item.memberDto.image} alt="" /></ImgBox1>
-                    <Nickname > {item.memberDto.nickName}</Nickname>
-                  </div>
-                  <ReviewDate> {item.reviewDate}</ReviewDate>
-                  <StarBox>
-                    {Array.from({ length: 5 }).map((_, i) => (
-                      <span key={i}>
-                        {i + 1 <= item.reviewStar ? (
-                          <FaStar color="#fff453" />
-                        ) : i + 0.5 === item.reviewStar ? (
-                          <FaStarHalf color="#fff453" />
-                        ) : (
-                          <FaStar color="gray" />
-                        )}
-                      </span>
+            <ReviewBox key={item.goodsReviewId}>
+              <li >
+                <div className="box1">
+                  <ImgBox><img src={item.reviewImg} alt=""></img></ImgBox>
+                </div>
+                <div className="box2" onClick={() => {
+                  setGoodsReviewId(item.goodsReviewId);
+                  setReviewContent(item.reviewContent);
+                  setReviewStar(item.reviewStar);
+                  setReviewUrl(item.reviewImg)
+                  setWriter(item.memberDto.nickName);
+                  openReviewEidtModal()
+                }}>
+                  <TextBox >
+                    <div className="box3" >
+                      <ImgBox1> <img src={item.memberDto.image} alt="" /></ImgBox1>
+                      <Nickname > {item.memberDto.nickName}</Nickname>
+                    </div>
+                    <ReviewDate> {item.reviewDate}</ReviewDate>
+                    <StarBox>
+                      {Array.from({ length: 5 }).map((_, i) => (
+                        <span key={i}>
+                          {i + 1 <= item.reviewStar ? (
+                            <FaStar color="#fff453" />
+                          ) : i + 0.5 === item.reviewStar ? (
+                            <FaStarHalf color="#fff453" />
+                          ) : (
+                            <FaStar color="gray" />
+                          )}
+                        </span>
 
-                    ))}
-                  </StarBox>
-                  <ReviewContent > <p>{item.reviewContent}</p></ ReviewContent >
+                      ))}
+                    </StarBox>
+                    <ReviewContent > <p>{item.reviewContent}</p></ ReviewContent >
 
 
 
-                </TextBox>
-              </div>
-              {nickName === item.memberDto.nickName &&
-                <AnotherButton width={"30px"} height={"30px"} value={"X"} onClick={() => { deleteReview(item.goodsReviewId) }}></AnotherButton>
-              }
+                  </TextBox>
+                </div>
+                {nickName === item.memberDto.nickName &&
+                  <AnotherButton width={"30px"} height={"30px"} value={"X"} onClick={() => { deleteReview(item.goodsReviewId) }}></AnotherButton>
+                }
 
-            </li>
+              </li>
 
             </ReviewBox>
           ))}

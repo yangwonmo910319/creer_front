@@ -30,7 +30,18 @@ export const CartAxiosApi = {
   },
 
   // 장바구니 제거
-  removeFromCart: async (accessToken, goodsId) => {
-    return await axios.delete(`${KH_DOMAIN}/Cart/${accessToken}/${goodsId}`);
+  removeFromCart: async (accessToken, num) => {
+    return await axios.delete(`${KH_DOMAIN}/Cart/delete/${num}`, {
+      headers: {
+        // 설정 객체
+        "Content-Type": "application/json",
+        Authorization: "Bearer " + accessToken,
+      },
+    });
   },
+
+
+
+
+
 };
