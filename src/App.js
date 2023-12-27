@@ -28,6 +28,9 @@ function App() {
             <Route path="/Cart" element={<Cart />}></Route>
             <Route path="/Seller" element={<Seller />}></Route>
             <Route path="/MyPage" element={<MyPage />}></Route>
+            <Route path="/ChatList" element={<ChatList />} />
+            <Route path="/ChatRoomCreate" element={<ChatRoomCreate />} />
+            <Route path="/Chatting/:roomId" element={<Chatting />} />
           </Route>
         </Routes>
       </BrowserRouter>
