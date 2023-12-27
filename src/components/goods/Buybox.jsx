@@ -6,21 +6,11 @@ import { CartAxiosApi } from "../../api/goods/CartAxiosApi";
 import { useParams } from "react-router-dom";
 import { CheckModal } from "../../utils/goods/CheckModal";
 import { AnotherButton } from "../../css/common/AnotherButton";
+import { ChatAxiosApi } from "../../api/chat/ChatAxiosApi";
 const BuyboxCss = styled.div`
   margin-top: 50px;
   justify-content: space-around;
   display: flex;
-`;
-const Btn1 = styled.div`
-  width: 100px;
-  height: 45px;
-  border-radius: 10px;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  color: #616161;
-  background: #c0f4eb;
-  border: 1px solid #1f968e;
 `;
 
 export const Buybox = ({ list, optionList, quantity1 }) => {
@@ -45,7 +35,7 @@ export const Buybox = ({ list, optionList, quantity1 }) => {
     // goodsId가 변경될 때마다 content 객체를 업데이트합니다.
     setContent({
       goodsDetailId: list.goodsDetailId, //상품 PK
-      option: option,    //선택 옵션
+      option: option, //선택 옵션
       quantity: quantity1, //수량
       status: status, //판매 상태
     });
@@ -103,7 +93,19 @@ export const Buybox = ({ list, optionList, quantity1 }) => {
       const rsp = await PurchaseAxiosApi.insertPurchase(content);
       console.log("구매한 상품 상세정보 : " + rsp.data);
     } catch (error) {
-      console.log("상품 구매 오류 발생 : " + error);
+      console.error("상품 구매 오류 발생 : " + error);
+    }
+  };
+
+  // 채팅
+  const CreateChatRoom = async () => {
+    const accessToken = localStorage.getItem("accessToken");
+    try {
+      const response = await ChatAxiosApi.chatRoomCreate(accessToken, goodsId);
+      navigate(`/chatting/${response.data}`);
+      console.log("Buybox CreateChat response.data" + response.data);
+    } catch (error) {
+      console.error("BuyBox CreateChat Room 오류 발생 : " + error);
     }
   };
 
@@ -126,7 +128,7 @@ export const Buybox = ({ list, optionList, quantity1 }) => {
             data={quantity}
           ></AnotherButton>
         )}
-        {/* <Btn1 onClick={cartAdd}>장바구니</Btn1> */}
+
         <AnotherButton
           width={"120px"}
           height={"50px"}
@@ -134,11 +136,13 @@ export const Buybox = ({ list, optionList, quantity1 }) => {
           data={quantity}
           onClick={cartAdd}
         ></AnotherButton>
+
         <AnotherButton
           width={"120px"}
           height={"50px"}
           value={"채팅"}
           data={quantity}
+          onClick={CreateChatRoom}
         ></AnotherButton>
       </BuyboxCss>
 

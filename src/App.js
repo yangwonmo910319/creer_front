@@ -11,7 +11,6 @@ import { GoodsDetail } from "./pages/goods/GoodsDetail";
 import { GoodsWrite } from "./pages/goods/GoodsWrite";
 import { GoodsEdit } from "./pages/goods/GoodsEdit";
 import { ChatList } from "./pages/chat/ChatList";
-import { ChatRoomCreate } from "./pages/chat/ChatRoomCreate";
 import { Chatting } from "./pages/chat/Chatting";
 
 function App() {
@@ -31,7 +30,6 @@ function App() {
             <Route path="/Seller" element={<Seller />}></Route>
             <Route path="/MyPage" element={<MyPage />}></Route>
             <Route path="/ChatList" element={<ChatList />} />
-            <Route path="/ChatRoomCreate" element={<ChatRoomCreate />} />
             <Route path="/Chatting/:roomId" element={<Chatting />} />
           </Route>
         </Routes>

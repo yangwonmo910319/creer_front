@@ -10,6 +10,7 @@ export const Top = styled.div`
   display: grid;
   grid-template-columns: 30% 40% 30%;
   grid-template-rows: 40% 30% 30%;
+  z-index: 10;
   grid-template-areas:
     "topL topC topR"
     "topL topC midR"

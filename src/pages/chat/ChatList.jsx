@@ -11,6 +11,7 @@ const ChatListContainer = styled.div`
   background-color: #f3f3f3;
   border-radius: 10px;
   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  z-index: 5;
 `;
 
 const ChatUl = styled.ul`
@@ -36,6 +37,7 @@ const Header = styled.h1`
   color: #333;
   text-align: center;
   margin-bottom: 20px;
+  z-index: 5;
 `;
 
 const ChatName = styled.p`
