@@ -24,7 +24,7 @@ const BtnCss = styled.button`
   border-radius: 50%;
   background:  inset 0 0 20px 10px #0e0d0d; /* 수정된 box-shadow 값 */
   border: 1px solid rgb(134, 134, 134);
-  box-shadow: ${({ shadow }) => shadow ? 'inset 0 0 15px 1px #909090d3' : 'none'};
+  box-shadow: ${({ shadow }) => shadow ? 'inset 0 0 12px 1px #424242d9' : 'none'};
    /* 수정된 box-shadow 값 */
   transition: box-shadow 0.2s ease, transform 0.2s ease; /* 트랜지션 수정 */
   font-family: "Source Sans Pro", sans-serif;

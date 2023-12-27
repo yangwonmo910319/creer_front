@@ -2,14 +2,13 @@ import { useEffect, useState } from "react";
 import styled from "styled-components";
 import { GoodsAxiosApi } from "../../api/goods/GoodsAxiosApi";
 import { useNavigate } from "react-router-dom";
-import { CheckModal } from "../../utils/goods/CheckModal";
 import { OptionBox } from "./OptionBox";
 
 const GoodsOptionCss = styled.div`
   width: 35%;
   height: auto;
   @media (max-width: 768px) {
-    width: 500px;
+    width: 50%;
     margin: 0 auto;
     grid-area: option;
   }
@@ -61,13 +60,14 @@ const OptionNick = styled.div`
   top: -25px;
 `;
 const OptionCategory = styled.div`
-  width: 50px;
-  height: 20px;
+  width: 70px;
+  height: 25px;
   border-radius: 15px;
   display: flex;
   color: white;
   background: #adadad;
   justify-content: center;
+  border: 1px solid  #727272;
 `;
 
 const OptionTitleEdit = styled.div`
@@ -205,52 +205,6 @@ export const GoodsOption = ({ goodsDedail, updateGoodsDetail }) => {
     setGoodsCategory1(list.goodsCategory);
   }, [list]);
 
-  //삭제 버튼을 누르면 실행
-  const deleteGoodsDetail = () => {
-    //게시글 삭제 기능을 만듬
-    const deleteGoods = async () => {
-      try {
-        const Delete = await GoodsAxiosApi.deleteGoods(list.goodsDetailId);
-      } catch (error) {
-        console.log(error);
-      }
-    };
-    //게시글 삭제 기능을 실행
-    deleteGoods();
-    //reset값을 변경하여 댓글 업데이트 화면을 보여줌
-    // setReset(!reset);
-    navigate("/");
-  };
-  const GoodsTitleChange = (e) => {
-    setGoodsTitle1(e.target.value);
-    setGoodsTitle(e.target.value);
-  };
-  const GoodsDeliveryFeeChange = (e) => {
-    setGoodsDeliveryFee1(e.target.value);
-    setGoodsDeliveryFee(e.target.value);
-  };
-  const GoodsRefundChange = (e) => {
-    setGoodsStock1(e.target.value);
-    setGoodsStock(e.target.value);
-  };
-  const GoodsPriceChange = (e) => {
-    setGoodsPrice1(e.target.value);
-    setGoodsPrice(e.target.value);
-  };
-  const GoodsCategoryChange = (e) => {
-    setGoodsCategory1(e.target.value);
-    setGoodsCategory(e.target.value);
-  };
-
-  const revertChanges = () => {
-    setGoodsTitle1(list.goodsTitle);
-    setGoodsPrice1(list.goodsPrice);
-    setGoodsStock1(list.goodsStock);
-    setGoodsCategory1(list.goodsCategory);
-    setGoodsDeliveryFee1(list.goodsDeliveryFee);
-    setRender(!render);
-  };
-
   return (
     <GoodsOptionCss>
       <OptionCategory>{goodsCategory}</OptionCategory>
@@ -274,7 +228,6 @@ export const GoodsOption = ({ goodsDedail, updateGoodsDetail }) => {
       <Option>
         <div className="option1">
           <OptionBox list={list.options} list2={list} ></OptionBox>
-
         </div>
       </Option>
 

@@ -54,7 +54,7 @@ export const Cart = () => {
       // console.log("장바구니 목록 : " + JSON.stringify(response));
 
       if (response.status === 200) {
-        setCartItems(response.data);
+
         console.log("cartItems : " + JSON.stringify(response));
       } else {
         console.error("장바구니 가져오기 실패");
@@ -124,7 +124,7 @@ export const Cart = () => {
           </StyledTitle>
 
           {cartItems.map((item) => (
-            <GoodsCard key={item.goodsDetailId}>
+            <GoodsCard key={item.cartId}>
               <div className="goodsInfo">
                 {/* 정보 추가 */}
                 <input

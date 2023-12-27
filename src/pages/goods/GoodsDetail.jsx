@@ -126,7 +126,6 @@ export const GoodsDetail = () => {
 
   return (
     <GoodsDetailCss>
-      {/* 작성자와 로그인 회원이 다를 경우 */}
       <GoodsInfo
         list={goodsInfoList}
         reply={list.reviews}

@@ -34,7 +34,7 @@ export const Buybox = ({ list, optionList, quantity1 }) => {
   //판매자
   const [seller, setSeller] = useState();
   //옵션
-  const [option, setOption] = useState("");
+  const [option, setOption] = useState("기본");
   //상태
   const [status, setStatus] = useState("결제 전");
   //수량
@@ -44,10 +44,10 @@ export const Buybox = ({ list, optionList, quantity1 }) => {
   useEffect(() => {
     // goodsId가 변경될 때마다 content 객체를 업데이트합니다.
     setContent({
-      goodsDetailId: list.goodsDetailId,
-      option: option,
-      quantity: quantity1,
-      status: status,
+      goodsDetailId: list.goodsDetailId, //상품 PK
+      option: option,    //선택 옵션
+      quantity: quantity1, //수량
+      status: status, //판매 상태
     });
   }, [seller, goodsId, option, quantity, status, content.seller, quantity1]);
 

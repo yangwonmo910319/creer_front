@@ -3,10 +3,9 @@ import { ReviewComp } from "./ReviewComp";
 import { ReviewModal } from "../../utils/goods/ReviewModal";
 import { useEffect, useState } from "react";
 import { ReviewAxiosApi } from "../../api/goods/ReviewAxiosApi";
-import { storage } from "../../api/FireBase";
-import { GoodsAxiosApi } from "../../api/goods/GoodsAxiosApi";
+import { useNavigate } from "react-router-dom";
 import { SelectImg } from "./SelectImg";
-import { PictureAxiosApi } from "../../api/goods/PictureAxiosApi";
+
 import * as DOMPurify from 'dompurify';
 const GoodsInfoCss = styled.div`
     width: 65%;
@@ -15,6 +14,7 @@ const GoodsInfoCss = styled.div`
         width: 500px;
         margin: 0 auto;
         grid-area: info; 
+        margin-top: 50px;
     }
    
 `;
@@ -115,34 +115,9 @@ img{
 }
 
 `;
-const UploadContainer = styled.div`
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  margin-top: 20px;
-`;
 
-const UploadInput = styled.input`
-  display: none;
-`;
-
-
-
-const UploadLabel = styled.label`
-  display: inline-block;
-  padding: 8px 12px;
-  color: white;
-  background-color: #adaaff;
-  border-radius: 4px;
-  cursor: pointer;
-  margin-bottom: 10px;
-  
-  &:hover {
-    background-color: #00648b;
-  }
-`;
 export const GoodsInfo = ({ list, reply, member }) => {
-
+    const navigate = useNavigate();
     const [goodsDetailId, goodsDesc, goodsPic, setGoodsDesc, setGoodsPic] = list;
     //Modal Switch
     const [isReviewModalOpen, setIsReviewModalOpen] = useState(false);
@@ -182,6 +157,7 @@ export const GoodsInfo = ({ list, reply, member }) => {
             if (response.status === 200) {
                 // 성공적으로 데이터가 전송되었으면, 리뷰 목록에 새 리뷰 추가    
                 closeReviewModal();
+                navigate(0)
             } else {
                 // 서버에서 응답이 오지 않거나, 응답의 상태 코드가 200이 아닌 경우 에러 처리
                 console.error("서버 응답 실패");
