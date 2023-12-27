@@ -13,6 +13,10 @@ const SearchBox = styled.div`
   justify-content: center;
   align-items: center;
   height: 40px;
+
+  :hover {
+    transform: scale(1.05);
+  }
 `;
 
 const SearchMode = styled.div`
@@ -39,8 +43,13 @@ const Input = styled.input`
   outline: none;
   font-size: 16px;
   font-weight: bold;
-  padding: 0 10px; // 아이콘과 겹치지 않는 적절한 패딩을 설정
+  padding: 0 1vw; // 아이콘과 겹치지 않는 적절한 패딩을 설정
   background: rgba(0, 0, 0, 0);
+  position: relative;
+
+  &::placeholder {
+    color: rgb(175, 175, 175);
+  }
 
   @media (max-width: 600px) {
     font-size: 12px;
@@ -48,7 +57,7 @@ const Input = styled.input`
 `;
 
 const SearchIcon = styled.div`
-  margin-left: 3%;
+  margin-left: -0.5vw;
   cursor: pointer;
   svg {
     color: #757575;
@@ -81,7 +90,7 @@ export const StyledSearch = () => {
         <SearchMode>
           <Input
             type="text"
-            placeholder="  Search"
+            placeholder="Search"
             value={search}
             onChange={(e) => setSearch(e.target.value)}
             onKeyDown={handleKeyPress}

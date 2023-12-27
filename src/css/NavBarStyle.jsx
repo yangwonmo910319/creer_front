@@ -54,6 +54,7 @@ export const StyledLogo = styled(Logo)`
 `;
 
 export const MidR = styled.div`
+  max-width: 35vw;
   display: flex;
   justify-content: end;
   font-size: 1rem;
@@ -61,8 +62,17 @@ export const MidR = styled.div`
   width: 100%;
   height: 100%;
   list-style: none;
+
   li {
     margin: 0 10px;
+    white-space: nowrap; // 텍스트 한줄로 표시
+    overflow: hidden;
+    text-overflow: ellipsis; // 텍스트가 넘칠 때 ... 로 표시
+    cursor: pointer;
+  }
+
+  :hover {
+    font-weight: bold;
   }
 `;
 

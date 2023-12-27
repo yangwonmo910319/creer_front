@@ -74,76 +74,11 @@ export const NavBar = () => {
           ></StyledLogo>
         </TopC>
         {/* 로그인 여부 */}
+
         <TopR>
-          <ul>
-            {login === "false" ? ( // 로그인 X
-              <>
-                {/* 로그인 */}
-                <br />
-                <br />
-                <br />
-                <MidR>
-                  <li
-                    onClick={() => {
-                      navigate("/Login");
-                    }}
-                  >
-                    로그인
-                  </li>
-                  {/* 회원가입 */}
-                  <li
-                    onClick={() => {
-                      navigate("/SignUp");
-                    }}
-                  >
-                    회원가입
-                  </li>
-                </MidR>
-              </>
-            ) : (
-              // 로그인 O
-              <>
-                <br />
-                <TopR>
-                  안녕하세요, <span>&nbsp;{member.nickName}</span>&nbsp;&nbsp;
-                </TopR>
-                <MidR>
-                  {/* 마이 페이지 */}
-                  <li
-                    onClick={() => {
-                      navigate("/MyPage");
-                    }}
-                  >
-                    내 정보 수정
-                  </li>
-                  {/* 상품 등록 */}
-                  <li
-                    onClick={() => {
-                      navigate("/GoodsWrite");
-                    }}
-                  >
-                    상품 등록
-                  </li>
-                  {/* 장바구니 */}
-                  <li
-                    onClick={() => {
-                      navigate("/Cart");
-                    }}
-                  >
-                    장바구니
-                  </li>
-                  {/* 로그아웃 */}
-                  <li
-                    onClick={() => {
-                      logout();
-                    }}
-                  >
-                    로그아웃
-                  </li>
-                </MidR>
-              </>
-            )}
-          </ul>
+
+
+
         </TopR>
         <BottomC>
           <StyledSearch />

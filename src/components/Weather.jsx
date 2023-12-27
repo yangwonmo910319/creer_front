@@ -16,6 +16,7 @@ const WeatherBox = styled.div`
 // Radio
 const Input = styled.input`
   display: none;
+
   &:checked + label {
     font-weight: bold;
   }
@@ -24,6 +25,7 @@ const Input = styled.input`
 const RadioLabel = styled.label`
   width: 100%;
   margin-right: 1rem;
+  cursor: pointer;
 `;
 
 const CityRadioButtons = styled.div`
