@@ -1,5 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { EmailAxiosApi } from "../../api/member/EmailAxiosApi";
+import { AnotherButton } from "../../css/common/AnotherButton";
+import { MiddleOrderBox } from "../../css/common/MiddleOrderBox";
 
 export const EmailVerification = ({
   email,
@@ -65,6 +67,10 @@ export const EmailVerification = ({
               fontSize: "15px",
               backgroundColor: "rgb(241,241,241)",
               color: "black",
+              border: "none",
+              borderRadius: "10px",
+              margin: "5px",
+              boxShadow: "0px 4px 4px rgba(0, 0, 0, 0.25)",
             }}
             disabled={isVerified}
             type="button"
@@ -74,19 +80,12 @@ export const EmailVerification = ({
           </button>
         </div>
       ) : (
-        <div style={{ textAlign: "center" }}>
-          <button
-            type="button"
+        <MiddleOrderBox>
+          <AnotherButton
             onClick={() => sendVerificationEmail()}
-            style={{
-              fontSize: "15px",
-              backgroundColor: "rgb(241,241,241)",
-              color: "black",
-            }}
-          >
-            Send
-          </button>
-        </div>
+            value="인증번호 전송"
+          ></AnotherButton>
+        </MiddleOrderBox>
       )}
       {verificationMessage && <p>{verificationMessage}</p>}
     </div>

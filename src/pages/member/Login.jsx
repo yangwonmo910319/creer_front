@@ -193,6 +193,49 @@ export const Login = () => {
           </SocialLinks>
         </SocialLink>
       </SocialLinks>
+
+      <Items className="item2">
+        <Input
+          placeholder="이메일"
+          value={inputUserEmail}
+          onChange={onChangeEmail}
+        />
+      </Items>
+      <Items className="hint">
+        {inputUserEmail.length > 0 && (
+          <span className={`${isId ? "success" : "error"}`}>{idMessage}</span>
+        )}
+      </Items>
+
+      <Items className="item2">
+        <Input placeholder="패스워드" value={inputPw} onChange={onChangePw} />
+      </Items>
+      <Items className="hint">
+        {inputPw.length > 0 && (
+          <span className={`${isPassWord ? "success" : "error"}`}>
+            {pwMessage}
+          </span>
+        )}
+      </Items>
+
+      <Items className="item2">
+        {isId && isPassWord ? (
+          <Button enabled onClick={onClickLogin}>
+            로그인
+          </Button>
+        ) : (
+          <Button disabled>로그인</Button>
+        )}
+      </Items>
+
+      <Modal open={modalOpen} close={closeModal} header="오류">
+        {modalContent}
+      </Modal>
+      <Items className="signup">
+        <Link to="/SignUpBefore" className="link_style">
+          <span>회원가입</span>
+        </Link>
+      </Items>
     </Container>
   );
 };

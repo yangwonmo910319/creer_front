@@ -6,6 +6,7 @@ import { MemberAxiosApi } from "../../api/member/MemberAxiosApi";
 import { PopUpAddress } from "../../components/member/PopUpAddress";
 import styled from "styled-components";
 import { EmailVerification } from "../../components/member/EmailVerification";
+import { StyledTitle } from "../../css/common/StyledTitle";
 
 const AddressInputCss = styled.div`
   width: 100%;
@@ -189,9 +190,7 @@ export const SignUp = () => {
 
   return (
     <Container>
-      <Items className="sign">
-        <span>Sign Up</span>
-      </Items>
+      <StyledTitle>회원가입</StyledTitle>
 
       <Items className="item2">
         <Input
@@ -337,10 +336,10 @@ export const SignUp = () => {
         isPhoneNum &&
         isVerified ? (
           <Button enabled onClick={onClickLogin}>
-            NEXT
+            회원가입
           </Button>
         ) : (
-          <Button disabled>NEXT</Button>
+          <Button disabled>회원가입</Button>
         )}
         <Modal open={modalOpen} close={closeModal} header="오류">
           {modalText}

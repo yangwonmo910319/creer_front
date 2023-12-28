@@ -13,11 +13,14 @@ import { GoodsEdit } from "./pages/goods/GoodsEdit";
 import { ChatList } from "./pages/chat/ChatList";
 import { Chatting } from "./pages/chat/Chatting";
 import { Payment } from "./pages/member/Payment";
+import { SignUpBefore } from "./pages/member/SignUpBefore";
+
 function App() {
   return (
     <>
       <BrowserRouter>
         <Routes>
+          <Route path="/SignUpBefore" element={<SignUpBefore />} />
           <Route path="/Signup" element={<SignUp />}></Route>
           <Route path="/Login" element={<Login />}></Route>
           <Route element={<Main />}>

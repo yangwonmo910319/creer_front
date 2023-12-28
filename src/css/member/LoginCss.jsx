@@ -20,12 +20,12 @@ export const Button = styled.button`
   background-color: #999;
   font-size: 15px;
   border-radius: 18px;
-  border: orange;
+  border: rgb(218, 70, 82);
   font-weight: 700;
   ${(props) =>
     props.enabled &&
     css`
-      background-color: #E84855;
+      background-color: rgb(218, 70, 82);
     `};
 
   &:active {
@@ -103,14 +103,14 @@ export const Items = styled.div`
 
   &.signup {
     justify-content: right;
-    color: orange;
+    color: rgb(218, 70, 82);
     font-weight: 700;
     margin-top: 10px;
     margin-right: 40px;
 
     font-size: 14px;
     .link_style {
-      color: #E84855;
+      color: rgb(218, 70, 82);
       text-decoration-line: none;
     }
   }
