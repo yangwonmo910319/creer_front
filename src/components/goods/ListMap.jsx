@@ -149,7 +149,7 @@ export const ListMap = ({ list }) => {
                   list.map((item, index) =>
                      item.goodsStatus === "sale" ? (
                         <li key={index}>
-                           <Link className="" to={`/goods/${item.goodsDetailId}`}>
+                           <Link className="" to={`/Goods/${item.goodsDetailId}`}>
                               <Class1>
                                  {/* 카테고리 */}
                                  <ClassCategory>{item.goodsCategory}</ClassCategory>

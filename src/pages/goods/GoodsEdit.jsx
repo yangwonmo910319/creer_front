@@ -10,7 +10,8 @@ import { GoodsOptionEdit } from "../../components/goods/GoodsOptionEdit";
 const GoodsDetailCss = styled.div`
   display: flex;
   flex-direction: row;
-  width: 100%;
+  width: 80%;
+  margin: 0 auto;
   height: auto;
   margin-top: 100px;
 

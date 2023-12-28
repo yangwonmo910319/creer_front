@@ -10,7 +10,8 @@ import { GoodsOptionEdit } from "../../components/goods/GoodsOptionEdit";
 const GoodsDetailCss = styled.div`
   display: flex;
   flex-direction: row;
-  width: 100%;
+  margin: 0 auto;
+  width: 90%;
   height: auto;
   margin-top: 100px;
 
@@ -45,7 +46,14 @@ export const GoodsDetail = () => {
       try {
         const rsp = await GoodsAxiosApi.getGoods(goodsId);
         // 상품 정보를 가져옵니다.
-        console.log("상품 상세정보");
+        console.log("상품 상세정보 : " + goodsId);
+        console.log("상품 상세정보 : " + goodsId);
+        console.log("상품 상세정보 : " + goodsId);
+        console.log("상품 상세정보 : " + goodsId);
+        console.log("상품 상세정보 : " + goodsId);
+        console.log("상품 상세정보 : " + goodsId);
+        console.log("상품 상세정보 : " + goodsId);
+        console.log("상품 상세정보 : " + goodsId);
         console.log(rsp.data);
         //가져온 데이터를 저장
         setList(rsp.data);

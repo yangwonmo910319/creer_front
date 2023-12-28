@@ -47,8 +47,8 @@ const Optionimage = styled.div`
   img {
     border-radius: 50px;
     border: 2px solid #a8a8a8;
-    width: 100px;
-    height: 100px;
+    width: 80px;
+    height: 80px;
     margin-bottom: 40px;
   }
 `;

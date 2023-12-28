@@ -4,7 +4,6 @@ import styled from "styled-components";
 const OptionWriteBoxCss = styled.div`
   width: 100%;
   height: auto;
-
   .numInput {
     width: 98%;
   }

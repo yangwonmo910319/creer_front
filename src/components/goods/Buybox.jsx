@@ -51,7 +51,7 @@ export const Buybox = ({ list, optionList, quantity1 }) => {
       if (res && res.status === 200) {
         console.log("장바구니에 물품을 담았습니다.");
         console.log(res.data);
-        setPage(res.data)
+        return res.data;
       } else {
         console.error("장바구니에 물품을 담는데 실패했습니다.", res);
         alert("장바구니에 물품을 담는데 실패했습니다.");
@@ -89,12 +89,12 @@ export const Buybox = ({ list, optionList, quantity1 }) => {
     }
   }, [optionList]);
 
-  // 구매 클릭 
-  useEffect(() => {
-    navigate(`/Goods/Payment/${page}`);
-  }, [page])
-  const purchaseClick = () => {
-    cartAdd();
+
+  const purchaseClick = async () => {
+    const res = await cartAdd();
+    if (res) {
+      navigate(`/Goods/Payment/${res}`);
+    }
   };
 
   // 장바구니 클릭
@@ -106,6 +106,7 @@ export const Buybox = ({ list, optionList, quantity1 }) => {
     }
     setIsModalOpen(true);
   };
+
   // 채팅
   const CreateChatRoom = async () => {
     const accessToken = localStorage.getItem("accessToken");

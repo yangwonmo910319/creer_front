@@ -171,17 +171,18 @@ export const Seller = () => {
   };
 
   useEffect(() => {
-    const memberRegCheck = async () => {
-      try {
-        const resp = await GoodsAxiosApi.getMyGoods();
-        console.log("내가 작성한 글 : ", resp.data);
-        setList(resp.data);
-      } catch (error) {
-        console.log(error);
-      }
-    };
     memberRegCheck();
-  }, [status, statusOn]);
+  }, []);
+
+  const memberRegCheck = async () => {
+    try {
+      const resp = await GoodsAxiosApi.getMyGoods();
+      console.log("내가 작성한 글 : ", resp.data);
+      setList(resp.data);
+    } catch (error) {
+      console.log(error);
+    }
+  };
 
   const navi = (e) => {
     navigate(`/GoodsEdit/${e}`)
@@ -258,6 +259,7 @@ export const Seller = () => {
                           setStatus={setStatus}
                           statusOn={statusOn} //모달 켜기
                           setStatusOn={setStatusOn}//모달끄기
+                          memberRegCheck={memberRegCheck}
                         /></div>
                     </>
                   ))}</Buyer2>

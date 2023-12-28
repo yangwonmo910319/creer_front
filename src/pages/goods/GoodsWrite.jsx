@@ -11,29 +11,34 @@ import { OptionAxiosApi } from "../../api/goods/OptionAxiosApi";
 
 
 const GoodsWriteCss = styled.div`
-  display: flex;
+  display: grid;
   flex-direction: row;
   width: 100%;
   height: auto;
   margin-top: 100px;
-
+  grid-template-columns: 65% 35% ;
+     grid-template-rows: auto 100%; 
+        grid-template-areas:  
+        'L1 R1 '
+        'L1 R2';  
   @media (max-width: 768px) {
     display: grid;
     grid-template-columns: 100%;
-    grid-template-rows: auto;
-    grid-template-areas:
-      "option"
-      "info";
+    grid-template-rows: auto auto auto;
+    grid-template-areas:  
+        'R1 '
+        'L1 '
+        'R2 ';  
   }
 `;
 const GoodsInfoCss = styled.div`
-    width: 65%;
+    width: 100%;
     height: auto;
-
+    grid-area: L1;
+ 
     @media (max-width: 768px) {
         width: 500px;
-        margin: 0 auto;
-        grid-area: info; 
+        margin: 0 auto;  
     }
    
 `;
@@ -164,12 +169,14 @@ const UploadLabel = styled.label`
 `;
 
 const GoodsOptionCss = styled.div`
-    width: 35%;
+    width: 100%;
     height: auto;
+      grid-area: R1;
+  
     @media (max-width: 768px) {
       width: 500px;
       margin: 0 auto;
-        grid-area: option; 
+
     }
 
 
@@ -184,9 +191,7 @@ height: 150px;
 border-bottom: 1px solid rgba(136, 136, 136, 0.673);
     /* justify-content: center; */
    align-items: center;
-margin-top: 20px;
-
-  
+margin-top: 20px;  
 `;
 
 const Seller1 = styled.div`
@@ -227,7 +232,6 @@ const OptionCategory = styled.div`
 width: 100%;
 height: auto;
 border: ${(props) => (props.goodsCategory === null || props.goodsCategory.length === 0 ? '3px solid red' : '3px solid   #03bf81')};
-
 .CategoryRaido{
  display: none;
 }
@@ -241,14 +245,14 @@ font-size: 1.5em;
 line-height: 1.2em;
 padding-bottom: 20px;
  width:100%; 
+ height: auto;
 border: ${(props) => (props.goodsTitle === null || props.goodsTitle.length === 0 ? '3px solid red' : '3px solid   #03bf81')};
 `;
 const Delivery = styled.div`
 width: 100%;
-height: auto;
 position:relative;
 
-
+ height: auto;
 `;
 const OptionPrice = styled.input`
 position: relative;
@@ -277,9 +281,23 @@ height: 20px;
 border: ${(props) => (props.goodsRefund === null || props.goodsRefund.length === 0 ? '3px solid red' : '3px solid  #03bf81')};
 
 `;
+const Option2 = styled.div`
+  width: 100%;
+  height: auto;
+  margin: 0 auto;
+  margin-top: 50px;
+  display: flex;
+  justify-content: center;
+@media (max-width: 768px) {
+        width: 500px;
+      margin: 0 auto;
+      grid-area: R2;
+      padding-bottom: 10px;
+    }
+`
+
 
 const Option = styled.div`
-
 width: 100%;
 height: auto;
 display: flex;
@@ -290,50 +308,9 @@ align-items: center;
     height: auto;
     margin-top: 30px;
 }
-.sell{
-    display: flex;
-    justify-content: space-around;
-    width: 60%;
-    height   :80px ;
-    margin: 0;
-    .sell1-1 ,.sell1-2 {
-        width: 110px;
-        height:80px;
-        margin: 10px;        
-        border-radius: 10px;     
-        background-color: #fbf3d8;
-        display: flex;
-        justify-content: center;
-        align-items: center;
 
-    }
-}
-.sell1-3{
-        border-radius: 10px;
-      width: 60%;
-    height: 20px;
-    background-color: #fbf3d8;
-      display: flex;
-      justify-content: center;
-      align-items: center;      
-      margin-top: 30px;
-}
-.sell1-4{
-        border-radius: 10px;
-      width: 60%;
-    height: 50px;
-    color: white;
-    background-color: #03bf81;    
-      display: flex;
-      justify-content: center;
-      align-items: center;
-   margin-top: 10px;
 
-}
-.sell1-5{
-  margin-top: 10px;
 
-}
 `;
 export const GoodsWrite = () => {
   const navigate = useNavigate();
@@ -523,27 +500,31 @@ export const GoodsWrite = () => {
           <div className="option1">
             <OptionWriteBox setContent2={setContent2}></OptionWriteBox>
           </div>
-          {
-            (goodsCategory !== null &&
-              goodsPic !== null &&
-              goodsDesc !== null &&
-              goodsStock !== null &&
-              goodsTitle !== null &&
-              goodsPrice !== null &&
-              goodsDeliveryFee !== null &&
-              goodsCategory.length !== 0 &&
-              goodsPic.length !== 0 &&
-              goodsDesc.length !== 0 &&
-              goodsStock.length !== 0 &&
-              goodsTitle.length !== 0 &&
-              goodsPrice.length !== 0 &&
-              goodsDeliveryFee.length !== 0) && (
-              <AnotherButton value={"작성 완료"} onClick={submit}></AnotherButton>
-            )
-          }
+
         </Option>
 
       </GoodsOptionCss>
+      <Option2>
+
+        {
+          (goodsCategory !== null &&
+            goodsPic !== null &&
+            goodsDesc !== null &&
+            goodsStock !== null &&
+            goodsTitle !== null &&
+            goodsPrice !== null &&
+            goodsDeliveryFee !== null &&
+            goodsCategory.length !== 0 &&
+            goodsPic.length !== 0 &&
+            goodsDesc.length !== 0 &&
+            goodsStock.length !== 0 &&
+            goodsTitle.length !== 0 &&
+            goodsPrice.length !== 0 &&
+            goodsDeliveryFee.length !== 0) && (
+            <AnotherButton value={"작성 완료"} onClick={submit}></AnotherButton>
+          )
+        }
+      </Option2>
     </GoodsWriteCss>
   )
 }

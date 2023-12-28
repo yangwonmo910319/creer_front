@@ -17,7 +17,7 @@ float: right;
     height: 10px;
   }
 `;
-export const StatusButton = ({ id, status, setStatus, statusOn, setStatusOn }) => {
+export const StatusButton = ({ id, status, setStatus, statusOn, setStatusOn, memberRegCheck }) => {
   const click = (e) => {
     updateStatus(e.target.value); // 변경된 값으로 updateStatus 호출
     setStatusOn(false);
@@ -26,6 +26,7 @@ export const StatusButton = ({ id, status, setStatus, statusOn, setStatusOn }) =
   const updateStatus = async (newContent) => {
     try {
       const update = await PurchaseAxiosApi.update(id, newContent); // content 대신 newContent를 넘겨줌
+      memberRegCheck()
     } catch (error) {
       console.log(error);
     }
