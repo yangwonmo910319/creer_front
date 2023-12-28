@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import styled from "styled-components";
 import { PopUpPost } from "./PopUpPost";
 import { PopUpDom } from "./PopUpDom";
+import { AnotherButton } from "../../css/common/AnotherButton";
 
 // "우편 번호 검색" 버튼 및 팝업창을 관리
 const PopupAddrCss = styled.div`
@@ -34,9 +35,10 @@ export const PopUpAddress = ({ setInputAdd, setInputAdd2 }) => {
 
   return (
     <PopupAddrCss>
-      <button type="button" onClick={openPostCode}>
-        우편번호 검색
-      </button>
+      <AnotherButton
+        onClick={openPostCode}
+        value="우편번호 검색"
+      ></AnotherButton>
 
       <div id="popupDom">
         {isPopupOpen && (

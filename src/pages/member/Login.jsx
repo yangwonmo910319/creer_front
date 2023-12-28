@@ -180,10 +180,10 @@ export const Login = () => {
       <Items className="item2">
         {isId && isPassWord ? (
           <Button enabled onClick={onClickLogin}>
-            SIGN IN
+            로그인
           </Button>
         ) : (
-          <Button disabled>SIGN IN</Button>
+          <Button disabled>로그인</Button>
         )}
       </Items>
 
@@ -191,8 +191,8 @@ export const Login = () => {
         {modalContent}
       </Modal>
       <Items className="signup">
-        <Link to="/Signup" className="link_style">
-          <span>Sign Up</span>
+        <Link to="/SignUpBefore" className="link_style">
+          <span>회원가입</span>
         </Link>
       </Items>
     </Container>

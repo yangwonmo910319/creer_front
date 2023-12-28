@@ -1,6 +1,7 @@
 import React from "react";
 import styled from "styled-components";
 import DaumPostcode from "react-daum-postcode";
+import { AnotherButton } from "../../css/common/AnotherButton";
 
 // 주소 검색을 담당
 const PopUpPostCss = styled.div`
@@ -47,15 +48,12 @@ export const PopUpPost = (props) => {
     <PopUpPostCss>
       <DaumPostcode style={postCodeStyle} onComplete={handlePostCode} />
 
-      <button
-        type="button"
+      <AnotherButton
         onClick={() => {
           props.onClose();
         }}
-        className="postCode_btn"
-      >
-        닫기
-      </button>
+        value="닫기"
+      ></AnotherButton>
     </PopUpPostCss>
   );
 };

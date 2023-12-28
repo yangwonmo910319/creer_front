@@ -88,7 +88,7 @@ const Button = styled.button`
 `;
 
 export const AnotherButton = (props) => {
-  const { onClick, width, height, margin, value, data, padding } = props;
+  const { onClick, width, height, margin, value, padding } = props;
 
   return (
     <ThemeProvider theme={theme}>
