@@ -34,7 +34,7 @@ function App() {
             <Route path="/Member/Seller" element={<Seller />}></Route>
             <Route path="/MyPage" element={<MyPage />}></Route>
             <Route path="/ChatList" element={<ChatList />} />
-            <Route path="/Chatting/:roomId" element={<Chatting />} />
+            <Route path="/Chatting/:roomName" element={<Chatting />} />
           </Route>
         </Routes>
       </BrowserRouter>

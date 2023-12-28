@@ -80,10 +80,9 @@ export const Chatting = () => {
   const [socketConnected, setSocketConnected] = useState(false); // 채팅방, 즉 웹소켓에 접속했는가?
   const [inputMsg, setInputMsg] = useState("");
   const [chatList, setChatList] = useState([]);
-  const { roomId } = useParams(); // URL에서 동적 세그먼트의 값을 추출
+  const { roomName } = useParams(); // URL에서 동적 세그먼트의 값을 추출
   const navigate = useNavigate();
   const sender = window.localStorage.getItem("email");
-  const roomName = localStorage.getItem("roomName");
   const ws = useRef(null);
   /*
   useState()는 컴포넌트의 상태를 관리하고, 상태가 바뀔때마다 컴포넌트를 리렌더링 한다.
@@ -117,7 +116,7 @@ export const Chatting = () => {
       // 이를 통해 해당 객체에 접근이 가능
       JSON.stringify({
         type: "TALK",
-        roomId: roomId,
+        name: roomName,
         sender: sender, // 로컬 저장소에 저장된 email
         message: inputMsg,
       })
@@ -131,7 +130,7 @@ export const Chatting = () => {
     ws.current.send(
       JSON.stringify({
         type: "CLOSE",
-        roomId: roomId,
+        name: roomName,
         sender: sender,
         message: "종료 합니다.",
       })
@@ -144,7 +143,7 @@ export const Chatting = () => {
 
   // 렌더링 이후 가장 먼저 실행되는 useEffect()
   useEffect(() => {
-    console.log("방번호 : " + roomId);
+    console.log("방 이름 : " + roomName);
 
     if (!ws.current) {
       // 새로운 웹소켓 객체를 생성하고, ws.current에 할당
@@ -161,7 +160,7 @@ export const Chatting = () => {
     // 이전 채팅 로그 불러오기
     const fetchPreviousMessages = async () => {
       try {
-        const response = await ChatAxiosApi.chatLoad(roomId);
+        const response = await ChatAxiosApi.chatLoad(roomName);
         // chatList를 업데이트
         setChatList(response.data);
       } catch (error) {
@@ -176,7 +175,7 @@ export const Chatting = () => {
       ws.current.send(
         JSON.stringify({
           type: "ENTER",
-          roomId: roomId,
+          name: roomName,
           sender: sender,
           message: "처음으로 접속 합니다.",
         })
@@ -193,11 +192,11 @@ export const Chatting = () => {
       // 이전 상태(변수 이름 지정 가능)를 인자로 받아,
       // [...prevItems : 이를 배열로 변환한 후,
       // ,data] : 새로운 항목을 배열의 끝에 추가
-      // ... : 스프레드 연산자 : 배열이나 객체를 풀어헤칠 때 사용
+      // ... : 전개 연산자 : 배열이나 객체를 풀어헤칠 때 사용
       // prevItems 배열의 모든 항목을 풀어헤친 후, data를 추가한 새로운 배열을 생성
       setChatList((prevItems) => [...prevItems, data]);
     };
-  }, [socketConnected, roomId, sender]);
+  }, [socketConnected, roomName, sender]);
   // 일반적으로는 useEffect() 내에서 사용하는 변수는 의존성 배열에 넣어주는 것이 바람직하다.
   // 최종적으로 변경되는 변수만을 useEffect()에 넣는다면, useEffect()가 변수의 이전 값을 참조하는 버그가 있기 때문이다.
 
@@ -220,7 +219,10 @@ export const Chatting = () => {
 
   return (
     <ChatContainer>
-      <ChatHeader>채팅방 {roomName}</ChatHeader>
+      <ChatHeader>
+        {" "}
+        <strong>{roomName}</strong>님과의 채팅방입니다!
+      </ChatHeader>
       <MessagesContainer ref={chatContainerRef}>
         {/* ref 속성을 DOM 요소에 부여해서 해당 DOM 요소를 직접 가르키는 참조를 얻을 수 있다. 해당 참조는 useRef()를 통해 접근 가능하고, 이후 .current 속성을 통하여 실제 DOM 요소에 접근이 가능하다.*/}
         {chatList.map((chat, index) => (
