@@ -18,12 +18,9 @@ float: right;
   }
 `;
 export const StatusButton = ({ id, status, setStatus, statusOn, setStatusOn }) => {
-  const [content, setContent] = useState()
   const click = (e) => {
-    setStatusOn(false);
-    setStatus(e.target.value)
-    setContent(e.target.value); // 클릭된 라디오 버튼의 값을 content 상태로 설정
     updateStatus(e.target.value); // 변경된 값으로 updateStatus 호출
+    setStatusOn(false);
   }
 
   const updateStatus = async (newContent) => {
@@ -34,9 +31,6 @@ export const StatusButton = ({ id, status, setStatus, statusOn, setStatusOn }) =
     }
   };
 
-  useEffect(() => {
-    setContent(status)
-  }, [statusOn]);
 
   return (
     <>

@@ -18,7 +18,7 @@ export const GoodsList = () => {
     <GoodsListCss>
       {/* 이미지 슬라이드 */}
       <SlideOne />
-      <Slide2></Slide2>
+      {/* <Slide2></Slide2>  */}
       {/* 판매 리스트 카테고리 */}
       <Category setList={setList} />
       {/* 판매 리스트 출력 */}

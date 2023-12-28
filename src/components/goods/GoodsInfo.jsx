@@ -148,11 +148,11 @@ export const GoodsInfo = ({ list, reply, member }) => {
     }, [list])
 
     //리뷰 추가
-    const reviewSubmit = async (reviewData) => {
+    const reviewSubmit = async ({ rating, reviewText, url }) => {
         try {
             // 서버에 데이터 전송
             const response = await ReviewAxiosApi.insertReview(
-                reviewData.rating, reviewData.reviewText, goodsDetailId, user
+                rating, reviewText, goodsDetailId, url
             );
             if (response.status === 200) {
                 // 성공적으로 데이터가 전송되었으면, 리뷰 목록에 새 리뷰 추가    

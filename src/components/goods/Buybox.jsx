@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import styled from "styled-components";
-import { PurchaseAxiosApi } from "../../api/goods/PurchaseAxiosApi";
+
 import { useNavigate } from "react-router-dom";
 import { CartAxiosApi } from "../../api/goods/CartAxiosApi";
 import { useParams } from "react-router-dom";
@@ -19,6 +19,8 @@ export const Buybox = ({ list, optionList, quantity1 }) => {
   const accessToken = localStorage.getItem("accessToken");
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [content, setContent] = useState({});
+  const [page, setPage] = useState('');
+
   //판매자 Pk
   const [goodsDetailId, setGoodsDetailId] = useState("");
   //판매자
@@ -29,9 +31,6 @@ export const Buybox = ({ list, optionList, quantity1 }) => {
   const [status, setStatus] = useState("결제 전");
   //수량
   const [quantity, setQuantity] = useState("1");
-  console.log(list.goodsTitle);
-  console.log(list.goodsPic);
-  console.log(list.goodsPrice);
   // 상품 정보 업데이트
   useEffect(() => {
     // goodsId가 변경될 때마다 content 객체를 업데이트합니다.
@@ -43,16 +42,16 @@ export const Buybox = ({ list, optionList, quantity1 }) => {
       goodsImg: list.goodsPic, //상품 이미지
       price: list.goodsPrice,  //가격
     });
-  }, [option, status, quantity1,list]);
-
+  }, [option, status, quantity1, list]);
   // 장바구니 담기
   const cartAdd = async () => {
     try {
       console.log("장바구니에 담을 content 정보 : " + JSON.stringify(content));
       const res = await CartAxiosApi.addToCart(accessToken, content);
       if (res && res.status === 200) {
-        alert("장바구니에 물품을 담았습니다.");
-        setIsModalOpen(true);
+        console.log("장바구니에 물품을 담았습니다.");
+        console.log(res.data);
+        setPage(res.data)
       } else {
         console.error("장바구니에 물품을 담는데 실패했습니다.", res);
         alert("장바구니에 물품을 담는데 실패했습니다.");
@@ -90,17 +89,23 @@ export const Buybox = ({ list, optionList, quantity1 }) => {
     }
   }, [optionList]);
 
-  // 구매
-  const SelectGoodsList = async () => {
+  // 구매 클릭 
+  useEffect(() => {
+    navigate(`/Goods/Payment/${page}`);
+  }, [page])
+  const purchaseClick = () => {
+    cartAdd();
+  };
+
+  // 장바구니 클릭
+  const cartClick = async () => {
     try {
-      console.log("구매 content 정보 : " + JSON.stringify(content));
-      const rsp = await PurchaseAxiosApi.insertPurchase(content);
-      console.log("구매한 상품 상세정보 : " + rsp.data);
+      cartAdd();
     } catch (error) {
       console.error("상품 구매 오류 발생 : " + error);
     }
+    setIsModalOpen(true);
   };
-
   // 채팅
   const CreateChatRoom = async () => {
     const accessToken = localStorage.getItem("accessToken");
@@ -122,7 +127,7 @@ export const Buybox = ({ list, optionList, quantity1 }) => {
             height={"50px"}
             value={"구매"}
             data={quantity}
-            onClick={SelectGoodsList}
+            onClick={purchaseClick}
           ></AnotherButton>
         ) : (
           <AnotherButton
@@ -138,7 +143,7 @@ export const Buybox = ({ list, optionList, quantity1 }) => {
           height={"50px"}
           value={"장바구니"}
           data={quantity}
-          onClick={cartAdd}
+          onClick={cartClick}
         ></AnotherButton>
 
         <AnotherButton

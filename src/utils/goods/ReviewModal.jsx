@@ -183,6 +183,7 @@ export const ReviewModal = ({ isOpen, closeModal, onSubmit }) => {
       alert("리뷰 내용을 입력해주세요."); // 알림 표시
       return;
     }
+    alert(url)
     onSubmit({ rating, reviewText, url });
     closeModal();
   };

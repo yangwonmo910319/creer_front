@@ -171,7 +171,6 @@ export const Seller = () => {
   };
 
   useEffect(() => {
-
     const memberRegCheck = async () => {
       try {
         const resp = await GoodsAxiosApi.getMyGoods();
@@ -181,10 +180,8 @@ export const Seller = () => {
         console.log(error);
       }
     };
-
     memberRegCheck();
-
-  }, [status,]);
+  }, [status, statusOn]);
 
   const navi = (e) => {
     navigate(`/GoodsEdit/${e}`)
@@ -243,7 +240,6 @@ export const Seller = () => {
                   <Buyer2>   {item.purchase.map((purchaseItem) => (
                     <>
                       <div key={purchaseItem.id} className="buyer2">
-
                         <div className="id"> {purchaseItem.id}</div>
                         <div className="nickName">   {purchaseItem.buyer.nickName}</div>
                         <div className="address">   {purchaseItem.buyer.address}</div>

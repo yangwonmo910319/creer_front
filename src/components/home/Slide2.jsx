@@ -102,7 +102,7 @@ export const Slide2 = () => {
   return (
     <Body>
       <A><A1 bb={position}>
-        <Photo1 asdw={position} /><p>GjristMas Gifts</p>
+        <Photo1 asdw={position} /><p> Christmas  Gifts</p>
       </A1></A>
 
     </Body>

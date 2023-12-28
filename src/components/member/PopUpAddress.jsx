@@ -9,7 +9,7 @@ const PopupAddrCss = styled.div`
   margin: 0 auto;
 
   width: 90%;
-  height: 40px;
+  height: ${(props) => props.height || "40px"};
 
   button {
     border-radius: 10px;
@@ -17,9 +17,10 @@ const PopupAddrCss = styled.div`
     height: 100%;
     background-color: #ffffff;
     border: 1px solid rgb(153, 153, 153);
+    position: relative;
   }
 `;
-export const PopUpAddress = ({ setInputAdd, setInputAdd2 }) => {
+export const PopUpAddress = ({ setInputAdd, setInputAdd2, height }) => {
   // 팝업창 상태 관리
   const [isPopupOpen, setIsPopupOpen] = useState(false);
 
@@ -34,7 +35,7 @@ export const PopUpAddress = ({ setInputAdd, setInputAdd2 }) => {
   };
 
   return (
-    <PopupAddrCss>
+    <PopupAddrCss height={height}>
       <AnotherButton
         onClick={openPostCode}
         value="우편번호 검색"
