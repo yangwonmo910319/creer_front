@@ -19,7 +19,7 @@ export const Buybox = ({ list, optionList, quantity1 }) => {
   const accessToken = localStorage.getItem("accessToken");
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [content, setContent] = useState({});
-  const [page, setPage] = useState('');
+  const [page, setPage] = useState("");
 
   //판매자 Pk
   const [goodsDetailId, setGoodsDetailId] = useState("");
@@ -40,9 +40,10 @@ export const Buybox = ({ list, optionList, quantity1 }) => {
       quantity: quantity1, //수량
       title: list.goodsTitle, //상품 제목
       goodsImg: list.goodsPic, //상품 이미지
-      price: list.goodsPrice,  //가격
+      price: list.goodsPrice, //가격
     });
   }, [option, status, quantity1, list]);
+
   // 장바구니 담기
   const cartAdd = async () => {
     try {
@@ -89,7 +90,7 @@ export const Buybox = ({ list, optionList, quantity1 }) => {
     }
   }, [optionList]);
 
-
+  // 구매 클릭
   const purchaseClick = async () => {
     const res = await cartAdd();
     if (res) {

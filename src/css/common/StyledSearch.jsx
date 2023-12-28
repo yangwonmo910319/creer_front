@@ -59,6 +59,7 @@ const Input = styled.input`
 const SearchIcon = styled.div`
   margin-left: -0.5vw;
   cursor: pointer;
+  z-index: 1000;
   svg {
     color: #757575;
     transition: all 0.3s ease-in-out;
