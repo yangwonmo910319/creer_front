@@ -83,11 +83,11 @@ export const Cart = () => {
       if (response.status === 200) {
         setCartItems(response.data);
         console.log("cartItems : " + JSON.stringify(response));
-       console.log(response.data);
-       console.log(response.data);
-       console.log(response.data);
-       console.log(response.data);
-       console.log(response.data);
+        console.log(response.data);
+        console.log(response.data);
+        console.log(response.data);
+        console.log(response.data);
+        console.log(response.data);
       } else {
         console.error("장바구니 가져오기 실패");
       }
@@ -153,7 +153,7 @@ export const Cart = () => {
       <MiddleOrderBox>
         <CartPageContainer>
           <StyledTitle>
-            <img src={cartImg} alt="장바구니" style={{ width: "80px" }}></img>
+            <img src={cartImg} alt="장바구니" style={{ width: "45px" }}></img>
             장바구니
           </StyledTitle>
           {cartItems && cartItems.map((item, i) => (
@@ -164,9 +164,9 @@ export const Cart = () => {
                   <img src={item.goodsImg} alt={item.title} className="goodsImage" />
                   <div className="title" >{item.title}{item.option}</div>
                   <div className="price">{item.price}원</div>
-                  <div className="quantity">{item.quantity}개</div>           
-                  <div className="price">{item.quantity*item.price}원</div>
-                  </div>
+                  <div className="quantity">{item.quantity}개</div>
+                  <div className="price">{item.quantity * item.price}원</div>
+                </div>
                 <div className="btn">
                   <AnotherButton
                     onClick={() => { remove(item.cartId) }}

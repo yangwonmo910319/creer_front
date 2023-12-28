@@ -199,7 +199,7 @@ export const MemberDropDown = ({ onClose }) => {
       </li>
       <li
         onClick={() => {
-          navigate("/Seller");
+          navigate("/Member/Seller");
         }}
       >
         내 상품 목록

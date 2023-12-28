@@ -12,7 +12,7 @@ export const Input = styled.input`
 `;
 
 export const Button = styled.button`
-  margin: 100px 30px 0;
+  margin: 0 30px ;
   font-weight: bold;
   width: 100%; /* 원하는 너비 설정 */
   height: 50px;
@@ -25,7 +25,7 @@ export const Button = styled.button`
   ${(props) =>
     props.enabled &&
     css`
-      background-color: orange;
+      background-color: #E84855;
     `};
 
   &:active {
@@ -41,7 +41,8 @@ export const Container = styled.div`
   flex-direction: column;
   max-width: 500px;
   margin: auto;
-
+  height: auto;
+  width: 100%;
   .success {
     color: royalblue;
   }
@@ -76,17 +77,20 @@ export const Items = styled.div`
 
   &.item1 {
     margin-top: 100px;
-    margin-bottom: 40px;
+    margin-bottom: 0px;
     justify-content: center;
+    height: 120px;
+    img{
+      height: 100%;
+    }
   }
-  &.item2 {
+  &.item2 { 
     margin: 10px;
+    height: 40px;
   }
   &.item3 {
-    margin: 10px 40px 0;
-    justify-content: space-between;
-    color: #999;
-    font-size: 14px;
+    height: 40px;
+    margin: 10px;
   }
   &.hint {
     margin-top: -5px;
@@ -103,9 +107,10 @@ export const Items = styled.div`
     font-weight: 700;
     margin-top: 10px;
     margin-right: 40px;
+
     font-size: 14px;
     .link_style {
-      color: orange;
+      color: #E84855;
       text-decoration-line: none;
     }
   }

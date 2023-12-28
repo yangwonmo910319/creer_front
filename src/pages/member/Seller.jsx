@@ -181,8 +181,10 @@ export const Seller = () => {
         console.log(error);
       }
     };
+
     memberRegCheck();
-  }, [status, list, statusOn]);
+
+  }, [status,]);
 
   const navi = (e) => {
     navigate(`/GoodsEdit/${e}`)
