@@ -112,48 +112,10 @@ export const Login = () => {
       <Items className="item1">
         <img src={imgLogo} alt="Logo" />
       </Items>
-      <Items className="item2">
-        <Input
-          placeholder="이메일"
-          value={inputUserEmail}
-          onChange={onChangeEmail}
-        />
-      </Items>
-      <Items className="hint">
-        {inputUserEmail.length > 0 && (
-          <span className={`${isId ? "success" : "error"}`}>{idMessage}</span>
-        )}
-      </Items>
 
-      <Items className="item2">
-        <Input placeholder="패스워드" type="password" value={inputPw} onChange={onChangePw} />
-      </Items>
-      <Items className="hint">
-        {inputPw.length > 0 && (
-          <span className={`${isPassWord ? "success" : "error"}`}>
-            {pwMessage}
-          </span>
-        )}
-      </Items>
+      <br />
+      <br />
 
-      <Items className="item3 ">
-        {isId && isPassWord ? (
-          <Button enabled onClick={onClickLogin}>
-            SIGN IN
-          </Button>
-        ) : (
-          <Button disabled>SIGN IN</Button>
-        )}
-      </Items>
-
-      <Modal open={modalOpen} close={closeModal} header="오류">
-        {modalContent}
-      </Modal>
-      <Items className="signup">
-        <Link to="/Signup" className="link_style">
-          <span>Sign Up</span>
-        </Link>
-      </Items>
       <SocialLinks>
         <SocialLink>
           <SocialLinks>
