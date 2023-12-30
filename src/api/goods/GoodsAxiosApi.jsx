@@ -57,7 +57,16 @@ export const GoodsAxiosApi = {
       },
     });
   },
-
+    // 경매 추가
+    insertAuction: async (content,auctionTime) => {  
+      const accessToken = localStorage.getItem("accessToken");
+      return await axios.post(KH_DOMAIN + `/auction/new/${auctionTime}`, content, {
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: "Bearer " + accessToken,
+        },
+      });
+    },
   // 상품 수정
   updateGoods: async (
     goodsCategory,
