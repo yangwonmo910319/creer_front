@@ -5,9 +5,13 @@ export const ChatAxiosApi = {
   // 메서드 내부에서는 const chatLIst = () =>{...} 와 같은 형태로 선언이 불가능
 
   // 채팅방 생성
-  chatRoomCreate: async (accesstoken, goodsId) => {
-    const chatContent = { token: accesstoken, goodsId };
-    return await axios.post(KH_DOMAIN + "/chat/new", chatContent);
+  chatRoomCreate: async (accessToken, goodsId) => {
+    return await axios.post(KH_DOMAIN + "/chat/new", goodsId, {
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: "Bearer " + accessToken,
+      },
+    });
   },
 
   // 채팅방 목록 보기

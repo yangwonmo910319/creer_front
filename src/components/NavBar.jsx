@@ -95,7 +95,7 @@ export const NavBar = () => {
                   {/* 회원가입 */}
                   <li
                     onClick={() => {
-                      navigate("/SignUp");
+                      navigate("/SignUpBefore");
                     }}
                   >
                     <span>회원가입</span>
