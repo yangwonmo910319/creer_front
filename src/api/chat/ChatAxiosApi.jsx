@@ -14,18 +14,33 @@ export const ChatAxiosApi = {
     });
   },
 
+  // 채팅 기록 가져오기
+  chatLoad: async (accessToken, roomId) => {
+    return await axios.get(KH_DOMAIN + `/chat/${roomId}/messages`, {
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: "Bearer " + accessToken,
+      },
+    });
+  },
+
   // 채팅방 목록 보기
-  chatList: async () => {
-    return await axios.get(KH_DOMAIN + `/chat/list`);
+  chatList: async (accessToken) => {
+    return await axios.get(KH_DOMAIN + `/chat/list`, {
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: "Bearer " + accessToken,
+      },
+    });
   },
 
   // 채팅방 정보 가져오기
-  chatInfo: async (roomId) => {
-    return await axios.get(KH_DOMAIN + `/chat/${roomId}}`);
-  },
-
-  // 채팅 기록 가져오기
-  chatLoad: async (roomId) => {
-    return await axios.get(KH_DOMAIN + `/chat/${roomId}/messages`);
+  chatInfo: async (accessToken, roomId) => {
+    return await axios.get(KH_DOMAIN + `/chat/${roomId}}`, {
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: "Bearer " + accessToken,
+      },
+    });
   },
 };

@@ -81,8 +81,9 @@ export const Chatting = () => {
   const [inputMsg, setInputMsg] = useState("");
   const [chatList, setChatList] = useState([]);
   const { roomName } = useParams(); // URL에서 동적 세그먼트의 값을 추출
+  const accessToken = localStorage.getItem("accessToken");
   const navigate = useNavigate();
-  const sender = window.localStorage.getItem("email");
+  const sender = window.localStorage.getItem("NickName");
   const ws = useRef(null);
   /*
   useState()는 컴포넌트의 상태를 관리하고, 상태가 바뀔때마다 컴포넌트를 리렌더링 한다.
@@ -117,7 +118,7 @@ export const Chatting = () => {
       JSON.stringify({
         type: "TALK",
         name: roomName,
-        sender: sender, // 로컬 저장소에 저장된 email
+        sender: sender,
         message: inputMsg,
       })
     );
@@ -160,7 +161,7 @@ export const Chatting = () => {
     // 이전 채팅 로그 불러오기
     const fetchPreviousMessages = async () => {
       try {
-        const response = await ChatAxiosApi.chatLoad(roomName);
+        const response = await ChatAxiosApi.chatLoad(accessToken, roomName);
         // chatList를 업데이트
         setChatList(response.data);
       } catch (error) {
