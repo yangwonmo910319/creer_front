@@ -5,7 +5,8 @@ import { SignUp } from "./pages/member/SignUp";
 import { Login } from "./pages/member/Login";
 import { Cart } from "./pages/goods/Cart";
 import { Test } from "./pages/Test";
-import { Seller } from "./pages/member/Seller";
+import { SellerList } from "./pages/member/SellerList";
+import { BuyerList } from "./pages/member/BuyerList";
 import { MyPage } from "./pages/member/MyPage";
 import { GoodsList } from "./pages/goods/GoodsList";
 import { GoodsDetail } from "./pages/goods/GoodsDetail";
@@ -33,7 +34,8 @@ function App() {
             <Route path="/GoodsWrite" element={<GoodsWrite />}></Route>
             <Route path="/Cart" element={<Cart />}></Route>
             <Route path="/Goods/Payment/:goodsId" element={<Payment />}></Route>
-            <Route path="/Member/Seller" element={<Seller />}></Route>
+            <Route path="/Member/Seller" element={<SellerList />}></Route>
+            <Route path="/Member/Buyer" element={<BuyerList />}></Route>
             <Route path="/MyPage" element={<MyPage />}></Route>
             <Route path="/ChatList" element={<ChatList />} />
             <Route path="/Chatting/:roomId" element={<Chatting />} />
