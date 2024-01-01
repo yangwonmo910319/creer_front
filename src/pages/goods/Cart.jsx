@@ -45,24 +45,24 @@ const GoodsCard = styled.div`
     align-items: center;
   }
   .title {
-    width: calc(100% - (150px + 5% + 10% + 5%));
+    width: calc(100% - (150px + 10% + 20% + 15%));
     height: 200px;
     margin-right: 10px;
   }
 .quantity{
       flex: none;
     min-width: 30px;
-    width: 5%;
+    width: 10%;
 }
   .btn{
     flex: none;
     min-width: 50px;
-    width: 5%;
+    width: 20%;
   }
   .price{
     flex: none;
     min-width: 50px;
-    width: 10%;
+    width: 15%;
   }
   }
   
@@ -70,7 +70,7 @@ const GoodsCard = styled.div`
 
 export const Cart = () => {
   const navigate = useNavigate();
-
+  const [link, setLink] = useState('');
   const [cartItems, setCartItems] = useState('');
   const [checkedItems, setCheckedItems] = useState([]);
   const accessToken = localStorage.getItem("accessToken");
@@ -108,22 +108,9 @@ export const Cart = () => {
 
 
 
-  const purchaseSelected = async () => {
-    try {
-      const response = await GoodsAxiosApi.purchaseGoods(checkedItems);
-      console.log(response);
-
-      if (response.status === 200 && response.data) {
-        if (window.confirm("선택된 책들을 구매하시겠습니까?")) {
-          fetchCartItems();
-          setCheckedItems([]);
-        }
-      } else {
-        alert("잔액이 부족합니다.");
-      }
-    } catch (error) {
-      console.error("장바구니 선택 구매 오류:", error);
-    }
+  const purchaseSelected =  (e) => {   
+    // setLink()
+    navigate(`/Goods/Payment/`+e )
   };
 
   const remove = async (num) => {
@@ -164,6 +151,14 @@ export const Cart = () => {
                   <div className="price">{item.quantity * item.price}원</div>
                 </div>
                 <div className="btn">
+                <MiddleOrderBox>
+            <AnotherButton
+              onClick={() => purchaseSelected(item.cartId)}
+              value="구매하기"
+              width="50px"
+                    height="50px"
+            ></AnotherButton>
+          </MiddleOrderBox>
                   <AnotherButton
                     onClick={() => { remove(item.cartId) }}
                     value="삭제"
@@ -188,14 +183,14 @@ export const Cart = () => {
                 </div>
               </div>
             </GoodsCard> */}
-          <MiddleOrderBox>
+          {/* <MiddleOrderBox>
             <AnotherButton
               onClick={purchaseSelected}
               value="구매하기"
               width="200px"
               height="50px"
             ></AnotherButton>
-          </MiddleOrderBox>
+          </MiddleOrderBox> */}
 
           <br />
         </CartPageContainer>

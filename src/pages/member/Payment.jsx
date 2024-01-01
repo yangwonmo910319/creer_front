@@ -6,10 +6,17 @@ import { useParams } from "react-router-dom";
 import { CartAxiosApi } from "../../api/goods/CartAxiosApi";
 import { PopUpAddress } from "../../components/member/PopUpAddress";
 import { PurchaseAxiosApi } from "../../api/goods/PurchaseAxiosApi";
+import { ClickPay  } from "../../components/goods/ClickPay";
+
+
+
+
 const PaymentCss = styled.div`
 width: 80%;
 height: auto;
+
   margin  : 0 auto;
+  margin-top: 50px;
 div{
   /* border: 1px solid black; */
   margin: 10px 0;
@@ -22,13 +29,12 @@ div{
 }
 .content2{
   width: 100%;  
-  height: auto;
-  
+  height: auto; 
   .content2-1{
     border-bottom: 2px solid #a9a9a9;
     width: 100%;
   height: auto;
-
+ margin-top: 50px;
   h3{  margin: 0;}
   }
   .content2-2{
@@ -39,7 +45,47 @@ div{
       width: 100%;
       margin: 0;
       padding: 0;
-      list-style: none;            
+      list-style: none; 
+      .z1{
+          height: 80px;
+          width: 100%;
+      
+          .title {
+            height: 80px;
+          }
+          .content{
+            width: 100%;
+     
+            height: 80px;
+            display: flex;
+            flex-direction: row;
+            justify-content: start;
+            align-items: center;
+
+            .add{
+              width: auto;
+              height: 30px;    
+              margin: 0;         
+            }
+            .add2{
+              display: flex;
+              flex-direction: row;
+              width: 120px;
+              height: 30px;  
+              margin: 0;     
+              margin-top : -10px ;
+            }
+            .add3{
+                width: 120px;
+                margin-left:10px ;
+                margin-top: 15px;
+              button{
+                margin: 0;
+              padding: 0;
+              }         
+            }
+          }
+        }           
       li:first-child{
             border-top: 1px solid  #4d4949;}
             li:last-child{
@@ -55,13 +101,12 @@ div{
         margin:0 ;
         margin-top: -26px;
         padding: 0;
-        width: 150px;
-
+        width: 150px;   
        }
         .title{
           border-right: 1px solid #a9a9a9;
           margin:0;
-          width: 100px;
+          width: 150px;
           height: 35px;
         background: #d7d7d7;
         font-size: .8em;
@@ -71,6 +116,7 @@ div{
         align-items: center;
         
         }
+     
         .content{
           margin:0;
           margin-left: 10px;
@@ -88,7 +134,7 @@ div{
 }
 }
 .content3{
-  margin: 0 auto;
+  margin: 20px auto;
   width: 80%;
   height: auto;
   border: 2px solid #9d9d9d;
@@ -127,8 +173,8 @@ div{
   width: 500px;
   height: auto;
   margin: 0 auto;
-  margin-top: 80px;
-  padding-bottom: 20px;
+  margin-top: 150px;
+  padding-bottom: 60px;
   display: flex;
   button{
     margin: 0 auto;
@@ -144,17 +190,20 @@ export const Payment = () => {
   const { goodsId } = useParams();
   const accessToken = localStorage.getItem("accessToken");
   const [list, setList] = useState('');
+
   const [content, setContent] = useState({});
   const [name, setName] = useState('');
   const [newName, setnewName] = useState('');
   const [onName, setOnName] = useState(false);
 
-  const [add, setAdd] = useState('');
+
 
   const [phone, setPhone] = useState('');
   const [newPhone, setNewPhone] = useState('');
   const [onPhone, setonPhone] = useState(false);
 
+  const [add, setAdd] = useState('');
+  const [onAdd, setOntAdd] = useState(false);
   const [inputAdd, setInputAdd] = useState("");
   const [inputAdd2, setInputAdd2] = useState("");
   const [inputAdd3, setInputAdd3] = useState("");
@@ -167,17 +216,17 @@ export const Payment = () => {
       try {
         const res = await CartAxiosApi.selectCart(accessToken, goodsId);
         if (res && res.status === 200) {
-          console.log(res.data);
-          console.log(res.data);
-          console.log(res.data);
+          console.log("장바구니 추가"+res.data);
           setList(res.data);
+
+     
           // setName(res.data.list.buyer.name)
         } else {
 
         }
       } catch (error) {
         // 오류가 발생한 경우
-        console.error(".", error);
+        console.error("장바구니 추가 에러", error);
       };
     }
     select()
@@ -191,18 +240,13 @@ export const Payment = () => {
     }
     // setName(list.buyer.name)
   }, [list])
-  useEffect(() => {
-    // goodsId가 변경될 때마다 content 객체를 업데이트합니다.
-    setContent({
-      goodsDetailId: list.goodsDetailId, //상품 PK
-      option: list.option, //선택 옵션
-      quantity: list.quantity, //수량
-      requirements: require, //요구사항
-    });
-  }, [list]);
+
+ 
+
   const cancel = () => {
     navigate(-1)
   }
+
   const nemeInput = () => {
     setOnName(prevState => !prevState)
     setName('')
@@ -213,9 +257,16 @@ export const Payment = () => {
   const chageName = (e) => {
     setnewName(e.target.value)
   }
-  const chageAdd = () => {
 
+  const chageAdd = (e) => {
+    setOntAdd(!onAdd)
+    setAdd(inputAdd+"/"+inputAdd2+"/"+inputAdd3) 
+    console.log(inputAdd2);
   }
+  const chageAdd2 = (e) => {
+    setInputAdd3(e.target.value)
+  }
+  
   const phoneInput = () => {
     setonPhone(prevState => !prevState)
     setPhone('')
@@ -226,6 +277,7 @@ export const Payment = () => {
   const chagePhone = (e) => {
     setNewPhone(e.target.value)
   }
+
 
   const requireInput = () => {
     setOnRepuie(prevState => !prevState)
@@ -239,6 +291,7 @@ export const Payment = () => {
   }
 
   const addPurchase = async () => {
+
     try {
       console.log("구매 content 정보 : " + JSON.stringify(content));
       const rsp = await PurchaseAxiosApi.insertPurchase(content);
@@ -247,6 +300,34 @@ export const Payment = () => {
       console.error("상품 구매 오류 발생 : " + error);
     }
   }
+  useEffect(() => {
+    if (list) {
+      const updatedReceiveAdd = onAdd ? `${inputAdd}/${inputAdd2}/${inputAdd3}` : add;
+      setContent(prevContent => ({
+        ...prevContent,
+        requirements: newRepuie,
+        receiveName: onName ? newName : list.buyer.name,
+        receiveAdd: updatedReceiveAdd,
+        receiveNumber: onPhone ? newPhone : list.buyer.phoneNum,
+      }));
+      // 다른 작업 수행
+    }
+    
+    // 다른 경우에 대한 작업
+  }, [list, onAdd, inputAdd, inputAdd2, inputAdd3, add, newRepuie, onName, newName, onPhone, newPhone]);
+  
+  useEffect(() => {
+    setContent({
+      goodsDetailId: list.goodsDetailId,
+      option: list.option,
+      quantity: list.quantity,
+      requirements: newRepuie,
+      receiveName: newName,
+      receiveAdd: inputAdd,
+      receiveNumber: newPhone,
+    });
+    // 다른 작업 수행
+  }, [list, newRepuie, newName, inputAdd, newPhone]);
   const cansel = async () => {
     try {
       const response = await CartAxiosApi.removeFromCart(accessToken, list.cartId);
@@ -295,15 +376,34 @@ export const Payment = () => {
 
             </div>
             </li>
-            <li className="z1"><div className="title">배송주소 </div><div className="content">{add}
-
-              <div className="add">
-                <PopUpAddress
+            <li className="z1">
+              <div className="title">배송주소 </div>
+              <div className="content">
+              {onAdd !== true ?  <>
+                 <div className="add">             
+                 {add}
+                 </div>
+                 <div className="add2">      
+                 <AnotherButton width={"70px"} height={"20px"} value={"변경"} onClick={chageAdd}></AnotherButton>           
+                 </div>                   
+                    </>:<>  
+                    <div className="add">   
+                    {inputAdd}
+                    {inputAdd2}
+                    {inputAdd2 === ('') ?<> </>:
+                     <input type="text" placeholder = "상세주소" onChange={chageAdd2} value={inputAdd3}></input> }                     </div>                                  
+                      <div className="add3">   
+                      <PopUpAddress
                   setInputAdd={setInputAdd}
                   setInputAdd2={setInputAdd2}
                   height={"10"}
-                ></PopUpAddress>
-              </div>
+                ></PopUpAddress> 
+                 </div>          
+                 <div className="add4">   
+                  <AnotherButton width={"70px"} height={"20px"} value={"확인"} onClick={chageAdd}></AnotherButton>   
+                  </div>      
+                 </>}    
+    
             </div>
 
             </li>
@@ -319,9 +419,9 @@ export const Payment = () => {
           </ul>
         </div>
       </div>
-
+   
       <div className="content4">
-        <AnotherButton value={"확인"} onClick={addPurchase}></AnotherButton>
+      <ClickPay  content={content} addPurchase={addPurchase} /> 
         <AnotherButton value={"취소"} onClick={cansel}></AnotherButton>
       </div>
     </PaymentCss>

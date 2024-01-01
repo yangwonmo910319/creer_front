@@ -147,7 +147,7 @@ export const ListMap = ({ list }) => {
             <ul>
                {list &&
                   list.map((item, index) =>
-                     item.goodsStatus === "sale" ? (
+                  item.goodsStatus === "sale"|| item.goodsStock===0 ||item.goodsStock===null  ? (
                         <li key={index}>
                            <Link className="" to={`/Goods/${item.goodsDetailId}`}>
                               <Class1>
