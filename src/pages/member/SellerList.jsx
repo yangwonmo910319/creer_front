@@ -159,7 +159,7 @@ width: 50px;
   
     
 `;
-export const Seller = () => {
+export const SellerList = () => {
   const [status, setStatus] = useState('');
   const [statusOn, setStatusOn] = useState(false);
   const [list, setList] = useState('');
@@ -190,7 +190,7 @@ export const Seller = () => {
 
   return (
     <SalseListCss>
-      <h3> 판매 상품 리스트</h3>
+      <h3> 판매 상품 목록</h3>
       <Title>
         <ul>
           <li className="no">순서</li>

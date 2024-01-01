@@ -191,7 +191,12 @@ export const Payment = () => {
   const accessToken = localStorage.getItem("accessToken");
   const [list, setList] = useState('');
 
-  const [content, setContent] = useState({});
+  const [content, setContent] = useState({
+    receiveAdd: '',
+    receiveName: '',
+    receiveNumber: '',
+    requirements: ''
+  });
   const [name, setName] = useState('');
   const [newName, setnewName] = useState('');
   const [onName, setOnName] = useState(false);
@@ -217,12 +222,8 @@ export const Payment = () => {
         const res = await CartAxiosApi.selectCart(accessToken, goodsId);
         if (res && res.status === 200) {
           console.log("장바구니 추가"+res.data);
-          setList(res.data);
-
-     
-          // setName(res.data.list.buyer.name)
+          setList(res.data);    
         } else {
-
         }
       } catch (error) {
         // 오류가 발생한 경우
@@ -236,9 +237,7 @@ export const Payment = () => {
       setName(list.buyer.name);
       setAdd(list.buyer.address);
       setPhone(list.buyer.phoneNum);
-
     }
-    // setName(list.buyer.name)
   }, [list])
 
  
@@ -292,9 +291,10 @@ export const Payment = () => {
 
   const addPurchase = async () => {
 
+  
     try {
       console.log("구매 content 정보 : " + JSON.stringify(content));
-      const rsp = await PurchaseAxiosApi.insertPurchase(content);
+      const rsp = await PurchaseAxiosApi.insertPurchase(content,list.goodsDetailId);
       console.log("구매한 상품 상세정보 : " + rsp.data);
     } catch (error) {
       console.error("상품 구매 오류 발생 : " + error);
@@ -318,7 +318,6 @@ export const Payment = () => {
   
   useEffect(() => {
     setContent({
-      goodsDetailId: list.goodsDetailId,
       option: list.option,
       quantity: list.quantity,
       requirements: newRepuie,
