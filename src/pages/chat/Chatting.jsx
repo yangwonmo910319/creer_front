@@ -80,7 +80,8 @@ export const Chatting = () => {
   const [socketConnected, setSocketConnected] = useState(false); // 채팅방, 즉 웹소켓에 접속했는가?
   const [inputMsg, setInputMsg] = useState("");
   const [chatList, setChatList] = useState([]);
-  const { roomName } = useParams(); // URL에서 동적 세그먼트의 값을 추출
+  const { roomId } = useParams(); // URL에서 동적 세그먼트의 값을 추출
+  const [roomName, setRoomName] = useState("");
   const accessToken = localStorage.getItem("accessToken");
   const navigate = useNavigate();
   const sender = window.localStorage.getItem("NickName");
@@ -144,6 +145,20 @@ export const Chatting = () => {
 
   // ==================== 렌더링 이후 가장 먼저 실행되는 useEffect() ====================
   useEffect(() => {
+    const fetchRoomName = async () => {
+      try {
+        const res = await ChatAxiosApi.chatInfo(accessToken, roomId);
+        console.log(res);
+        // setRoomName(resRoomName);
+      } catch (error) {
+        console.error(
+          "채팅방 아이디를 통해 채팅방 이름을 가져오는 데 실패했습니다.",
+          error
+        );
+      }
+    };
+
+    fetchRoomName();
     console.log("방 이름 : " + roomName);
 
     if (!ws.current) {
@@ -161,7 +176,7 @@ export const Chatting = () => {
     // 이전 채팅 로그 불러오기
     const fetchPreviousMessages = async () => {
       try {
-        const response = await ChatAxiosApi.chatLoad(accessToken, roomName);
+        const response = await ChatAxiosApi.chatLoad(accessToken, roomId);
         // chatList를 업데이트
         setChatList(response.data);
       } catch (error) {
@@ -197,7 +212,7 @@ export const Chatting = () => {
       // prevItems 배열의 모든 항목을 풀어헤친 후, data를 추가한 새로운 배열을 생성
       setChatList((prevItems) => [...prevItems, data]);
     };
-  }, [socketConnected, roomName, sender]);
+  }, [socketConnected, roomName, sender, roomId, accessToken]);
   // 일반적으로는 useEffect() 내에서 사용하는 변수는 의존성 배열에 넣어주는 것이 바람직하다.
   // 최종적으로 변경되는 변수만을 useEffect()에 넣는다면, useEffect()가 변수의 이전 값을 참조하는 버그가 있기 때문이다.
   // ================================================================================
@@ -224,7 +239,7 @@ export const Chatting = () => {
     <ChatContainer>
       <ChatHeader>
         {" "}
-        <strong>{roomName}</strong>입니다!
+        <strong>{roomName}</strong>
       </ChatHeader>
       <MessagesContainer ref={chatContainerRef}>
         {/* ref 속성을 DOM 요소에 부여해서 해당 DOM 요소를 직접 가르키는 참조를 얻을 수 있다. 해당 참조는 useRef()를 통해 접근 가능하고, 이후 .current 속성을 통하여 실제 DOM 요소에 접근이 가능하다.*/}

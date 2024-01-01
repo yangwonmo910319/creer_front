@@ -15,8 +15,8 @@ export const ChatAxiosApi = {
   },
 
   // 채팅 기록 가져오기
-  chatLoad: async (accessToken, roomId) => {
-    return await axios.get(KH_DOMAIN + `/chat/${roomId}/messages`, {
+  chatLoad: async (accessToken, roomName) => {
+    return await axios.get(KH_DOMAIN + `/chat/${roomName}/messages`, {
       headers: {
         "Content-Type": "application/json",
         Authorization: "Bearer " + accessToken,
@@ -36,7 +36,7 @@ export const ChatAxiosApi = {
 
   // 채팅방 정보 가져오기
   chatInfo: async (accessToken, roomId) => {
-    return await axios.get(KH_DOMAIN + `/chat/${roomId}}`, {
+    return await axios.get(KH_DOMAIN + `/chat/${roomId}`, {
       headers: {
         "Content-Type": "application/json",
         Authorization: "Bearer " + accessToken,

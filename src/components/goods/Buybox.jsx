@@ -114,7 +114,7 @@ export const Buybox = ({ list, optionList, quantity1 }) => {
     try {
       const response = await ChatAxiosApi.chatRoomCreate(accessToken, goodsId);
       navigate(`/chatting/${response.data}`);
-      console.log("Buybox CreateChat response.data" + response.data);
+      console.log("Buybox CreateChat response.data 방 번호 : " + response.data);
     } catch (error) {
       console.error("BuyBox CreateChat Room 오류 발생 : " + error);
     }
