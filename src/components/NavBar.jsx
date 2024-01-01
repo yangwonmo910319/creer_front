@@ -36,25 +36,30 @@ export const NavBar = () => {
   useEffect(() => {
     const getMember = async () => {
       // 로컬 스토리지에서 액세스 토큰 읽기
-      const accessToken = Common.getAccessToken();
-
       try {
         // 로그인한 해당 회원의 상세 정보 조회
-        const rsp = await MemberAxiosApi.memberGetOne();
+        const accessToken = await localStorage.getItem("accessToken");
+        const rsp = await MemberAxiosApi.memberGetOne(accessToken);
         setMember(rsp.data);
         window.localStorage.setItem("NickName", rsp.data.nickName);
       } catch (e) {
-        // 엑세스토큰이 만료되면,
-        if (e.response.status === 401) {
-          alert("액세스 토큰이 만료됐습니다!");
-          // 리프레시 토큰을 통한 재발급
-          await Common.handleUnauthorized();
-          const newToken = Common.getAccessToken();
+        // 액세스 토큰이 만료
+        if (e.response.status === 401 || e.response.status === 500) {
+          alert("액세스 토큰이 만료되어 회원 정보를 불러오지 못했습니다!");
+          // 리프레시 토큰을 통해 액세스 토큰 및 리프레시 토큰을 재발급
+          const newAccessToken = await Common.handleUnauthorized();
+          console.log("재발급된 액세스 토큰 : " + newAccessToken);
+          const rsp = await MemberAxiosApi.memberGetOne(newAccessToken);
+          setMember(rsp.data);
+          window.localStorage.setItem("NickName", rsp.data.nickName);
         }
       }
     };
-    getMember();
-  }, []);
+
+    if (login === "true") {
+      getMember();
+    }
+  }, [login]);
 
   const logout = () => {
     // 로컬 스트리지 비우기

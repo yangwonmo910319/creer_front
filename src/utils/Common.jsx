@@ -39,24 +39,23 @@ export const Common = {
   // 액세스 토큰이 만료됐을 때, 리프레시 토큰을 통해 액세스 토큰과 리프레시 토큰을 모두 재발급
   handleUnauthorized: async () => {
     const refreshToken = Common.getRefreshToken();
-    const accessToken = Common.getAccessToken();
-    const config = {
-      headers: {
-        Authorization: `Bearer ${accessToken}`,
-      },
-    };
     try {
-      const res = await axios.post(
-        `${KH_DOMAIN}/auth/refresh`,
+      const res = await axios.post(`${KH_DOMAIN}/refresh/new`, {
         refreshToken,
-        config
+      });
+      await console.log(
+        "handleUnauthorized 응답 데이터 : " + JSON.stringify(res)
       );
-      console.log(res.data);
-      Common.setAccessToken(res.data.accessToken);
-      Common.setRefreshToken(res.data.refreshToken);
-      return true;
+
+      // 로컬 스토리지에 저장된 토큰 덮어쓰기
+      await Common.setAccessToken(res.data.accessToken);
+      await Common.setRefreshToken(res.data.refreshToken);
+      await alert(
+        "리프레시 토큰을 통해서 액세스 토큰 및 리프레시 토큰이 재발급 되었습니다 : "
+      );
+      return res.data.accessToken;
     } catch (err) {
-      console.log(err);
+      console.log("handleUnauthorized 에서 에러가 발생했습니다!");
       return false;
     }
   },
