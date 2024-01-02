@@ -49,7 +49,7 @@ export const MyPageAxiosApi = {
         currentId: currentId,
         newId: newId,
       };
-      console.log("현제 아이디" + currentId);
+      console.log("현재 아이디" + currentId);
       console.log("새로운 아이디" + newId);
       // POST 요청을 보냅니다.
       return await axios.post(KH_DOMAIN + "/MyPage/updateId", updateId);

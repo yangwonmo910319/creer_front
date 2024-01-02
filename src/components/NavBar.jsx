@@ -39,8 +39,7 @@ export const NavBar = () => {
       // 로컬 스토리지에서 액세스 토큰 읽기
       try {
         // 로그인한 해당 회원의 상세 정보 조회
-        const accessToken = await localStorage.getItem("accessToken");
-        const rsp = await MemberAxiosApi.memberGetOne(accessToken);
+        const rsp = await MemberAxiosApi.memberGetOne();
         setMember(rsp.data);
         window.localStorage.setItem("NickName", rsp.data.nickName);
       } catch (e) {
@@ -61,7 +60,7 @@ export const NavBar = () => {
     if (login === "true") {
       getMember();
     }
-  }, [login]);
+  }, [login, navigate]);
 
   const logout = () => {
     // 로컬 스트리지 비우기

@@ -22,7 +22,8 @@ export const MemberAxiosApi = {
     });
   },
   // 액세스 토큰을 통한 로그인한 회원의 정보 상세 조회
-  memberGetOne: async (accessToken) => {
+  memberGetOne: async () => {
+    const accessToken = await localStorage.getItem("accessToken");
     return await axios.get(KH_DOMAIN + `/member/detail`, {
       headers: {
         "Content-Type": "application/json",
