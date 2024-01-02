@@ -16,7 +16,6 @@ const BuyboxCss = styled.div`
 export const Buybox = ({ list, optionList, quantity1 }) => {
   const navigate = useNavigate();
   const { goodsId } = useParams(); // 이후 사용은 중괄호 불필요
-  const accessToken = localStorage.getItem("accessToken");
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [content, setContent] = useState({});
   const [page, setPage] = useState("");
@@ -48,7 +47,7 @@ export const Buybox = ({ list, optionList, quantity1 }) => {
   const cartAdd = async () => {
     try {
       console.log("장바구니에 담을 content 정보 : " + JSON.stringify(content));
-      const res = await CartAxiosApi.addToCart(accessToken, content);
+      const res = await CartAxiosApi.addToCart(content);
       if (res && res.status === 200) {
         console.log("장바구니에 물품을 담았습니다.");
         console.log(res.data);
@@ -110,9 +109,8 @@ export const Buybox = ({ list, optionList, quantity1 }) => {
 
   // 채팅
   const CreateChatRoom = async () => {
-    const accessToken = localStorage.getItem("accessToken");
     try {
-      const response = await ChatAxiosApi.chatRoomCreate(accessToken, goodsId);
+      const response = await ChatAxiosApi.chatRoomCreate(goodsId);
       navigate(`/chatting/${response.data}`);
       console.log("Buybox CreateChat response.data 방 번호 : " + response.data);
     } catch (error) {

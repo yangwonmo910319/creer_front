@@ -40,9 +40,7 @@ export const Common = {
   handleUnauthorized: async () => {
     const refreshToken = Common.getRefreshToken();
     try {
-      const res = await axios.post(`${KH_DOMAIN}/refresh/new`, {
-        refreshToken,
-      });
+      const res = await axios.post(`${KH_DOMAIN}/refresh/new`, refreshToken);
       await console.log(
         "handleUnauthorized 응답 데이터 : " + JSON.stringify(res)
       );

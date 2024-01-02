@@ -43,7 +43,7 @@ export const NavBar = () => {
         setMember(rsp.data);
         window.localStorage.setItem("NickName", rsp.data.nickName);
       } catch (e) {
-        // 액세스 토큰이 만료
+        // 액세스 토큰이 만료시 401 오류 발생, 회원 정보 상세 조회 실패시 500 오류 발생
         if (e.response.status === 401 || e.response.status === 500) {
           alert("액세스 토큰이 만료되어 회원 정보를 불러오지 못했습니다!");
           // 리프레시 토큰을 통해 액세스 토큰 및 리프레시 토큰을 재발급
@@ -52,6 +52,7 @@ export const NavBar = () => {
           const rsp = await MemberAxiosApi.memberGetOne(newAccessToken);
           setMember(rsp.data);
           window.localStorage.setItem("NickName", rsp.data.nickName);
+          Reload(navigate);
         }
       }
     };

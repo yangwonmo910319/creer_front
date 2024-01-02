@@ -46,8 +46,7 @@ export const MyPageDELETE = ({ id }) => {
   const [checkedInfo, setCheckedInfo] = useState(false);
 
   const onClickCheck = async () => {
-    const accessToken = localStorage.getItem("accessToken");
-    const res = await MyPageAxiosApi.memberCheck(pw, accessToken);
+    const res = await MyPageAxiosApi.memberCheck(pw);
     // 입력한 비밀번호가 맞으면 탈퇴 진행
     if (res.data) {
       setCheckedInfo(true);

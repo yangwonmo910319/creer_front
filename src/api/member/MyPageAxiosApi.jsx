@@ -3,8 +3,8 @@ import { KH_DOMAIN } from "../../utils/Common";
 
 export const MyPageAxiosApi = {
   // 정보 수정을 위해서 입력 받은 정보들이 존재하는지 확인
-  memberCheck: async (password, accessToken) => {
-    // console.log('체크를 위한 정보', accessToken, password);
+  memberCheck: async (password) => {
+    const accessToken = localStorage.getItem("accessToken");
     return await axios.post(
       KH_DOMAIN + "/MyPage/checkInfo",
       {
@@ -21,12 +21,12 @@ export const MyPageAxiosApi = {
   },
   // 회원 탈퇴
   memberDel: async (email) => {
-    const token = localStorage.getItem("accessToken");
+    const accessToken = localStorage.getItem("accessToken");
     console.log("회원 탈퇴할 회원의 이메일 : " + email);
     return await axios.delete(KH_DOMAIN + "/MyPage/delete", {
       headers: {
         "X-Email": email,
-        Authorization: "Bearer " + token,
+        Authorization: "Bearer " + accessToken,
       },
     });
   },

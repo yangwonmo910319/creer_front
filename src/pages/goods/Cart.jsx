@@ -12,7 +12,6 @@ const CartPageContainer = styled.div`
   margin: 20px;
   width: 80%;
   max-width: 1280px;
-
 `;
 
 const GoodsCard = styled.div`
@@ -26,66 +25,66 @@ const GoodsCard = styled.div`
   .goodsInfo {
     display: flex;
     width: 100%;
-  .goodsImage {
-    width: 100px;
-    height: 100px;
-    margin-right: 10px;
-  }
-  .removeButton {
-
-    color: white;
-    border: none;
-    padding: 5px 10px;
-    cursor: pointer;
-  } 
-  div{
-    flex: 1;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-  }
-  .title {
-    width: calc(100% - (150px + 10% + 20% + 15%));
-    height: 200px;
-    margin-right: 10px;
-  }
-.quantity{
+    .goodsImage {
+      width: 100px;
+      height: 100px;
+      margin-right: 10px;
+    }
+    .removeButton {
+      color: white;
+      border: none;
+      padding: 5px 10px;
+      cursor: pointer;
+    }
+    div {
+      flex: 1;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+    }
+    .title {
+      width: calc(100% - (150px + 10% + 20% + 15%));
+      height: 200px;
+      margin-right: 10px;
+    }
+    .quantity {
       flex: none;
-    min-width: 30px;
-    width: 10%;
-}
-  .btn{
-    flex: none;
-    min-width: 50px;
-    width: 20%;
+      min-width: 30px;
+      width: 10%;
+    }
+    .btn {
+      flex: none;
+      min-width: 50px;
+      width: 20%;
+    }
+    .price {
+      flex: none;
+      min-width: 50px;
+      width: 15%;
+    }
   }
-  .price{
-    flex: none;
-    min-width: 50px;
-    width: 15%;
-  }
-  }
-  
 `;
 
 export const Cart = () => {
   const navigate = useNavigate();
-  const [link, setLink] = useState('');
-  const [cartItems, setCartItems] = useState('');
+  const [cartItems, setCartItems] = useState("");
   const [checkedItems, setCheckedItems] = useState([]);
-  const accessToken = localStorage.getItem("accessToken");
 
   const fetchCartItems = async () => {
     try {
-      const response = await CartAxiosApi.getCartItems(accessToken);
-      // console.log("장바구니 목록 : " + JSON.stringify(response));
+      const accessToken = localStorage.getItem("accessToken");
+      if (accessToken) {
+        const response = await CartAxiosApi.getCartItems();
+        // console.log("장바구니 목록 : " + JSON.stringify(response));
 
-      if (response.status === 200) {
-        setCartItems(response.data);
-        console.log("cartItems : " + JSON.stringify(response));
-
+        if (response.status === 200) {
+          setCartItems(response.data);
+          console.log("cartItems : " + JSON.stringify(response));
+        } else {
+          console.error("장바구니 가져오기 실패");
+        }
       } else {
-        console.error("장바구니 가져오기 실패");
+        console.error("accessToken이 없습니다.");
       }
     } catch (error) {
       console.error("장바구니 목록을 가져오는 중 오류 발생", error);
@@ -93,10 +92,8 @@ export const Cart = () => {
   };
 
   useEffect(() => {
-    if (accessToken) {
-      fetchCartItems();
-    }
-  }, [accessToken]);
+    fetchCartItems();
+  }, []);
 
   const checkboxChange = (goodsId) => {
     if (checkedItems.includes(goodsId)) {
@@ -106,16 +103,14 @@ export const Cart = () => {
     }
   };
 
-
-
-  const purchaseSelected =  (e) => {   
+  const purchaseSelected = (e) => {
     // setLink()
-    navigate(`/Goods/Payment/`+e )
+    navigate(`/Goods/Payment/` + e);
   };
 
   const remove = async (num) => {
     try {
-      const response = await CartAxiosApi.removeFromCart(accessToken, num);
+      const response = await CartAxiosApi.removeFromCart(num);
       if (response.status === 200) {
         if (window.confirm("장바구니에서 해당 책을 삭제하시겠습니까?")) {
           fetchCartItems();
@@ -129,8 +124,8 @@ export const Cart = () => {
   };
 
   const move = (e) => {
-    navigate(`/goods/` + e)
-  }
+    navigate(`/goods/` + e);
+  };
   return (
     <>
       <MiddleOrderBox>
@@ -139,36 +134,50 @@ export const Cart = () => {
             <img src={cartImg} alt="장바구니" style={{ width: "45px" }}></img>
             장바구니
           </StyledTitle>
-          {cartItems && cartItems.map((item, i) => (
-            <GoodsCard key={i}>
-              <div className="goodsInfo" >
-                {/* 정보 추가 */}
-                <div onClick={() => { move(item.goodsDetailId) }}>
-                  <img src={item.goodsImg} alt={item.title} className="goodsImage" />
-                  <div className="title" >{item.title}{item.option}</div>
-                  <div className="price">{item.price}원</div>
-                  <div className="quantity">{item.quantity}개</div>
-                  <div className="price">{item.quantity * item.price}원</div>
+          {cartItems &&
+            cartItems.map((item, i) => (
+              <GoodsCard key={i}>
+                <div className="goodsInfo">
+                  {/* 정보 추가 */}
+                  <div
+                    onClick={() => {
+                      move(item.goodsDetailId);
+                    }}
+                  >
+                    <img
+                      src={item.goodsImg}
+                      alt={item.title}
+                      className="goodsImage"
+                    />
+                    <div className="title">
+                      {item.title}
+                      {item.option}
+                    </div>
+                    <div className="price">{item.price}원</div>
+                    <div className="quantity">{item.quantity}개</div>
+                    <div className="price">{item.quantity * item.price}원</div>
+                  </div>
+                  <div className="btn">
+                    <MiddleOrderBox>
+                      <AnotherButton
+                        onClick={() => purchaseSelected(item.cartId)}
+                        value="구매하기"
+                        width="50px"
+                        height="50px"
+                      ></AnotherButton>
+                    </MiddleOrderBox>
+                    <AnotherButton
+                      onClick={() => {
+                        remove(item.cartId);
+                      }}
+                      value="삭제"
+                      width="50px"
+                      height="50px"
+                    ></AnotherButton>
+                  </div>
                 </div>
-                <div className="btn">
-                <MiddleOrderBox>
-            <AnotherButton
-              onClick={() => purchaseSelected(item.cartId)}
-              value="구매하기"
-              width="50px"
-                    height="50px"
-            ></AnotherButton>
-          </MiddleOrderBox>
-                  <AnotherButton
-                    onClick={() => { remove(item.cartId) }}
-                    value="삭제"
-                    width="50px"
-                    height="50px">
-                  </AnotherButton>
-                </div>
-              </div>
-            </GoodsCard>
-          ))}
+              </GoodsCard>
+            ))}
           <br />
           {/* <GoodsCard >
               <div className="goodsInfo" >
