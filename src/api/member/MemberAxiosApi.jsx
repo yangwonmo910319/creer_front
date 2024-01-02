@@ -84,15 +84,4 @@ export const MemberAxiosApi = {
   kakaoLogin: async (data) => {
     return await axios.post(KH_DOMAIN + "/member/kakaoLogin", data);
   },
-
-  // 카카오 로그인 상태 확인
-  checkKakaoLogin: async (token) => {
-    const response = await axios.get(KH_DOMAIN + "/member/checkKakaoLogin", {
-      headers: {
-        Authorization: `Bearer ${token}`,
-      },
-    });
-
-    return response;
-  },
 };
