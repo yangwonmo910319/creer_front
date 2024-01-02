@@ -20,7 +20,7 @@ export const GoodsList = () => {
       <SlideOne />
       {/* <Slide2></Slide2>  */}
       {/* 판매 리스트 카테고리 */}
-      <Category setList={setList} />
+      <Category setList={setList} /> 
       {/* 판매 리스트 출력 */}
       <ListMap list={list} status={"sale"}></ListMap>
     </GoodsListCss>

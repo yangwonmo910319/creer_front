@@ -138,54 +138,65 @@ const ClassCategory = styled.div`
    overflow: hidden;
    text-overflow: ellipsis;
 `;
-
 export const ListMap = ({ list, status }) => {
    return (
-      <ListMapCss>
-         <List>
-            <ul>
-               {list &&
-                  list.map((item, index) =>
-                     item.goodsStatus === status && item.goodsStock !== 0 && item.goodsStock !== null ? (
-                        <li key={index}>
-                           <Link className="" to={`/Goods/${item.goodsDetailId}`}>
-                              <Class1>
-                                 {/* 카테고리 */}
-                                 <ClassCategory>{item.goodsCategory}</ClassCategory>
-                                 {/* 상품 이미지 */}
-                                 <Class1img>
-                                    <img src={item.goodsPic} alt={item.goodsPic} />
-                                 </Class1img>
-                                 {/* 상품명 */}
-                                 <ClassTitle>{item.goodsTitle}</ClassTitle>
-                                 {/* 가격 */}
-                                 {item.goodsStatus === `sale` ?
-                                    <ClassPeice>{item.goodsPrice}원</ClassPeice> :
-                                    <ClassPeice style={{ fontSize: "18px" }}>
-                                       {new Date(item.auctionDate).toLocaleString('ko-KR', {
-                                          year: 'numeric',
-                                          month: '2-digit',
-                                          day: '2-digit',
-                                          hour: '2-digit',
-                                          minute: '2-digit'
-                                       })}
-                                    </ClassPeice>
-                                 }
-
-                                 <div className="member">
-                                    {/* 판매자 이미지 */}
-                                    <Class1Memberimg>
-                                       <img src={item.memberDto.image} alt={""} />
-                                    </Class1Memberimg>
-                                    {/* 판매자 닉네임 */}
-                                    <ClassNick>{item.memberDto && item.memberDto.nickName}</ClassNick>
-                                 </div>
-                              </Class1>
-                           </Link>
-                        </li>
-                     ) : null
-                  )}
-            </ul></List>
-      </ListMapCss>
+     <ListMapCss>
+       <List>
+         <ul>
+           {list &&
+             list.map((item, index) =>
+               item.goodsStatus === status &&
+               item.goodsStock !== 0 &&
+               item.goodsStock !== null ? (
+                 <li key={index}>
+                   {item.goodsStatus === 'sale' ? (
+                     <Link className="" to={`/Goods/${item.goodsDetailId}`}>
+                       <Class1>
+                         <ClassCategory>{item.goodsCategory}</ClassCategory>
+                         <Class1img>
+                           <img src={item.goodsPic} alt={item.goodsPic} />
+                         </Class1img>
+                         <ClassTitle>{item.goodsTitle}</ClassTitle>
+                         <ClassPeice>{item.goodsPrice}원</ClassPeice>
+                         <div className="member">
+                           <Class1Memberimg>
+                             <img src={item.memberDto.image} alt={""} />
+                           </Class1Memberimg>
+                           <ClassNick>{item.memberDto && item.memberDto.nickName}</ClassNick>
+                         </div>
+                       </Class1>
+                     </Link>
+                   ) : (
+                     <Link className="" to={`/Auction/${item.goodsDetailId}`}>
+                       <Class1>
+                         <ClassCategory>{item.goodsCategory}</ClassCategory>
+                         <Class1img>
+                           <img src={item.goodsPic} alt={item.goodsPic} />
+                         </Class1img>
+                         <ClassTitle>{item.goodsTitle}</ClassTitle>
+                         <ClassPeice style={{ fontSize: "18px" }}>
+                           {new Date(item.auctionDate).toLocaleString('ko-KR', {
+                             year: 'numeric',
+                             month: '2-digit',
+                             day: '2-digit',
+                             hour: '2-digit',
+                             minute: '2-digit'
+                           })}
+                         </ClassPeice>
+                         <div className="member">
+                           <Class1Memberimg>
+                             <img src={item.memberDto.image} alt={""} />
+                           </Class1Memberimg>
+                           <ClassNick>{item.memberDto && item.memberDto.nickName}</ClassNick>
+                         </div>
+                       </Class1>
+                     </Link>
+                   )}
+                 </li>
+               ) : null
+             )}
+         </ul>
+       </List>
+     </ListMapCss>
    );
-};
+ };

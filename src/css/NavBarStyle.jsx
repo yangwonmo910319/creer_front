@@ -304,7 +304,7 @@ export const AuctionDropDown = ({ onClose }) => {
     <AuctionDorpDownMenu ref={dropdownRef}>
       <li
         onClick={() => {
-          navigate("/AuctionList");
+          navigate("/auction");
         }}
       >
         경매 보기

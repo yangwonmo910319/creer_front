@@ -112,7 +112,7 @@ const Participate = styled.div`
   }
 `;
 
-export const AuctionOption = ({ goodsDedail, chagerende }) => {
+export const AuctionOption = ({ goodsDedail, chagerende,SelectGoodsLIst }) => {
   const [
     list,
   ] = goodsDedail;
@@ -131,24 +131,24 @@ export const AuctionOption = ({ goodsDedail, chagerende }) => {
     setId(list.goodsDetailId);
   }, [list]);
 
-  const submit = () => {
+  const submit = async () => {
     if (list.goodsPrice > newPrice) {
+      // 기존 가격이 새로운 가격보다 큰 경우 아무것도 하지 않습니다.
     } else {
-      auctionPrice()
-      chagerende();
+      await auctionPrice();  // 입찰 가격을 업데이트합니다.
+      chagerende(); // 렌더링 상태를 변경합니다.
+      await SelectGoodsLIst(); // 상품 정보를 다시 가져옵니다.
     }
   }
   const auctionPrice = async () => {
     try {
       const rsp = await GoodsAxiosApi.goodsPrice(id, newPrice);
-      // 상품 정보를 가져옵니다.
       console.log(rsp.data);
-      //가져온 데이터를 저장
     } catch (error) {
       console.log(error);
     }
-
   };
+
   useEffect(() => {
     // newPrice 상태가 변경될 때마다 수행할 작업
   }, [newPrice]);

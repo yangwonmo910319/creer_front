@@ -50,22 +50,23 @@ export const AuctionDetail = () => {
   // 상품 정보를 가져옵니다.
   useEffect(() => {
     //함수 만들기
-    const SelectGoodsLIst = async () => {
-      try {
-        const rsp = await GoodsAxiosApi.getGoods(goodsId);
-        // 상품 정보를 가져옵니다.
-        console.log(rsp.data);
-
-
-        //가져온 데이터를 저장
-        setList(rsp.data);
-      } catch (error) {
-        console.log(error);
-      }
-    };
+ 
     //함수 실행
     SelectGoodsLIst();
   }, [goodsId]);
+  const SelectGoodsLIst = async () => {
+    try {
+      const rsp = await GoodsAxiosApi.getGoods(goodsId);
+      // 상품 정보를 가져옵니다.
+      console.log(rsp.data);
+
+
+      //가져온 데이터를 저장
+      setList(rsp.data);
+    } catch (error) {
+      console.log(error);
+    }
+  };
   //가져온 상품 정보를 각각의 저장해 줍니다.
   useEffect(() => {
     if (list) {
@@ -126,6 +127,7 @@ export const AuctionDetail = () => {
       <AuctionOption
         goodsDedail={goodsOptionList}
         chagerende={chagerende}
+        SelectGoodsLIst={SelectGoodsLIst}
       ></AuctionOption>
     </GoodsDetailCss>
   );
