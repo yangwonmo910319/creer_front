@@ -13,6 +13,7 @@ import {
   TopC,
   MemberDropDown,
   GoodsDropDown,
+  AuctionDropDown,
   MidR,
   MidRLogged,
 } from "../css/NavBarStyle";
@@ -23,7 +24,7 @@ export const NavBar = () => {
   const [member, setMember] = useState({});
   const [memberView, setMemberView] = useState(false);
   const [goodsView, setGoodsView] = useState(false);
-
+  const [auctionView, setAuctionView] = useState(false);
   // 로그인 판별을 위한 상태
   const [login, setlogin] = useState(window.localStorage.getItem("isLogin"));
 
@@ -141,7 +142,16 @@ export const NavBar = () => {
                       <GoodsDropDown onClose={() => setGoodsView(false)} />
                     )}
                   </li>
-
+                  <li
+                    onClick={() => {
+                      setAuctionView(!auctionView);
+                    }}
+                  >
+                    <span>경매</span>
+                    {auctionView && (
+                      <AuctionDropDown onClose={() => setAuctionView(false)} />
+                    )}
+                  </li>
                   <li
                     onClick={() => {
                       logout();

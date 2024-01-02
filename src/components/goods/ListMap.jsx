@@ -124,13 +124,13 @@ const ClassCategory = styled.div`
   width: 50px;
    font-size: .6em;
    margin-left: 10px;
-   border:  1px solid #b7b5b5;
+   border:  1px solid #b7b5b59a;
    text-align: center;
    margin-bottom: -30px;
    z-index: 2;
    position: relative;
    height: 15px;
-   background-color:  #ffffff;
+   background-color:  #ffffff6c;
    border-radius: 10px; 
    display: inline-block;
    max-width: 100%;
@@ -139,15 +139,14 @@ const ClassCategory = styled.div`
    text-overflow: ellipsis;
 `;
 
-export const ListMap = ({ list }) => {
-   console.log(list);
+export const ListMap = ({ list, status }) => {
    return (
       <ListMapCss>
          <List>
             <ul>
                {list &&
                   list.map((item, index) =>
-                  item.goodsStatus === "sale"&& item.goodsStock!==0 &&item.goodsStock!==null  ? (
+                     item.goodsStatus === status && item.goodsStock !== 0 && item.goodsStock !== null ? (
                         <li key={index}>
                            <Link className="" to={`/Goods/${item.goodsDetailId}`}>
                               <Class1>
@@ -160,7 +159,19 @@ export const ListMap = ({ list }) => {
                                  {/* 상품명 */}
                                  <ClassTitle>{item.goodsTitle}</ClassTitle>
                                  {/* 가격 */}
-                                 <ClassPeice>{item.goodsPrice}원</ClassPeice>
+                                 {item.goodsStatus === `sale` ?
+                                    <ClassPeice>{item.goodsPrice}원</ClassPeice> :
+                                    <ClassPeice style={{ fontSize: "18px" }}>
+                                       {new Date(item.auctionDate).toLocaleString('ko-KR', {
+                                          year: 'numeric',
+                                          month: '2-digit',
+                                          day: '2-digit',
+                                          hour: '2-digit',
+                                          minute: '2-digit'
+                                       })}
+                                    </ClassPeice>
+                                 }
+
                                  <div className="member">
                                     {/* 판매자 이미지 */}
                                     <Class1Memberimg>

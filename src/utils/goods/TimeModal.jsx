@@ -13,7 +13,7 @@ const TimeCss = styled.div`
   }
 `
 
-export const TimeModal = ({ modaOpen, setAuctionTime }) => {
+export const TimeModal = ({ modaOpen, setAuctionDate }) => {
   const [date, setDate] = useState('');
   const [time, setTime] = useState('');
   const [remainingTime, setRemainingTime] = useState(0);
@@ -42,7 +42,7 @@ export const TimeModal = ({ modaOpen, setAuctionTime }) => {
     const selectedDateTime = new Date(date + 'T' + time);
     const isoDateTimeString = selectedDateTime.toISOString();
 
-    setAuctionTime(isoDateTimeString)
+    setAuctionDate(isoDateTimeString)
     const timeDifference = selectedDateTime.getTime() - currentTime.getTime();
 
     setRemainingTime(timeDifference);
@@ -51,12 +51,6 @@ export const TimeModal = ({ modaOpen, setAuctionTime }) => {
       alert('첫 번째 알람 시간입니다!');
       setRemainingTime(0);
     }, timeDifference);
-
-    // setTimeout(() => {
-    //   alert('첫 번째 알람이 종료되었습니다.');
-    // }, timeDifference + 60000); // 첫 번째 알람 시간에서 1분 추가
-
-
 
   };
 

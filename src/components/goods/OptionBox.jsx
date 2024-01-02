@@ -34,7 +34,11 @@ flex-direction: row;
   button{
     margin: 0 5px; 
   }
+
 }
+.quantity{
+    margin-top: 8px;
+  }
 `;
 
 const Check = styled.div`
@@ -157,8 +161,9 @@ export const OptionBox = ({ list, list2 }) => {
   return (
     <OptionBoxCss>
       <Status>
-
-        수 량: {quantity}
+        <div className="quantity">
+          수 량: {quantity}
+        </div>
         <div className="btn">
           <AnotherButton
             width={"40px"} height={"40px"} value={"∧"} onClick={up}

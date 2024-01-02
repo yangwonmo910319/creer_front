@@ -24,6 +24,32 @@ export const GoodsAxiosApi = {
     });
   },
 
+  // 경매 목록 조회
+  AuctionList: async () => {
+    const accessToken = localStorage.getItem("accessToken");
+    return await axios.get(KH_DOMAIN + `/api/goods/auction`, {
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: "Bearer " + accessToken,
+      },
+    });
+  },
+
+  // 경매 금액 변경
+  goodsPrice: async (id, newPrice) => {
+    const accessToken = localStorage.getItem("accessToken");
+    return await axios.post(KH_DOMAIN + `/api/goods/auctionPrice?id=${id}&price=${newPrice}`,
+      {},
+      {
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: "Bearer " + accessToken,
+        },
+      });
+  },
+
+
+
   // 상품 삭제
   deleteGoods: async (id) => {
     const accessToken = localStorage.getItem("accessToken");
@@ -49,7 +75,8 @@ export const GoodsAxiosApi = {
   insertAuction: async (content, auctionTime) => {
     const accessToken = localStorage.getItem("accessToken");
     return await axios.post(
-      KH_DOMAIN + `/auction/new/${auctionTime}`,
+
+      KH_DOMAIN + `/api/goods/new/${auctionTime}`,
       content,
       {
         headers: {

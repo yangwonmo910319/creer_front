@@ -331,8 +331,9 @@ export const GoodsWrite = () => {
   const [goodsTitle, setGoodsTitle] = useState("");
   const [goodsStatus, setGoodsStatus] = useState("sale");
   const [content2, setContent2] = useState([]);
+  const [content, setContent] = useState({});
   const [type, setType] = useState('goods');
-  const [auctionTime, setAuctionTime] = useState('');
+  const [auctionDate, setAuctionDate] = useState('null');
   const nickName = localStorage.getItem("NickName");
   const UserImg = localStorage.getItem("UserImg");
 
@@ -354,11 +355,15 @@ export const GoodsWrite = () => {
     insert()
   }
   const auctionSubmit = () => {
-    insetTime()
+    insert()
   }
 
-  const insetTime = async () => {
-    const content = {
+
+
+
+  useEffect(() => {
+
+    setContent({
       goodsCategory,      // 카테고리
       goodsPic,        // 상품 사진    ,
       goodsDesc,        // 상품 설명
@@ -366,35 +371,16 @@ export const GoodsWrite = () => {
       goodsTitle,        // 상품 이름      
       goodsPrice,        // 상품 가격
       goodsDeliveryFee,  // 배달비
-      goodsStatus,  // 판매 상태      
-    }
-    try {
-      const response = await GoodsAxiosApi.insertAuction(content, auctionTime);
-    } catch (e) {
-      console.log("경매 상품 등록 실패" + e)
-    }
-  }
+      goodsStatus,  // 판매 상태    
 
+    })
+  }, [goodsCategory, goodsPic, goodsDesc, goodsStock, goodsTitle, goodsPrice, goodsStatus])
 
-
-
-  const insert = async () => {
-    const content = {
-      goodsCategory,      // 카테고리
-      goodsPic,        // 상품 사진    ,
-      goodsDesc,        // 상품 설명
-      goodsStock,      // 재고
-      goodsTitle,        // 상품 이름      
-      goodsPrice,        // 상품 가격
-      goodsDeliveryFee,  // 배달비
-      goodsStatus,  // 판매 상태      
-    }
-
+  const insert = async (e) => {
 
     //대표 이미지 추가
-
     try {
-      const response = await GoodsAxiosApi.insertGoods(content);
+      const response = await GoodsAxiosApi.insertAuction(content, auctionDate);
       //작성한 글의 PK를 가져옴
       const num = response.data;
       // 새로운 속성을 추가한 새로운 배열
@@ -418,7 +404,7 @@ export const GoodsWrite = () => {
       console.error("submit review 데이터에러 :", error);
       console.log(error)
     }
-    navigate("/")
+    // navigate("/")
   }
 
 
@@ -512,8 +498,8 @@ export const GoodsWrite = () => {
 
       <GoodsOptionCss>
         <TypeCss>
-          <AnotherButton value={"상품"} onClick={() => { setType('goods'); timeModalOpen(); }}></AnotherButton>
-          <AnotherButton value={"경매"} onClick={() => { setType("auction"); }}></AnotherButton>
+          <AnotherButton value={"상품"} onClick={() => { setType('goods'); timeModalOpen(); setGoodsStatus('sale') }}></AnotherButton>
+          <AnotherButton value={"경매"} onClick={() => { setType("auction"); setGoodsStatus('auction') }}></AnotherButton>
         </TypeCss>
         <OptionCategory goodsCategory={goodsCategory} >  {goodsCategory ? goodsCategory : "카테고리"}
 
@@ -555,15 +541,12 @@ export const GoodsWrite = () => {
         </Delivery>
 
         <Option>
-
           <div className="option1">
             <OptionWriteBox setContent2={setContent2}></OptionWriteBox>
           </div>
           <div className="option1">
-
-
             {type === 'auction' &&
-              <TimeModal modaOpen={modaOpen} setAuctionTime={setAuctionTime}></TimeModal>
+              <TimeModal modaOpen={modaOpen} setAuctionDate={setAuctionDate}></TimeModal>
             }
           </div>
         </Option>
@@ -586,7 +569,10 @@ export const GoodsWrite = () => {
             goodsPrice.length !== 0 &&
             goodsDeliveryFee.length !== 0) ? <> {
 
-              type !== 'auction' ? <>  <AnotherButton value={" 상품 작성 완료"} onClick={goodsSubmit}></AnotherButton></> : <> <AnotherButton value={"경매 작성 완료"} onClick={auctionSubmit}></AnotherButton></>
+              type !== 'auction' ?
+                <>  <AnotherButton value={" 상품 작성 완료"} onClick={goodsSubmit}></AnotherButton></>
+                :
+                <> <AnotherButton value={"경매 작성 완료"} onClick={auctionSubmit}></AnotherButton></>
             }
 
           </> : <>

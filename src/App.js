@@ -4,12 +4,13 @@ import { Main } from "./components/Main";
 import { SignUp } from "./pages/member/SignUp";
 import { Login } from "./pages/member/Login";
 import { Cart } from "./pages/goods/Cart";
-import { Test } from "./pages/Test";
+import { AuctionList } from "./pages/auction/AuctionList";
 import { SellerList } from "./pages/member/SellerList";
 import { BuyerList } from "./pages/member/BuyerList";
 import { MyPage } from "./pages/member/MyPage";
 import { GoodsList } from "./pages/goods/GoodsList";
 import { GoodsDetail } from "./pages/goods/GoodsDetail";
+import { AuctionDetail } from "./pages/auction/AuctionDetail";
 import { GoodsWrite } from "./pages/goods/GoodsWrite";
 import { GoodsEdit } from "./pages/goods/GoodsEdit";
 import { ChatList } from "./pages/chat/ChatList";
@@ -27,11 +28,12 @@ function App() {
           <Route path="/Login" element={<Login />}></Route>
           <Route element={<Main />}>
             <Route path="/" element={<GoodsList />}></Route>
-            <Route path="/Test" element={<Test />}></Route>
             <Route path="/:title" element={<GoodsList />}></Route>
             <Route path="/Goods/:goodsId" element={<GoodsDetail />}></Route>
             <Route path="/GoodsEdit/:goodsId" element={<GoodsEdit />}></Route>
             <Route path="/GoodsWrite" element={<GoodsWrite />}></Route>
+            <Route path="/Auction" element={<AuctionList />}></Route>
+            <Route path="/Auction/:goodsId" element={<AuctionDetail/>}></Route>
             <Route path="/Cart" element={<Cart />}></Route>
             <Route path="/Goods/Payment/:goodsId" element={<Payment />}></Route>
             <Route path="/Member/Seller" element={<SellerList />}></Route>

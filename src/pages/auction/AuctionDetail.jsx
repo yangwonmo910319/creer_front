@@ -6,6 +6,7 @@ import { useParams } from "react-router-dom";
 import { useEffect, useState } from "react";
 import { GoodsInfoEdit } from "../../components/goods/GoodsInfoEdit";
 import { GoodsOptionEdit } from "../../components/goods/GoodsOptionEdit";
+import { AuctionOption } from "../../components/goods/AuctionOption";
 
 const GoodsDetailCss = styled.div`
   display: flex;
@@ -25,7 +26,7 @@ const GoodsDetailCss = styled.div`
   }
 `;
 
-export const GoodsDetail = () => {
+export const AuctionDetail = () => {
   const { goodsId } = useParams();
   const [list, setList] = useState("");
   const [goodsCategory, setGoodsCategory] = useState("");
@@ -36,9 +37,16 @@ export const GoodsDetail = () => {
   const [goodsPrice, setGoodsPrice] = useState("");
   const [goodsStock, setGoodsStock] = useState("");
   const [goodsTitle, setGoodsTitle] = useState("");
+  const [auctionDate, setAuctionDate] = useState("");
   const [memberDto, setMemberDto] = useState("");
+  const [render, setrender] = useState(true);
   const nickName = localStorage.getItem("NickName");
 
+
+
+  const chagerende = () => {
+    setrender(prevRender => !prevRender);
+  }
   // 상품 정보를 가져옵니다.
   useEffect(() => {
     //함수 만들기
@@ -46,9 +54,8 @@ export const GoodsDetail = () => {
       try {
         const rsp = await GoodsAxiosApi.getGoods(goodsId);
         // 상품 정보를 가져옵니다.
-        console.log("상품 상세정보 : " + goodsId);
         console.log(rsp.data);
-        console.log(rsp.data);
+
 
         //가져온 데이터를 저장
         setList(rsp.data);
@@ -71,6 +78,7 @@ export const GoodsDetail = () => {
         goodsPrice,
         goodsStock,
         goodsTitle,
+        auctionDate,
         memberDto,
       } = list;
 
@@ -82,33 +90,13 @@ export const GoodsDetail = () => {
       setGoodsPrice(goodsPrice);
       setGoodsStock(goodsStock);
       setGoodsTitle(goodsTitle);
+      setAuctionDate(auctionDate);
       setMemberDto(memberDto);
     }
   }, [list]);
 
-  const updateGoodsDetail = () => {
-    //게시글 수정 기능을 만듬
-    const updateGoods = async () => {
-      try {
-        const update = await GoodsAxiosApi.updateGoods(
-          goodsCategory,
-          goodsDeliveryFee,
-          goodsDesc,
-          goodsDetailId,
-          goodsPic,
-          goodsPrice,
-          goodsStock,
-          goodsTitle
-        );
-      } catch (error) {
-        console.log(error);
-      }
-    };
-    //게시글 수정 기능을 실행
-    updateGoods();
-  };
 
-  //정보 컴포넌트로 보내줄 데이터
+
   //상품 기본키,상품 정보 ,상품사진
   const goodsInfoList = [
     goodsDetailId,
@@ -122,6 +110,7 @@ export const GoodsDetail = () => {
     setGoodsTitle,
     setGoodsPrice,
     setGoodsStock,
+    setAuctionDate,
     setGoodsDeliveryFee,
     setGoodsCategory,
     setMemberDto,
@@ -134,10 +123,10 @@ export const GoodsDetail = () => {
         reply={list.reviews}
         member={memberDto.nickName}
       ></GoodsInfo>
-      <GoodsOption
+      <AuctionOption
         goodsDedail={goodsOptionList}
-        updateGoodsDetail={updateGoodsDetail}
-      ></GoodsOption>
+        chagerende={chagerende}
+      ></AuctionOption>
     </GoodsDetailCss>
   );
 };
