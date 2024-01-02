@@ -66,7 +66,7 @@ export const Login = () => {
       if (res.data.grantType === "Bearer") {
         console.log("accessToken : ", res.data.accessToken);
         console.log("refreshToken : ", res.data.refreshToken);
-        window.localStorage.setItem("accessToken", res.data.accessToken); // 브라우저에서 임시로 값을 저장하는 기술
+        window.localStorage.setItem("accessToken", res.data.accessToken);
         window.localStorage.setItem("refreshToken", res.data.refreshToken);
         window.localStorage.setItem("isLogin", "true");
         navigate("/");
@@ -85,26 +85,29 @@ export const Login = () => {
   const onKakaoLoginSuccess = async (data) => {
     console.log(
       // JSON.stringify(data) : 콘솔에서 [object Object]와 같이 찍히는 데이터를 문자열로 변환하여 출력하는 방법
-      "카카오 로그인 시 서버에 날라가는 데이터 : " + JSON.stringify(data)
+      "카카오 로그인 시 서버에 날라가는 데이터 : " + JSON.stringify(data) // 이때 전송되는 액세스 토큰은 카카오에서 제공
     );
 
-    // 카카오 사용자 정보와 토큰 등을 백엔드 서버에 전달
+    // 카카오 서버에서 받은 액세스 토큰을 서버로 전송
     const res = await MemberAxiosApi.kakaoLogin({
       access_token: data.response.access_token,
     });
-    console.log(res);
+
+    console.log("카카오 서버의 응답 : " + JSON.stringify(res.data));
+    console.log("kakaLogin 액세스 토큰 : " + res.data.accessToken);
+    console.log("kakaLogin 리프레시 토큰 : " + res.data.refreshToken);
 
     // 서버로부터 받은 토큰을 로컬 스토리지에 저장
-    const token = res.data;
-    window.localStorage.setItem("authToken", token);
-
     // 로그인 상태를 업데이트
-    // login(res, token);
+    window.localStorage.setItem("accessToken", res.data.accessToken);
+    window.localStorage.setItem("refreshToken", res.data.refreshToken);
+    window.localStorage.setItem("isLogin", "true");
+    navigate("/");
   };
 
   // 카카오 로그인에 실패하면 실행할 함수
   const onKakaoLoginFailure = (error) => {
-    console.error(error);
+    console.error("카카오 로그인에 실패했습니다 : " + error);
   };
 
   return (
@@ -170,7 +173,12 @@ export const Login = () => {
       </Items>
 
       <Items className="item2">
-        <Input placeholder="패스워드" type={"password"} value={inputPw} onChange={onChangePw} />
+        <Input
+          placeholder="패스워드"
+          type={"password"}
+          value={inputPw}
+          onChange={onChangePw}
+        />
       </Items>
       <Items className="hint">
         {inputPw.length > 0 && (
