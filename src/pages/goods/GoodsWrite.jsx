@@ -335,7 +335,7 @@ export const GoodsWrite = () => {
   const [auctionTime, setAuctionTime] = useState('');
   const nickName = localStorage.getItem("NickName");
   const UserImg = localStorage.getItem("UserImg");
-  
+
   //상품 대표 이미지
   const [url, setUrl] = useState('');
   //상품 대표 이미지 변경시 사용
@@ -343,41 +343,41 @@ export const GoodsWrite = () => {
   //상품 대표 이미지 변경시 사용
   const [subUrl, setSubUrl] = useState([]);
   // 상품 정보를 가져옵니다.
- const [modaOpen,setModaOpen] = useState(false);
+  const [modaOpen, setModaOpen] = useState(false);
   useEffect(() => {
 
   }, [subUrl]);
 
 
 
-const goodsSubmit=()=>{
-  insert()
-}
-const auctionSubmit=()=>{
-  insetTime()
-}
- 
-const insetTime=async()=>{
-  const content = {
-    goodsCategory,      // 카테고리
-    goodsPic,        // 상품 사진    ,
-    goodsDesc,        // 상품 설명
-    goodsStock,      // 재고
-    goodsTitle,        // 상품 이름      
-    goodsPrice,        // 상품 가격
-    goodsDeliveryFee,  // 배달비
-    goodsStatus,  // 판매 상태      
+  const goodsSubmit = () => {
+    insert()
   }
-  try{
-    const response = await GoodsAxiosApi.insertAuction(content,auctionTime);
-  }catch(e){
-   console.log("경매 상품 등록 실패" + e)
+  const auctionSubmit = () => {
+    insetTime()
   }
-}
+
+  const insetTime = async () => {
+    const content = {
+      goodsCategory,      // 카테고리
+      goodsPic,        // 상품 사진    ,
+      goodsDesc,        // 상품 설명
+      goodsStock,      // 재고
+      goodsTitle,        // 상품 이름      
+      goodsPrice,        // 상품 가격
+      goodsDeliveryFee,  // 배달비
+      goodsStatus,  // 판매 상태      
+    }
+    try {
+      const response = await GoodsAxiosApi.insertAuction(content, auctionTime);
+    } catch (e) {
+      console.log("경매 상품 등록 실패" + e)
+    }
+  }
 
 
 
-  
+
   const insert = async () => {
     const content = {
       goodsCategory,      // 카테고리
@@ -452,7 +452,7 @@ const insetTime=async()=>{
     const updatedSubUrl = subUrl.filter((_, i) => i !== index);
     setSubUrl(updatedSubUrl);
   }
-  const timeModalOpen=()=>{
+  const timeModalOpen = () => {
     setModaOpen(true)
   }
   return (
@@ -511,12 +511,12 @@ const insetTime=async()=>{
       </GoodsInfoCss>
 
       <GoodsOptionCss>
-        <TypeCss>     
-            <AnotherButton value={"상품"} onClick={()=>{setType('goods');timeModalOpen(); }}></AnotherButton> 
-            <AnotherButton value={"경매"} onClick={() => { setType("auction"); }}></AnotherButton>
-            </TypeCss>
+        <TypeCss>
+          <AnotherButton value={"상품"} onClick={() => { setType('goods'); timeModalOpen(); }}></AnotherButton>
+          <AnotherButton value={"경매"} onClick={() => { setType("auction"); }}></AnotherButton>
+        </TypeCss>
         <OptionCategory goodsCategory={goodsCategory} >  {goodsCategory ? goodsCategory : "카테고리"}
-    
+
           <div className="CategoryRaido">
             <input type="radio" name="goods" id="패션" value="패션" onChange={(e) => { setGoodsCategory(e.target.value) }} />패션
             <br />
@@ -546,31 +546,31 @@ const insetTime=async()=>{
         <Delivery>
           <OptionPrice goodsPrice={goodsPrice} type="text" value={goodsPrice} onChange={(e) => { setGoodsPrice(e.target.value) }} placeholder=" 가격 :" />
           <GoodsDeliveryFee goodsDeliveryFee={goodsDeliveryFee} type="text" value={goodsDeliveryFee} onChange={(e) => { setGoodsDeliveryFee(e.target.value) }} placeholder=" 배송비 :" />
-          {type === 'goods' &&          
+          {type === 'goods' &&
             <GoodsRefund goodsRefund={goodsStock} type="text" value={goodsStock} onChange={(e) => { setGoodsStock(e.target.value) }} placeholder=" 재고 :" />
-            }
-         
-        
+          }
+
+
 
         </Delivery>
-        
+
         <Option>
-   
+
           <div className="option1">
             <OptionWriteBox setContent2={setContent2}></OptionWriteBox>
           </div>
           <div className="option1">
-    
-     
-           {type === 'auction' &&          
-            <TimeModal modaOpen={modaOpen} setAuctionTime={setAuctionTime}></TimeModal>
+
+
+            {type === 'auction' &&
+              <TimeModal modaOpen={modaOpen} setAuctionTime={setAuctionTime}></TimeModal>
             }
           </div>
         </Option>
 
       </GoodsOptionCss>
       <Option2>
-          { 
+        {
           (goodsCategory !== null &&
             goodsPic !== null &&
             goodsDesc !== null &&
@@ -584,11 +584,16 @@ const insetTime=async()=>{
             // goodsStock.length !== 0 &&
             goodsTitle.length !== 0 &&
             goodsPrice.length !== 0 &&
-            goodsDeliveryFee.length !== 0) && type !=='auction'?
-            <AnotherButton value={" 상품 작성 완료"} onClick={goodsSubmit}></AnotherButton>
-            :
-            <AnotherButton value={"경매 작성 완료"} onClick={auctionSubmit}></AnotherButton>
+            goodsDeliveryFee.length !== 0) ? <> {
+
+              type !== 'auction' ? <>  <AnotherButton value={" 상품 작성 완료"} onClick={goodsSubmit}></AnotherButton></> : <> <AnotherButton value={"경매 작성 완료"} onClick={auctionSubmit}></AnotherButton></>
+            }
+
+          </> : <>
+
+          </>
         }
+        {/**/}
       </Option2>
     </GoodsWriteCss>
   )

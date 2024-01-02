@@ -170,7 +170,7 @@ export const Login = () => {
       </Items>
 
       <Items className="item2">
-        <Input placeholder="패스워드" value={inputPw} onChange={onChangePw} />
+        <Input placeholder="패스워드" type={"password"} value={inputPw} onChange={onChangePw} />
       </Items>
       <Items className="hint">
         {inputPw.length > 0 && (

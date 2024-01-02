@@ -1,23 +1,27 @@
 import React, { useState, useEffect } from "react";
 import styled from "styled-components";
+import { AnotherButton } from "../../css/common/AnotherButton";
 
 
-const TimeCss=styled.div`
+const TimeCss = styled.div`
   font-size: 1.2em;
   input{
     margin: 5px;
   }
+  button{
+    margin-top: 20px;
+  }
 `
 
-export const TimeModal = ({modaOpen,setAuctionTime}) => {
+export const TimeModal = ({ modaOpen, setAuctionTime }) => {
   const [date, setDate] = useState('');
   const [time, setTime] = useState('');
   const [remainingTime, setRemainingTime] = useState(0);
-  const [modalOpen,setModalOpen] = useState(true);
-  useEffect(()=>{
+  const [modalOpen, setModalOpen] = useState(true);
+  useEffect(() => {
 
     setModalOpen(modaOpen)
-  },[modaOpen])
+  }, [modaOpen])
 
   const handleDateChange = (event) => {
     setDate(event.target.value);
@@ -42,23 +46,23 @@ export const TimeModal = ({modaOpen,setAuctionTime}) => {
     const timeDifference = selectedDateTime.getTime() - currentTime.getTime();
 
     setRemainingTime(timeDifference);
-  
+
     setTimeout(() => {
       alert('첫 번째 알람 시간입니다!');
-      setRemainingTime(0);         
+      setRemainingTime(0);
     }, timeDifference);
-  
+
     // setTimeout(() => {
     //   alert('첫 번째 알람이 종료되었습니다.');
     // }, timeDifference + 60000); // 첫 번째 알람 시간에서 1분 추가
-  
 
-  
+
+
   };
- 
+
   useEffect(() => {
     let countdownInterval;
-    
+
     if (remainingTime > 0) {
       countdownInterval = setInterval(() => {
         setRemainingTime(prevTime => prevTime - 1000);
@@ -89,39 +93,39 @@ export const TimeModal = ({modaOpen,setAuctionTime}) => {
   };
   return (
     <TimeCss>
-            {modalOpen  === true&&  
-    <div>
-    {/* (YYYY-MM-DD) */}
-      <label>경매 날짜를 입력하세요 : </label>
-      <br></br>
-      <input
-        type="date"
-        value={date}
-        onChange={handleDateChange}
-      />
-      <br />
-      <label>시간을 입력하세요: </label>
-      <br></br>
-      <input
-        type="time"
-        value={time}
-        onChange={handleTimeChange}
-      />
-      <br />
-      <button onClick={setAlarm}>알람 설정</button>
-      {remainingTime > 0 && (
+      {modalOpen === true &&
         <div>
-          <p>
-            경매 까지 남은 시간: {formatTime(Math.floor(remainingSeconds / 3600))}시간{' '}
-            {formatTime(Math.floor((remainingSeconds % 3600) / 60))}분{' '}
-            {formatTime(Math.floor(remainingSeconds % 60))}초
-          </p>
-          <div style={barStyle}>
-            <div style={fillStyle}></div>
-          </div>
+          {/* (YYYY-MM-DD) */}
+          <label>경매 날짜를 입력하세요 : </label>
+          <br></br>
+          <input
+            type="date"
+            value={date}
+            onChange={handleDateChange}
+          />
+          <br />
+          <label>시간을 입력하세요: </label>
+          <br></br>
+          <input
+            type="time"
+            value={time}
+            onChange={handleTimeChange}
+          />
+          <br />
+          <AnotherButton value={"날짜 설정"} onClick={setAlarm}></AnotherButton>
+          {remainingTime > 0 && (
+            <div>
+              <p>
+                경매 까지 남은 시간: {formatTime(Math.floor(remainingSeconds / 3600))}시간{' '}
+                {formatTime(Math.floor((remainingSeconds % 3600) / 60))}분{' '}
+                {formatTime(Math.floor(remainingSeconds % 60))}초
+              </p>
+              <div style={barStyle}>
+                <div style={fillStyle}></div>
+              </div>
+            </div>
+          )}
         </div>
-      )}
-    </div>
-}</TimeCss>
+      }</TimeCss>
   );
 };

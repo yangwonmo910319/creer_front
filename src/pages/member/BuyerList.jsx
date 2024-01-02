@@ -95,14 +95,14 @@ export const BuyerList = () => {
   const [checkedItems, setCheckedItems] = useState([]);
   const accessToken = localStorage.getItem("accessToken");
   const fetchCartItems = async () => {
-        try {
-      const response =  await PurchaseAxiosApi.getMyPurchase();
+    try {
+      const response = await PurchaseAxiosApi.getMyPurchase();
       if (response.status === 200) {
         setCartItems(response.data);
         console.log(response.data);
         console.log(response.data);
         console.log(response.data);
-  
+
       } else {
         console.error("장바구니 가져오기 실패");
       }
@@ -110,7 +110,7 @@ export const BuyerList = () => {
       console.error("장바구니 목록을 가져오는 중 오류 발생", error);
     }
   };
-  
+
   useEffect(() => {
     if (accessToken) {
       fetchCartItems();
@@ -130,9 +130,9 @@ export const BuyerList = () => {
       console.error("에러 확인:", error);
     }
   };
-  const purchaseSelected =  (e) => {   
+  const purchaseSelected = (e) => {
     // setLink()
-    navigate(`/Goods/Payment/`+e )
+    navigate(`/Goods/Payment/` + e)
   };
   const move = (e) => {
     navigate(`/goods/` + e)
@@ -149,24 +149,24 @@ export const BuyerList = () => {
             <GoodsCard key={i}>
               <div className="goodsInfo" >
                 {/* 정보 추가 */}
-                <div onClick={() => { move(item.goodsDetailId) }}>                  
+                <div onClick={() => { move(item.goodsDetailId) }}>
                   <img src={item.goodsDetailId.goodsPic} alt={item.title} className="goodsImage" />
                   <div className="title" >{item.goodsDetailId.goodsTitle}{item.option}</div>
-               
+
                   <div className="price">{item.goodsDetailId.goodsPrice}원</div>
                   <div className="quantity">{item.quantity}개</div>
                   <div className="price">{item.quantity * item.goodsDetailId.goodsPrice}원</div>
-                </div>       
+                </div>
               </div>
               <div className="goodsInfo2" >
                 {/* 정보 추가 */}
-                <div className="title2" >받는곳 :{item.receiveAdd}</div>
-                <div className="title2" >받는이 :{item.receiveName}</div>
-                <div className="title2" >받는 번호:{item.receiveNumber}</div>
+                <div className="title2" >배송 주소 :{item.receiveAdd}</div>
+                <div className="title2" >성함:{item.receiveName}</div>
+                <div className="title2" >연락처 :{item.receiveNumber}</div>
                 {/* <div className="title2" >결재 상태:{item.status}</div> */}
               </div>
             </GoodsCard>
-          ))}      
+          ))}
         </CartPageContainer>
       </MiddleOrderBox>
       {/* <AnotherButton
