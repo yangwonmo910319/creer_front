@@ -39,7 +39,7 @@ const ModalContent = styled.div`
   padding: 30px;
   border-radius: 10px;
   box-shadow: 0 0 20px rgba(0, 0, 0, 0.5);
-  width: 80%;
+  width: 50%;
   max-width: 1000px;
   height: auto;
   text-align: center;
@@ -52,6 +52,12 @@ const ModalContent = styled.div`
   display: flex;
   height: auto;
   flex-direction: row;
+  @media (max-width: 970px) {
+    flex-direction: column;
+   margin-left: 25px;
+   margin:  0 auto;
+   justify-content: center;
+  }
 }
 .content1-1{
   width: 150px;
@@ -59,6 +65,10 @@ const ModalContent = styled.div`
   font-size: 1.1em;
 display: flex;
 justify-content: end;
+@media (max-width: 970px) {
+   justify-content: center;
+ width: 100%;
+  }
 }
 .content1-2{
   width: 100%;
@@ -66,6 +76,10 @@ justify-content: end;
   margin-left: 10px;
   display: flex;
   justify-content: start;
+  @media (max-width: 970px) {
+   justify-content: center;
+ width: 100%;
+  }
 }
 
 .content2{
@@ -74,18 +88,36 @@ justify-content: end;
   display: flex;
   height: auto;
   flex-direction: row;
+  @media (max-width: 970px) {
+    flex-direction: column;
+ 
+  }
+
+
+
   .content2-1{
     width: 150px;
   height: 30px;
   font-size: 1.1em;
 display: flex;
 justify-content: end;
+@media (max-width: 970px) {
+   justify-content: center;
+   width: 100%;
+ 
+  }
 }
 .content2-2{
   width: 100%;
   height: 300px;
   margin-left: 10px; 
+  @media (max-width: 970px) {
+   justify-content: start;
+   margin-left: 25px;
+ 
+  }
 }
+
 }
 .content3{
   width: 100%;
@@ -131,10 +163,13 @@ img{
 .content4{
   margin: 0 auto;
   margin-top: 20px;
-  width: 100%;
+  width: 400px;
   height: 50px;
   display: flex;
-  justify-content: center;  
+  justify-content:center;  
+   button{
+    margin: 0 20px;
+   }  
 }
 
 `;
@@ -157,7 +192,9 @@ const Star = styled(FaStar)`
   cursor: pointer;
 `;
 const TextArea = styled.textarea`
-  width: 100%;
+  width: 85%;
+  width: 85%;
+  float: left;
   height: 300px;
 `;
 

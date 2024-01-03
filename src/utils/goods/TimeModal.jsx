@@ -48,7 +48,7 @@ export const TimeModal = ({ modaOpen, setAuctionDate }) => {
     setRemainingTime(timeDifference);
 
     setTimeout(() => {
-      alert('첫 번째 알람 시간입니다!');
+      // alert('첫 번째 알람 시간입니다!');
       setRemainingTime(0);
     }, timeDifference);
 

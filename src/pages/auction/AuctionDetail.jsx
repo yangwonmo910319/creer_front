@@ -50,7 +50,7 @@ export const AuctionDetail = () => {
   // 상품 정보를 가져옵니다.
   useEffect(() => {
     //함수 만들기
- 
+
     //함수 실행
     SelectGoodsLIst();
   }, [goodsId]);

@@ -11,6 +11,9 @@ const BuyboxCss = styled.div`
   margin-top: 50px;
   justify-content: space-around;
   display: flex;
+  button{
+    margin: 5px;
+  }
 `;
 
 export const Buybox = ({ list, optionList, quantity1 }) => {

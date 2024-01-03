@@ -91,9 +91,9 @@ const Participate = styled.div`
      font-size: 1.3em;
   }
     .d2{  margin-top: 20px;
-     font-size: 1em;
+     font-size: 1.2em;
      display: flex;
-     color: #000000;
+     color: #606060;
      flex-direction: column;
      padding-bottom: 20px;
      border-bottom: 1px solid #bfbebe;
@@ -112,7 +112,7 @@ const Participate = styled.div`
   }
 `;
 
-export const AuctionOption = ({ goodsDedail, chagerende,SelectGoodsLIst }) => {
+export const AuctionOption = ({ goodsDedail, chagerende, SelectGoodsLIst }) => {
   const [
     list,
   ] = goodsDedail;
@@ -152,6 +152,11 @@ export const AuctionOption = ({ goodsDedail, chagerende,SelectGoodsLIst }) => {
   useEffect(() => {
     // newPrice 상태가 변경될 때마다 수행할 작업
   }, [newPrice]);
+  const currentDateTime = new Date();
+  // list.auctionDate를 JavaScript Date 객체로 변환
+  const auctionDateTime = new Date(list.auctionDate);
+  // list.auctionDate가 현재 시간 이후인지 확인하여 true,false를 입력
+  const timeOut = currentDateTime > auctionDateTime;
   return (
     <GoodsOptionCss>
       <OptionCategory>{goodsCategory}</OptionCategory>
@@ -174,11 +179,12 @@ export const AuctionOption = ({ goodsDedail, chagerende,SelectGoodsLIst }) => {
           현재 가 {list.goodsPrice}원
         </div>
         <div className="d2">
-          참여하기
-          <input type="number" value={newPrice} onChange={chagePrice} placeholder="입찰 희망가" />
+
+          {timeOut ? null : <>
+            <input type="number" value={newPrice} onChange={chagePrice} placeholder="입찰 희망가" />
+            {list.goodsPrice > newPrice && newPrice !== "" && <>기존 가격보다 작습니다</>}</>
+          }
         </div>
-        {newPrice}
-        {list.goodsPrice > newPrice && newPrice !== "" && <>기존 가격보다 작습니다</>}
         <div className="d3">
           <AnotherButton value="입찰" onClick={submit} />
         </div>

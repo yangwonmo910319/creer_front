@@ -64,8 +64,8 @@ const OptionCategory = styled.div`
   height: 25px;
   border-radius: 15px;
   display: flex;
-  color: white;
-  background: #adadad;
+  color: #000000;
+  background: #e3e3e340;
   justify-content: center;
   border: 1px solid  #727272;
 `;

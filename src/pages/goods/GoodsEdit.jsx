@@ -86,7 +86,7 @@ export const GoodsEdit = () => {
   }, [list]);
 
   const updateGoodsDetail = () => {
-    alert("수정" + goodsDesc)
+
     //게시글 수정 기능을 만듬
     const updateGoods = async () => {
       try {
