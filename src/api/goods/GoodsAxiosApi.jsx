@@ -47,6 +47,17 @@ export const GoodsAxiosApi = {
         },
       });
   },
+  goodsPrice2: async (id, newPrice) => {
+    const accessToken = localStorage.getItem("accessToken");
+    return await axios.post(KH_DOMAIN + `/api/goods/auctionPrice2?id=${id}&price=${newPrice}`,
+      {},
+      {
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: "Bearer " + accessToken,
+        },
+      });
+  },
 
 
 

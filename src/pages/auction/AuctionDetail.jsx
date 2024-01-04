@@ -59,8 +59,6 @@ export const AuctionDetail = () => {
       const rsp = await GoodsAxiosApi.getGoods(goodsId);
       // 상품 정보를 가져옵니다.
       console.log(rsp.data);
-
-
       //가져온 데이터를 저장
       setList(rsp.data);
     } catch (error) {

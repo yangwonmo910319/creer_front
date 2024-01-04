@@ -18,7 +18,36 @@ export const CartAxiosApi = {
       }
     );
   },
-
+  
+  addToCart2: async (content,buyer) => {
+    console.log(buyer)
+    console.log(buyer)
+    console.log(buyer)
+    console.log(buyer)
+    console.log(buyer)
+    console.log(buyer)
+    console.log(buyer)
+    console.log(buyer)
+    console.log(buyer)
+    console.log(buyer)
+    console.log(buyer)
+    console.log(buyer)
+    console.log(buyer)
+    console.log(buyer)
+    console.log(buyer)
+    const accessToken = localStorage.getItem("accessToken");
+    return await axios.post(
+      `${KH_DOMAIN}/Cart/add`, // URL
+      content, // 요청 본문
+      {
+        headers: {
+          // 설정 객체
+          "Content-Type": "application/json",
+          Authorization: "Bearer " + accessToken,
+        },
+      }
+    );
+  },
   // 장바구니 전체 조회
   getCartItems: async () => {
     const accessToken = localStorage.getItem("accessToken");

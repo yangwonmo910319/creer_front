@@ -4,6 +4,8 @@ import { AuctionTime } from "../auction/AuctionTime";
 import { useNavigate } from "react-router-dom";
 import { AnotherButton } from "../../css/common/AnotherButton";
 import { GoodsAxiosApi } from "../../api/goods/GoodsAxiosApi";
+import { CartAxiosApi } from "../../api/goods/CartAxiosApi";
+import { AuctionModal } from "../../utils/goods/AuctionModal";
 
 
 const GoodsOptionCss = styled.div`
@@ -116,15 +118,20 @@ export const AuctionOption = ({ goodsDedail, chagerende, SelectGoodsLIst }) => {
   const [
     list,
   ] = goodsDedail;
-  console.log("sssssssssssssssslist")
-  console.log(list)
-  console.log(list)
-  console.log(list)
+
   const [goodsTitle, setGoodsTitle1] = useState("");
+  const [content, setContent] = useState({});
   const [goodsCategory, setGoodsCategory1] = useState("");
   const [newPrice, setNewPrice] = useState("");
   const [id, setId] = useState("");
   const [buyer, setBuyer] = useState('')
+  const [modalOpen, setModalOpen] = useState(false);
+    //판매자
+    const [seller, setSeller] = useState();
+    //옵션
+    const [option, setOption] = useState("기본");
+    //상태
+    const [status, setStatus] = useState("결제 전");
   const chagePrice = (e) => {
     setNewPrice(e.target.value)
   }
@@ -136,36 +143,104 @@ export const AuctionOption = ({ goodsDedail, chagerende, SelectGoodsLIst }) => {
       setId(list.goodsDetailId);
       const auction = list.goodsStatus;
       const splitted = auction.split('='); // '='를 기준으로 문자열 분할
-      const extractedName = splitted[1] ? splitted[1].trim() : ''; // 공백 제거 후 '이름' 추출
-      setBuyer(extractedName);
+      setBuyer(splitted[1] ? splitted[1].trim() : '');// 공백 제거 후 '이름' 추출
     }
   }, [list]);
   const submit = async () => {
-    if (list.goodsPrice > newPrice) {
-      // 기존 가격이 새로운 가격보다 큰 경우 아무것도 하지 않습니다.
-    } else {
+
       await auctionPrice();  // 입찰 가격을 업데이트합니다.
-      chagerende(); // 렌더링 상태를 변경합니다.
-      await SelectGoodsLIst(); // 상품 정보를 다시 가져옵니다.
-    }
+
+ 
   }
+  //입찰 버튼 클릭시 가격과 구매자 등록
   const auctionPrice = async () => {
     try {
       const rsp = await GoodsAxiosApi.goodsPrice(id, newPrice);
-      console.log(rsp.data);
-    } catch (error) {
+      console.log(rsp);
+      if(rsp.data !== false){        
+        chagerende(); // 렌더링 상태를 변경합니다.
+        SelectGoodsLIst(); // 상품 정보를 다시 가져옵니다.
+      }else{      
+        setModalOpen(true);        }
+
+    } catch (error) { 
+      console.log(error);
+    }
+  };
+
+  const auctionPrice2 = async (e) => {
+    try {
+      const rsp = await GoodsAxiosApi.goodsPrice2(id, e);
+      console.log(rsp);
+      if(rsp.data !== false){        
+        chagerende(); // 렌더링 상태를 변경합니다.
+        SelectGoodsLIst(); // 상품 정보를 다시 가져옵니다.
+      }
+    } catch (error) { 
       console.log(error);
     }
   };
 
   useEffect(() => {
-    // newPrice 상태가 변경될 때마다 수행할 작업
+ 
   }, [newPrice]);
   const currentDateTime = new Date();
   // list.auctionDate를 JavaScript Date 객체로 변환
   const auctionDateTime = new Date(list.auctionDate);
   // list.auctionDate가 현재 시간 이후인지 확인하여 true,false를 입력
   const timeOut = currentDateTime > auctionDateTime;
+
+ 
+  useEffect(() => {
+    const currentDateTime = new Date();
+    const auctionDateTime = new Date(list.auctionDate);
+    const timeOut = currentDateTime > auctionDateTime;
+
+    if (timeOut) {
+
+      console.log('현재 시간이 경매 종료 시간을 지났습니다.');
+      // 경매 종료 시간을 이미 지났으므로 알림 등의 동작 수행
+    } else {
+      console.log('아직 경매 종료 시간이 아닙니다.');
+      const timeDifference = auctionDateTime - currentDateTime;
+      const timer = setTimeout(() => {
+        console.log('알람 시간입니다!');
+        cartAdd();
+        // 여기서 알람이 울리도록 원하는 동작 수행
+      }, timeDifference);
+    }
+  }
+)
+  // 상품 정보 업데이트
+  useEffect(() => {
+    // goodsId가 변경될 때마다 content 객체를 업데이트합니다.
+    setContent({
+      goodsDetailId: list.goodsDetailId, //상품 PK
+      title: list.goodsTitle, //상품 제목
+      goodsImg: list.goodsPic, //상품 이미지
+      price: list.goodsPrice, //가격      
+    });
+  }, [option, status,  list]);
+  // 장바구니 담기
+  const cartAdd = async () => {
+    try {
+      console.log("장바구니에 담을 content 정보 : " + JSON.stringify(content));
+      const res = await CartAxiosApi.addToCart2(content,buyer);
+      if (res && res.status === 200) {
+        console.log("장바구니에 물품을 담았습니다.");
+        console.log(res.data);  
+        return res.data;
+      } else {
+        console.error("장바구니에 물품을 담는데 실패했습니다.", res);
+        alert("장바구니에 물품을 담는데 실패했습니다.");
+      }
+    } catch (error) {
+      // 오류가 발생한 경우
+      console.error("장바구니에 물품을 담는데 실패했습니다.", error);
+      alert("장바구니에 물품을 담는데 실패했습니다.");
+    }
+  };
+
   return (
     <GoodsOptionCss>
       <OptionCategory>{goodsCategory}</OptionCategory>
@@ -186,6 +261,8 @@ export const AuctionOption = ({ goodsDedail, chagerende, SelectGoodsLIst }) => {
       <Participate >
         <div className="d1">
           현재 가 {list.goodsPrice}원
+          <br/>
+          {buyer}
         </div>
         <div className="d2">
 
@@ -196,18 +273,20 @@ export const AuctionOption = ({ goodsDedail, chagerende, SelectGoodsLIst }) => {
         </div>
         <div className="d3">
           <AnotherButton value="입찰" onClick={submit} />
+          
         </div>
-
-
       </Participate>
-
-      {/* 
-      <Option>
-        <div className="option1">
-          <OptionBox list={list.options} list2={list} ></OptionBox>
-        </div>
-      </Option> */}
-
+            <AuctionModal      
+              modalOpen={modalOpen}
+        setModalOpen={setModalOpen}
+        onSubmit={auctionPrice2}
+        checkMmessage={'값 입력이 늦었습니다.'}
+        setNewPrice={setNewPrice}
+        newPrice={newPrice}
+        >     
+          </AuctionModal> 
+        
+         
     </GoodsOptionCss>
   );
 };
