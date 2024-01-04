@@ -25,8 +25,6 @@ export const AuctionList = () => {
     };
 
     useEffect(() => {
-        console.log(list);
-        console.log("useEffect");
         goodsList();
     }, []);
 

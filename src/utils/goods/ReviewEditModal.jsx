@@ -156,6 +156,7 @@ height: 100%;
 .contentImg{
 
 img{
+  border: 1px solid #7c7c7c;
   width: 350px;
   height: 350px;
 }
@@ -199,10 +200,13 @@ const TextArea = styled.textarea`
 `;
 
 export const ReviewEditModal = ({ Writer, goodsReviewId, reviewContent, reviewUrl, reviewStar, isOpen, onSubmit, closeModal }) => {
-  const [reviewText, setReviewText] = useState('');
-  const [rating, setRating] = useState('');
+  //리뷰 내용
+  const [reviewText, setReviewText] = useState(reviewContent);
+  //별점
+  const [rating, setRating] = useState(reviewStar);
   const [hoverRating, setHoverRating] = useState(0);
-  const NickName = window.localStorage.getItem("NickName")
+  const NickName = window.localStorage.getItem("NickName");
+  //이미지 주소
   const [url, setUrl] = useState(reviewUrl);
 
   const reviewTextChange = (e) => {
@@ -261,7 +265,7 @@ export const ReviewEditModal = ({ Writer, goodsReviewId, reviewContent, reviewUr
     setReviewText(reviewContent)
     setRating(reviewStar)
     setUrl(reviewUrl)
-  }, [reviewContent, reviewStar, reviewUrl])
+  }, [reviewContent, reviewStar, reviewUrl,])
   return (
     <>
       {isOpen && (

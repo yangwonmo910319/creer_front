@@ -4,13 +4,32 @@ import { AnotherButton } from "../../css/common/AnotherButton";
 
 
 const TimeCss = styled.div`
+width: 100%;
+height: auto;
+display: flex;
+justify-content: center;
+align-items: center;
   font-size: 1.2em;
   input{
-    margin: 5px;
+    margin: 10px;
   }
-  button{
-    margin-top: 20px;
-  }
+
+  @media (max-width: 768px) {
+      margin-bottom: 20px;
+    }
+    .time1{
+      display: flex;
+      width: 100%;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      button{
+        margin: 20PX auto;
+      }
+    }
+    .time2{
+      margin: 10px;
+    }
 `
 
 export const TimeModal = ({ modaOpen, setAuctionDate }) => {
@@ -48,7 +67,6 @@ export const TimeModal = ({ modaOpen, setAuctionDate }) => {
     setRemainingTime(timeDifference);
 
     setTimeout(() => {
-      // alert('첫 번째 알람 시간입니다!');
       setRemainingTime(0);
     }, timeDifference);
 
@@ -88,25 +106,27 @@ export const TimeModal = ({ modaOpen, setAuctionDate }) => {
   return (
     <TimeCss>
       {modalOpen === true &&
-        <div>
-          {/* (YYYY-MM-DD) */}
-          <label>경매 날짜를 입력하세요 : </label>
-          <br></br>
-          <input
-            type="date"
-            value={date}
-            onChange={handleDateChange}
-          />
-          <br />
-          <label>시간을 입력하세요: </label>
-          <br></br>
-          <input
-            type="time"
-            value={time}
-            onChange={handleTimeChange}
-          />
-          <br />
-          <AnotherButton value={"날짜 설정"} onClick={setAlarm}></AnotherButton>
+        <div className="time1">
+          <div className="time2">
+            {/* (YYYY-MM-DD) */}
+            <label>경매 날짜를 입력하세요. </label>
+            <br></br>
+            <input
+              type="date"
+              value={date}
+              onChange={handleDateChange}
+            />
+            <br />
+            <label>시간을 입력하세요. </label>
+            <br></br>
+            <input
+              type="time"
+              value={time}
+              onChange={handleTimeChange}
+            />
+            <br />
+            <AnotherButton value={"날짜 설정"} onClick={setAlarm}></AnotherButton>
+          </div>
           {remainingTime > 0 && (
             <div>
               <p>

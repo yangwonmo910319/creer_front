@@ -4,6 +4,7 @@ import { useEffect, useState } from "react";
 import { PurchaseListModal } from "../../utils/goods/PurchaseListModal";
 import { useNavigate } from "react-router-dom";
 import { StatusButton } from "../../css/common/StatusButton";
+import { AnotherButton } from "../../css/common/AnotherButton";
 const SalseListCss = styled.div`
   width: 100%;
   height: auto;
@@ -34,6 +35,7 @@ const Title = styled.div`
     .no{
       flex: none;
       width: 50px; 
+
     }
     .info{
       flex: none;
@@ -75,6 +77,9 @@ const Goods1 = styled.li`
     width: 50px;
     display: flex;
       flex-direction: column;
+            button{
+        margin-top: 10px;
+      }
   }
     .img{
     flex: none;
@@ -136,9 +141,9 @@ const Buyer2 = styled.li`
   width: 100%;
   align-items: center;
   flex-direction: column;
-
+  padding-bottom: 100px;
 .buyer2{
-  height: auto;
+  height: 50px;
 display: flex;
 width: 100%;
     border-bottom: 1px solid #d6d6d6;
@@ -212,7 +217,8 @@ export const SellerList = () => {
             <Goods key={item.goodsDetailId} >
               <Goods1 >
                 <div className="no">{item.goodsDetailId}
-                  <button onClick={() => { navi(item.goodsDetailId) }}> 수정</button> </div>
+                  <AnotherButton width={"45px"} height={"20px"} value={'수정'} onClick={() => { navi(item.goodsDetailId) }}> </AnotherButton>
+                </div>
                 <div onClick={() => openClick(item.goodsDetailId)}  >
                   <div className="img">
                     <img src={item.goodsPic} alt="" />
@@ -243,8 +249,8 @@ export const SellerList = () => {
                       <div key={purchaseItem.id} className="buyer2">
                         <div className="id"> {purchaseItem.id}</div>
                         <div className="nickName">   {purchaseItem.buyer.nickName}</div>
-                        <div className="address">   {purchaseItem.buyer.address}</div>
-                        <div className="option">   {purchaseItem.buyer.option}</div>
+                        <div className="address">   {purchaseItem.receiveAdd}</div>
+                        <div className="option">   {purchaseItem.option}</div>
                         <div className="quantity">  {purchaseItem.quantity}</div>
                         <div className="price">  {item.goodsPrice * purchaseItem.quantity}</div>
                         <div className="status" onClick={() => {

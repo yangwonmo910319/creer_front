@@ -38,6 +38,7 @@ export const TopL = styled.div`
 
 export const TopC = styled.div`
   display: flex;
+  height: 100px;
   justify-content: center;
   align-items: center;
   grid-area: topC;
@@ -45,11 +46,13 @@ export const TopC = styled.div`
 
 export const StyledLogo = styled(Logo)`
   width: 80%;
-  height: 80%;
+  height: 80px;
+  margin-top: 30px;
   cursor: pointer;
   display: flex;
   justify-content: center;
   align-items: center;
+
 `;
 
 export const MidR = styled.div`
@@ -80,15 +83,13 @@ export const MidR = styled.div`
 export const MidRLogged = styled.div`
   position: relative;
   top: 15px;
-  max-width: 35vw;
   display: flex;
   justify-content: end;
   font-size: 1rem;
   grid-area: midR;
-  width: 100%;
   height: 100%;
   list-style: none;
-
+  width: 240px;
   li {
     margin: 0 10px;
     white-space: nowrap; // 텍스트 한줄로 표시
@@ -220,10 +221,17 @@ export const MemberDropDown = ({ onClose }) => {
       </li>
       <li
         onClick={() => {
+          navigate("/Member/Buyer");
+        }}
+      >
+        구매 목록
+      </li>
+      <li
+        onClick={() => {
           navigate("/Member/Seller");
         }}
       >
-        내 상품 목록
+        판매 목록
       </li>
     </MemberDropDownMenu>
   );

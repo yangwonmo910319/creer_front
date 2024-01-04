@@ -184,7 +184,8 @@ export const GoodsOptionEdit = ({ goodsDedail, updateGoodsDetail }) => {
   const [goodsPrice, setGoodsPrice1] = useState("");
   const [goodsStock, setGoodsStock1] = useState("");
   const [goodsDeliveryFee, setGoodsDeliveryFee1] = useState("");
-  const [isCheckModalOpen, setIsCheckModalOpen] = useState(false);
+  const [modalOpen, setModalOpen] = useState(false);
+  const [modalOpen2, setModalOpen2] = useState(false);
   const [render, setRender] = useState(false);
   const navigate = useNavigate();
   //댓글 추가,삭제 axios를 실행 후 reset값을 바꿔서 useEffect를 실행하여 추가 삭제된 화면을 새로 보여줌
@@ -209,7 +210,7 @@ export const GoodsOptionEdit = ({ goodsDedail, updateGoodsDetail }) => {
     deleteGoods();
     //reset값을 변경하여 댓글 업데이트 화면을 보여줌
     // setReset(!reset);
-    navigate("/");
+    navigate("/Member/Seller");
   };
   const GoodsTitleChange = (e) => {
     setGoodsTitle1(e.target.value);
@@ -289,19 +290,21 @@ export const GoodsOptionEdit = ({ goodsDedail, updateGoodsDetail }) => {
         </GoodsDeliveryFee>
       </Delivery>
       <Option>
-
-
-        <AnotherButton width={"150px"} value={"수정 완료"} onClick={() => setIsCheckModalOpen(!isCheckModalOpen)}></AnotherButton>
-        <AnotherButton width={"150px"} value={"삭제"} onClick={() => deleteGoodsDetail()}></AnotherButton>
-
-
+        <AnotherButton width={"150px"} value={"수정 완료"} onClick={() => setModalOpen(!modalOpen)}></AnotherButton>
+        <AnotherButton width={"150px"} value={"삭제"} onClick={() => setModalOpen2(!modalOpen2)}></AnotherButton>
       </Option>
       <CheckModal
-        isOpen={isCheckModalOpen}
+        modalOpen={modalOpen}
+        setModalOpen={setModalOpen}
         onSubmit={updateGoodsDetail}
-        setIsCheckModalOpen={setIsCheckModalOpen}
         checkMmessage={"작성하신 글을 수정합니다."}
         revertChanges={revertChanges}
+      />
+      <CheckModal
+        modalOpen={modalOpen2}
+        setModalOpen={setModalOpen2}
+        onSubmit={deleteGoodsDetail}
+        checkMmessage={"작성하신 글을 삭제합니다."}
       />
     </GoodsOptionCss>
   );

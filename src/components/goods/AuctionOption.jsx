@@ -116,21 +116,30 @@ export const AuctionOption = ({ goodsDedail, chagerende, SelectGoodsLIst }) => {
   const [
     list,
   ] = goodsDedail;
-
+  console.log("sssssssssssssssslist")
+  console.log(list)
+  console.log(list)
+  console.log(list)
   const [goodsTitle, setGoodsTitle1] = useState("");
   const [goodsCategory, setGoodsCategory1] = useState("");
   const [newPrice, setNewPrice] = useState("");
   const [id, setId] = useState("");
+  const [buyer, setBuyer] = useState('')
   const chagePrice = (e) => {
     setNewPrice(e.target.value)
   }
   //댓글 추가,삭제 axios를 실행 후 reset값을 바꿔서 useEffect를 실행하여 추가 삭제된 화면을 새로 보여줌
   useEffect(() => {
-    setGoodsTitle1(list.goodsTitle);
-    setGoodsCategory1(list.goodsCategory);
-    setId(list.goodsDetailId);
+    if (list && list.goodsStatus && typeof list.goodsStatus === 'string') {
+      setGoodsTitle1(list.goodsTitle);
+      setGoodsCategory1(list.goodsCategory);
+      setId(list.goodsDetailId);
+      const auction = list.goodsStatus;
+      const splitted = auction.split('='); // '='를 기준으로 문자열 분할
+      const extractedName = splitted[1] ? splitted[1].trim() : ''; // 공백 제거 후 '이름' 추출
+      setBuyer(extractedName);
+    }
   }, [list]);
-
   const submit = async () => {
     if (list.goodsPrice > newPrice) {
       // 기존 가격이 새로운 가격보다 큰 경우 아무것도 하지 않습니다.

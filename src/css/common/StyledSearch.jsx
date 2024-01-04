@@ -31,7 +31,7 @@ const SearchMode = styled.div`
   box-shadow: 2px 2px 2px rgba(0, 0, 0, 0.1);
   background: white; // 배경색을 흰색으로 설정
 
-  @media (max-width: 600px) {
+  @media (max-width: 768px) {
     height: 30px;
   }
 `;

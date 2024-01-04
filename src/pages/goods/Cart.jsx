@@ -7,6 +7,7 @@ import { MiddleOrderBox } from "../../css/common/MiddleOrderBox";
 import { StyledTitle } from "../../css/common/StyledTitle";
 import { AnotherButton } from "../../css/common/AnotherButton";
 import { useNavigate } from "react-router-dom";
+import { CheckModal } from "../../utils/goods/CheckModal";
 
 const CartPageContainer = styled.div`
   margin: 20px;
@@ -69,7 +70,8 @@ export const Cart = () => {
   const navigate = useNavigate();
   const [cartItems, setCartItems] = useState("");
   const [checkedItems, setCheckedItems] = useState([]);
-
+  const [modalOpen, setModalOpen] = useState(false);
+  const [cartId, setCartId] = useState("");
   const fetchCartItems = async () => {
     try {
       const accessToken = localStorage.getItem("accessToken");
@@ -108,9 +110,9 @@ export const Cart = () => {
     navigate(`/Goods/Payment/` + e);
   };
 
-  const remove = async (num) => {
+  const remove = async () => {
     try {
-      const response = await CartAxiosApi.removeFromCart(num);
+      const response = await CartAxiosApi.removeFromCart(cartId);
       if (response.status === 200) {
         if (window.confirm("장바구니에서 해당 책을 삭제하시겠습니까?")) {
           fetchCartItems();
@@ -168,7 +170,8 @@ export const Cart = () => {
                     </MiddleOrderBox>
                     <AnotherButton
                       onClick={() => {
-                        remove(item.cartId);
+                        setCartId(item.cartId)
+                        setModalOpen(!modalOpen)
                       }}
                       value="삭제"
                       width="50px"
@@ -178,30 +181,12 @@ export const Cart = () => {
                 </div>
               </GoodsCard>
             ))}
-          <br />
-          {/* <GoodsCard >
-              <div className="goodsInfo" >
-        
-                <div>             
-                  <div className="title" ></div>
-                  <div className="price">원</div>
-                  <div className="quantity">개</div>           
-                  <div className="price">원</div>
-                  </div>
-                <div className="btn">       
-                </div>
-              </div>
-            </GoodsCard> */}
-          {/* <MiddleOrderBox>
-            <AnotherButton
-              onClick={purchaseSelected}
-              value="구매하기"
-              width="200px"
-              height="50px"
-            ></AnotherButton>
-          </MiddleOrderBox> */}
-
-          <br />
+          <CheckModal
+            modalOpen={modalOpen}
+            setModalOpen={setModalOpen}
+            onSubmit={remove}
+            checkMmessage={"상품을 장바구니에서 제거합니다."}
+          />
         </CartPageContainer>
       </MiddleOrderBox>
     </>

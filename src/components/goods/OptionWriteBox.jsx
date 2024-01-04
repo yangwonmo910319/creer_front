@@ -1,5 +1,6 @@
 import { useState } from "react";
 import styled from "styled-components";
+import { AnotherButton } from "../../css/common/AnotherButton";
 
 const OptionWriteBoxCss = styled.div`
   width: 100%;
@@ -38,9 +39,12 @@ const Title = styled.div`
   width: 100%;
   height: auto;
   margin-top: 10px;
-  .optionTitle{
-    border: 2px solid black;
+  .optionTitle{ 
     padding-top: 10px;
+    .optionTitle1{ 
+      display: flex;
+     flex-direction: row;
+  }
   }
   button {
     margin-left: 10px;
@@ -120,10 +124,13 @@ export const OptionWriteBox = ({ setContent2 }) => {
       <Title>
         {arrays.map((array, arrayIndex) => (
           <div key={arrayIndex} className="optionTitle">
-            제목  (사이즈,색)
-            <button onClick={() => handleAddValue(arrayIndex)}>
-              내용 추가
-            </button>
+            <div className="optionTitle1">
+              제목  (사이즈,색)
+
+              <AnotherButton width={"120px"} value={'상세 옵션'} onClick={() => handleAddValue(arrayIndex)}></AnotherButton>
+
+            </div>
+
             <input className="numInput"
               value={array}
               onChange={(e) =>

@@ -50,8 +50,7 @@ const ImgCategory = styled.div`
   display: flex;
    flex-direction: column;
   .ImgCategory1{
-    width: 100%;  
- 
+    width: 100%;   
     height: 470px;
   }
   .ImgCategory2{
@@ -159,13 +158,14 @@ const UploadLabel = styled.label`
   display: inline-block;
   padding: 8px 12px;
   color: white;
-  background-color: #adaaff;
+  background-color: #e5e5e5;
+  border: 1px solid  #484848;
   border-radius: 4px;
   cursor: pointer;
   margin-bottom: 10px;
   
   &:hover {
-    background-color: #00648b;
+    background-color: #6f6f6f;
   }
 `;
 
@@ -352,10 +352,10 @@ export const GoodsWrite = () => {
 
 
   const goodsSubmit = () => {
-    insert()
+    insert('Goods')
   }
   const auctionSubmit = () => {
-    insert()
+    insert('Auction')
   }
 
 
@@ -377,7 +377,6 @@ export const GoodsWrite = () => {
   }, [goodsCategory, goodsPic, goodsDesc, goodsStock, goodsTitle, goodsPrice, goodsStatus])
 
   const insert = async (e) => {
-
     //대표 이미지 추가
     try {
       const response = await GoodsAxiosApi.insertAuction(content, auctionDate);
@@ -398,13 +397,14 @@ export const GoodsWrite = () => {
           const response2 = await PictureAxiosApi.insertGoodsImg(num, subUrl[i]);
         }
       }
+      navigate(`/${e}/` + num)
     }
     catch (error) {
       // 네트워크 요청 중에 오류가 발생한 경우 에러 처리
       console.error("submit review 데이터에러 :", error);
       console.log(error)
     }
-    // navigate("/")
+
   }
 
 
@@ -474,8 +474,6 @@ export const GoodsWrite = () => {
               <UploadInput type="button" onClick={subImgAdd} />
             </UploadLabel>
           </UploadContainer>
-
-
         </ImgCategory>
         <InfoCategory>
           <ul>
@@ -487,22 +485,15 @@ export const GoodsWrite = () => {
         <InfoBox goodsDesc={goodsDesc}>
           {/* 상품 정보 표시 */}
           <QuillText goodsDesc={goodsDesc} setGoodsDesc={setGoodsDesc}>
-
           </QuillText>
-
-
         </InfoBox>
-
-
       </GoodsInfoCss>
-
       <GoodsOptionCss>
         <TypeCss>
           <AnotherButton value={"상품"} onClick={() => { setType('goods'); timeModalOpen(); setGoodsStatus('sale') }}></AnotherButton>
           <AnotherButton value={"경매"} onClick={() => { setType("auction"); setGoodsStatus('auction') }}></AnotherButton>
         </TypeCss>
         <OptionCategory goodsCategory={goodsCategory} >  {goodsCategory ? goodsCategory : "카테고리"}
-
           <div className="CategoryRaido">
             <input type="radio" name="goods" id="패션" value="패션" onChange={(e) => { setGoodsCategory(e.target.value) }} />패션
             <br />
@@ -522,7 +513,7 @@ export const GoodsWrite = () => {
         </OptionCategory>
         <Seller>
           <Seller1>
-            <img src={UserImg}></img>
+            <img src={UserImg} alt=""></img>
           </Seller1>
           <Seller2>
             <OptionNick>{nickName && nickName}</OptionNick>
@@ -535,11 +526,7 @@ export const GoodsWrite = () => {
           {type === 'goods' &&
             <GoodsRefund goodsRefund={goodsStock} type="text" value={goodsStock} onChange={(e) => { setGoodsStock(e.target.value) }} placeholder=" 재고 :" />
           }
-
-
-
         </Delivery>
-
         <Option>
           <div className="option1">
             <OptionWriteBox setContent2={setContent2}></OptionWriteBox>
@@ -550,7 +537,6 @@ export const GoodsWrite = () => {
             }
           </div>
         </Option>
-
       </GoodsOptionCss>
       <Option2>
         {
@@ -568,18 +554,14 @@ export const GoodsWrite = () => {
             goodsTitle.length !== 0 &&
             goodsPrice.length !== 0 &&
             goodsDeliveryFee.length !== 0) ? <> {
-
               type !== 'auction' ?
                 <>  <AnotherButton value={" 상품 작성 완료"} onClick={goodsSubmit}></AnotherButton></>
                 :
                 <> <AnotherButton value={"경매 작성 완료"} onClick={auctionSubmit}></AnotherButton></>
             }
-
           </> : <>
-
           </>
         }
-        {/**/}
       </Option2>
     </GoodsWriteCss>
   )

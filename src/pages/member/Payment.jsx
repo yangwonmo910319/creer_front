@@ -170,6 +170,9 @@ const PaymentCss = styled.div`
       width: 80px;
       padding: 10px;
       border-left: 2px solid #7e7e7e;
+      display: flex;
+      align-items: center;
+      justify-content: center;
     }
   }
   .content4 {
@@ -209,7 +212,7 @@ export const Payment = () => {
   const [inputAdd, setInputAdd] = useState("");
   const [inputAdd2, setInputAdd2] = useState("");
   const [inputAdd3, setInputAdd3] = useState("");
-
+  const [price, setPrice] = useState("");
   const [require, setRequire] = useState("");
   const [newRepuie, setNewRepuie] = useState("");
   const [onRepuie, setOnRepuie] = useState(false);
@@ -230,10 +233,12 @@ export const Payment = () => {
     select();
   }, []);
   useEffect(() => {
+
     if (list) {
       setName(list.buyer.name);
       setAdd(list.buyer.address);
       setPhone(list.buyer.phoneNum);
+      setPrice(list.price * list.quantity)
     }
   }, [list]);
 
@@ -347,7 +352,7 @@ export const Payment = () => {
     } catch (error) {
       console.error("에러 확인:", error);
     }
-    navigate("/");
+    navigate(-1);
   };
 
   return (
@@ -364,7 +369,7 @@ export const Payment = () => {
           <div className="title">{list && list.title}</div>
           <div>{list && list.price}원</div>
           <div>{list && list.quantity}개</div>
-          <div>{list && list.quantity * list.price}원</div>
+          <div>{price}원</div>
         </div>
       </div>
       <div className="content2">
@@ -504,7 +509,7 @@ export const Payment = () => {
       </div>
 
       <div className="content4">
-        <ClickPay content={content} addPurchase={addPurchase} />
+        <ClickPay price={price} content={content} addPurchase={addPurchase} />
         <AnotherButton value={"취소"} onClick={cansel}></AnotherButton>
       </div>
     </PaymentCss>

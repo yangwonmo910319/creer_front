@@ -129,6 +129,10 @@ height: 100%;
   display: flex;
   justify-content: center;
   width: 400px;
+  padding-bottom: 10px;
+  button{
+    margin: 20px 10px;
+  }
 }
 
 `;
@@ -151,7 +155,8 @@ const Star = styled(FaStar)`
   cursor: pointer;
 `;
 const TextArea = styled.textarea`
-  width: 100%;
+  float: left;
+  width: 87%;
   height: 300px;
 `;
 

@@ -155,7 +155,7 @@ export const MyPage = () => {
       </Modal>
 
       {/* 좌측 */}
-      <Container>
+      <Container >
         <Left>
           <Imagine>
             <Img src={memberInformation.image} alt="이미지 사진" />

@@ -1,5 +1,6 @@
 import styled, { keyframes } from "styled-components";
 import { useNavigate } from "react-router-dom";
+import { AnotherButton } from "../../css/common/AnotherButton";
 const ModalClickCss = styled.div`
   position: absolute;
   margin: 0;
@@ -30,82 +31,77 @@ const ModalWrapper = styled.div`
 `;
 
 const Message = styled.div`
+p{
+  margin-top: 20px;
+}
   width: 600px;
-  height: 50px;
+  height: 180px;
   border-radius: 10px;
   background: rgb(255, 255, 255);
   display: flex;
+  flex-direction: column;
   justify-content: center;
   align-items: center;
 `;
-const SubmitButton = styled.button`
-  position: relative;
-  display: inline-block;
-  cursor: pointer;
-  outline: none;
-  border: 0;
-  margin: 50px;
-  vertical-align: middle;
-  text-decoration: none;
-  font-size: inherit;
-  font-family: inherit;
-  font-weight: 600;
-  color: #382b22;
-  text-transform: uppercase;
-  padding: 1.25em 2em;
-  background: #fffd7f;
-  border: 2px solid #ffeaa3;
-  border-radius: 0.75em;
-  transform-style: preserve-3d;
-  transition: transform 150ms cubic-bezier(0, 0, 0.58, 1),
-    background 150ms cubic-bezier(0, 0, 0.58, 1);
-  &:hover {
-    background: #ffeaa3;
-    transform: translate(0, 0.25em);
-  }
-`;
 
-const Button = styled.div``;
+
+const Button = styled.div`
+display: flex;
+justify-content: space-between;
+width: 350px;
+margin:  20px;
+`;
 
 export const CheckModal = ({
   // 기본값 설정
-  isOpen = false,
-  setIsCheckModalOpen = () => { },
+  modalOpen = false,
+  setModalOpen = () => { },
   onSubmit = () => { },
   checkMmessage = "",
   revertChanges = () => { },
+  type,
 }) => {
   const navigate = useNavigate();
   // 모달 바깥 부분 클릭 시,
   const modalClick = (e) => {
     if (e.target === e.currentTarget) {
-      setIsCheckModalOpen();
+      setModalOpen();
     }
   };
 
   //확인버튼 누르면
   const CheckClick = () => {
     onSubmit();
-    setIsCheckModalOpen();
+    setModalOpen();
     navigate(0)
+  };
+  const CheckClick2 = () => {
+    onSubmit();
+    setModalOpen();
   };
 
   //취소버튼 누르면
   const closeClick = () => {
     revertChanges();
-    setIsCheckModalOpen();
+    setModalOpen();
   };
 
   return (
     <ModalClickCss>
-      {isOpen && (
+      {modalOpen && (
         <>
           <ModalWrapper ModalWrapper onClick={modalClick}>
-            <Message>{checkMmessage}</Message>
-            <Button>
-              <SubmitButton onClick={CheckClick}>확 인</SubmitButton>
-              <SubmitButton onClick={closeClick}>취 소</SubmitButton>
-            </Button>
+            <Message>
+              <p>{checkMmessage}</p>
+              <Button>
+                {type !== 'noNavi' ?
+                  <AnotherButton value={'확인'} onClick={CheckClick}></AnotherButton>
+                  :
+                  <AnotherButton value={'확인'} onClick={CheckClick2}></AnotherButton>
+                }
+                <AnotherButton value={'취소'} onClick={closeClick}></AnotherButton>
+              </Button>
+            </Message>
           </ModalWrapper>
         </>
       )}

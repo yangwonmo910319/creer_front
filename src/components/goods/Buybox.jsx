@@ -21,8 +21,8 @@ export const Buybox = ({ list, optionList, quantity1 }) => {
   const { goodsId } = useParams(); // 이후 사용은 중괄호 불필요
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [content, setContent] = useState({});
-  const [page, setPage] = useState("");
-
+  const [modalOpen, setModalOpen] = useState(false);
+  const [message, setMessage] = useState('');
   //판매자 Pk
   const [goodsDetailId, setGoodsDetailId] = useState("");
   //판매자
@@ -54,6 +54,7 @@ export const Buybox = ({ list, optionList, quantity1 }) => {
       if (res && res.status === 200) {
         console.log("장바구니에 물품을 담았습니다.");
         console.log(res.data);
+        setMessage('장바구니에 상품을 담았습니다.')
         return res.data;
       } else {
         console.error("장바구니에 물품을 담는데 실패했습니다.", res);
@@ -103,11 +104,12 @@ export const Buybox = ({ list, optionList, quantity1 }) => {
   // 장바구니 클릭
   const cartClick = async () => {
     try {
-      cartAdd();
+      await cartAdd();
     } catch (error) {
       console.error("상품 구매 오류 발생 : " + error);
     }
     setIsModalOpen(true);
+    navigate('/Cart')
   };
 
   // 채팅
@@ -146,7 +148,7 @@ export const Buybox = ({ list, optionList, quantity1 }) => {
           height={"50px"}
           value={"장바구니"}
           data={quantity}
-          onClick={cartClick}
+          onClick={() => setModalOpen(!modalOpen)}
         ></AnotherButton>
 
         <AnotherButton
@@ -159,10 +161,11 @@ export const Buybox = ({ list, optionList, quantity1 }) => {
       </BuyboxCss>
 
       <CheckModal
-        isOpen={isModalOpen}
-        onSubmit={goToCart}
+        modalOpen={modalOpen}
+        setModalOpen={setModalOpen}
+        onSubmit={cartClick}
         checkMmessage={"장바구니 페이지로 이동하시겠습니까?"}
-        setIsCheckModalOpen={setIsCheckModalOpen}
+        type={'noNavi'}
       />
     </>
   );
