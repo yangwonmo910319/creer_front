@@ -152,21 +152,12 @@ display: flex;
 
 `;
 
-const MoreButton = styled.button`
-  background-color: #fbf3d8;
-  color: black;
-  border-radius: 10px;
-  position: relative;
+const MoreButton = styled.div`
   width: 100%;
-  height: 40px;
-  padding: 10px 25px;
-  border: none;
-  font-family: "Lato", sans-serif;
-  font-weight: 500;
-  cursor: pointer;
-  transition: all 0.3s ease;
-  display: block;
-
+  height: auto;
+  padding-bottom: 10px;
+  display: flex;
+  justify-content: center;
 `;
 
 const ImgBox = styled.div`
@@ -445,9 +436,10 @@ export const ReviewComp = ({ goodsNum, openReviewModal, reply }) => {
             </ReviewBox>
           ))}
         {reply && reply.length > visibleReviews && ( // 더 보기 버튼. 보여지는 리뷰 개수보다 전체 리뷰 개수가 많을 경우에만 보여짐
-          <MoreButton className="btn-11" onClick={showMoreReviews}>
-            10개 더보기
+          <MoreButton >
+            <AnotherButton width={"600px"} value={'리뷰 더보기'} onClick={showMoreReviews}></AnotherButton>
           </MoreButton>
+
         )}
       </ul>
 

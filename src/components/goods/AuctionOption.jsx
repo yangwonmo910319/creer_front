@@ -126,44 +126,33 @@ export const AuctionOption = ({ goodsDedail, chagerende, SelectGoodsLIst }) => {
   const [id, setId] = useState("");
   const [buyer, setBuyer] = useState('')
   const [modalOpen, setModalOpen] = useState(false);
-    //판매자
-    const [seller, setSeller] = useState();
-    //옵션
-    const [option, setOption] = useState("기본");
-    //상태
-    const [status, setStatus] = useState("결제 전");
+  //판매자
+  const [seller, setSeller] = useState();
+  //옵션
+  const [option, setOption] = useState("기본");
+  //상태
+  const [status, setStatus] = useState("결제 전");
   const chagePrice = (e) => {
     setNewPrice(e.target.value)
   }
   //댓글 추가,삭제 axios를 실행 후 reset값을 바꿔서 useEffect를 실행하여 추가 삭제된 화면을 새로 보여줌
-  useEffect(() => {
-    if (list && list.goodsStatus && typeof list.goodsStatus === 'string') {
-      setGoodsTitle1(list.goodsTitle);
-      setGoodsCategory1(list.goodsCategory);
-      setId(list.goodsDetailId);
-      const auction = list.goodsStatus;
-      const splitted = auction.split('='); // '='를 기준으로 문자열 분할
-      setBuyer(splitted[1] ? splitted[1].trim() : '');// 공백 제거 후 '이름' 추출
-    }
-  }, [list]);
+
   const submit = async () => {
-
-      await auctionPrice();  // 입찰 가격을 업데이트합니다.
-
- 
+    await auctionPrice();  // 입찰 가격을 업데이트합니다.
   }
   //입찰 버튼 클릭시 가격과 구매자 등록
   const auctionPrice = async () => {
     try {
       const rsp = await GoodsAxiosApi.goodsPrice(id, newPrice);
       console.log(rsp);
-      if(rsp.data !== false){        
+      if (rsp.data !== false) {
         chagerende(); // 렌더링 상태를 변경합니다.
         SelectGoodsLIst(); // 상품 정보를 다시 가져옵니다.
-      }else{      
-        setModalOpen(true);        }
+      } else {
+        setModalOpen(true);
+      }
 
-    } catch (error) { 
+    } catch (error) {
       console.log(error);
     }
   };
@@ -172,33 +161,72 @@ export const AuctionOption = ({ goodsDedail, chagerende, SelectGoodsLIst }) => {
     try {
       const rsp = await GoodsAxiosApi.goodsPrice2(id, e);
       console.log(rsp);
-      if(rsp.data !== false){        
+      if (rsp.data !== false) {
         chagerende(); // 렌더링 상태를 변경합니다.
         SelectGoodsLIst(); // 상품 정보를 다시 가져옵니다.
       }
-    } catch (error) { 
+    } catch (error) {
       console.log(error);
     }
   };
 
-  useEffect(() => {
- 
-  }, [newPrice]);
   const currentDateTime = new Date();
   // list.auctionDate를 JavaScript Date 객체로 변환
   const auctionDateTime = new Date(list.auctionDate);
   // list.auctionDate가 현재 시간 이후인지 확인하여 true,false를 입력
   const timeOut = currentDateTime > auctionDateTime;
 
- 
+
+
+
+  // 장바구니 담기
+
+  const cartAdd = async () => {
+
+    try {
+      console.log("장바구니에 담을 content 정보 : " + JSON.stringify(content));
+      const res = await CartAxiosApi.addToCart2(content, buyer);
+      if (res && res.status === 200) {
+        console.log("장바구니에 물품을 담았습니다.");
+        console.log(res.data);
+        return res.data;
+      } else {
+        console.error("장바구니에 물품을 담는데 실패했습니다.", res);
+      }
+    } catch (error) {
+      // 오류가 발생한 경우
+      console.error("장바구니에 물품을 담는데 실패했습니다.", error);
+    }
+  };
   useEffect(() => {
+    // 구매자 정보 업데이트
+    const updateBuyer = async () => {
+      if (list && list.goodsStatus && typeof list.goodsStatus === 'string') {
+        setGoodsTitle1(list.goodsTitle);
+        setGoodsCategory1(list.goodsCategory);
+        setId(list.goodsDetailId);
+        const auction = list.goodsStatus;
+        const splitted = auction.split('='); // '='를 기준으로 문자열 분할
+        await setBuyer(splitted[1] ? splitted[1].trim() : ''); // 공백 제거 후 '이름' 추출
+        console.log('list.goodsStatus:', list.goodsStatus); // list.goodsStatus 확인
+        console.log('buyer:', buyer); // buyer값 확인
+      }
+    };
+
+    // 상품 정보 업데이트
+    setContent({
+      goodsDetailId: list.goodsDetailId, //상품 PK
+      title: list.goodsTitle, //상품 제목
+      goodsImg: list.goodsPic, //상품 이미지
+      price: list.goodsPrice, //가격      
+    });
+
+    // 경매 시간 체크
     const currentDateTime = new Date();
     const auctionDateTime = new Date(list.auctionDate);
     const timeOut = currentDateTime > auctionDateTime;
-
     if (timeOut) {
-
-      console.log('현재 시간이 경매 종료 시간을 지났습니다.');
+      console.log('현재 경매 종료 시간을 지났습니다.');
       // 경매 종료 시간을 이미 지났으므로 알림 등의 동작 수행
     } else {
       console.log('아직 경매 종료 시간이 아닙니다.');
@@ -209,38 +237,10 @@ export const AuctionOption = ({ goodsDedail, chagerende, SelectGoodsLIst }) => {
         // 여기서 알람이 울리도록 원하는 동작 수행
       }, timeDifference);
     }
-  }
-)
-  // 상품 정보 업데이트
-  useEffect(() => {
-    // goodsId가 변경될 때마다 content 객체를 업데이트합니다.
-    setContent({
-      goodsDetailId: list.goodsDetailId, //상품 PK
-      title: list.goodsTitle, //상품 제목
-      goodsImg: list.goodsPic, //상품 이미지
-      price: list.goodsPrice, //가격      
-    });
-  }, [option, status,  list]);
-  // 장바구니 담기
-  const cartAdd = async () => {
-    try {
-      console.log("장바구니에 담을 content 정보 : " + JSON.stringify(content));
-      const res = await CartAxiosApi.addToCart2(content,buyer);
-      if (res && res.status === 200) {
-        console.log("장바구니에 물품을 담았습니다.");
-        console.log(res.data);  
-        return res.data;
-      } else {
-        console.error("장바구니에 물품을 담는데 실패했습니다.", res);
-        alert("장바구니에 물품을 담는데 실패했습니다.");
-      }
-    } catch (error) {
-      // 오류가 발생한 경우
-      console.error("장바구니에 물품을 담는데 실패했습니다.", error);
-      alert("장바구니에 물품을 담는데 실패했습니다.");
-    }
-  };
 
+    // 최초 실행 시 updateBuyer 호출
+    updateBuyer();
+  }, [list, buyer, option, status]);
   return (
     <GoodsOptionCss>
       <OptionCategory>{goodsCategory}</OptionCategory>
@@ -261,32 +261,32 @@ export const AuctionOption = ({ goodsDedail, chagerende, SelectGoodsLIst }) => {
       <Participate >
         <div className="d1">
           현재 가 {list.goodsPrice}원
-          <br/>
-          {buyer}
+          <br />
         </div>
         <div className="d2">
-
           {timeOut ? null : <>
             <input type="number" value={newPrice} onChange={chagePrice} placeholder="입찰 희망가" />
             {list.goodsPrice > newPrice && newPrice !== "" && <>기존 가격보다 작습니다</>}</>
           }
         </div>
-        <div className="d3">
+
+        {timeOut ? <>입찰이 종료되었습니다.</> : <><div className="d3">
           <AnotherButton value="입찰" onClick={submit} />
-          
         </div>
+        </>
+        }
       </Participate>
-            <AuctionModal      
-              modalOpen={modalOpen}
+      <AuctionModal
+        modalOpen={modalOpen}
         setModalOpen={setModalOpen}
         onSubmit={auctionPrice2}
-        checkMmessage={'값 입력이 늦었습니다.'}
+        checkMmessage={'입력하시 금액보다 가격이 올랐습니다.'}
         setNewPrice={setNewPrice}
         newPrice={newPrice}
-        >     
-          </AuctionModal> 
-        
-         
+      >
+      </AuctionModal>
+
+
     </GoodsOptionCss>
   );
 };

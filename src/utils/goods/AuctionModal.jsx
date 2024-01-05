@@ -67,7 +67,7 @@ export const AuctionModal = ({
   checkMmessage = "",
 }) => {
   const navigate = useNavigate();
-  const [price, setPrice]=useState('');
+  const [price, setPrice] = useState('');
   // 모달 바깥 부분 클릭 시,
   const modalClick = (e) => {
     if (e.target === e.currentTarget) {
@@ -84,7 +84,7 @@ export const AuctionModal = ({
 
 
   //취소버튼 누르면
-  const closeClick = () => {    
+  const closeClick = () => {
     setModalOpen();
   };
 
@@ -95,14 +95,12 @@ export const AuctionModal = ({
           <ModalWrapper ModalWrapper onClick={modalClick}>
             <Message>
               <p>{checkMmessage}</p>
-             현재 값보다 올리기
-
-              <Button>         
-              <AnotherButton width={"700px"} value={'500'} onClick={() => CheckClick(500)}></AnotherButton>      
-              <AnotherButton width={"700px"} value={'1000'}onClick={() => CheckClick(1000)}></AnotherButton>
-              <AnotherButton width={"700px"} value={'5000'} onClick={() => CheckClick(500)}></AnotherButton>      
-              <AnotherButton width={"700px"} value={'10000'}onClick={() => CheckClick(1000)}></AnotherButton>
-                <AnotherButton  width={"700px"} value={'취소'} onClick={closeClick}></AnotherButton>
+              <Button>
+                <AnotherButton width={"700px"} value={'500원'} onClick={() => CheckClick(500)}></AnotherButton>
+                <AnotherButton width={"700px"} value={'1000원'} onClick={() => CheckClick(1000)}></AnotherButton>
+                <AnotherButton width={"700px"} value={'5000원'} onClick={() => CheckClick(5000)}></AnotherButton>
+                <AnotherButton width={"700px"} value={'10000원'} onClick={() => CheckClick(10000)}></AnotherButton>
+                <AnotherButton width={"700px"} value={'취소'} onClick={closeClick}></AnotherButton>
               </Button>
             </Message>
           </ModalWrapper>

@@ -5,11 +5,11 @@ const Test3Css = styled.div`
 margin-top: -10px;
 display:  grid;
 width: 100%;
-height: 400px;
+height: 350px;
 .slideBox{
     display: flex;    
     width: 100%;
-    height: 400px;
+    height: 350px;
 img{
     width: 100%;
     height: 100%;

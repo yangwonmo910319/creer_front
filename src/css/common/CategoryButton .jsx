@@ -11,6 +11,18 @@ const scale = keyframes`
   }
 `;
 
+const CategoryButtonCss = styled.div`
+display: flex;
+flex-direction: column;
+justify-content: center;
+align-items: center;
+p{
+  margin: 0;
+  margin-top: 3px;
+  font-size: .9em;
+  height: auto;
+}
+`;
 const BtnCss = styled.button`
   appearance: none;
   user-select: none;
@@ -22,9 +34,10 @@ const BtnCss = styled.button`
   width: ${({ width }) => (width ? width : '50px')}; /* 수정된 동적 너비 설정 */
   height: ${({ height }) => (height ? height : '50px')}; /* 수정된 동적 높이 설정 */ 
   border-radius: 50%;
-  background:  inset 0 0 20px 10px #0e0d0d; /* 수정된 box-shadow 값 */
+  /* background:  inset 0 0 20px 10px #0e0d0d; 수정된 box-shadow 값 */  
+  background: ${({ logo }) => logo ? `url(${logo})` : 'logo'} center/cover;
   border: 1px solid rgb(134, 134, 134);
-  box-shadow: ${({ shadow }) => shadow ? 'inset 0 0 12px 1px #424242d9' : 'none'};
+  box-shadow: ${({ shadow }) => shadow ? 'inset 0 0 12px 1px #ffa2acd9' : 'none'};
    /* 수정된 box-shadow 값 */
   transition: box-shadow 0.2s ease, transform 0.2s ease; /* 트랜지션 수정 */
   font-family: "Source Sans Pro", sans-serif;
@@ -63,10 +76,12 @@ const BtnCss = styled.button`
     opacity: 0.6;
     cursor: not-allowed;
   }
+  background-size:80%;
+  background-repeat:no-repeat;
 `;
 
 
-export const CategoryButton = ({ text, pick, submit }) => {
+export const CategoryButton = ({ text, pick, submit, logo }) => {
   const [selectedCategory, setSelectedCategory] = useState(false);
   const click = () => {
     submit(text)
@@ -79,8 +94,10 @@ export const CategoryButton = ({ text, pick, submit }) => {
     }
   })
   return (
-    <BtnCss shadow={selectedCategory} onClick={click}>
-      {text}
-    </BtnCss>
+    <CategoryButtonCss>
+      <BtnCss shadow={selectedCategory} onClick={click} logo={logo}>
+      </BtnCss>
+      <p>   {text}</p>
+    </CategoryButtonCss>
   )
 }

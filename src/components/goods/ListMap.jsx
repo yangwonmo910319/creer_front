@@ -11,7 +11,7 @@ const ListMapCss = styled.div`
    display: flex;
     justify-content: center;
     align-items: center; 
-    margin-top: 40px;
+    margin-top: 20px;
 `;
 
 
@@ -137,7 +137,7 @@ const ClassCategory = styled.div`
    white-space: nowrap;
    overflow: hidden;
    text-overflow: ellipsis;
-`;export const ListMap = ({ list, status }) => {
+`; export const ListMap = ({ list, status }) => {
   // 현재 시간을 가져옵니다.
   const currentDate = new Date();
 
@@ -192,10 +192,10 @@ const ClassCategory = styled.div`
                       </Class1>
                     </Link>
                   ) : null)
-                  }
+                }
               </li>
-              ))
-              }
+            ))
+          }
         </ul>
       </List>
     </ListMapCss>

@@ -18,26 +18,11 @@ export const CartAxiosApi = {
       }
     );
   },
-  
-  addToCart2: async (content,buyer) => {
-    console.log(buyer)
-    console.log(buyer)
-    console.log(buyer)
-    console.log(buyer)
-    console.log(buyer)
-    console.log(buyer)
-    console.log(buyer)
-    console.log(buyer)
-    console.log(buyer)
-    console.log(buyer)
-    console.log(buyer)
-    console.log(buyer)
-    console.log(buyer)
-    console.log(buyer)
-    console.log(buyer)
+
+  addToCart2: async (content, buyer) => {
     const accessToken = localStorage.getItem("accessToken");
     return await axios.post(
-      `${KH_DOMAIN}/Cart/add`, // URL
+      `${KH_DOMAIN}/Cart/add2/${buyer}`, // URL
       content, // 요청 본문
       {
         headers: {

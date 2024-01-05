@@ -61,9 +61,10 @@ const OptionNick = styled.div`
 `;
 const OptionCategory = styled.div`
   width: 70px;
-  height: 25px;
+  height: 20px;
   border-radius: 15px;
   display: flex;
+  font-size: .8em;
   color: #000000;
   background: #e3e3e340;
   justify-content: center;

@@ -4,6 +4,14 @@ import { GoodsAxiosApi } from "../../api/goods/GoodsAxiosApi";
 import { useNavigate, useParams } from "react-router-dom";
 import { CategoryButton } from "../../css/common/CategoryButton ";
 import { AnotherButton } from "../../css/common/AnotherButton";
+import category from "../../images/category.png";
+import category1 from "../../images/category1.png";
+import category2 from "../../images/category2.png";
+import category3 from "../../images/category3.png";
+import category4 from "../../images/category4.png";
+import category5 from "../../images/category5.png";
+import category6 from "../../images/category6.png";
+import category7 from "../../images/category7.png";
 const ListItem = styled.li`
   width: 60px;
   height: 60px;
@@ -22,7 +30,7 @@ const ListItem = styled.li`
 const CategoryCss = styled.div`
   margin: 0 auto;
   width: 90%;
-  height: auto;
+  height: 70px;
   ul {
     display: flex;
     flex-direction: row;
@@ -115,20 +123,21 @@ export const Category = ({ setList }) => {
             text={"전체"}
             pick={selectedCategory}
             submit={CategoryClick}
+            logo={category}
           >
-            {" "}
           </CategoryButton>
           <CategoryButton
             text={"패션"}
             pick={selectedCategory}
             submit={CategoryClick}
+            logo={category3}
           >
-            {" "}
           </CategoryButton>
           <CategoryButton
             text={"쥬얼리"}
             pick={selectedCategory}
             submit={CategoryClick}
+            logo={category2}
           >
             {" "}
           </CategoryButton>
@@ -136,36 +145,40 @@ export const Category = ({ setList }) => {
             text={"가구"}
             pick={selectedCategory}
             submit={CategoryClick}
+            logo={category1}
           >
-            {" "}
+
           </CategoryButton>
           <CategoryButton
             text={"문구"}
             pick={selectedCategory}
             submit={CategoryClick}
+            logo={category4}
           >
-            {" "}
+
           </CategoryButton>
           <CategoryButton
             text={"반려"}
             pick={selectedCategory}
             submit={CategoryClick}
+            logo={category5}
           >
             {" "}
           </CategoryButton>
           <CategoryButton
-            text={"아동"}
+            text={"유아"}
             pick={selectedCategory}
             submit={CategoryClick}
+            logo={category7}
           >
-            {" "}
+
           </CategoryButton>
           <CategoryButton
             text={"공예"}
             pick={selectedCategory}
             submit={CategoryClick}
+            logo={category6}
           >
-            {" "}
           </CategoryButton>
         </ul>
       </CategoryCss>

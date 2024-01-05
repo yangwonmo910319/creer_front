@@ -54,6 +54,15 @@ export const AuctionDetail = () => {
     //함수 실행
     SelectGoodsLIst();
   }, [goodsId]);
+
+  // useEffect(() => {
+  //   const interval = setInterval(() => {
+  //     SelectGoodsLIst();
+  //     window.location.href = window.location.href; // 현재 페이지 URL로 이동하여 새로고침
+  //   }, 30000); // 30초마다 실행
+
+  //   return () => clearInterval(interval); // 컴포넌트 언마운트 시 clearInterval
+  // }, []);
   const SelectGoodsLIst = async () => {
     try {
       const rsp = await GoodsAxiosApi.getGoods(goodsId);

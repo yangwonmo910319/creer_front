@@ -114,7 +114,7 @@ export const OptionBox = ({ list, list2 }) => {
   const groupedOptions = {};
 
   useEffect(() => {
-    const combinedOptions = optionList.map((option) => option.goodsOptionContent + " / ").join(' ');
+    const combinedOptions = optionList.map((option) => option.goodsOptionContent + " , ").join(' ');
     setCheck(` ${combinedOptions}  ${quantity}개`);
   }, [quantity, optionList])
 
@@ -203,7 +203,7 @@ export const OptionBox = ({ list, list2 }) => {
         ))}
         <Check>{check &&
           <>
-            <div className="check1">{check}</div>
+            <div className="check1">{optionList.length === 0 ? <>기본</> : <></>}{check}</div>
             <div className="check2">  {list2.goodsPrice}원</div>
             <div className="check3">  {list2.goodsPrice * quantity}원</div>
           </>
