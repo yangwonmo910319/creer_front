@@ -48,8 +48,6 @@ export const GoodsDetail = () => {
         // 상품 정보를 가져옵니다.
         console.log("상품 상세정보 : " + goodsId);
         console.log(rsp.data);
-        console.log(rsp.data);
-
         //가져온 데이터를 저장
         setList(rsp.data);
       } catch (error) {

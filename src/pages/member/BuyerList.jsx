@@ -100,9 +100,6 @@ export const BuyerList = () => {
       if (response.status === 200) {
         setCartItems(response.data);
         console.log(response.data);
-        console.log(response.data);
-        console.log(response.data);
-
       } else {
         console.error("장바구니 가져오기 실패");
       }

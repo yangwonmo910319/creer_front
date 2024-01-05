@@ -20,6 +20,7 @@ export const CartAxiosApi = {
   },
 
   addToCart2: async (content, buyer) => {
+    console.log("addToCart2 실행");
     const accessToken = localStorage.getItem("accessToken");
     return await axios.post(
       `${KH_DOMAIN}/Cart/add2/${buyer}`, // URL

@@ -521,11 +521,11 @@ export const GoodsWrite = () => {
           </Seller2>
         </Seller>
         <Delivery>
-          <OptionPrice goodsPrice={goodsPrice} type="text" value={goodsPrice} onChange={(e) => { setGoodsPrice(e.target.value) }} placeholder=" 가격 :" />
           <GoodsDeliveryFee goodsDeliveryFee={goodsDeliveryFee} type="text" value={goodsDeliveryFee} onChange={(e) => { setGoodsDeliveryFee(e.target.value) }} placeholder=" 배송비 :" />
-          {type === 'goods' &&
+          {type === 'goods' && <>
+            <OptionPrice goodsPrice={goodsPrice} type="text" value={goodsPrice} onChange={(e) => { setGoodsPrice(e.target.value) }} placeholder=" 가격 :" />
             <GoodsRefund goodsRefund={goodsStock} type="text" value={goodsStock} onChange={(e) => { setGoodsStock(e.target.value) }} placeholder=" 재고 :" />
-          }
+          </>}
         </Delivery>
         <Option>
           <div className="option1">

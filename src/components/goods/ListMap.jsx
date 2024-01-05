@@ -11,7 +11,7 @@ const ListMapCss = styled.div`
    display: flex;
     justify-content: center;
     align-items: center; 
-    margin-top: 20px;
+    margin-top: 40px;
 `;
 
 
@@ -137,7 +137,8 @@ const ClassCategory = styled.div`
    white-space: nowrap;
    overflow: hidden;
    text-overflow: ellipsis;
-`; export const ListMap = ({ list, status }) => {
+`;
+export const ListMap = ({ list, status }) => {
   // 현재 시간을 가져옵니다.
   const currentDate = new Date();
 
@@ -146,27 +147,33 @@ const ClassCategory = styled.div`
       <List>
         <ul>
           {list &&
-            list.map((item, index) => (
-              <li key={index}>
-                {item.goodsStatus === 'sale' ? (
-                  <Link className="" to={`/Goods/${item.goodsDetailId}`}>
-                    <Class1>
-                      <ClassCategory>{item.goodsCategory}</ClassCategory>
-                      <Class1img>
-                        <img src={item.goodsPic} alt={item.goodsPic} />
-                      </Class1img>
-                      <ClassTitle>{item.goodsTitle}</ClassTitle>
-                      <ClassPeice>{item.goodsPrice}원</ClassPeice>
-                      <div className="member">
-                        <Class1Memberimg>
-                          <img src={item.memberDto.image} alt={""} />
-                        </Class1Memberimg>
-                        <ClassNick>{item.memberDto && item.memberDto.nickName}</ClassNick>
-                      </div>
-                    </Class1>
-                  </Link>
-                ) : (
-                  currentDate < new Date(item.auctionDate) ? (
+            list.map((item, index) => {
+              if (status === 'sale') {
+                return (
+                  <li key={index}>
+                    <Link className="" to={`/Goods/${item.goodsDetailId}`}>
+                      <Class1>
+                        <ClassCategory>{item.goodsCategory}</ClassCategory>
+                        <Class1img>
+                          <img src={item.goodsPic} alt={item.goodsPic} />
+                        </Class1img>
+                        <ClassTitle>{item.goodsTitle}</ClassTitle>
+                        <ClassPeice>{item.goodsPrice}원</ClassPeice>
+                        <div className="member">
+                          <Class1Memberimg>
+                            <img src={item.memberDto.image} alt={""} />
+                          </Class1Memberimg>
+                          <ClassNick>{item.memberDto && item.memberDto.nickName}</ClassNick>
+                        </div>
+                      </Class1>
+                    </Link>
+                  </li>
+                );
+              }
+
+              if (currentDate < new Date(item.auctionDate)) {
+                return (
+                  <li key={index}>
                     <Link className="" to={`/Auction/${item.goodsDetailId}`}>
                       <Class1>
                         <ClassCategory>{item.goodsCategory}</ClassCategory>
@@ -191,10 +198,12 @@ const ClassCategory = styled.div`
                         </div>
                       </Class1>
                     </Link>
-                  ) : null)
-                }
-              </li>
-            ))
+                  </li>
+                );
+              }
+
+              return null;
+            })
           }
         </ul>
       </List>
