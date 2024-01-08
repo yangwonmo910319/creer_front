@@ -60,14 +60,17 @@ const SelectImgCss = styled.div`
 export const SelectImg = ({ num, url, imgview, member, login }) => {
   const perPage = 4; // 페이지당 보여질 이미지 수
   const [urls, setUrls] = useState([{ goodsPictures: url }]); // url prop을 객체로 변환하여 초기화합니다.
+  //사진을 4장씩 보여주는 페이지 넘버
   const [currentPage, setCurrentPage] = useState(1);
+  //사진 주소를 저장하여 수정 및 삭제 하기 위해 2개를 사용
   const [submitUrl, setSubmitUrl] = useState();
   const [pictureId, setPictureId] = useState();
-  const [nickName, setNickName] = useState();
+
+
   const [member1, setMember] = useState();
 
   useEffect(() => {
-    setNickName(localStorage.getItem("NickName"));
+
     setMember(member);
     const selectImg = async () => {
       try {

@@ -3,7 +3,7 @@ import { KH_DOMAIN } from "../../utils/Common";
 
 export const GoodsAxiosApi = {
   // 상품 목록 전부 가져오기
-  getGoodsList: async () => {
+  selectGoodsList: async () => {
     const accessToken = localStorage.getItem("accessToken");
     return await axios.get(KH_DOMAIN + "/api/goods/list", {
       headers: {
@@ -14,7 +14,7 @@ export const GoodsAxiosApi = {
   },
 
   // 내 상품 조회
-  getMyGoods: async () => {
+  selectMyGoods: async () => {
     const accessToken = localStorage.getItem("accessToken");
     return await axios.get(KH_DOMAIN + `/api/goods/Mylist`, {
       headers: {
@@ -25,7 +25,7 @@ export const GoodsAxiosApi = {
   },
 
   // 경매 목록 조회
-  AuctionList: async () => {
+  selectAuctionList: async () => {
     const accessToken = localStorage.getItem("accessToken");
     return await axios.get(KH_DOMAIN + `/api/goods/auction`, {
       headers: {
@@ -35,8 +35,8 @@ export const GoodsAxiosApi = {
     });
   },
 
-  // 경매 금액 변경
-  goodsPrice: async (id, newPrice) => {
+  // 경매 금액 변경(금액 입력시)
+  updateGoodsPrice: async (id, newPrice) => {
     const accessToken = localStorage.getItem("accessToken");
     return await axios.post(KH_DOMAIN + `/api/goods/auctionPrice?id=${id}&price=${newPrice}`,
       {},
@@ -47,7 +47,9 @@ export const GoodsAxiosApi = {
         },
       });
   },
-  goodsPrice2: async (id, newPrice) => {
+
+  // 경매 금액 변경(버튼 클릭시 입력시)
+  updateGoodsPrice2: async (id, newPrice) => {
     const accessToken = localStorage.getItem("accessToken");
     return await axios.post(KH_DOMAIN + `/api/goods/auctionPrice2?id=${id}&price=${newPrice}`,
       {},
@@ -58,9 +60,6 @@ export const GoodsAxiosApi = {
         },
       });
   },
-
-
-
   // 상품 삭제
   deleteGoods: async (id) => {
     const accessToken = localStorage.getItem("accessToken");
@@ -71,7 +70,6 @@ export const GoodsAxiosApi = {
       },
     });
   },
-
   // 상품 추가
   insertGoods: async (content) => {
     const accessToken = localStorage.getItem("accessToken");
@@ -86,7 +84,6 @@ export const GoodsAxiosApi = {
   insertAuction: async (content, auctionTime) => {
     const accessToken = localStorage.getItem("accessToken");
     return await axios.post(
-
       KH_DOMAIN + `/api/goods/new/${auctionTime}`,
       content,
       {
@@ -148,19 +145,19 @@ export const GoodsAxiosApi = {
   },
 
   // 상품 목록 한개 가져오기
-  getGoods: async (id) => {
+  selectGoods: async (id) => {
     return await axios.get(KH_DOMAIN + `/api/goods/list/${id}`);
   },
 
   // 카테고리 상품 검색
-  categoryList: async (keyword) => {
+  selectCategoryList: async (keyword) => {
     return await axios.get(
       KH_DOMAIN + `/api/goods/list/tag/?keyword=${keyword}`
     );
   },
 
   // 제목 상품 검색
-  titleList: async (keyword) => {
+  selectTitleList: async (keyword) => {
     return await axios.get(
       KH_DOMAIN + `/api/goods/list/title/?keyword=${keyword}`
     );
@@ -174,7 +171,7 @@ export const GoodsAxiosApi = {
   },
 
   // 상품 페이지네이션 조회
-  GoodsPageList: async (page, size) => {
+  selectGoodsPageList: async (page, size) => {
     return await axios.get(
       KH_DOMAIN + `/api/goods/list/page?page=${page}&size=${size}`
     );

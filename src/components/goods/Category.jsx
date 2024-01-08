@@ -54,7 +54,7 @@ export const Category = ({ setList }) => {
 
   const titleList = async (title) => {
     try {
-      const rsp = await GoodsAxiosApi.titleList(title);
+      const rsp = await GoodsAxiosApi.selectTitleList(title);
       setList(rsp.data);
     } catch (error) {
       console.log(error);
@@ -63,7 +63,7 @@ export const Category = ({ setList }) => {
 
   const categoryList = async (category) => {
     try {
-      const rsp = await GoodsAxiosApi.categoryList(category);
+      const rsp = await GoodsAxiosApi.selectCategoryList(category);
       setList(rsp.data);
     } catch (error) {
       console.log(error);
@@ -72,7 +72,7 @@ export const Category = ({ setList }) => {
 
   const goodsList = async () => {
     try {
-      const res = await GoodsAxiosApi.GoodsPageList(currentPage, 5);
+      const res = await GoodsAxiosApi.selectGoodsPageList(currentPage, 5);
       const data = res.data;
       setList((prevList) => [...prevList, ...data]);
     } catch (error) {

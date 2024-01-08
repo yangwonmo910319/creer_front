@@ -1,6 +1,5 @@
 import { useEffect, useState } from "react";
 import styled from "styled-components";
-import { GoodsAxiosApi } from "../../api/goods/GoodsAxiosApi";
 import { useNavigate } from "react-router-dom";
 import { OptionBox } from "./OptionBox";
 

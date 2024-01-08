@@ -181,7 +181,7 @@ export const SellerList = () => {
 
   const memberRegCheck = async () => {
     try {
-      const resp = await GoodsAxiosApi.getMyGoods();
+      const resp = await GoodsAxiosApi.selectMyGoods();
       console.log("내가 작성한 글 : ", resp.data);
       setList(resp.data);
     } catch (error) {

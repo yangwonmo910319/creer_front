@@ -135,7 +135,7 @@ export const AuctionOption = ({ goodsDedail, chagerende, SelectGoodsLIst }) => {
 
   const auctionPrice = async () => {
     try {
-      const rsp = await GoodsAxiosApi.goodsPrice(id, newPrice);
+      const rsp = await GoodsAxiosApi.updateGoodsPrice(id, newPrice);
       if (rsp.data !== false) {
         chagerende();
         SelectGoodsLIst();
@@ -149,7 +149,7 @@ export const AuctionOption = ({ goodsDedail, chagerende, SelectGoodsLIst }) => {
 
   const auctionPrice2 = async (e) => {
     try {
-      const rsp = await GoodsAxiosApi.goodsPrice2(id, e);
+      const rsp = await GoodsAxiosApi.updateGoodsPrice2(id, e);
       if (rsp.data !== false) {
         chagerende();
         SelectGoodsLIst();

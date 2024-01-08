@@ -375,7 +375,6 @@ export const ReviewComp = ({ goodsNum, openReviewModal, reply }) => {
           <p>리뷰 개수: {totalRatings}</p>
         </div>
         <div className="review-rating">
-
           <WriteButton>
             <AnotherButton
               width={"150px"} height={"40px"} value={"리뷰 작성"} onClick={openReviewModal}
@@ -422,29 +421,21 @@ export const ReviewComp = ({ goodsNum, openReviewModal, reply }) => {
                       ))}
                     </StarBox>
                     <ReviewContent > <p>{item.reviewContent}</p></ ReviewContent >
-
-
-
                   </TextBox>
                 </div>
                 {nickName === item.memberDto.nickName &&
                   <AnotherButton width={"30px"} height={"30px"} value={"X"} onClick={() => { deleteReview(item.goodsReviewId) }}></AnotherButton>
                 }
-
               </li>
-
             </ReviewBox>
           ))}
         {reply && reply.length > visibleReviews && ( // 더 보기 버튼. 보여지는 리뷰 개수보다 전체 리뷰 개수가 많을 경우에만 보여짐
           <MoreButton >
             <AnotherButton width={"600px"} value={'리뷰 더보기'} onClick={showMoreReviews}></AnotherButton>
           </MoreButton>
-
         )}
       </ul>
-
       {/* 리뷰 수정 Madal */}
-
       <ReviewEditModal
         Writer={Writer}  //작성자
         goodsReviewId={goodsReviewId} //리뷰 PK
@@ -455,7 +446,6 @@ export const ReviewComp = ({ goodsNum, openReviewModal, reply }) => {
         onSubmit={reviewEidtSubmit}//수정 함수
         closeModal={closeReviewEidtModal}// 모달 닫기
       />
-
     </ReviewSectionContainer>
   );
 };

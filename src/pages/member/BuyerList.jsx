@@ -1,11 +1,9 @@
 import React, { useEffect, useState } from "react";
 import styled from "styled-components";
 import cartImg from "../../images/cart.png";
-import { GoodsAxiosApi } from "../../api/goods/GoodsAxiosApi";
 import { CartAxiosApi } from "../../api/goods/CartAxiosApi";
 import { MiddleOrderBox } from "../../css/common/MiddleOrderBox";
 import { StyledTitle } from "../../css/common/StyledTitle";
-import { AnotherButton } from "../../css/common/AnotherButton";
 import { useNavigate } from "react-router-dom";
 import { PurchaseAxiosApi } from "../../api/goods/PurchaseAxiosApi";
 
@@ -96,7 +94,7 @@ export const BuyerList = () => {
   const accessToken = localStorage.getItem("accessToken");
   const fetchCartItems = async () => {
     try {
-      const response = await PurchaseAxiosApi.getMyPurchase();
+      const response = await PurchaseAxiosApi.selectPurchaseList();
       if (response.status === 200) {
         setCartItems(response.data);
         console.log(response.data);

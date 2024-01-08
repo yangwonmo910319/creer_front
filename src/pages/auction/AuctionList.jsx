@@ -16,7 +16,7 @@ export const AuctionList = () => {
 
     const goodsList = async () => {
         try {
-            const res = await GoodsAxiosApi.AuctionList();
+            const res = await GoodsAxiosApi.selectAuctionList();
             setList(res.data);
             console.log(res.data);
         } catch (error) {

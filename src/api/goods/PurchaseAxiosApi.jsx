@@ -18,7 +18,7 @@ export const PurchaseAxiosApi = {
     );
   },
   // 구매 목록 가져오기
-  getMyPurchase: async () => {
+  selectPurchaseList: async () => {
     const accessToken = localStorage.getItem("accessToken");
     return await axios.get(KH_DOMAIN + `/api/purchase/buy`, {
       headers: {
@@ -28,7 +28,7 @@ export const PurchaseAxiosApi = {
     });
   },
   // 내 카트 조회
-  getMyCart: async () => {
+  selectCartList: async () => {
     const accessToken = localStorage.getItem("accessToken");
     return await axios.get(KH_DOMAIN + `/api/purchase/cart`, {
       headers: {

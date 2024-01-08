@@ -2,7 +2,6 @@ import axios from "axios";
 import { KH_DOMAIN } from "../../utils/Common";
 
 export const PictureAxiosApi = {
-
   // 상품  이미지 모두 출력
   selectGoodsImg: async (num) => {
     const accessToken = localStorage.getItem("accessToken");
@@ -19,7 +18,6 @@ export const PictureAxiosApi = {
 
   // 상품 이미지 넣기
   insertGoodsImg: async (num, newUrl) => {
-
     const goodsData = {
       goodsDetailId: num,
       goodsPictures: newUrl,

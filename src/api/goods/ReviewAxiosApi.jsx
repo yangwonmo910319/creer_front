@@ -5,7 +5,6 @@ export const ReviewAxiosApi = {
 
   // 리뷰 작성
   insertReview: async (reviewStar, reviewText, goodsDetailId, url) => {
-
     const reviewData = {
       goodsDetailId: goodsDetailId,
       reviewContent: reviewText,
@@ -14,17 +13,6 @@ export const ReviewAxiosApi = {
     };
     const accessToken = localStorage.getItem("accessToken");
     return await axios.post(KH_DOMAIN + `/api/Review/new/`, reviewData, {
-      headers: {
-        "Content-Type": "application/json",
-        Authorization: "Bearer " + accessToken,
-      },
-    });
-  },
-
-  //리뷰 전부 가져오기
-  getReviews: async (num) => {
-    const accessToken = localStorage.getItem("accessToken");
-    return await axios.get(KH_DOMAIN + `/api/Review/list/${num}`, {
       headers: {
         "Content-Type": "application/json",
         Authorization: "Bearer " + accessToken,

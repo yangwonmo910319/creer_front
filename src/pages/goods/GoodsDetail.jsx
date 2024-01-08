@@ -44,7 +44,7 @@ export const GoodsDetail = () => {
     //함수 만들기
     const SelectGoodsLIst = async () => {
       try {
-        const rsp = await GoodsAxiosApi.getGoods(goodsId);
+        const rsp = await GoodsAxiosApi.selectGoods(goodsId);
         // 상품 정보를 가져옵니다.
         console.log("상품 상세정보 : " + goodsId);
         console.log(rsp.data);

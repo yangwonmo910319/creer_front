@@ -1,11 +1,8 @@
 import styled from "styled-components";
-import { GoodsOption } from "../../components/goods/GoodsOption";
 import { GoodsInfo } from "../../components/goods/GoodsInfo";
 import { GoodsAxiosApi } from "../../api/goods/GoodsAxiosApi";
 import { useParams } from "react-router-dom";
 import { useEffect, useState } from "react";
-import { GoodsInfoEdit } from "../../components/goods/GoodsInfoEdit";
-import { GoodsOptionEdit } from "../../components/goods/GoodsOptionEdit";
 import { AuctionOption } from "../../components/goods/AuctionOption";
 
 const GoodsDetailCss = styled.div`
@@ -27,21 +24,32 @@ const GoodsDetailCss = styled.div`
 `;
 
 export const AuctionDetail = () => {
+  //상품 PK로 해당 데이터를 가져옵니다. 
   const { goodsId } = useParams();
+  //Axios로 결과 값을 담아서 출력에 사용
   const [list, setList] = useState("");
+  //상품 카테고리 
   const [goodsCategory, setGoodsCategory] = useState("");
+  //상품 카테고리 
   const [goodsDeliveryFee, setGoodsDeliveryFee] = useState("");
+  //상품 정보
   const [goodsDesc, setGoodsDesc] = useState("");
+  //상품 PK
   const [goodsDetailId, setGoodsDetailId] = useState("");
+  //상품 대표 사진
   const [goodsPic, setGoodsPic] = useState("");
+  //상품 가격
   const [goodsPrice, setGoodsPrice] = useState("");
+  //상품 수량
   const [goodsStock, setGoodsStock] = useState("");
+  //상품 제목
   const [goodsTitle, setGoodsTitle] = useState("");
+  //상품 옵션
   const [auctionDate, setAuctionDate] = useState("");
+  //작성자 데이터
   const [memberDto, setMemberDto] = useState("");
+  //랜더링에 사용
   const [render, setrender] = useState(true);
-  const nickName = localStorage.getItem("NickName");
-
 
 
   const chagerende = () => {
@@ -65,7 +73,7 @@ export const AuctionDetail = () => {
   // }, []);
   const SelectGoodsLIst = async () => {
     try {
-      const rsp = await GoodsAxiosApi.getGoods(goodsId);
+      const rsp = await GoodsAxiosApi.selectGoods(goodsId);
       // 상품 정보를 가져옵니다.
       console.log(rsp.data);
       //가져온 데이터를 저장
@@ -74,7 +82,9 @@ export const AuctionDetail = () => {
       console.log(error);
     }
   };
-  //가져온 상품 정보를 각각의 저장해 줍니다.
+  //back에서 가져온 상품 정보를 분해,저장 합니다.
+  //화면을 좌,우 2개의 컴포넌트를 사용하여 출력하기 때문에 
+  //좌,우 컴포넌트 별로 사용할 데이터를 재할당합니다.
   useEffect(() => {
     if (list) {
       const {
@@ -103,9 +113,7 @@ export const AuctionDetail = () => {
     }
   }, [list]);
 
-
-
-  //상품 기본키,상품 정보 ,상품사진
+  //화면 왼쪽 상품 정보 출력 컴포넌트로 전달할 데이터
   const goodsInfoList = [
     goodsDetailId,
     goodsDesc,
@@ -113,6 +121,7 @@ export const AuctionDetail = () => {
     setGoodsDesc,
     setGoodsPic,
   ];
+  //화면 오른쪽 상품 옵션 출력 컴포넌트로 전달할 데이터
   const goodsOptionList = [
     list,
     setGoodsTitle,
@@ -126,11 +135,13 @@ export const AuctionDetail = () => {
 
   return (
     <GoodsDetailCss>
+      {/* 상품 상세정보,리뷰,사진을 출력,작성,수정,삭제 */}
       <GoodsInfo
         list={goodsInfoList}
         reply={list.reviews}
         member={memberDto.nickName}
       ></GoodsInfo>
+      {/* 상품 가격,이름,작성자 정보를 출력,작성,수정,삭제 */}
       <AuctionOption
         goodsDedail={goodsOptionList}
         chagerende={chagerende}

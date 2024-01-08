@@ -118,12 +118,13 @@ img{
 
 export const GoodsInfo = ({ list, reply, member }) => {
     const navigate = useNavigate();
+    //back에서 가져온 데이터인 list를 분해하여 사용 
     const [goodsDetailId, goodsDesc, goodsPic, setGoodsDesc, setGoodsPic] = list;
     //Modal Switch
     const [isReviewModalOpen, setIsReviewModalOpen] = useState(false);
     //작성자와 로그인 유저 확인용
     const user = localStorage.getItem("userId");
-    //상품 대표 이미지
+    //큰 이미지 화면 주소
     const [url, setUrl] = useState(list[2]);
     //상품 대표 이미지
     const [mainurl, setMainUrl] = useState(list[2]);
@@ -142,6 +143,7 @@ export const GoodsInfo = ({ list, reply, member }) => {
     const descChage = (e) => {
         setGoodsDesc(e.target.value)
     }
+    //상품 대표 사진 정보를 저장
     useEffect(() => {
         setUrl(list[2])
         setMainUrl(list[2])
@@ -152,6 +154,7 @@ export const GoodsInfo = ({ list, reply, member }) => {
         try {
             // 서버에 데이터 전송
             const response = await ReviewAxiosApi.insertReview(
+                //별점,내용,상품 PK,사진주소
                 rating, reviewText, goodsDetailId, url
             );
             if (response.status === 200) {
@@ -167,17 +170,19 @@ export const GoodsInfo = ({ list, reply, member }) => {
             console.error("submit review 데이터에러 :", error);
         }
     };
-
-
-
+    //대표,서브 이미지 클릭시 메인 화면에 해당 이미지를 보여줌 
     const imgview = (e) => {
         setUrl(e)
     }
-
+    //Quill 데이터를 출력할 때 사용 
+    //DOMPurify는 브라우저에서 사용되는 HTML, CSS 등을 정제하고 안전하게 만들어주는 라이브러리입니다.
+    //dangerouslySetInnerHTML은 리액트의 이러한 안전성 검사를 우회하고, 특정한 경우에만 HTML 문자열을 렌더링할 수 있도록 허용합니다.
+    //보안상 신뢰할 수 있을 때 사용해야 합니다.
     const InfoDesc = ({ value }) => {
         const processedDesc = DOMPurify.sanitize(value);
         return <div dangerouslySetInnerHTML={{ __html: processedDesc }} />;
     }
+
     return (
         <GoodsInfoCss>
             <ImgCategory>
@@ -185,11 +190,11 @@ export const GoodsInfo = ({ list, reply, member }) => {
                     <ImgBox>
                         <div className="mainImg">
                             <img src={url} alt="대표 이미지" />
-
                         </div>
                     </ImgBox>
                 </div>
                 <div className="ImgCategory2">
+                    {/* 상품별 서브 이미지를 출력,수정,삭제 컴포넌트 */}
                     <SelectImg num={list[0]} url={mainurl} imgview={imgview} member={member}>
                     </SelectImg>
                 </div>
