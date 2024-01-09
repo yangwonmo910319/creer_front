@@ -29,6 +29,7 @@ const ModalWrapper = styled.div`
   align-items: center;
   animation: ${fadeIn} 0.3s;
   z-index: 999;
+  
 `;
 
 const Message = styled.div`
@@ -43,6 +44,12 @@ p{
   flex-direction: column;
   justify-content: center;
   align-items: center;
+  @media (max-width: 768px) {
+   height: auto;  
+   p{
+    margin-top: 50px;
+   }
+  }
 `;
 
 
@@ -54,7 +61,15 @@ margin:  20px;
 button{
   margin: 0 10px;
 }
+  @media (max-width: 768px) {
+   height: auto;
+   flex-direction: column;
 
+   button{
+    margin: 15px auto;
+ width: 100px;
+} 
+  }
 `;
 
 export const AuctionModal = ({
@@ -96,11 +111,11 @@ export const AuctionModal = ({
             <Message>
               <p>{checkMmessage}</p>
               <Button>
-                <AnotherButton width={"700px"} value={'500원'} onClick={() => CheckClick(500)}></AnotherButton>
-                <AnotherButton width={"700px"} value={'1000원'} onClick={() => CheckClick(1000)}></AnotherButton>
-                <AnotherButton width={"700px"} value={'5000원'} onClick={() => CheckClick(5000)}></AnotherButton>
-                <AnotherButton width={"700px"} value={'10000원'} onClick={() => CheckClick(10000)}></AnotherButton>
-                <AnotherButton width={"700px"} value={'취소'} onClick={closeClick}></AnotherButton>
+                <AnotherButton width={"500px"} value={'500원'} onClick={() => CheckClick(500)}></AnotherButton>
+                <AnotherButton width={"500px"} value={'1000원'} onClick={() => CheckClick(1000)}></AnotherButton>
+                <AnotherButton width={"500px"} value={'5000원'} onClick={() => CheckClick(5000)}></AnotherButton>
+                <AnotherButton width={"500px"} value={'10000원'} onClick={() => CheckClick(10000)}></AnotherButton>
+                <AnotherButton width={"500px"} value={'취소'} onClick={closeClick}></AnotherButton>
               </Button>
             </Message>
           </ModalWrapper>

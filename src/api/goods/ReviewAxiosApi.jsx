@@ -12,7 +12,7 @@ export const ReviewAxiosApi = {
       reviewImg: url,
     };
     const accessToken = localStorage.getItem("accessToken");
-    return await axios.post(KH_DOMAIN + `/api/Review/new/`, reviewData, {
+    return await axios.post(KH_DOMAIN + `/review/new/`, reviewData, {
       headers: {
         "Content-Type": "application/json",
         Authorization: "Bearer " + accessToken,
@@ -23,7 +23,7 @@ export const ReviewAxiosApi = {
   //리뷰 한개 삭제
   deleteReview: async (num) => {
     const accessToken = localStorage.getItem("accessToken");
-    return await axios.get(KH_DOMAIN + `/api/Review/delete/${num}`, {
+    return await axios.get(KH_DOMAIN + `/review/delete/${num}`, {
       headers: {
         "Content-Type": "application/json",
         Authorization: "Bearer " + accessToken,
@@ -39,7 +39,7 @@ export const ReviewAxiosApi = {
       reviewImg: url,
     };
     const accessToken = localStorage.getItem("accessToken");
-    return await axios.post(KH_DOMAIN + `/api/Review/update/${goodsDetailId}`, reviewData, {
+    return await axios.post(KH_DOMAIN + `/review/update/${goodsDetailId}`, reviewData, {
       headers: {
         "Content-Type": "application/json",
         Authorization: "Bearer " + accessToken,

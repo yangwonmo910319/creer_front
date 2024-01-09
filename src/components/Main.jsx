@@ -15,30 +15,40 @@ const MainCss = styled.div`
     "middle"
     "bottom";
   gap: 12px;
+  .border{
+    left: 0;
+    position: absolute;
+    width: 100vw;
+    border-bottom:1px solid black;
+  }
 `;
-
 const NavCss = styled.div`
-  border-bottom: 1px solid black;
   grid-area: top;
 `;
 const Content = styled.div`
-  border-bottom: 1px solid black;
   grid-area: middle;
 `;
 const FootCss = styled.div`
-  border-top: 1px solid black;
   grid-area: bottom;
+  .border{
+    left: 0;
+    position: absolute;
+    width: 100vw;
+    border-bottom:1px solid black;
+  }
 `;
 export const Main = () => {
   return (
     <MainCss>
       <NavCss>
         <NavBar></NavBar>
+
       </NavCss>
       <Content>
         <Outlet></Outlet>
       </Content>
       <FootCss>
+        <div className="border"></div>
         <FootBar></FootBar>
       </FootCss>
     </MainCss>

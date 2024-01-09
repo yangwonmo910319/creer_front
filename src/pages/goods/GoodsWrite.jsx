@@ -138,99 +138,104 @@ export const GoodsWrite = () => {
   return (
     <GoodsWriteCss>
       <GoodsInfoCss>
-        <ImgCategory>
-          <div className="ImgCategory1">
-            <ImgBox url={mainUrl}>
-              <div className="mainImg" >
-                <img src={mainUrl} alt="대표 이미지" />
-              </div>
-            </ImgBox>
-          </div>
-          <div className="ImgCategory2">
-            {subUrl && subUrl.map((url, index) => (
-              <img key={index} src={url} alt={`Image ${index}`} onClick={() => { deleteImg(index) }} />
-            ))}
-          </div>
-          <NewImgBox>
-            <img src={url} alt="새 이미지" />
-          </NewImgBox>
-          <UploadContainer>
-            <UploadLabel>
-              파일 선택
-              <UploadInput type="file" onChange={handleFileUpload} />
-            </UploadLabel>
-            <UploadLabel>
-              대표 이미지로 저장
-              <UploadInput type="button" onClick={MainImgChange} />
-            </UploadLabel>
-            <UploadLabel>
-              상품 이미지로 저장
-              <UploadInput type="button" onClick={subImgAdd} />
-            </UploadLabel>
-          </UploadContainer>
-        </ImgCategory>
-        <InfoCategory>
-          <ul>
-            <li>소개</li>
-            <li>댓글</li>
-            <li>판매자</li>
-          </ul>
-        </InfoCategory>
-        <InfoBox goodsDesc={goodsDesc}>
-          {/* 상품 정보 표시 */}
-          <QuillText goodsDesc={goodsDesc} setGoodsDesc={setGoodsDesc}>
-          </QuillText>
-        </InfoBox>
+        <div className="form">
+          <ImgCategory>
+            <div className="ImgCategory1">
+              <ImgBox url={mainUrl}>
+                <div className="mainImg" >
+                  <img src={mainUrl} alt="대표 이미지" />
+                </div>
+              </ImgBox>
+            </div>
+            <div className="ImgCategory2">
+              {subUrl && subUrl.map((url, index) => (
+                <img key={index} src={url} alt={`Image ${index}`} onClick={() => { deleteImg(index) }} />
+              ))}
+            </div>
+            <NewImgBox>
+              <img src={url} alt="새 이미지" />
+            </NewImgBox>
+            <UploadContainer>
+              <UploadLabel>
+                파일 선택
+                <UploadInput type="file" onChange={handleFileUpload} />
+              </UploadLabel>
+              <UploadLabel>
+                대표 이미지로 저장
+                <UploadInput type="button" onClick={MainImgChange} />
+              </UploadLabel>
+              <UploadLabel>
+                상품 이미지로 저장
+                <UploadInput type="button" onClick={subImgAdd} />
+              </UploadLabel>
+            </UploadContainer>
+          </ImgCategory>
+          <InfoCategory>
+            <ul>
+              <li>소개</li>
+              <li>댓글</li>
+              <li>판매자</li>
+            </ul>
+          </InfoCategory>
+          <InfoBox goodsDesc={goodsDesc}>
+            {/* 상품 정보 표시 */}
+            <QuillText goodsDesc={goodsDesc} setGoodsDesc={setGoodsDesc}>
+            </QuillText>
+          </InfoBox>
+        </div>
       </GoodsInfoCss>
+
       <GoodsOptionCss>
-        <TypeCss>
-          <AnotherButton value={"상품"} onClick={() => { setType('goods'); timeModalOpen(); setGoodsStatus('sale') }}></AnotherButton>
-          <AnotherButton value={"경매"} onClick={() => { setType("auction"); setGoodsStatus('auction') }}></AnotherButton>
-        </TypeCss>
-        <OptionCategory goodsCategory={goodsCategory} >  {goodsCategory ? goodsCategory : "카테고리"}
-          <div className="CategoryRaido">
-            <input type="radio" name="goods" id="패션" value="패션" onChange={(e) => { setGoodsCategory(e.target.value) }} />패션
-            <br />
-            <input type="radio" name="goods" id="쥬얼리" value="쥬얼리" onChange={(e) => { setGoodsCategory(e.target.value) }} />쥬얼리
-            <br />
-            <input type="radio" name="goods" id="가구" value="가구" onChange={(e) => { setGoodsCategory(e.target.value) }} />가구
-            <br />
-            <input type="radio" name="goods" id="문구" value="문구" onChange={(e) => { setGoodsCategory(e.target.value) }} />문구
-            <br />
-            <input type="radio" name="goods" id="반려" value="반려" onChange={(e) => { setGoodsCategory(e.target.value) }} />반려
-            <br />
-            <input type="radio" name="goods" id="아동" value="아동" onChange={(e) => { setGoodsCategory(e.target.value) }} />아동
-            <br />
-            <input type="radio" name="goods" id="공예" value="공예" onChange={(e) => { setGoodsCategory(e.target.value) }} />공예
-            <br />
-          </div>
-        </OptionCategory>
-        <Seller>
-          <Seller1>
-            <img src={UserImg} alt=""></img>
-          </Seller1>
-          <Seller2>
-            <OptionNick>{nickName && nickName}</OptionNick>
-            <OptionTitleEdit goodsTitle={goodsTitle} type="text" value={goodsTitle} onChange={(e) => { setGoodsTitle(e.target.value) }} placeholder="제목 :" />
-          </Seller2>
-        </Seller>
-        <Delivery>
-          <GoodsDeliveryFee goodsDeliveryFee={goodsDeliveryFee} type="text" value={goodsDeliveryFee} onChange={(e) => { setGoodsDeliveryFee(e.target.value) }} placeholder=" 배송비 :" />
-          {type === 'goods' && <>
-            <OptionPrice goodsPrice={goodsPrice} type="text" value={goodsPrice} onChange={(e) => { setGoodsPrice(e.target.value) }} placeholder=" 가격 :" />
-            <GoodsRefund goodsRefund={goodsStock} type="text" value={goodsStock} onChange={(e) => { setGoodsStock(e.target.value) }} placeholder=" 재고 :" />
-          </>}
-        </Delivery>
-        <Option>
-          <div className="option1">
-            <OptionWriteBox setContent2={setContent2}></OptionWriteBox>
-          </div>
-          <div className="option1">
-            {type === 'auction' &&
-              <TimeModal modaOpen={modaOpen} setAuctionDate={setAuctionDate}></TimeModal>
-            }
-          </div>
-        </Option>
+        <div className="form">
+          <TypeCss>
+            <AnotherButton value={"상품"} onClick={() => { setType('goods'); timeModalOpen(); setGoodsStatus('sale') }}></AnotherButton>
+            <AnotherButton value={"경매"} onClick={() => { setType("auction"); setGoodsStatus('auction') }}></AnotherButton>
+          </TypeCss>
+          <OptionCategory goodsCategory={goodsCategory} >  {goodsCategory ? goodsCategory : "카테고리"}
+            <div className="CategoryRaido">
+              <input type="radio" name="goods" id="패션" value="패션" onChange={(e) => { setGoodsCategory(e.target.value) }} />패션
+              <br />
+              <input type="radio" name="goods" id="쥬얼리" value="쥬얼리" onChange={(e) => { setGoodsCategory(e.target.value) }} />쥬얼리
+              <br />
+              <input type="radio" name="goods" id="가구" value="가구" onChange={(e) => { setGoodsCategory(e.target.value) }} />가구
+              <br />
+              <input type="radio" name="goods" id="문구" value="문구" onChange={(e) => { setGoodsCategory(e.target.value) }} />문구
+              <br />
+              <input type="radio" name="goods" id="반려" value="반려" onChange={(e) => { setGoodsCategory(e.target.value) }} />반려
+              <br />
+              <input type="radio" name="goods" id="아동" value="아동" onChange={(e) => { setGoodsCategory(e.target.value) }} />아동
+              <br />
+              <input type="radio" name="goods" id="공예" value="공예" onChange={(e) => { setGoodsCategory(e.target.value) }} />공예
+              <br />
+            </div>
+          </OptionCategory>
+          <Seller>
+            <Seller1>
+              <img src={UserImg} alt=""></img>
+            </Seller1>
+            <Seller2>
+              <OptionNick>{nickName && nickName}</OptionNick>
+              <OptionTitleEdit goodsTitle={goodsTitle} type="text" value={goodsTitle} onChange={(e) => { setGoodsTitle(e.target.value) }} placeholder="제목 :" />
+            </Seller2>
+          </Seller>
+          <Delivery>
+            <GoodsDeliveryFee goodsDeliveryFee={goodsDeliveryFee} type="text" value={goodsDeliveryFee} onChange={(e) => { setGoodsDeliveryFee(e.target.value) }} placeholder=" 배송비 :" />
+            {type === 'goods' && <>
+              <OptionPrice goodsPrice={goodsPrice} type="text" value={goodsPrice} onChange={(e) => { setGoodsPrice(e.target.value) }} placeholder=" 가격 :" />
+              <GoodsRefund goodsRefund={goodsStock} type="text" value={goodsStock} onChange={(e) => { setGoodsStock(e.target.value) }} placeholder=" 재고 :" />
+            </>}
+          </Delivery>
+          <Option>
+            <div className="option1">
+              <OptionWriteBox setContent2={setContent2}></OptionWriteBox>
+            </div>
+            <div className="option1">
+              {type === 'auction' &&
+                <TimeModal modaOpen={modaOpen} setAuctionDate={setAuctionDate}></TimeModal>
+              }
+            </div>
+          </Option>
+        </div>
       </GoodsOptionCss>
       <Option2>
         {
@@ -257,6 +262,7 @@ export const GoodsWrite = () => {
           </>
         }
       </Option2>
+
     </GoodsWriteCss>
   )
 }

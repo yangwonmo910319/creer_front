@@ -33,30 +33,31 @@ export const GoodsOption = ({ goodsDedail, updateGoodsDetail }) => {
 
   return (
     <GoodsOptionCss>
-      <OptionCategory>{goodsCategory}</OptionCategory>
-      <Seller>
-        <Seller1>
-          <Optionimage>
-            {list.memberDto && <img src={list.memberDto.image} alt="{}"></img>}
-          </Optionimage>
-        </Seller1>
-        <Seller2>
-          <OptionNick>{list.memberDto && list.memberDto.nickName}</OptionNick>
-          <OptionTitleEdit>{goodsTitle} </OptionTitleEdit>
-        </Seller2>
-      </Seller>
-      <Delivery>
-        <OptionPrice>{goodsPrice} 원</OptionPrice>
-        <GoodsDeliveryFee>재고:{goodsStock}</GoodsDeliveryFee>
-        <GoodsRefund>배송 시작: {goodsDeliveryFee} </GoodsRefund>
-      </Delivery>
+      <div className="form">
+        <OptionCategory>{goodsCategory}</OptionCategory>
+        <Seller>
+          <Seller1>
+            <Optionimage>
+              {list.memberDto && <img src={list.memberDto.image} alt="{}"></img>}
+            </Optionimage>
+          </Seller1>
+          <Seller2>
+            <OptionNick>{list.memberDto && list.memberDto.nickName}</OptionNick>
+            <OptionTitleEdit>{goodsTitle} </OptionTitleEdit>
+          </Seller2>
+        </Seller>
+        <Delivery>
+          <OptionPrice>{goodsPrice} 원</OptionPrice>
+          <GoodsDeliveryFee>재고:{goodsStock}</GoodsDeliveryFee>
+          <GoodsRefund>배송 시작: {goodsDeliveryFee} </GoodsRefund>
+        </Delivery>
 
-      <Option>
-        <div className="option1">
-          <OptionBox list={list.options} list2={list} ></OptionBox>
-        </div>
-      </Option>
-
+        <Option>
+          <div className="option1">
+            <OptionBox list={list.options} list2={list} ></OptionBox>
+          </div>
+        </Option>
+      </div>
     </GoodsOptionCss>
   );
 };

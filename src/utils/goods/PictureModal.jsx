@@ -3,6 +3,7 @@ import styled, { keyframes } from "styled-components";
 import { storage } from "../../api/FireBase";
 import { useEffect, useState } from "react";
 import { PictureAxiosApi } from "../../api/goods/PictureAxiosApi";
+import { AnotherButton } from "../../css/common/AnotherButton";
 
 const ModalClickCss = styled.div`
   position: absolute;
@@ -45,45 +46,35 @@ const Message = styled.div`
 `;
 
 const Button = styled.div`
-  ul{
+width:100%;
+margin-left: 12px;
+ul{list-style: none;
     display: flex;
-    flex-direction: row;
+    flex-direction: rcw;
   }
 `;
 const Img = styled.div`
 background: white;
 margin-top: 20px;
 border-radius: 20px;
-width: 580px;
+width: 600px;
 height  :150px ;
 display: flex;
-padding: 10px;
+padding-top: 10px;
+padding-bottom: 10px;
 justify-content: center;
 `;
+const Content = styled.div`
+width: 600px;
+height: auto;
+background: white;
+margin: 20px auto;
+`;
 const UploadInput = styled.input`
-position: relative;
-
-  display: none;
-`;
-
-const UploadLabel = styled.label`
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  color: white;
-  width: 150px;
-  height: 50px;
-  margin: 20px;
-  background-color: #adaaff;
-  padding: 10px;
-  border-radius: 15px;
-  cursor: pointer;
-  margin-bottom: 10px;
+ width: 200px;
   
-  &:hover {
-    background-color: #00648b;
-  }
 `;
+
 
 export const PictureModal = ({ isOpen, setIsCheckModalOpen, checkMmessage, submitUrl, pictureId }) => {
 
@@ -150,35 +141,30 @@ export const PictureModal = ({ isOpen, setIsCheckModalOpen, checkMmessage, submi
       {isOpen && (<>
         <ModalWrapper ModalWrapper onClick={modalClick}>
           <Message>{checkMmessage}</Message>
-          <Img> <img src={url} alt=""></img> </Img>
-          {newUrl &&
-            <Img> <img src={newUrl} alt=""></img></Img>
-          }
+          <Content>
+            <Img> <img src={url} alt=""></img> </Img>
+            {newUrl &&
+              <Img> <img src={newUrl} alt=""></img></Img>
+            }
 
-          <Button>
-            <ul>
-              <li>
-                <UploadLabel>
-                  확인
-                  <UploadInput type="button" onClick={CheckClick} >
-                  </UploadInput>
-                </UploadLabel></li>
-              <li>    <UploadLabel>
-                이미지 변경
-                <UploadInput type="file" onChange={handleFileUpload} />
-              </UploadLabel></li>
-              <li>
-                <UploadLabel>
-                  취소
-                  <UploadInput type="button" onClick={closeClick} />
-                </UploadLabel>
-              </li>
-            </ul>
+            <Button>
+              <ul>
+                <li>
+                  <AnotherButton value="확인" onClick={CheckClick}></AnotherButton>
+                </li>
+                <li>
+                  <UploadInput type="file" onChange={handleFileUpload} />
+                </li>
+                <li>
+                  <AnotherButton value="취소" onClick={closeClick}></AnotherButton>
+                </li>
+              </ul>
 
 
 
 
-          </Button>
+            </Button>
+          </Content>
         </ModalWrapper ></>
       )}
     </ModalClickCss>

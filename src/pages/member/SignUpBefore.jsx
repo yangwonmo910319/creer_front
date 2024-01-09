@@ -5,24 +5,29 @@ import { SignUpModal } from "../../utils/member/SignUpModal";
 import { StyledTitle } from "../../css/common/StyledTitle";
 import { AnotherButton } from "../../css/common/AnotherButton";
 
+const SignUpBeforeCss = styled.div`
+  width: 100%;
+  height: auto;
+`
 const List = styled.ul`
   display: flex;
   flex-direction: column;
   justify-content: center;
   align-items: center;
   font-size: 26px;
-
+  list-style: none;
   @media (max-width: 768px) {
     font-size: 22px;
   }
 `;
 
 const ListEl = styled.li`
-  margin: 35px 30vw;
+  margin: 5px 0;
+  font-size: .5em;
 `;
 
 const Term = styled.div`
-  margin-top: 20px;
+  margin-top: 10px;
   border: 1px solid rgb(218, 70, 82);
   border-radius: 0.15rem;
   padding: 0 10px;
@@ -128,7 +133,7 @@ export const SignUpBefore = () => {
   };
 
   return (
-    <>
+    <SignUpBeforeCss>
       <StyledTitle>약관 동의</StyledTitle>
       <List>
         <ListEl>
@@ -913,16 +918,13 @@ export const SignUpBefore = () => {
             </Term>
           </ListEl>
         )}
-
-        <Checkbox
-          text={"전체 동의하기"}
-          checked={allChecked}
-          onChange={handleAllCheckedChange}
-        />
-
-        <br />
-        <br />
-
+        <ListEl>
+          <Checkbox
+            text={"전체 동의하기"}
+            checked={allChecked}
+            onChange={handleAllCheckedChange}
+          />
+        </ListEl>
         <AnotherButton
           onClick={handleNextButtonClick}
           value="다음 페이지"
@@ -932,6 +934,6 @@ export const SignUpBefore = () => {
       <SignUpModal open={modalOpen} close={closeModal} header="오류">
         {modalText}
       </SignUpModal>
-    </>
+    </SignUpBeforeCss>
   );
 };

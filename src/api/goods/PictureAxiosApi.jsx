@@ -6,7 +6,7 @@ export const PictureAxiosApi = {
   selectGoodsImg: async (num) => {
     const accessToken = localStorage.getItem("accessToken");
     return await axios.get(
-      KH_DOMAIN + `/api/picture/list/${num}`,
+      KH_DOMAIN + `/picture/list/${num}`,
       {
         headers: {
           "Content-Type": "application/json",
@@ -24,7 +24,7 @@ export const PictureAxiosApi = {
     };
     const accessToken = localStorage.getItem("accessToken");
     return await axios.post(
-      KH_DOMAIN + `/api/picture/new/`, goodsData,
+      KH_DOMAIN + `/picture/new/`, goodsData,
       {
         headers: {
           "Content-Type": "application/json",
@@ -41,7 +41,7 @@ export const PictureAxiosApi = {
     };
     const accessToken = localStorage.getItem("accessToken");
     return await axios.post(
-      KH_DOMAIN + `/api/picture/update/`, goodsData,
+      KH_DOMAIN + `/picture/update/`, goodsData,
       {
         headers: {
           "Content-Type": "application/json",
@@ -54,7 +54,7 @@ export const PictureAxiosApi = {
   deletePictureImg: async (num) => {
     const accessToken = localStorage.getItem("accessToken");
     return await axios.delete(
-      KH_DOMAIN + `/api/picture/delete/${num}`,
+      KH_DOMAIN + `/picture/delete/${num}`,
       {
         headers: {
           "Content-Type": "application/json",

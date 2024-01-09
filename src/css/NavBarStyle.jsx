@@ -15,6 +15,12 @@ export const Top = styled.div`
     "topL topC topR"
     "topL topC midR"
     "bottomL bottomC bottomR";
+    .border{
+      position: absolute;
+      top:0;
+      margin-top: 200px;
+      border-bottom: 1px solid black;
+    }
 `;
 
 export const TopR = styled.div`
@@ -24,6 +30,7 @@ export const TopR = styled.div`
   grid-area: topR;
   display: flex;
   justify-content: end;
+  padding-right: 10px;
 `;
 
 export const TopL = styled.div`
@@ -33,7 +40,10 @@ export const TopL = styled.div`
   font-size: 1rem;
   grid-area: topL;
   width: 100%;
+  min-width: 280px;
   height: 100%;
+  z-index: 5;
+  padding-left: 10px;
 `;
 
 export const TopC = styled.div`
@@ -129,7 +139,8 @@ const MemberDropDownMenu = styled.ul`
     padding: 10px;
     cursor: pointer;
     transition: background-color 0.3s;
-
+    background: #ffffff;
+    z-index: 999;
     &:hover {
       background-color: #f0f0f0;
       font-weight: bold;

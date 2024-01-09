@@ -8,6 +8,10 @@ export const GoodsOptionCss = styled.div`
     margin: 0 auto;
     grid-area: option;
   }
+  .form{
+    border: 1px solid  rgba(144, 144, 144, 0.673);
+    padding: 10px;
+  }
 `;
 
 export const Seller = styled.div`
@@ -40,12 +44,13 @@ export const Seller2 = styled.div`
   padding: 10px;
 `;
 export const Optionimage = styled.div`
+
   img {
     border-radius: 50px;
-    border: 2px solid #a8a8a8;
+    border: 1px solid #a8a8a8;
     width: 80px;
     height: 80px;
-    margin-bottom: 40px;
+    margin: 0;
   }
 `;
 export const OptionNick = styled.div`
@@ -69,7 +74,6 @@ export const OptionCategory = styled.div`
 
 export const OptionTitleEdit = styled.div`
   width: 100%;
-
   font-size: 2em;
   line-height: 1.2em;
   padding-bottom: 20px;
@@ -78,7 +82,8 @@ export const Delivery = styled.div`
   width: 100%;
   height: auto;
   position: relative;
-  padding-left: 10px;
+
+  border-bottom:  1px solid rgba(136, 136, 136, 0.673);
 `;
 export const OptionPrice = styled.div`
   width: 100%;
@@ -107,10 +112,13 @@ export const GoodsDeliveryFee = styled.div`
 
 export const GoodsRefund = styled.div`
   font-size: 1em;
+  margin: 0;
+  padding: 0;
   margin-top: 10px;
   padding-bottom: 20px;
-  border-bottom: 1px solid rgba(136, 136, 136, 0.673);
-  width: 100%;
+ 
+  width: 98%;
+  
   input {
     font-size: 1em;
     width: 65%;

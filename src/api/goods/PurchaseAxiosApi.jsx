@@ -7,7 +7,7 @@ export const PurchaseAxiosApi = {
     const accessToken = localStorage.getItem("accessToken");
     console.log("구매 회원 토큰 : " + accessToken);
     return await axios.post(
-      KH_DOMAIN + `/api/purchase/new?num=${num}`,
+      KH_DOMAIN + `/purchase/new?num=${num}`,
       content,
       {
         headers: {
@@ -20,7 +20,7 @@ export const PurchaseAxiosApi = {
   // 구매 목록 가져오기
   selectPurchaseList: async () => {
     const accessToken = localStorage.getItem("accessToken");
-    return await axios.get(KH_DOMAIN + `/api/purchase/buy`, {
+    return await axios.get(KH_DOMAIN + `/purchase/buy`, {
       headers: {
         "Content-Type": "application/json",
         Authorization: "Bearer " + accessToken,
@@ -30,7 +30,7 @@ export const PurchaseAxiosApi = {
   // 내 카트 조회
   selectCartList: async () => {
     const accessToken = localStorage.getItem("accessToken");
-    return await axios.get(KH_DOMAIN + `/api/purchase/cart`, {
+    return await axios.get(KH_DOMAIN + `/purchase/cart`, {
       headers: {
         "Content-Type": "application/json",
         Authorization: "Bearer " + accessToken,
@@ -43,7 +43,7 @@ export const PurchaseAxiosApi = {
     const accessToken = localStorage.getItem("accessToken");
     console.log("구매 회원 토큰 : " + accessToken);
     return await axios.post(
-      KH_DOMAIN + `/api/purchase/update?id=${id}&content=${content}`,
+      KH_DOMAIN + `/purchase/update?id=${id}&content=${content}`,
       null,
       {
         headers: {

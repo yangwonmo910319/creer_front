@@ -7,7 +7,7 @@ import { PopUpAddress } from "../../components/member/PopUpAddress";
 import styled from "styled-components";
 import { EmailVerification } from "../../components/member/EmailVerification";
 import { StyledTitle } from "../../css/common/StyledTitle";
-
+import imgLogo from "../../images/logo.svg";
 const AddressInputCss = styled.div`
   width: 100%;
   height: 100%;
@@ -190,8 +190,9 @@ export const SignUp = () => {
 
   return (
     <Container>
-      <StyledTitle>회원가입</StyledTitle>
 
+      <StyledTitle>  <img src={imgLogo} alt="Logo" /></StyledTitle>
+      <StyledTitle>  회원가입</StyledTitle>
       <Items className="item2">
         <Input
           type="email"
@@ -328,18 +329,20 @@ export const SignUp = () => {
 
       <Items className="item2">
         {isEmail &&
-        isPassWord &&
-        isConPassWord &&
-        isName &&
-        isNickName &&
-        totalAddress &&
-        isPhoneNum &&
-        isVerified ? (
+          isPassWord &&
+          isConPassWord &&
+          isName &&
+          isNickName &&
+          totalAddress &&
+          isPhoneNum &&
+          isVerified ? (
           <Button enabled onClick={onClickLogin}>
             회원가입
           </Button>
-        ) : (
+        ) : (<>
           <Button disabled>회원가입</Button>
+          <Button onClick={() => { navigate(-2) }}>취소</Button>
+        </>
         )}
         <Modal open={modalOpen} close={closeModal} header="오류">
           {modalText}

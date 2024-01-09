@@ -3,7 +3,6 @@ import styled, { css } from "styled-components";
 import { GoodsAxiosApi } from "../../api/goods/GoodsAxiosApi";
 import { useNavigate, useParams } from "react-router-dom";
 import { CategoryButton } from "../../css/common/CategoryButton ";
-import { AnotherButton } from "../../css/common/AnotherButton";
 import category from "../../images/category.png";
 import category1 from "../../images/category1.png";
 import category2 from "../../images/category2.png";
@@ -12,25 +11,14 @@ import category4 from "../../images/category4.png";
 import category5 from "../../images/category5.png";
 import category6 from "../../images/category6.png";
 import category7 from "../../images/category7.png";
-const ListItem = styled.li`
-  width: 60px;
-  height: 60px;
-  background-color: ${(props) => (props.selected ? " #fde1e1" : "#dcdcdc")};
-  /* color: ${(props) => (props.selected ? " #ffffff" : "#000000")}; */
-  color: white;
-  border-radius: 50px;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  &:hover {
-    background-color: #ffeef0;
-  }
-`;
+
 
 const CategoryCss = styled.div`
   margin: 0 auto;
   width: 90%;
-  height: 70px;
+  padding-top: 15px;
+  height: 60px;
+
   ul {
     display: flex;
     flex-direction: row;

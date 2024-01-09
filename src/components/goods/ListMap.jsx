@@ -1,6 +1,3 @@
-import { useNavigate } from 'react-router-dom';
-import { useEffect, useState } from "react";
-import { storage } from "../../api/FireBase";
 import { Link } from "react-router-dom";
 import { ListMapCss, List, Class1, Class1img, ClassNick, ClassCategory, ClassTitle, Class1Memberimg, ClassPeice } from '../../css/components/goods/ListMap';
 

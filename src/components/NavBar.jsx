@@ -74,7 +74,8 @@ export const NavBar = () => {
   return (
     <>
       {/* 기본 */}
-      <Top>
+
+      <Top>        <div className="border"></div>
         <TopL>
           <Weather></Weather>
         </TopL>
@@ -85,6 +86,7 @@ export const NavBar = () => {
             }}
           ></StyledLogo>
         </TopC>
+
         <TopR>
           <ul>
             {login === "false" ? ( // 로그인 X
@@ -166,6 +168,7 @@ export const NavBar = () => {
         <BottomC>
           <StyledSearch />
         </BottomC>
+
       </Top>
     </>
   );

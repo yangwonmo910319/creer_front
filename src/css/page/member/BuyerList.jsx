@@ -10,11 +10,11 @@ export const CartPageContainer = styled.div`
 export const GoodsCard = styled.div`
   border: 1px solid #ddd;
   padding: 10px;
-  margin: 10px 0;
   display: flex;
   flex-direction: column;
   align-items: end;
-  width: 100%;
+  margin: 20px auto;
+  width: 80%;
   height: 100px;
 
   .goodsInfo2 {
@@ -23,7 +23,7 @@ export const GoodsCard = styled.div`
 justify-content: space-between;
 align-items: center;
     width: 80%;   
-    height: 50%;
+    height: 30%;
     .title2{   
       display: flex;
       margin: 10px;
@@ -36,16 +36,14 @@ align-items: center;
 justify-content: center;
 align-items: center;
     width: 100%;
-    height: 50%;
+    height: 70%;
+    border-bottom: 1px solid #ddd;
   .goodsImage {
     width: 100px;
     height: 100px;
     margin-top: 50px;
     position: relative;
   }
-  img{
-    margin: 0;
-    }
   .removeButton {
 
     color: white;
@@ -62,7 +60,7 @@ align-items: center;
   .title {
     width: calc(100% - (150px +  10% + 15%));
     height: auto;
-    margin-right: 10px;
+    margin-left: 10px;
   }
 .quantity{
       flex: none;
@@ -73,6 +71,9 @@ align-items: center;
     flex: none;
     min-width: 50px;
     width: 15%;
+  }
+  img{
+    margin-bottom: 20px;
   }
   }
   

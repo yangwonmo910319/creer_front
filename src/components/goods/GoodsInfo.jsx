@@ -77,61 +77,62 @@ export const GoodsInfo = ({ list, reply, member }) => {
 
     return (
         <GoodsInfoCss>
-            <ImgCategory>
-                <div className="ImgCategory1">
-                    <ImgBox>
-                        <div className="mainImg">
-                            <img src={url} alt="대표 이미지" />
-                        </div>
-                    </ImgBox>
-                </div>
-                <div className="ImgCategory2">
-                    {/* 상품별 서브 이미지를 출력,수정,삭제 컴포넌트 */}
-                    <SelectImg num={list[0]} url={mainurl} imgview={imgview} member={member}>
-                    </SelectImg>
-                </div>
-                <NewImgBox>
-                    {newUrl && <>
-                        <img src={newUrl} alt="새 이미지" />
-                    </>
-                    }
-                </NewImgBox>
+            <div className="form">
+                <ImgCategory>
+                    <div className="ImgCategory1">
+                        <ImgBox>
+                            <div className="mainImg">
+                                <img src={url} alt="대표 이미지" />
+                            </div>
+                        </ImgBox>
+                    </div>
+                    <div className="ImgCategory2">
+                        {/* 상품별 서브 이미지를 출력,수정,삭제 컴포넌트 */}
+                        <SelectImg num={list[0]} url={mainurl} imgview={imgview} member={member}>
+                        </SelectImg>
+                    </div>
+                    <NewImgBox>
+                        {newUrl && <>
+                            <img src={newUrl} alt="새 이미지" />
+                        </>
+                        }
+                    </NewImgBox>
 
-            </ImgCategory>
-            <InfoCategory>
-                <ul>
-                    <li>소개</li>
-                    <li>댓글</li>
-                    <li>판매자</li>
-                </ul>
-            </InfoCategory>
-            <InfoBox>
-                {/* 상품 정보 표시 */}
-                <InfoDescCss>
-                    <InfoDesc value={(goodsDesc)}
-                        placeholder="내용"></InfoDesc>
-                </InfoDescCss>
+                </ImgCategory>
+                <InfoCategory>
+                    <ul>
+                        <li>소개</li>
+                        <li>댓글</li>
+                        <li>판매자</li>
+                    </ul>
+                </InfoCategory>
+                <InfoBox>
+                    {/* 상품 정보 표시 */}
+                    <InfoDescCss>
+                        <InfoDesc value={(goodsDesc)}
+                            placeholder="내용"></InfoDesc>
+                    </InfoDescCss>
 
-                <div
-                    style={{
-                        width: "100px",
-                        whiteSpace: "normal",
-                    }}
+                    <div
+                        style={{
+                            width: "100px",
+                            whiteSpace: "normal",
+                        }}
 
-                />
-                {/* 리뷰 출력 */}
-                <ReviewComp goodsNum={list[0]} reply={reply}
-                    openReviewModal={openReviewModal}></ReviewComp>
+                    />
+                    {/* 리뷰 출력 */}
+                    <ReviewComp goodsNum={list[0]} reply={reply}
+                        openReviewModal={openReviewModal}></ReviewComp>
 
-                {/* 리뷰 작성 Madal */}
-                <ReviewModal
-                    isOpen={isReviewModalOpen}
-                    onSubmit={reviewSubmit}
-                    closeModal={closeReviewModal}
-                />
-            </InfoBox>
+                    {/* 리뷰 작성 Madal */}
+                    <ReviewModal
+                        isOpen={isReviewModalOpen}
+                        onSubmit={reviewSubmit}
+                        closeModal={closeReviewModal}
+                    />
+                </InfoBox>
 
-
+            </div>
         </GoodsInfoCss>
     )
 }

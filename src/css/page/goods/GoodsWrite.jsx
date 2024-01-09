@@ -4,13 +4,14 @@ import styled from "styled-components";
 export const GoodsWriteCss = styled.div`
   display: grid;
   flex-direction: row;
-  width: 100%;
+  width: 90%;
   height: auto;
+  margin:  0 auto;
   margin-top: 100px;
   grid-template-columns: 65% 35% ;
      grid-template-rows: auto 100%; 
         grid-template-areas:  
-        'L1 R1 '
+        'L1 R1'
         'L1 R2';  
   @media (max-width: 768px) {
     display: grid;
@@ -24,13 +25,22 @@ export const GoodsWriteCss = styled.div`
 `;
 export const GoodsInfoCss = styled.div`
     width: 100%;
-    height: auto;
+    height: 1800px;
     grid-area: L1;
- 
     @media (max-width: 768px) {
         width: 500px;
         margin: 0 auto;  
     }
+    .form{
+      width: 90%;
+      margin: 0;
+      padding: 10px;
+    border: 1px solid  rgba(144, 144, 144, 0.673);
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  }
    
 `;
 
@@ -147,8 +157,8 @@ export const UploadInput = styled.input`
 export const UploadLabel = styled.label`
   display: inline-block;
   padding: 8px 12px;
-  color: white;
-  background-color: #e5e5e5;
+  color: #656565;
+  background-color: #e1e0e0;
   border: 1px solid  #484848;
   border-radius: 4px;
   cursor: pointer;
@@ -169,7 +179,10 @@ export const GoodsOptionCss = styled.div`
       margin: 0 auto;
 
     }
-
+    .form{
+    border: 1px solid  rgba(144, 144, 144, 0.673);
+    padding: 10px;
+  }
 
 `;
 

@@ -3,13 +3,18 @@ import styled from "styled-components";
 export const GoodsInfoCss = styled.div`
     width: 65%;
     height: auto;
+    margin-right: 30px;
     @media (max-width: 768px) {
         width: 500px;
         margin: 0 auto;
         grid-area: info; 
         margin-top: 50px;
     }
-   
+   .form{
+
+    border: 1px solid  rgba(144, 144, 144, 0.673);
+    padding: 10px;
+   }
 `;
 
 export const ImgCategory = styled.div`
@@ -55,7 +60,7 @@ export const ImgBox = styled.div`
 export const InfoBox = styled.div`     
        width: 80%;
     height: auto;
-    border:  1px solid black;
+    border:  1px solid   rgba(144, 144, 144, 0.673);
     margin: 20px auto;    
     input{
      width: 90%;  

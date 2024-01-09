@@ -7,7 +7,7 @@ export const ListMapCss = styled.div`
    display: flex;
     justify-content: center;
     align-items: center; 
-    margin-top: 40px;
+    margin-top: 60px;
 `;
 
 
@@ -31,8 +31,11 @@ height: auto;
    height: auto;
    display: flex;
    flex-wrap: wrap;  
+   justify-content: center;
+   align-items: center;
    margin-left: 20px;
    padding: 10px;  
+   padding-top: 0;
       transition: box-shadow 0.3s ease-in-out;
       &:hover {
         box-shadow: 0px 0px 10px 0px rgb(252, 198, 198);

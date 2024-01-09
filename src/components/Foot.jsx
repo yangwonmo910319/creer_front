@@ -2,13 +2,13 @@ import styled from "styled-components";
 const FootCss = styled.div`
   width: 100%;
   height: 400px;
-  max-width: 1280px;
+  max-width: 1100px;
   margin: 0 auto;
   display: flex;
   flex-direction: row;
   justify-content: space-between;
   div {
-    font-size: 12px;
+    font-size: 1em;
     margin-top: 50px;
   }
   .content1 {

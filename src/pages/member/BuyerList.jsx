@@ -9,9 +9,7 @@ import { CartPageContainer, GoodsCard } from "../../css/page/member/BuyerList";
 
 export const BuyerList = () => {
   const navigate = useNavigate();
-  const [link, setLink] = useState('');
   const [cartItems, setCartItems] = useState('');
-  const [checkedItems, setCheckedItems] = useState([]);
   const accessToken = localStorage.getItem("accessToken");
   const fetchCartItems = async () => {
     try {
@@ -45,10 +43,6 @@ export const BuyerList = () => {
     } catch (error) {
       console.error("에러 확인:", error);
     }
-  };
-  const purchaseSelected = (e) => {
-    // setLink()
-    navigate(`/Goods/Payment/` + e)
   };
   const move = (e) => {
     navigate(`/goods/` + e)
@@ -85,12 +79,7 @@ export const BuyerList = () => {
           ))}
         </CartPageContainer>
       </MiddleOrderBox>
-      {/* <AnotherButton
-              onClick={() => purchaseSelected(item.cartId)}
-              value="배송지"
-              width="50px"
-                    height="50px"
-            ></AnotherButton> */}
+
     </>
   );
 };
