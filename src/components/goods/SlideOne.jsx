@@ -29,11 +29,6 @@ img{
       border: 1px solid #b4b4b421;
     }
   }
-/* .but2{
-  width : 50px;
-  height: 50px;
-} */
-
 `
   ;
 

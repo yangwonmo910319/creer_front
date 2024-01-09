@@ -11,17 +11,7 @@ const QuillTextCss = styled.div`
   width  :100% ;
   height: auto;
 `;
-const Button1 = styled.div`
-  width  :100px ;
-  height: auto;  float: right;
-  button{
-    width  :100px ;
-    border-radius: 10px;
-  height :60px ;
-    background: #ff3d3d;
-  
-  }
-`;
+
 
 const Content1 = styled.div`
   width  :100% ;
