@@ -97,7 +97,6 @@ export const Category = ({ setList }) => {
   }, [title, selectedCategory]);
 
   useEffect(() => {
-    alert(currentPage)
     if (selectedCategory === "전체") {
       goodsList();
     }
