@@ -5,6 +5,14 @@ export const MiddleOrderBox = styled.div`
   flex-direction: column;
   justify-content: center;
   align-items: center;
+    button {
+    border-radius: 13px;
+    width: 85%;
+    height: 43px;
+    background-color: #ffffff;
+    border: 1px solid rgb(153, 153, 153);
+    position: relative;
+  }
 `;
 
 export const MiddleOrderBoxRow = styled.div`

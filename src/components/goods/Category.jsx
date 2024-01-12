@@ -70,11 +70,10 @@ export const Category = ({ setList }) => {
 
   useEffect(() => {
     const onScroll = () => {
-      if (
-        window.innerHeight + document.documentElement.scrollTop ===
-        document.documentElement.scrollHeight
-      ) {
-        setCurrentPage(currentPage + 1);
+      const { scrollTop, clientHeight, scrollHeight } = document.documentElement;
+
+      if (scrollTop + clientHeight >= scrollHeight - 1) {
+        setCurrentPage((prevPage) => prevPage + 1);
       }
     };
     window.addEventListener("scroll", onScroll);
@@ -98,6 +97,7 @@ export const Category = ({ setList }) => {
   }, [title, selectedCategory]);
 
   useEffect(() => {
+    alert(currentPage)
     if (selectedCategory === "전체") {
       goodsList();
     }

@@ -32,26 +32,29 @@ const SelectImgCss = styled.div`
     height: 120px;
     margin: 1px 0;
   }
-
+   button{
+    margin-top: -95px;
+   }
   .buttons {
     position: absolute;
     width: 640px;
     bottom: 0;
     height: auto;
     border-radius: 50px;
-
     .buttonsL {
       float: left;
       width: 35px;
       height: 35px;
       color: black;
       border-radius: 50px;
+      margin-left: -10px;
     }
     .buttonsR {
       width: 35px;
       height: 35px;
       color: black;
-      border-radius: 50px;
+      border-radius: 50px;      
+      margin-right: -10px;
       float: right;
     }
   }
@@ -65,7 +68,6 @@ export const SelectImg = ({ num, url, imgview, member, login }) => {
   //사진 주소를 저장하여 수정 및 삭제 하기 위해 2개를 사용
   const [submitUrl, setSubmitUrl] = useState();
   const [pictureId, setPictureId] = useState();
-
 
   const [member1, setMember] = useState();
 
@@ -154,6 +156,7 @@ export const SelectImg = ({ num, url, imgview, member, login }) => {
         </div>
       ))}
       {urls.length > perPage && (
+
         <div className="buttons">
           <button
             className="buttonsL"
@@ -162,6 +165,7 @@ export const SelectImg = ({ num, url, imgview, member, login }) => {
           >
             〈
           </button>
+
           <button
             className="buttonsR"
             onClick={nextPage}

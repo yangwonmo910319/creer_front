@@ -191,7 +191,7 @@ export const SignUp = () => {
   return (
     <Container>
 
-      <StyledTitle>  <img src={imgLogo} alt="Logo" /></StyledTitle>
+      <StyledTitle>  <img src={imgLogo} alt="Logo" onClick={() => { navigate("/") }} /></StyledTitle>
       <StyledTitle>  회원가입</StyledTitle>
       <Items className="item2">
         <Input

@@ -12,8 +12,8 @@ const PopupAddrCss = styled.div`
   height: ${(props) => props.height || "40px"};
 
   button {
-    border-radius: 10px;
-    width: 100%;
+    border-radius: 13px;
+    width: 97%;
     height: 100%;
     background-color: #ffffff;
     border: 1px solid rgb(153, 153, 153);

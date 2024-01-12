@@ -7,6 +7,8 @@ import { AnotherButton } from "../../css/common/AnotherButton";
 
 const SignUpBeforeCss = styled.div`
   width: 100%;
+  max-width: 1280px;
+  margin-top: 50px;
   height: auto;
 `
 const List = styled.ul`
@@ -25,7 +27,12 @@ const ListEl = styled.li`
   margin: 5px 0;
   font-size: .5em;
 `;
-
+const ListE2 = styled.div`
+display:  flex;
+width: 350px;
+justify-content: space-between;
+margin: 0 30px;
+`;
 const Term = styled.div`
   margin-top: 10px;
   border: 1px solid rgb(218, 70, 82);
@@ -925,10 +932,15 @@ export const SignUpBefore = () => {
             onChange={handleAllCheckedChange}
           />
         </ListEl>
-        <AnotherButton
-          onClick={handleNextButtonClick}
-          value="다음 페이지"
-        ></AnotherButton>
+        <ListE2>
+          <AnotherButton
+            onClick={handleNextButtonClick}
+            value="다음 페이지"
+          ></AnotherButton>
+          <AnotherButton value={"취소"}
+            onClick={() => { navigate(-1) }}>
+          </AnotherButton>
+        </ListE2>
       </List>
 
       <SignUpModal open={modalOpen} close={closeModal} header="오류">
