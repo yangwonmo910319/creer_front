@@ -37,13 +37,7 @@ export const GoodsAxiosApi = {
 
   // 경매 금액 변경(금액 입력시)
   updateGoodsPrice: async (id, newPrice) => {
-    console.log(id);
-    console.log(id);
-    console.log(id);
-    console.log(id);
-    console.log(newPrice);
-    console.log(newPrice);
-    console.log(newPrice);
+
     const accessToken = localStorage.getItem("accessToken");
     return await axios.post(KH_DOMAIN + `/goods/auctionPrice?id=${id}&price=${newPrice}`,
       {},
