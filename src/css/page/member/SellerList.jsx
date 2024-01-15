@@ -133,11 +133,12 @@ width: 50px;
 export const Buyer2 = styled.li`
   display: flex;
   width: 100%;
+
   align-items: center;
   flex-direction: column;
   padding-bottom: 100px;
 .buyer2{
-  height: 50px;
+  height: auto;
 display: flex;
 width: 100%;
     border-bottom: 1px solid #d6d6d6;

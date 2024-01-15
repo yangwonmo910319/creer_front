@@ -96,7 +96,7 @@ width: 99%;
 border: none;
 border-radius: 4px;
 font-size: 16px;
-height: 600px;
+height: auto;
 img{
   width: 100%; 
   height: auto;

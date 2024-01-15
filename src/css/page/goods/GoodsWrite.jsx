@@ -297,6 +297,7 @@ export const Option2 = styled.div`
       margin: 0 auto;
       grid-area: R2;
       padding-bottom: 10px;
+      margin-top: 50px;
     }
 `
 

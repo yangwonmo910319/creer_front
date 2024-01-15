@@ -89,7 +89,7 @@ export const SellerList = () => {
                     <>
                       <div key={purchaseItem.id} className="buyer2">
                         <div className="id"> {purchaseItem.id}</div>
-                        <div className="nickName">   {purchaseItem.buyer.nickName}</div>
+                        <div className="nickName">   {purchaseItem.receiveName}</div>
                         <div className="address">   {purchaseItem.receiveAdd}</div>
                         <div className="option">   {purchaseItem.option}</div>
                         <div className="quantity">  {purchaseItem.quantity}</div>

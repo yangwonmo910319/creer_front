@@ -251,7 +251,6 @@ export const GoodsWrite = () => {
             goodsDesc.length !== 0 &&
             // goodsStock.length !== 0 &&
             goodsTitle.length !== 0 &&
-            goodsPrice.length !== 0 &&
             goodsDeliveryFee.length !== 0) ? <> {
               type !== 'auction' ?
                 <>  <AnotherButton value={" 상품 작성 완료"} onClick={goodsSubmit}></AnotherButton></>

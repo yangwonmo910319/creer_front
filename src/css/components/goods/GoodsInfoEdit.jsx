@@ -104,6 +104,7 @@ export const NewImgBox = styled.div`
 width: 100%;
 height: auto;
 text-align: center;
+margin-top: 15px;
 img{
   width: 150px;
   height: 150px;

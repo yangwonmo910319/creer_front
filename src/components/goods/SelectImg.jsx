@@ -25,12 +25,22 @@ const SelectImgCss = styled.div`
   flex-direction: row;
   justify-content: center;
   align-items: start;
+  
   img {
     border: 2px solid #bcbcbc79;
     padding: 10px;
     width: 120px;
     height: 120px;
     margin: 1px 0;
+  }
+    @media (max-width: 768px) {
+      img {
+    border: 2px solid #bcbcbc79;
+    padding: 10px;
+    width: 80%;
+    height: 80px;
+    margin: 1px 0;
+  }
   }
    button{
     margin-top: -95px;

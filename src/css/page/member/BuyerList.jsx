@@ -24,10 +24,11 @@ justify-content: space-between;
 align-items: center;
     width: 80%;   
     height: 30%;
+    margin-top: 5px;
     .title2{   
       display: flex;
       margin: 10px;
-      width: 100%;
+      width: auto;
       flex-wrap: nowrap;
     }
   }

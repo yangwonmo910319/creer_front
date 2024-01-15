@@ -46,12 +46,18 @@ const Message = styled.div`
 `;
 
 const Button = styled.div`
-width:100%;
-margin-left: 12px;
-ul{list-style: none;
+height: 100px;
+margin-left: 10px;
+ul{
+  height: auto;
+  list-style: none;
     display: flex;
     flex-direction: rcw;
   }
+  button{
+   margin-top: 30px;
+  }
+
 `;
 const Img = styled.div`
 background: white;
@@ -63,6 +69,21 @@ display: flex;
 padding-top: 10px;
 padding-bottom: 10px;
 justify-content: center;
+
+    @media (max-width: 768px) {
+       background: white;
+border-radius: 20px;
+height: 100px;
+padding-bottom: 20px;
+display: flex;
+justify-content: center;
+   img{
+    width: 100px;
+    height: 100px;
+    margin: 0 auto;
+   }
+
+  }
 `;
 const Content = styled.div`
 width: 600px;

@@ -19,6 +19,7 @@ const MainCss = styled.div`
     left: 0;
     position: absolute;
     width: 100vw;
+    min-width: 768px;
     border-bottom:1px solid black;
   }
 `;
